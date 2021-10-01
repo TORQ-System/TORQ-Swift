@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -18,6 +18,9 @@
 		BEF974F52707146500325281 /* TORQTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF974F42707146500325281 /* TORQTests.swift */; };
 		BEF975002707146500325281 /* TORQUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF974FF2707146500325281 /* TORQUITests.swift */; };
 		BEF9750E2707153E00325281 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BEF9750D2707153E00325281 /* GoogleService-Info.plist */; };
+		BEF975102707291F00325281 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9750F2707291F00325281 /* HomeViewController.swift */; };
+		BEF975122707292C00325281 /* signUpFirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF975112707292C00325281 /* signUpFirstViewController.swift */; };
+		BEF975142707293600325281 /* signUpSecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF975132707293600325281 /* signUpSecondViewController.swift */; };
 		FC4BF75E181535F7BB4C96B1 /* Pods_TORQTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D35DF5D9259C289028E18D8 /* Pods_TORQTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +66,9 @@
 		BEF974FF2707146500325281 /* TORQUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TORQUITests.swift; sourceTree = "<group>"; };
 		BEF975012707146500325281 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BEF9750D2707153E00325281 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		BEF9750F2707291F00325281 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		BEF975112707292C00325281 /* signUpFirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = signUpFirstViewController.swift; sourceTree = "<group>"; };
+		BEF975132707293600325281 /* signUpSecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = signUpSecondViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,7 +119,6 @@
 				2021F18F1B90EB235EC5095C /* Pods-TORQTests.debug.xcconfig */,
 				2FF5348CF2C51FD8DA9067F8 /* Pods-TORQTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -142,6 +147,7 @@
 		BEF974DC2707146300325281 /* TORQ */ = {
 			isa = PBXGroup;
 			children = (
+				BEF975152707294100325281 /* viewControllers */,
 				BEF974DD2707146300325281 /* AppDelegate.swift */,
 				BEF974DF2707146300325281 /* SceneDelegate.swift */,
 				BEF974E12707146300325281 /* ViewController.swift */,
@@ -170,6 +176,16 @@
 				BEF975012707146500325281 /* Info.plist */,
 			);
 			path = TORQUITests;
+			sourceTree = "<group>";
+		};
+		BEF975152707294100325281 /* viewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				BEF9750F2707291F00325281 /* HomeViewController.swift */,
+				BEF975112707292C00325281 /* signUpFirstViewController.swift */,
+				BEF975132707293600325281 /* signUpSecondViewController.swift */,
+			);
+			path = viewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -411,9 +427,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEF975142707293600325281 /* signUpSecondViewController.swift in Sources */,
+				BEF975102707291F00325281 /* HomeViewController.swift in Sources */,
 				BEF974E22707146300325281 /* ViewController.swift in Sources */,
 				BEF974DE2707146300325281 /* AppDelegate.swift in Sources */,
 				BEF974E02707146300325281 /* SceneDelegate.swift in Sources */,
+				BEF975122707292C00325281 /* signUpFirstViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
