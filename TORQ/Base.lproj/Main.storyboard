@@ -51,13 +51,21 @@
                                             <action selector="goToSecondScreen:" destination="2XM-jo-eNb" eventType="touchUpInside" id="4jP-zp-o2L"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0kF-d3-A2d">
+                                        <rect key="frame" x="171.5" y="229.5" width="71" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="8ae-JF-TVg" firstAttribute="leading" secondItem="X2y-zR-o2k" secondAttribute="leading" constant="50" id="JDd-cD-dNF"/>
                                     <constraint firstItem="8ae-JF-TVg" firstAttribute="centerY" secondItem="X2y-zR-o2k" secondAttribute="centerY" id="ZoB-5T-peG"/>
+                                    <constraint firstItem="0kF-d3-A2d" firstAttribute="centerX" secondItem="X2y-zR-o2k" secondAttribute="centerX" id="cCy-L8-tbw"/>
                                     <constraint firstItem="mfD-Ib-bV6" firstAttribute="top" secondItem="8ae-JF-TVg" secondAttribute="bottom" constant="70" id="gsU-lo-M5V"/>
                                     <constraint firstAttribute="trailing" secondItem="8ae-JF-TVg" secondAttribute="trailing" constant="50" id="idx-ef-gDy"/>
+                                    <constraint firstItem="8ae-JF-TVg" firstAttribute="top" secondItem="0kF-d3-A2d" secondAttribute="bottom" constant="100" id="oDE-zf-sML"/>
                                     <constraint firstItem="mfD-Ib-bV6" firstAttribute="centerX" secondItem="X2y-zR-o2k" secondAttribute="centerX" id="q5B-aV-YbQ"/>
                                     <constraint firstItem="8ae-JF-TVg" firstAttribute="centerX" secondItem="X2y-zR-o2k" secondAttribute="centerX" id="vQ0-1y-Pk6"/>
                                 </constraints>
