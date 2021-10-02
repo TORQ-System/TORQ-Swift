@@ -42,6 +42,15 @@ class loginViewController: UIViewController {
         present(vc, animated: true, completion: nil)
     }
     
+    func goToParamedicHome(){
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "paramedicHomeViewController") as! paramedicHomeViewController
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true, completion: nil)
+        
+    }
+    
+    
     func showALert(message:String){
         //show alert based on the message that is being paased as parameter
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
@@ -71,7 +80,24 @@ class loginViewController: UIViewController {
          }
         
         
-        //1- login functionality
+        //login if the credintaials belong to a SRCA center.
+        if email.text!.isParamedicUser {
+            // validate if it's correct credintials of the center.
+            Auth.auth().signIn(withEmail: email.text!, password: password.text!) { authResult, error in
+                
+                guard error == nil else {
+                    self.showALert(message: error!.localizedDescription)
+                    return
+                }
+                
+                self.goToParamedicHome()
+
+                
+            }
+        }
+        
+        
+        //1- login if the credintials belongs to a user.
         Auth.auth().signIn(withEmail: email.text!, password: password.text!) { authResult, error in
             guard error == nil else{
                 self.showALert(message: error!.localizedDescription)

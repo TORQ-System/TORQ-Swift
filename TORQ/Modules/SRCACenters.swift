@@ -1,8 +1,8 @@
-//
-//  SRCACenters.swift
-//  TORQ
-//
-//  Created by Noura Alsulayfih on 02/10/2021.
-//
-
 import Foundation
+struct SRCACenters {
+    
+    let almalqa: [String:String] = ["almalqa@srca.org.sa":"almalqa"]
+    let kingFahad: [String:String] = ["kingFahad@srca.org.sa":"kingFahad"]
+    
+    
+}
