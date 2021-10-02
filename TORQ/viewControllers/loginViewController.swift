@@ -18,6 +18,23 @@ class loginViewController: UIViewController {
     
     //MARK: - Functions
     
+    func validateFields()->[String: String]{
+        var errors = ["email":"", "password":""]
+        
+        //CASE-1: when the user leaves the email field empty
+        if email.text == nil || email.text == ""{
+            errors["email"] = "the email field can't be empty , try again"
+        }
+        
+        //CASE-1: when the user leaves the password field empty
+        if password.text == nil || password.text == ""{
+            errors["password"] = "the password field can't be empty , try again"
+        }
+    
+        return errors
+        
+    }
+    
     func goToUserHome(){
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "userHomeViewController") as! userHomeViewController
@@ -39,6 +56,19 @@ class loginViewController: UIViewController {
     @IBAction func loginpressed(_ sender: Any) {
         
         //1- fields validation:
+        let errors = validateFields()
+        
+        guard errors["email"] == "" else {
+            //handle the error
+            showALert(message: errors["email"]!)
+            return
+        }
+        
+        guard errors["password"] == "" else {
+             //handle the error
+             showALert(message: errors["password"]!)
+             return
+         }
         
         
         //1- login functionality
