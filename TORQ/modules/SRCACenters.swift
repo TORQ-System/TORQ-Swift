@@ -3,7 +3,7 @@ import Foundation
 
 class SCRACenters {
     
-    let  SRCACenters: [[String:Any]] = [
+    static let centers: [[String:Any]] = [
       [
         // 1-maseef
         "name": "maseef",
@@ -12,7 +12,7 @@ class SCRACenters {
       ],
       [
         // 2-malqa
-        "name": "malqa",
+        "name": "almalqa",
         "latitude": 24.813340812816,
         "longitude": 46.608601997063275,
       ],
@@ -174,8 +174,15 @@ class SCRACenters {
       ]
     ]
     
-    func getSRCAInfo(){
+    static func getSRCAInfo(name: String)-> [String: Any]{
         
+        for center in centers {
+            let centerName = center["name"] as! String
+            if centerName == name {
+                return center
+            }
+        }
+        return [String: Any]()
     }
     
 }
