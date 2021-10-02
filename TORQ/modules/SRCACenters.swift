@@ -3,15 +3,6 @@ import Foundation
 
 class SCRACenters {
     
-    let centers = [
-    
-       [
-        "":"",
-        "":24.0000,
-        "":24.000
-       ],
-    ]
-    
     let  SRCACenters: [[String:Any]] = [
       [
         // 1-maseef
@@ -181,5 +172,10 @@ class SCRACenters {
         "latitude": 24.62625068416492,
         "longitude": 46.70996480685846,
       ]
-    ];
+    ]
+    
+    func getSRCAInfo(){
+        
+    }
+    
 }
