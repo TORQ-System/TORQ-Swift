@@ -22,7 +22,6 @@
 		BEF975202707E0FE00325281 /* userHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9751F2707E0FE00325281 /* userHomeViewController.swift */; };
 		BEF975222707E27800325281 /* paramedicHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF975212707E27800325281 /* paramedicHomeViewController.swift */; };
 		BEF975252707E9EC00325281 /* stringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF975242707E9EC00325281 /* stringExtension.swift */; };
-		BEF975282707F6A600325281 /* SRCACenters.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF975272707F6A600325281 /* SRCACenters.swift */; };
 		FC4BF75E181535F7BB4C96B1 /* Pods_TORQTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D35DF5D9259C289028E18D8 /* Pods_TORQTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -72,7 +71,6 @@
 		BEF9751F2707E0FE00325281 /* userHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userHomeViewController.swift; sourceTree = "<group>"; };
 		BEF975212707E27800325281 /* paramedicHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = paramedicHomeViewController.swift; sourceTree = "<group>"; };
 		BEF975242707E9EC00325281 /* stringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = stringExtension.swift; sourceTree = "<group>"; };
-		BEF975272707F6A600325281 /* SRCACenters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SRCACenters.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,7 +149,6 @@
 		BEF974DC2707146300325281 /* TORQ */ = {
 			isa = PBXGroup;
 			children = (
-				BEF975262707F68400325281 /* Modules */,
 				BEF975232707E9B000325281 /* extensionsUtilites */,
 				BEF9751C2707E0DF00325281 /* viewControllers */,
 				BEF974DD2707146300325281 /* AppDelegate.swift */,
@@ -200,14 +197,6 @@
 				BEF975242707E9EC00325281 /* stringExtension.swift */,
 			);
 			path = extensionsUtilites;
-			sourceTree = "<group>";
-		};
-		BEF975262707F68400325281 /* Modules */ = {
-			isa = PBXGroup;
-			children = (
-				BEF975272707F6A600325281 /* SRCACenters.swift */,
-			);
-			path = Modules;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -450,7 +439,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BEF975252707E9EC00325281 /* stringExtension.swift in Sources */,
-				BEF975282707F6A600325281 /* SRCACenters.swift in Sources */,
 				BEF9751E2707E0F700325281 /* loginViewController.swift in Sources */,
 				BEF974E22707146300325281 /* ViewController.swift in Sources */,
 				BEF975222707E27800325281 /* paramedicHomeViewController.swift in Sources */,

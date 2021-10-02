@@ -11,7 +11,7 @@
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="loginViewController" customModule="TORQ" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="loginViewcontroller" id="BYZ-38-t0r" customClass="loginViewController" customModule="TORQ" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -109,6 +109,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yfE-Hq-Gdt">
                                 <rect key="frame" x="185" y="488.5" width="44" height="30"/>
                                 <state key="normal" title="logout"/>
+                                <connections>
+                                    <action selector="logoutPressed:" destination="3PH-ZS-d2q" eventType="touchUpInside" id="eOk-lo-wdB"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="C1Q-Za-bba"/>

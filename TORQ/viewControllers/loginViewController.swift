@@ -91,9 +91,8 @@ class loginViewController: UIViewController {
                 }
                 
                 self.goToParamedicHome()
-
-                
             }
+            return
         }
         
         
