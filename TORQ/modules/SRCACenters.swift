@@ -1,5 +1,5 @@
 import Foundation
-
+import CoreLocation
 
 class SCRACenters {
     
@@ -184,5 +184,26 @@ class SCRACenters {
         }
         return [String: Any]()
     }
+    
+    static func getNearest(accidentLoacation: [String:Double]) -> [String: Any]{
+        
+        let accidentLoc = CLLocation(latitude: accidentLoacation["latitude"]!, longitude: accidentLoacation["longitude"]!)
+        var nearest: [String: Any] = [:]
+        var minDistance: CLLocationDistance?
+        
+        for center in centers {
+            let centerLocation = CLLocation(latitude: center["latitude"] as! CLLocationDegrees, longitude: center["longitude"] as! CLLocationDegrees)
+            let distance = centerLocation.distance(from: accidentLoc)
+            if minDistance == nil || distance < minDistance! {
+              nearest = center
+              minDistance = distance
+          }
+        }
+        
+        return nearest
+        
+    }
+    
+    
     
 }
