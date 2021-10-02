@@ -16,15 +16,15 @@ extension String {
    }
     
    var isValidPhone: Bool {
-      // validate the domain of the email address:
-      let regxForPhone = "^\\[05]-\\d{4}-\\d{4}$"
+      // validate the phone format:
+      let regxForPhone = "^(0|05|05[0-9]{1,9})$"
       let phoneTest = NSPredicate(format:"SELF MATCHES %@", regxForPhone)
       return phoneTest.evaluate(with: self)
    }
     
     var isValidPassword: Bool {
-       // validate the domain of the email address:
-       let regxForPassword = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z]).{8,}$"
+       // validate the password format:
+       let regxForPassword = "^(?=.*[a-z])(?=.*[0-9])(?=.*[A-Z]).{8,}$"
        let passwordText = NSPredicate(format:"SELF MATCHES %@", regxForPassword)
        return passwordText.evaluate(with: self)
     }
@@ -35,10 +35,11 @@ extension String {
         let domainTest = self[domainRange.upperBound...]
         return !domainTest.elementsEqual("srca.org.sa")
     }
+    
+    var isValidNationalID: Bool {
+        // validate the nationalID format:
+        let digitsCharacters = CharacterSet.decimalDigits
+        return (CharacterSet(charactersIn: self).isSubset(of: digitsCharacters) && self[self.startIndex] == "1" && self.count == 10)
+    }
 }
 
-
-//if let range = snippet.range(of: "Phone: ") {
-//    let phone = snippet[range.upperBound...]
-//    print(phone) // prints "123.456.7891"
-//}

@@ -100,41 +100,37 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="drs-uX-HyJ">
-                                <rect key="frame" x="50" y="253" width="314" height="390"/>
+                                <rect key="frame" x="50" y="348" width="314" height="200.5"/>
                                 <subviews>
-                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" translatesAutoresizingMaskIntoConstraints="NO" id="3nL-J5-iLB">
-                                        <rect key="frame" x="0.0" y="0.0" width="314" height="216"/>
-                                        <date key="minimumDate" timeIntervalSinceReferenceDate="-1609419600">
-                                            <!--1950-01-01 11:00:00 +0000-->
-                                        </date>
-                                        <date key="maximumDate" timeIntervalSinceReferenceDate="94561200">
-                                            <!--2003-12-31 11:00:00 +0000-->
-                                        </date>
-                                    </datePicker>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="National ID" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="07J-bA-k0H">
+                                        <rect key="frame" x="0.0" y="0.0" width="314" height="26.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="date of birth" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DxI-c0-Ysi">
+                                        <rect key="frame" x="0.0" y="56.5" width="314" height="26.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Phone" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AFl-WM-cCo">
+                                        <rect key="frame" x="0.0" y="113" width="314" height="26.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="phonePad" textContentType="tel"/>
+                                    </textField>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ccv-9j-UDj">
-                                        <rect key="frame" x="0.0" y="246" width="314" height="32"/>
+                                        <rect key="frame" x="0.0" y="169.5" width="314" height="32"/>
                                         <segments>
                                             <segment title="Female"/>
                                             <segment title="Male"/>
                                         </segments>
                                     </segmentedControl>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="National ID" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="07J-bA-k0H">
-                                        <rect key="frame" x="0.0" y="307" width="314" height="26.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Phone" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AFl-WM-cCo">
-                                        <rect key="frame" x="0.0" y="363.5" width="314" height="26.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="phonePad" textContentType="tel"/>
-                                    </textField>
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KPZ-YG-2i7">
-                                <rect key="frame" x="181" y="713" width="52" height="30"/>
+                                <rect key="frame" x="181" y="618.5" width="52" height="30"/>
                                 <state key="normal" title="Sign up"/>
                                 <connections>
-                                    <action selector="goToThirdScreen:" destination="Wwq-9K-buX" eventType="touchUpInside" id="848-4d-g0J"/>
+                                    <action selector="goToHomeScreen:" destination="Wwq-9K-buX" eventType="touchUpInside" id="0Vl-9d-tu3"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -150,7 +146,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="date" destination="3nL-J5-iLB" id="aH8-Mx-QCJ"/>
+                        <outlet property="date" destination="DxI-c0-Ysi" id="0oX-kx-vh0"/>
                         <outlet property="gender" destination="ccv-9j-UDj" id="RoP-9a-UMh"/>
                         <outlet property="nationalID" destination="07J-bA-k0H" id="gW2-zN-QUQ"/>
                         <outlet property="phone" destination="AFl-WM-cCo" id="nqi-oE-4Pf"/>

@@ -45,8 +45,8 @@ class signUpFirstViewController: UIViewController {
             }
         
         //CASE-4: This case validate if the user enters empty or nil or an invalid password that has not fulfilled the conditions ( Not less than 8 charecters & has capital letter &  ).
-            if password.text == nil || password.text == "" {
-                error["password"] = "Please enter a valid password (Not less than 8 charecters & has capital and small letters and a number ))"
+        if password.text == nil || password.text == "" || !password.text!.isValidPassword {
+                error["password"] = "Please enter a valid password (Not less than 8 charecters & has capital and small letters ))"
             }
 
         return error
