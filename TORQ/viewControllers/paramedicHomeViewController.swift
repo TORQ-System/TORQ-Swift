@@ -13,7 +13,6 @@ class paramedicHomeViewController: UIViewController {
     //MARK: - Overriden funtions
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
     
     //MARK: - Functions
