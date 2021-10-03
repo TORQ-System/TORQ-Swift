@@ -47,9 +47,10 @@ extension requestsViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "requestCell", for: indexPath) as! requestCollectionViewCell
         cell.backgroundColor = .darkGray
-        cell.date.text = requests[indexPath.row].getDate()
-        cell.time.text = requests[indexPath.row].getTime()
-        cell.name.text = "Noura Alsulayfih"
+        cell.layer.masksToBounds = true;
+        cell.layer.cornerRadius = 20
+        cell.dateTime.text = "\(requests[indexPath.row].getDate())   \(requests[indexPath.row].getTime())"
+        cell.status.text = "\(requests[indexPath.row].getStatus())"
         return cell
     }
     
