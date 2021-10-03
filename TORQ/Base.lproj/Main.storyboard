@@ -121,8 +121,8 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="352" height="119"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4Fk-It-VZ1">
-                                                            <rect key="frame" x="10" y="10" width="100" height="99"/>
+                                                        <imageView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mappin.and.ellipse" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="4Fk-It-VZ1">
+                                                            <rect key="frame" x="10" y="9.5" width="100" height="99.5"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="100" id="6Fe-5M-Rct"/>
                                                                 <constraint firstAttribute="height" constant="100" id="8v1-jg-kaJ"/>
@@ -144,7 +144,7 @@
                                                                 <constraint firstAttribute="width" secondItem="Dsi-Xd-e4X" secondAttribute="height" multiplier="77:15" id="2dW-e7-Awt"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                            <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B9P-KO-xF6">
@@ -205,7 +205,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Active Requests" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7yg-Fc-hED">
                                 <rect key="frame" x="50" y="223" width="220.5" height="36"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="30"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" red="0.093804882219999997" green="0.093351718540000003" blue="0.094258045910000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -220,6 +220,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="containerView" destination="DIz-qx-ywn" id="p7O-kD-Tqb"/>
                         <outlet property="requestsColletionView" destination="Zou-f7-N6K" id="xOc-Sc-zdR"/>
                     </connections>
                 </viewController>
@@ -230,6 +231,7 @@
     </scenes>
     <resources>
         <image name="arrow.right" catalog="system" width="128" height="98"/>
+        <image name="mappin.and.ellipse" catalog="system" width="118" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

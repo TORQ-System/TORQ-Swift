@@ -5,6 +5,7 @@ class requestsViewController: UIViewController {
     
     //MARK: - @IBOutlets
     @IBOutlet weak var requestsColletionView: UICollectionView!
+    @IBOutlet weak var containerView: UIView!
     
     //MARK: - Variables
     var ref = Database.database().reference()
@@ -15,6 +16,8 @@ class requestsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         getRequests()
+        containerView.layer.cornerRadius = 70
+        containerView.layer.maskedCorners = [.layerMinXMinYCorner]
     }
     
     //MARK: - Functions
@@ -46,7 +49,8 @@ extension requestsViewController: UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "requestCell", for: indexPath) as! requestCollectionViewCell
-        cell.backgroundColor = .darkGray
+        cell.layer.borderColor = CGColor(red: 0, green: 0, blue: 0, alpha: 1)
+        cell.layer.borderWidth = 2
         cell.layer.masksToBounds = true;
         cell.layer.cornerRadius = 20
         cell.dateTime.text = "\(requests[indexPath.row].getDate())   \(requests[indexPath.row].getTime())"
@@ -60,7 +64,7 @@ extension requestsViewController: UICollectionViewDataSource{
 extension requestsViewController: UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 414, height: 185)
+        return CGSize(width: collectionView.frame.width, height: 185)
     }
     
 }
