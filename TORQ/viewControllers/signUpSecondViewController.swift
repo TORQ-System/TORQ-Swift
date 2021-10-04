@@ -34,6 +34,7 @@ class signUpSecondViewController: UIViewController {
         super.viewDidLoad()
         setupDatePickerView()
         
+
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         self.view!.addGestureRecognizer(tap)
         
