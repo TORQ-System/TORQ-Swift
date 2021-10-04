@@ -16,15 +16,14 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         locationManager.delegate = self
-        locationManager.allowsBackgroundLocationUpdates = true
-        locationManager.showsBackgroundLocationIndicator = true
+//        locationManager.allowsBackgroundLocationUpdates = true
+//        locationManager.showsBackgroundLocationIndicator = true
         guard CLLocationManager.locationServicesEnabled() else {
             //show alert.
             self.showALert(message: "the location services isn't enabled")
             return
         }
         locationManager.requestAlwaysAuthorization()
-        
         
     }
     
@@ -49,17 +48,20 @@ extension ViewController: CLLocationManagerDelegate{
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         
-        let status = manager.authorizationStatus
+        let status = CLLocationManager.authorizationStatus()
         switch status {
         
         case .authorizedAlways:
             print("authorizedAlways")
+            locationManager.startUpdatingLocation()
             
         case .authorizedWhenInUse:
             print("authorizedWhenInUse")
-
+            locationManager.startUpdatingLocation()
+            
         case .denied:
             print("denied")
+             showALert(message: "Location access is needed to get your current location")
 
         case .notDetermined:
             print("notDetermined")
