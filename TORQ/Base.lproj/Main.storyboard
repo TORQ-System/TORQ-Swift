@@ -166,6 +166,7 @@
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tJu-fl-1GE">
                                         <rect key="frame" x="0.0" y="0.0" width="354" height="34"/>
+                                        <color key="textColor" red="0.97418779129999999" green="0.66629880669999997" blue="0.34109103680000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <connections>
@@ -174,8 +175,9 @@
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EA7-OC-8aN">
                                         <rect key="frame" x="0.0" y="56" width="354" height="34"/>
+                                        <color key="textColor" red="0.97418779129999999" green="0.66629880669999997" blue="0.34109103680000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                         <connections>
                                             <outlet property="delegate" destination="QN9-Ls-Crk" id="RY6-xe-Akn"/>
                                         </connections>
@@ -190,6 +192,9 @@
                                 </constraints>
                                 <color key="tintColor" red="0.97418779129999999" green="0.66629880669999997" blue="0.34109103680000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" image="arrow.right" catalog="system"/>
+                                <connections>
+                                    <action selector="loginpressed:" destination="QN9-Ls-Crk" eventType="touchUpInside" id="Rm1-yZ-58I"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r2f-qo-OCo">
                                 <rect key="frame" x="68.5" y="762" width="277" height="30"/>
@@ -415,7 +420,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9d1-Gz-VCj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1536" y="737"/>
+            <point key="canvasLocation" x="1483" y="737"/>
         </scene>
         <!--Paramedic Home View Controller-->
         <scene sceneID="9b7-6h-CPb">

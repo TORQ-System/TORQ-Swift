@@ -32,7 +32,7 @@ class userHomeViewController: UIViewController {
     
     func goToLoginScreen(){
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "loginViewcontroller") as! loginViewController
+        let vc = storyboard.instantiateViewController(withIdentifier: "loginViewController") as! loginViewController
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
     }
