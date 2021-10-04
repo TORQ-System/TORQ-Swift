@@ -49,6 +49,28 @@ extension ViewController: CLLocationManagerDelegate{
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         
+        let status = manager.authorizationStatus
+        switch status {
+        
+        case .authorizedAlways:
+            print("authorizedAlways")
+            
+        case .authorizedWhenInUse:
+            print("authorizedWhenInUse")
+
+        case .denied:
+            print("denied")
+
+        case .notDetermined:
+            print("notDetermined")
+
+        case .restricted:
+            print("restricted")
+            
+        default:
+            print("unknown")
+        }
+        
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
