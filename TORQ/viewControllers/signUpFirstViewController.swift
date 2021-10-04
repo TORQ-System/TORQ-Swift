@@ -11,6 +11,7 @@ class signUpFirstViewController: UIViewController {
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var password: UITextField!
     @IBOutlet weak var nextbutton: UIButton!
+    @IBOutlet weak var containerView: UIView!
     
     //MARK: - Variables
     var userFirstName: String?
@@ -22,8 +23,8 @@ class signUpFirstViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        let tap = self.view.addGestureRecognizer(UIGestureRecognizer(target: self, action: #selector(hideKeyboard)))
+
+
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         self.view!.addGestureRecognizer(tap)
         
@@ -46,7 +47,7 @@ class signUpFirstViewController: UIViewController {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue{
             let keyboardHieght = keyboardFrame.cgRectValue.height
             let bottomSpace = self.view.frame.height - (self.nextbutton.frame.origin.y + nextbutton.frame.height)
-            self.view.frame.origin.y -= keyboardHieght - bottomSpace + 10
+            self.view.frame.origin.y -= keyboardHieght - bottomSpace
             
         }
         

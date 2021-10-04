@@ -14,6 +14,7 @@ class signUpSecondViewController: UIViewController {
     @IBOutlet weak var gender: UISegmentedControl!
     @IBOutlet weak var nationalID: UITextField!
     @IBOutlet weak var phone: UITextField!
+    @IBOutlet weak var nextButton: UIButton!
     
     //MARK: - Variables
     var ref = Database.database().reference()
@@ -33,9 +34,43 @@ class signUpSecondViewController: UIViewController {
         super.viewDidLoad()
         setupDatePickerView()
         
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        self.view!.addGestureRecognizer(tap)
+        
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardwillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
     }
     
     //MARK: - Functions
+    
+    
+    @objc func hideKeyboard(){
+        self.view.endEditing(true)
+        
+    }
+    
+    @objc func keyboardwillShow(notification: NSNotification){
+        
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue{
+            let keyboardHieght = keyboardFrame.cgRectValue.height
+            let bottomSpace = self.view.frame.height - (self.nextButton.frame.origin.y + nextButton.frame.height)
+            self.view.frame.origin.y -= keyboardHieght - bottomSpace
+            
+        }
+        
+    }
+    
+    @objc func keyboardWillHide(){
+        self.view.frame.origin.y = 0
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
     
     func validateFields() -> [String: String] {
         var errors = ["nationalID":"", "phone":""]
@@ -102,6 +137,9 @@ class signUpSecondViewController: UIViewController {
     
     
     //MARK: - @IBActions
+    @IBAction func back(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
     
     @IBAction func goToHomeScreen(_ sender: Any) {
         
@@ -168,3 +206,9 @@ class signUpSecondViewController: UIViewController {
 }
 
 //MARK: - Extensions
+
+extension signUpSecondViewController: UITextFieldDelegate{
+    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        return range.location < 10
+    }
+}
