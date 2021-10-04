@@ -20,6 +20,7 @@
 		BEF9750E2707153E00325281 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BEF9750D2707153E00325281 /* GoogleService-Info.plist */; };
 		BEF9752F2708F09900325281 /* requestCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9752E2708F09900325281 /* requestCollectionViewCell.swift */; };
 		BEF975332709DAD600325281 /* request.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF975322709DAD600325281 /* request.swift */; };
+		BEF97535270A44B400325281 /* viewLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF97534270A44B400325281 /* viewLocationViewController.swift */; };
 		FC4BF75E181535F7BB4C96B1 /* Pods_TORQTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D35DF5D9259C289028E18D8 /* Pods_TORQTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -67,6 +68,7 @@
 		BEF9750D2707153E00325281 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BEF9752E2708F09900325281 /* requestCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = requestCollectionViewCell.swift; sourceTree = "<group>"; };
 		BEF975322709DAD600325281 /* request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = request.swift; sourceTree = "<group>"; };
+		BEF97534270A44B400325281 /* viewLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewLocationViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -189,6 +191,7 @@
 			isa = PBXGroup;
 			children = (
 				BEF974E12707146300325281 /* requestsViewController.swift */,
+				BEF97534270A44B400325281 /* viewLocationViewController.swift */,
 			);
 			path = viewController;
 			sourceTree = "<group>";
@@ -440,6 +443,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEF97535270A44B400325281 /* viewLocationViewController.swift in Sources */,
 				BEF974E22707146300325281 /* requestsViewController.swift in Sources */,
 				BEF974DE2707146300325281 /* AppDelegate.swift in Sources */,
 				BEF9752F2708F09900325281 /* requestCollectionViewCell.swift in Sources */,

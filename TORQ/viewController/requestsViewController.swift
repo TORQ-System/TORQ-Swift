@@ -40,6 +40,15 @@ class requestsViewController: UIViewController {
 //MARK: - Extension
 extension requestsViewController: UICollectionViewDelegate{
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(identifier: "viewLocation") as! viewLocationViewController
+        vc.latitude = requests[indexPath.row].getLatitude()
+        vc.longitude = requests[indexPath.row].getLongitude()
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
+    }
+    
 }
 
 extension requestsViewController: UICollectionViewDataSource{
@@ -54,7 +63,11 @@ extension requestsViewController: UICollectionViewDataSource{
         cell.layer.masksToBounds = true;
         cell.layer.cornerRadius = 20
         cell.dateTime.text = "\(requests[indexPath.row].getDate())   \(requests[indexPath.row].getTime())"
-        cell.status.text = "\(requests[indexPath.row].getStatus())"
+        var state = "Processed"
+        if requests[indexPath.row].getStatus() == 0 {
+            state = "Active"
+        }
+        cell.status.text = "status: \(state)"
         return cell
     }
     
