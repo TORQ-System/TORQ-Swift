@@ -26,21 +26,33 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="314" height="26.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" textContentType="given-name"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="2XM-jo-eNb" id="aa2-FY-JuM"/>
+                                                </connections>
                                             </textField>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Last Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3pD-lf-J6V">
                                                 <rect key="frame" x="0.0" y="56.5" width="314" height="26.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" textContentType="family-name"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="2XM-jo-eNb" id="s3b-Sv-WlD"/>
+                                                </connections>
                                             </textField>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="e6S-zc-JVJ">
                                                 <rect key="frame" x="0.0" y="113" width="314" height="26.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress" textContentType="email"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="2XM-jo-eNb" id="xbQ-M1-ctP"/>
+                                                </connections>
                                             </textField>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="637-NX-1ve">
                                                 <rect key="frame" x="0.0" y="169.5" width="314" height="26.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" textContentType="password"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="2XM-jo-eNb" id="6Yv-QF-NLN"/>
+                                                </connections>
                                             </textField>
                                         </subviews>
                                     </stackView>
@@ -84,6 +96,7 @@
                         <outlet property="email" destination="e6S-zc-JVJ" id="TXW-CC-7Wc"/>
                         <outlet property="firstName" destination="gbL-Fh-ryV" id="Grl-xp-FrB"/>
                         <outlet property="lastName" destination="3pD-lf-J6V" id="4M8-cc-wsa"/>
+                        <outlet property="nextbutton" destination="mfD-Ib-bV6" id="tUH-4g-2es"/>
                         <outlet property="password" destination="637-NX-1ve" id="bow-V1-jnp"/>
                     </connections>
                 </viewController>
