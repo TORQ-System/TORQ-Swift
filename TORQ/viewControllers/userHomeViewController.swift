@@ -3,6 +3,8 @@ import FirebaseAuth
 
 class userHomeViewController: UIViewController {
     
+        
+
     //MARK: - Variables
     var userEmail: String?
     var userID: String?
@@ -12,9 +14,14 @@ class userHomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+    
+        
+        
     }
     
     //MARK: - Functions
+    
     func showALert(message:String){
         //show alert based on the message that is being paased as parameter
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)

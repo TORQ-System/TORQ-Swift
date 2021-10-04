@@ -6,17 +6,52 @@ class loginViewController: UIViewController {
     //MARK:- @IBOutlets
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var password: UITextField!
+    @IBOutlet weak var nextbutton: UIButton!
     
     //MARK: - Vraibales
     
     //MARK: - Overriden Functions
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        self.view!.addGestureRecognizer(tap)
+        
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardwillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
 
     }
     
     
     //MARK: - Functions
+    
+    @objc func hideKeyboard(){
+        self.view.endEditing(true)
+        
+    }
+    
+    @objc func keyboardwillShow(notification: NSNotification){
+        
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue{
+            let keyboardHieght = keyboardFrame.cgRectValue.height
+            let bottomSpace = self.view.frame.height - (self.nextbutton.frame.origin.y + nextbutton.frame.height)
+            self.view.frame.origin.y -= keyboardHieght - bottomSpace
+            
+        }
+        
+    }
+    
+    @objc func keyboardWillHide(){
+        self.view.frame.origin.y = 0
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
     
     func validateFields()->[String: String]{
         var errors = ["email":"", "password":""]
