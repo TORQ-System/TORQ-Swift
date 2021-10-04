@@ -16,8 +16,8 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         locationManager.delegate = self
-//        locationManager.allowsBackgroundLocationUpdates = true
-//        locationManager.showsBackgroundLocationIndicator = true
+        locationManager.allowsBackgroundLocationUpdates = true
+        locationManager.showsBackgroundLocationIndicator = true
         guard CLLocationManager.locationServicesEnabled() else {
             //show alert.
             self.showALert(message: "the location services isn't enabled")
