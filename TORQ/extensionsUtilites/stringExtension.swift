@@ -41,5 +41,17 @@ extension String {
         let digitsCharacters = CharacterSet.decimalDigits
         return (CharacterSet(charactersIn: self).isSubset(of: digitsCharacters) && self[self.startIndex] == "1" && self.count == 10)
     }
+    
+    var isParamedicUser: Bool{
+        let domainRange = self.range(of: "@")!
+        let domainTest = self[domainRange.upperBound...]
+        return domainTest.elementsEqual("srca.org.sa")
+    }
+    
+    var isValidParamedicPassword: Bool{
+        let domainRange = self.range(of: "@")!
+        let domainTest = self[...domainRange.lowerBound]
+        return domainTest.elementsEqual("srca.org.sa")
+    }
 }
 
