@@ -77,17 +77,23 @@ class signUpSecondViewController: UIViewController {
         var errors = ["nationalID":"", "phone":""]
         
         //CASE-1: This case validate if the user enters empty or nil or a nationalID that has chracters.
-        if nationalID.text == nil || nationalID.text == "" ||  !nationalID.text!.isValidNationalID {
-            errors["nationalID"] = "Invalid National ID, note that you can't enter numbers nor exceed the limit of 10 digits also it should start with 1"
+        if nationalID.text == nil || nationalID.text == ""{
+            errors["nationalID"] = "National ID cannot be empty"
         }
-        
+        else if !nationalID.text!.isValidNationalID{
+            errors["nationalID"] = "Invalid National ID"
+        }
+      
         //CASE-2: date of birth
         //no validation is needed
         
         
         //CASE-3: This case validate if the user enters empty or nil or a nationalID that has chracters.
-        if phone.text == nil || phone.text == "" ||  !phone.text!.isValidPhone {
-            errors["phone"] = "Invalid phone number, note that you can't enter characters nor exceed the limit of 10 digits also it should start with 05"
+        if phone.text == nil || phone.text == "" {
+            errors["phone"] = "Phone number cannot be empty"
+        }
+        else if !phone.text!.isValidPhone {
+            errors["phone"] = "Invalid phone number"
         }
         
         //CASE-4: gender
@@ -188,19 +194,15 @@ class signUpSecondViewController: UIViewController {
         Auth.auth().createUser(withEmail: userEmail, password: userPassword) { Result, error in
             
             guard error == nil else{
-                print(error!)
+                self.showALert(message: error!.localizedDescription)
                 return
             }
             
             let id = Result!.user.uid
             print(id)
             self.ref.child("User").child(id).setValue(user)
+            self.goToHomeScreen()
         }
-        
-        
-        goToHomeScreen()
-                
-        
         
     }
     

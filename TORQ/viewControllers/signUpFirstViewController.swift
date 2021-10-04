@@ -68,12 +68,12 @@ class signUpFirstViewController: UIViewController {
         
         //CASE-1: This case validate if the user enters empty or nil or a first name that is less tha two charecters.
             if firstName.text == nil || firstName.text == "" || firstName.text!.count < 2{
-                error["firstName"] = "First Name must be grater than two characters, please enter a valid name"
+                error["firstName"] = "First Name must be grater than two characters"
             }
         
         //CASE-2: This case validate if the user enters empty or nil or a last name that is less tha two charecters.
             if lastName.text == nil || lastName.text == "" || lastName.text!.count < 2{
-                error["lastName"] = "Last Name must be grater than two characters, please enter a valid name"
+                error["lastName"] = "Last Name must be grater than two characters"
             }
         
         //CASE-3: This case validate if the user enters empty or nil or an invalid email address or if it restricted ( has the same domain as the paramedics "@srca.org.sa" )
@@ -83,7 +83,7 @@ class signUpFirstViewController: UIViewController {
         
         //CASE-4: This case validate if the user enters empty or nil or an invalid password that has not fulfilled the conditions ( Not less than 8 charecters & has capital letter &  ).
         if password.text == nil || password.text == "" || !password.text!.isValidPassword {
-                error["password"] = "Please enter a valid password (Not less than 8 charecters & has capital and small letters ))"
+                error["password"] = "Please enter a valid password (Not less than 8 charecters & with capital and small letters)"
             }
 
         return error
