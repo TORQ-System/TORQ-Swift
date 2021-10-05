@@ -1,5 +1,6 @@
 import UIKit
 import CoreLocation
+import FirebaseDatabase
 
 class ViewController: UIViewController {
     
@@ -8,6 +9,8 @@ class ViewController: UIViewController {
     
     //MARK: - @Variables
     let locationManager = CLLocationManager()
+    let ref = Database.database().reference()
+    let uID = "cj5oOVZ8Rrbzw3rqhKRsvLIWgZV2"
     
     
     //MARK: - Overriden Functions
@@ -76,7 +79,15 @@ extension ViewController: CLLocationManagerDelegate{
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print(locations)
+        let longitude = locations.last?.coordinate.longitude
+        let latitude = locations.last?.coordinate.latitude
+        let time = locations.last?.timestamp
+        print("longitude: \(String(describing: longitude!))")
+        print("latitude: \(String(describing: latitude!))")
+        print("time: \(String(describing: time!))")
+        ref.child("Sensor").child("Sensor1/longitude").setValue((String(describing: longitude!)))
+        ref.child("Sensor").child("Sensor1/latitude").setValue((String(describing: latitude!)))
+        ref.child("Sensor").child("Sensor1/time").setValue((String(describing: time!)))
     }
     
 }
