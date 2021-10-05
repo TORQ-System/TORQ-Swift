@@ -19,7 +19,7 @@ extension String {
       // validate the phone format:
       let regxForPhone = "^(0|05|05[0-9]{1,9})$"
       let phoneTest = NSPredicate(format:"SELF MATCHES %@", regxForPhone)
-      return phoneTest.evaluate(with: self)
+       return phoneTest.evaluate(with: self) && (self.count == 10)
    }
     
     var isValidPassword: Bool {
@@ -45,6 +45,6 @@ extension String {
         let domainTest = self[domainRange.upperBound...]
         return domainTest.elementsEqual("srca.org.sa")
     }
-
+    
 }
 

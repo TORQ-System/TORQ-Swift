@@ -58,17 +58,17 @@ class loginViewController: UIViewController {
         
         //CASE-1: when the user leaves the email field empty
         if email.text == nil || email.text == "" {
-            errors["email"] = "the email field can't be empty , try again"
+            errors["email"] = "Email cannot be empty"
         }
         
         //CASE-2: when the user leaves the password field empty or invalid
         if password.text == nil || password.text == "" || !password.text!.isValidPassword{
-            errors["password"] = "the password field can't be empty or less than 6 charachters , try again"
+            errors["password"] = "Password cannot be empty"
         }
         
         //CASE-3: when the user enters an invalid email
         if !email.text!.isValidEmail{
-            errors["email"] = "the email you entered is invalid , try again"
+            errors["email"] = "Email is invalid"
         }
        
         return errors

@@ -85,7 +85,6 @@ class signUpSecondViewController: UIViewController {
         }
       
         //CASE-2: date of birth
-        //no validation is needed
         
         
         //CASE-3: This case validate if the user enters empty or nil or a nationalID that has chracters.
@@ -151,13 +150,13 @@ class signUpSecondViewController: UIViewController {
     @IBAction func goToHomeScreen(_ sender: Any) {
         
         let errors = validateFields()
-        // if the first name has an error
+        // if national id has an error
         guard errors["nationalID"] == "" else {
             //handle the error
             showALert(message: errors["nationalID"]!)
             return
         }
-        // if the last name has an error
+        // if phone number has an error
         guard errors["phone"] == "" else {
             //handle the error
             showALert(message: errors["phone"]!)
@@ -192,7 +191,7 @@ class signUpSecondViewController: UIViewController {
         
         // write the user to firebase auth and realtime database.
         Auth.auth().createUser(withEmail: userEmail, password: userPassword) { Result, error in
-            
+            // need to specify the error with message
             guard error == nil else{
                 self.showALert(message: error!.localizedDescription)
                 return
