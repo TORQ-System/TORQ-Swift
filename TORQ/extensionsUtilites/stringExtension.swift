@@ -24,9 +24,7 @@ extension String {
     
     var isValidPassword: Bool {
        // validate the password format:
-       let regxForPassword = "^(?=.*[a-z])(?=.*[0-9])(?=.*[A-Z]).{8,}$"
-       let passwordText = NSPredicate(format:"SELF MATCHES %@", regxForPassword)
-       return passwordText.evaluate(with: self)
+        return self.count >= 6
     }
     
     var isValidDomain: Bool {
@@ -47,11 +45,6 @@ extension String {
         let domainTest = self[domainRange.upperBound...]
         return domainTest.elementsEqual("srca.org.sa")
     }
-    
-    var isValidParamedicPassword: Bool{
-        let domainRange = self.range(of: "@")!
-        let domainTest = self[...domainRange.lowerBound]
-        return domainTest.elementsEqual("srca.org.sa")
-    }
+
 }
 
