@@ -137,7 +137,7 @@ class signUpSecondViewController: UIViewController {
     
     func goToHomeScreen() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
+        let vc = storyboard.instantiateViewController(withIdentifier: "userHomeViewController") as! userHomeViewController
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
     }
