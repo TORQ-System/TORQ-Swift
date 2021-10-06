@@ -82,9 +82,9 @@ extension ViewController: CLLocationManagerDelegate{
         let longitude = locations.last?.coordinate.longitude
         let latitude = locations.last?.coordinate.latitude
         let time = locations.last?.timestamp
-        print("longitude: \(String(describing: longitude!))")
-        print("latitude: \(String(describing: latitude!))")
-        print("time: \(String(describing: time!))")
+//        print("longitude: \(String(describing: longitude!))")
+//        print("latitude: \(String(describing: latitude!))")
+//        print("time: \(String(describing: time!))")
         ref.child("Sensor").child("Sensor1/longitude").setValue((String(describing: longitude!)))
         ref.child("Sensor").child("Sensor1/latitude").setValue((String(describing: latitude!)))
         ref.child("Sensor").child("Sensor1/time").setValue((String(describing: time!)))
