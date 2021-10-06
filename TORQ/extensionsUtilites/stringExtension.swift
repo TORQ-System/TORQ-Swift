@@ -21,7 +21,13 @@ extension String {
       let phoneTest = NSPredicate(format:"SELF MATCHES %@", regxForPhone)
        return phoneTest.evaluate(with: self) && (self.count == 10)
    }
-    
+    var isValidName: Bool{
+        // Validate Name
+        let regxName = "^[a-zA-Z]+$"
+        let nameTest = NSPredicate(format: "SELF MATCHES %@", regxName)
+        return nameTest.evaluate(with: self)
+    }
+ 
     var isValidPassword: Bool {
        // validate the password format:
         return self.count >= 6
