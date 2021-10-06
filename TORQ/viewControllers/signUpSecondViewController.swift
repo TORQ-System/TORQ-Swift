@@ -163,6 +163,7 @@ class signUpSecondViewController: UIViewController {
             return
         }
         
+       
         //2- caching the first sign up screen information
         let genderType = gender.selectedSegmentIndex
         if genderType == 0 {
@@ -174,6 +175,11 @@ class signUpSecondViewController: UIViewController {
         userNationalID = nationalID.text
         userPhone = phone.text
         
+        guard userDate != "" else {
+            //handle the error
+            showALert(message: "Date cannot be empty")
+            return
+        }
         //3- create user info
         
         let user: [String: Any] = [
@@ -219,7 +225,6 @@ class signUpSecondViewController: UIViewController {
 }
 
 //MARK: - Extensions
-
 extension signUpSecondViewController: UITextFieldDelegate{
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         return range.location < 10
