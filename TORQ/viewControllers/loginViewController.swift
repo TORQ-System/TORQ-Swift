@@ -2,7 +2,7 @@ import UIKit
 import FirebaseAuth
 
 class loginViewController: UIViewController {
-
+    
     //MARK:- @IBOutlets
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var password: UITextField!
@@ -22,7 +22,7 @@ class loginViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
-
+        
     }
     
     
@@ -56,21 +56,18 @@ class loginViewController: UIViewController {
     func validateFields()->[String: String]{
         var errors = ["email":"", "password":""]
         
-        //CASE-1: when the user leaves the email field empty
-        if email.text == nil || email.text == "" {
-            errors["email"] = "Email cannot be empty"
-        }
-        
-        //CASE-2: when the user leaves the password field empty or invalid
-        if password.text == nil || password.text == "" || !password.text!.isValidPassword{
-            errors["password"] = "Password cannot be empty"
-        }
-        
-        //CASE-3: when the user enters an invalid email
         if !email.text!.isValidEmail{
             errors["email"] = "Email is invalid"
         }
-       
+        
+        if !password.text!.isValidPassword{
+            errors["password"] = "Password is invalid"
+        }
+        
+        if email.text == nil || email.text == "" || password.text == nil || password.text == ""  {
+            errors["email"] = "Fields cannot be empty"
+        }
+        
         return errors
         
     }
@@ -114,23 +111,31 @@ class loginViewController: UIViewController {
         }
         
         guard errors["password"] == "" else {
-             //handle the error
-             showALert(message: errors["password"]!)
-             return
-         }
+            //handle the error
+            showALert(message: errors["password"]!)
+            return
+        }
         
         
         //login if the credintaials belong to a SRCA center.
         if email.text!.isParamedicUser {
             // validate if it's correct credintials of the center.
             Auth.auth().signIn(withEmail: email.text!, password: password.text!) { authResult, error in
-                
-                guard error == nil else {
-                    self.showALert(message: error!.localizedDescription)
-                    return
+                if error != nil {
+                    if let errCode = AuthErrorCode(rawValue: error!._code) {
+                        switch errCode {
+                        case .invalidEmail:
+                            self.showALert(message: "invalid email")
+                        case .wrongPassword:
+                            self.showALert(message: "the password or email you entered is incorrect")
+                        default:
+                            self.showALert(message: "invalid credentials")
+                        }
+                    }
                 }
-                
-                self.goToParamedicHome()
+                else{
+                    self.goToParamedicHome()
+                }
             }
             return
         }
@@ -138,16 +143,25 @@ class loginViewController: UIViewController {
         
         //1- login if the credintials belongs to a user.
         Auth.auth().signIn(withEmail: email.text!, password: password.text!) { authResult, error in
-            guard error == nil else{
-                self.showALert(message: error!.localizedDescription)
-                return
+            if error != nil {
+                if let errCode = AuthErrorCode(rawValue: error!._code) {
+                    switch errCode {
+                    case .invalidEmail:
+                        self.showALert(message: "invalid email")
+                    case .wrongPassword:
+                        self.showALert(message: "the password or email you entered is incorrect")
+                    default:
+                        self.showALert(message: "invalid credentials")
+                    }
+                }
             }
-            
-            // go to user home screen
-            _ = authResult?.user.uid
-            self.goToUserHome()
-            
+            else{
+                // go to user home screen
+                _ = authResult?.user.uid
+                self.goToUserHome()
+            }
         }
+        
     }
     
 }

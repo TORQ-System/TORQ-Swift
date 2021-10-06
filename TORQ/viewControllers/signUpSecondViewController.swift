@@ -34,7 +34,7 @@ class signUpSecondViewController: UIViewController {
         super.viewDidLoad()
         setupDatePickerView()
         
-
+        
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         self.view!.addGestureRecognizer(tap)
         
@@ -83,7 +83,7 @@ class signUpSecondViewController: UIViewController {
         else if !nationalID.text!.isValidNationalID{
             errors["nationalID"] = "Invalid National ID"
         }
-      
+        
         //CASE-2: date of birth
         
         
@@ -192,15 +192,26 @@ class signUpSecondViewController: UIViewController {
         // write the user to firebase auth and realtime database.
         Auth.auth().createUser(withEmail: userEmail, password: userPassword) { Result, error in
             // need to specify the error with message
-            guard error == nil else{
-                self.showALert(message: error!.localizedDescription)
-                return
+            if error != nil {
+                if let errCode = AuthErrorCode(rawValue: error!._code) {
+                    switch errCode {
+                    case .invalidEmail:
+                        self.showALert(message: "invalid email")
+                    case .emailAlreadyInUse:
+                        self.showALert(message: "email in use")
+                    default:
+                        self.showALert(message: "invalid credentials")
+                    }
+                }
+            }
+            else{
+                // go to user home screen
+                let id = Result!.user.uid
+                print(id)
+                self.ref.child("User").child(id).setValue(user)
+                self.goToHomeScreen()
             }
             
-            let id = Result!.user.uid
-            print(id)
-            self.ref.child("User").child(id).setValue(user)
-            self.goToHomeScreen()
         }
         
     }
