@@ -57,7 +57,7 @@ class loginViewController: UIViewController {
         var errors = ["email":"", "password":""]
         
         if !email.text!.isValidEmail{
-            errors["email"] = "Email is invalid"
+            errors["email"] = "The email entered is not invalid"
         }
         
         if !password.text!.isValidPassword{
@@ -101,67 +101,43 @@ class loginViewController: UIViewController {
     //MARK: - @IBActions
     @IBAction func loginpressed(_ sender: Any) {
         
-        //1- fields validation:
         let errors = validateFields()
         
         guard errors["email"] == "" else {
-            //handle the error
             showALert(message: errors["email"]!)
             return
         }
-        
         guard errors["password"] == "" else {
             //handle the error
             showALert(message: errors["password"]!)
             return
         }
         
-        
-        //login if the credintaials belong to a SRCA center.
-        if email.text!.isParamedicUser {
-            // validate if it's correct credintials of the center.
-            Auth.auth().signIn(withEmail: email.text!, password: password.text!) { authResult, error in
-                if error != nil {
-                    if let errCode = AuthErrorCode(rawValue: error!._code) {
-                        switch errCode {
-                        case .invalidEmail:
-                            self.showALert(message: "invalid email")
-                        case .wrongPassword:
-                            self.showALert(message: "the password or email you entered is incorrect")
-                        default:
-                            self.showALert(message: "invalid credentials")
-                        }
-                    }
-                }
-                else{
-                    self.goToParamedicHome()
-                }
-            }
-            return
-        }
-        
-        
-        //1- login if the credintials belongs to a user.
         Auth.auth().signIn(withEmail: email.text!, password: password.text!) { authResult, error in
             if error != nil {
-                if let errCode = AuthErrorCode(rawValue: error!._code) {
-                    switch errCode {
-                    case .invalidEmail:
-                        self.showALert(message: "invalid email")
-                    case .wrongPassword:
-                        self.showALert(message: "the password or email you entered is incorrect")
-                    default:
-                        self.showALert(message: "invalid credentials")
-                    }
+                let errCode = AuthErrorCode(rawValue: error!._code)
+                switch errCode {
+                case .invalidEmail:
+                    self.showALert(message: "Invalid email")
+                case .wrongPassword:
+                    self.showALert(message: "Incorrect email or password")
+                default:
+                    self.showALert(message: "Incorrect email or password")
                 }
             }
+            // role authentication
             else{
-                // go to user home screen
-                _ = authResult?.user.uid
-                self.goToUserHome()
+                if(self.email.text!.isParamedicUser){
+                    self.goToParamedicHome()
+                }
+                else{
+                    _ = authResult?.user.uid
+                    self.goToUserHome()
+                }
             }
         }
         
     }
-    
 }
+
+
