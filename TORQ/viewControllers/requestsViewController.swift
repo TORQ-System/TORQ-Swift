@@ -50,14 +50,14 @@ class requestsViewController: UIViewController {
         let domainRange = loggedInCenterEmail.range(of: "@")!
         let centerName = loggedInCenterEmail[..<domainRange.lowerBound]
         loggedInCenter = SRCACenters.getSRCAInfo(name: String(centerName))
-        print("view: \(String(describing: centerName))")
-        print("view: \(String(describing: self.loggedInCenterEmail))")
-        print("view: \(String(describing: self.loggedInCenter))")
+//        print("view: \(String(describing: centerName))")
+//        print("view: \(String(describing: self.loggedInCenterEmail))")
+//        print("view: \(String(describing: self.loggedInCenter))")
     }
     
     func nearest(longitude: String, latitude:String, request: Request){
         let nearest = SRCACenters.getNearest(longitude: Double(longitude)!, latitude: Double(latitude)!)
-        print("vieww: \(loggedInCenter!["name"] as! String)")
+//        print("vieww: \(loggedInCenter!["name"] as! String)")
         if nearest["name"] as! String == loggedInCenter!["name"] as! String{
             myRequests.append(request)
             self.requestsColletionView.reloadData()
