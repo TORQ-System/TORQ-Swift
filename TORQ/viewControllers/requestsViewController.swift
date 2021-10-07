@@ -15,11 +15,15 @@ class requestsViewController: UIViewController {
     var myRequests: [Request] = []
     //MARK: - Overriden function
     
+    override func viewWillAppear(_ animated: Bool) {
+        configureCenter()
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         getRequests()
-        containerView.layer.cornerRadius = 70
-        containerView.layer.maskedCorners = [.layerMinXMinYCorner]
+        configureContainerView()
     }
     
     //MARK: - Functions
@@ -29,27 +33,29 @@ class requestsViewController: UIViewController {
         ref.child("Request").observe(.childAdded) { snapshot in
             let object = snapshot.value as! [String: Any]
             let request = Request(user_id: object["user_id"] as! String, sensor_id: object["sensor_id"] as! String, request_id: object["request_id"] as! String, dateTime: object["time_stamp"] as! String, longitude: object["longitude"] as! String, latitude: object["latitude"] as! String, vib: object["vib"] as! String, rotation: object["rotation"] as! String, status: object["status"] as! String)
-//            self.requests.append(request)
+            self.requests.append(request)
             self.nearest(longitude: request.getLongitude(), latitude: request.getLatitude(), request: request)
-//            self.requestsColletionView.reloadData()
-//            print(request)
         }
     }
     
-    func setupTheHardcoded(){
-        loggedInCenterEmail = "almalqa@srca.org.sa"
+    func configureContainerView(){
+        containerView.layer.cornerRadius = 70
+        containerView.layer.maskedCorners = [.layerMinXMinYCorner]
     }
+
     
     func configureCenter(){
         let domainRange = loggedInCenterEmail.range(of: "@")!
         let centerName = loggedInCenterEmail[..<domainRange.lowerBound]
         loggedInCenter = SRCACenters.getSRCAInfo(name: String(centerName))
+        print("view: \(String(describing: centerName))")
+        print("view: \(String(describing: self.loggedInCenterEmail))")
+        print("view: \(String(describing: self.loggedInCenter))")
     }
     
     func nearest(longitude: String, latitude:String, request: Request){
         let nearest = SRCACenters.getNearest(longitude: Double(longitude)!, latitude: Double(latitude)!)
-        if nearest["name"] as! String == "almalqa" {
-            print(request)
+        if nearest["name"] as! String == loggedInCenter?["name"] as! String{
             myRequests.append(request)
             self.requestsColletionView.reloadData()
 

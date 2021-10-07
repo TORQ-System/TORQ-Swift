@@ -125,14 +125,14 @@ class SRCACenters {
         "longitude": 46.547105141719804,
       ],
       [
-        // 21-munsiyah
-        "name": "munsiyah",
+        // 21-alqadisiyyah
+        "name": "alqadisiyyah",
         "latitude": 24.824786989529542,
         "longitude": 46.81655385515806,
       ],
       [
-        // 22-namar
-        "name": "namar",
+        // 22-alawali
+        "name": "alawali",
         "latitude": 24.55211787741151,
         "longitude": 46.63131015472793,
       ],
@@ -143,14 +143,14 @@ class SRCACenters {
         "longitude": 46.876853868227386,
       ],
       [
-        // 24-dar bida
-        "name": "darBida",
+        // 24-alaziziyah
+        "name": "alaziziyah",
         "latitude": 24.567103148393645,
         "longitude": 46.7685939682224,
       ],
       [
-        // 25-bayan
-        "name": "bayan",
+        // 25-alsharq
+        "name": "alsharq",
         "latitude": 24.88285664307162,
         "longitude": 46.85941051240605,
       ],
@@ -179,6 +179,7 @@ class SRCACenters {
         for center in centers {
             let centerName = center["name"] as! String
             if centerName == name {
+                print("srca: \(center)")
                 return center
             }
         }

@@ -7,7 +7,7 @@ class paramedicHomeViewController: UIViewController {
     //MARK: - @IBOutlets
     
     //MARK: - Variables
-    var loggedin: String?
+    var loggedinEmail: String!
     
     
     //MARK: - Overriden funtions
@@ -33,6 +33,17 @@ class paramedicHomeViewController: UIViewController {
     
     
     //MARK: - @IBActions
+    @IBAction func viewRequestsPressed(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "viewRequests") as! requestsViewController
+        vc.loggedInCenterEmail = self.loggedinEmail
+        print("home: \(String(describing: loggedinEmail))")
+        print("home: \(String(describing: vc.loggedInCenterEmail))")
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true, completion: nil)
+    }
+    
+    
     @IBAction func logoutPressed(_ sender: Any) {
         
         do {

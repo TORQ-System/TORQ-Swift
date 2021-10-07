@@ -456,7 +456,7 @@
                                     <color key="titleColor" red="0.97418779129999999" green="0.66629880669999997" blue="0.34109103680000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
                                 <connections>
-                                    <action selector="logoutPressed:" destination="lfb-Ep-xTh" eventType="touchUpInside" id="Jyg-Jq-ioF"/>
+                                    <action selector="logoutPressed:" destination="lfb-Ep-xTh" eventType="touchUpInside" id="rxr-NU-ht7"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sF9-Q6-mxC">
@@ -465,7 +465,7 @@
                                     <color key="titleColor" red="0.97418779129999999" green="0.66629880669999997" blue="0.34109103680000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
                                 <connections>
-                                    <segue destination="PLv-ze-LsX" kind="presentation" modalPresentationStyle="fullScreen" id="sdt-hR-ESt"/>
+                                    <action selector="viewRequestsPressed:" destination="lfb-Ep-xTh" eventType="touchUpInside" id="L68-AW-HYZ"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -488,7 +488,7 @@
         <!--Requests View Controller-->
         <scene sceneID="4oF-Z4-9Xp">
             <objects>
-                <viewController id="PLv-ze-LsX" customClass="requestsViewController" customModule="TORQ" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="viewRequests" id="PLv-ze-LsX" customClass="requestsViewController" customModule="TORQ" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vF6-4w-DE5">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -664,7 +664,7 @@
                                 <color key="tintColor" red="0.97418779129999999" green="0.66629880669999997" blue="0.34109103680000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" image="arrow.backward" catalog="system"/>
                                 <connections>
-                                    <segue destination="PLv-ze-LsX" kind="presentation" modalPresentationStyle="fullScreen" id="jJU-oC-YUG"/>
+                                    <action selector="backButton:" destination="Txv-70-U8i" eventType="touchUpInside" id="lxV-pF-F8E"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -727,7 +727,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="sdt-hR-ESt"/>
         <segue reference="d0X-3T-lTB"/>
     </inferredMetricsTieBreakers>
     <resources>

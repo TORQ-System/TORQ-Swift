@@ -13,20 +13,20 @@ class loginViewController: UIViewController {
     //MARK: - Overriden Functions
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-        self.view!.addGestureRecognizer(tap)
-        
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardwillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
-        
+        configureKeyboardNotification()
+
     }
     
     
     //MARK: - Functions
+    
+    
+    func configureKeyboardNotification(){
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        self.view!.addGestureRecognizer(tap)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardwillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
     
     @objc func hideKeyboard(){
         self.view.endEditing(true)
@@ -82,6 +82,9 @@ class loginViewController: UIViewController {
     func goToParamedicHome(){
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "paramedicHomeViewController") as! paramedicHomeViewController
+        vc.loggedinEmail = email.text
+        print("login: \(String(describing: email.text))")
+        print("login: \(String(describing: vc.loggedinEmail))")
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
         
