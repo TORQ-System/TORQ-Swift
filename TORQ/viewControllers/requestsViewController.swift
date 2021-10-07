@@ -6,6 +6,7 @@ class requestsViewController: UIViewController {
     //MARK: - @IBOutlets
     @IBOutlet weak var requestsColletionView: UICollectionView!
     @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var assignedRequests: UILabel!
     
     //MARK: - Variables
     var ref = Database.database().reference()
@@ -22,6 +23,7 @@ class requestsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureCenter()
         getRequests()
         configureContainerView()
     }
@@ -55,7 +57,8 @@ class requestsViewController: UIViewController {
     
     func nearest(longitude: String, latitude:String, request: Request){
         let nearest = SRCACenters.getNearest(longitude: Double(longitude)!, latitude: Double(latitude)!)
-        if nearest["name"] as! String == loggedInCenter?["name"] as! String{
+        print("vieww: \(loggedInCenter!["name"] as! String)")
+        if nearest["name"] as! String == loggedInCenter!["name"] as! String{
             myRequests.append(request)
             self.requestsColletionView.reloadData()
 
@@ -82,6 +85,11 @@ extension requestsViewController: UICollectionViewDelegate{
 
 extension requestsViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if myRequests.count == 0 {
+            assignedRequests.alpha = 1
+        }else{
+            assignedRequests.alpha = 0
+        }
         return myRequests.count
     }
     
