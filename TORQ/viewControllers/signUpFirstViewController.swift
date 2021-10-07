@@ -20,11 +20,14 @@ class signUpFirstViewController: UIViewController {
     var userPassword: String?
     
     //MARK: - Overriden Functions
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-
+        configureKeyboard()
+    }
+    
+    //MARK: - Functions
+    func configureKeyboard(){
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         self.view!.addGestureRecognizer(tap)
         
@@ -32,11 +35,8 @@ class signUpFirstViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardwillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
-
     }
     
-    //MARK: - Functions
     @objc func hideKeyboard(){
         self.view.endEditing(true)
         
@@ -66,30 +66,50 @@ class signUpFirstViewController: UIViewController {
     func validateFields() -> [String: String ]{
         var error: [String: String ] = ["firstName": "" ,"lastName": "" ,"email": "", "password":""]
         
-        //CASE-1: This case validate if the user enters empty or nil or a first name that is less tha two charecters.
-            if firstName.text == nil || firstName.text == "" || firstName.text!.count < 2{
-                error["firstName"] = "First Name must be greater than two characters"
-            }
-            else if(!firstName.text!.isValidName){
-                error["firstName"] = "First Name cannot contain numbers or spaces"
-            }
-        //CASE-2: This case validate if the user enters empty or nil or a last name that is less tha two charecters.
-            if lastName.text == nil || lastName.text == "" || lastName.text!.count < 2{
-                error["lastName"] = "Last Name must be greater than two characters"
-            }
-            else if(!lastName.text!.isValidName){
-               error["lastName"] = "Last Name cannot contain numbers or spaces"
-           }
+        //CASE-1: This case validate if the user enters empty or nil or a first name that is less tha two charecters. each case with it sub-cases detailed messages explained below.
+        
+        if firstName.text == nil || firstName.text == "" {
+            error["firstName"] = "First Name can't be empty"
+        }
+        else if firstName.text!.count < 2{
+            error["firstName"] = "First Name must be greater than two characters"
+        }
+        else if !firstName.text!.isValidName{
+            error["firstName"] = "First Name must be a valid name that has no spaces nor numbers"
+        }
+        
+        //CASE-2: This case validate if the user enters empty or nil or a last name that is less tha two charecters. each case with it sub-cases detailed messages explained below.
+        
+        if lastName.text == nil || lastName.text == ""{
+            error["lastName"] = "Last Name can't be empty"
+        }
+        else if lastName.text!.count < 2 {
+            error["lastName"] = "Last Name must be greater than two characters"
+        }
+        else if !lastName.text!.isValidName{
+            error["lastName"] = "Last Name must be a valid name that has no spaces nor numbers"
+        }
         
         //CASE-3: This case validate if the user enters empty or nil or an invalid email address or if it restricted ( has the same domain as the paramedics "@srca.org.sa" )
-            if email.text == nil || email.text == "" || !email.text!.isValidEmail || !email.text!.isValidDomain {
-                error["email"] = "Please enter a valid email address"
-            }
+        
+        if email.text == nil || email.text == "" {
+            error["email"] = "Email can't be empty"
+        }
+        else if !email.text!.isValidEmail{
+            error["email"] = "Please enter a valid email address"
+        }
+        else if !email.text!.isValidDomain{
+            error["email"] = "Please enter a valid user email that dont contain the domain @srca.org.sa"
+        }
         
         //CASE-4: This case validate if the user enters empty or nil or an invalid password that has not fulfilled the conditions ( Not less than 8 charecters & has capital letter &  ).
-        if password.text == nil || password.text == "" || !password.text!.isValidPassword {
-                error["password"] = "Password should not be less than 6 characters"
-            }
+        
+        if password.text == nil || password.text == ""{
+            error["password"] = "Password can't be empty"
+        }
+        else if !password.text!.isValidPassword{
+            error["password"] = "Password should not be less than 6 characters"
+        }
 
         return error
     }
