@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		3DDC91A2940F7463283FBFE6 /* Pods_TORQ_TORQUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 404C9ACD593D6364A24EFF38 /* Pods_TORQ_TORQUITests.framework */; };
 		8FA67A0F52162B410B79BAF0 /* Pods_TORQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9EC7D60F5128DCF29B3517 /* Pods_TORQ.framework */; };
+		BE34F69D270F30B70093C633 /* requestCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE34F69C270F30B70093C633 /* requestCollectionViewCell.swift */; };
+		BE34F69F270F31A00093C633 /* requestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE34F69E270F31A00093C633 /* requestsViewController.swift */; };
+		BE34F6A2270F31FB0093C633 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE34F6A1270F31FB0093C633 /* Request.swift */; };
+		BE34F6A4270F32260093C633 /* SRCACenters.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE34F6A3270F32260093C633 /* SRCACenters.swift */; };
+		BE34F6A6270F327A0093C633 /* viewLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE34F6A5270F327A0093C633 /* viewLocationViewController.swift */; };
 		BEF974DE2707146300325281 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF974DD2707146300325281 /* AppDelegate.swift */; };
 		BEF974E02707146300325281 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF974DF2707146300325281 /* SceneDelegate.swift */; };
 		BEF974E52707146300325281 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEF974E32707146300325281 /* Main.storyboard */; };
@@ -55,6 +60,11 @@
 		404C9ACD593D6364A24EFF38 /* Pods_TORQ_TORQUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TORQ_TORQUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9850D36D8AB92301B2DFBE7D /* Pods-TORQ-TORQUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TORQ-TORQUITests.debug.xcconfig"; path = "Target Support Files/Pods-TORQ-TORQUITests/Pods-TORQ-TORQUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		9F0737DF72CCC79CA95FDC8D /* Pods-TORQ.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TORQ.debug.xcconfig"; path = "Target Support Files/Pods-TORQ/Pods-TORQ.debug.xcconfig"; sourceTree = "<group>"; };
+		BE34F69C270F30B70093C633 /* requestCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = requestCollectionViewCell.swift; sourceTree = "<group>"; };
+		BE34F69E270F31A00093C633 /* requestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = requestsViewController.swift; sourceTree = "<group>"; };
+		BE34F6A1270F31FB0093C633 /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		BE34F6A3270F32260093C633 /* SRCACenters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SRCACenters.swift; sourceTree = "<group>"; };
+		BE34F6A5270F327A0093C633 /* viewLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewLocationViewController.swift; sourceTree = "<group>"; };
 		BEF974DA2707146300325281 /* TORQ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TORQ.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEF974DD2707146300325281 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BEF974DF2707146300325281 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -130,6 +140,23 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		BE34F69B270F30850093C633 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				BE34F69C270F30B70093C633 /* requestCollectionViewCell.swift */,
+			);
+			path = views;
+			sourceTree = "<group>";
+		};
+		BE34F6A0270F31C50093C633 /* modules */ = {
+			isa = PBXGroup;
+			children = (
+				BE34F6A1270F31FB0093C633 /* Request.swift */,
+				BE34F6A3270F32260093C633 /* SRCACenters.swift */,
+			);
+			path = modules;
+			sourceTree = "<group>";
+		};
 		BEF974D12707146300325281 = {
 			isa = PBXGroup;
 			children = (
@@ -155,6 +182,8 @@
 		BEF974DC2707146300325281 /* TORQ */ = {
 			isa = PBXGroup;
 			children = (
+				BE34F6A0270F31C50093C633 /* modules */,
+				BE34F69B270F30850093C633 /* views */,
 				BEF9751627076BE000325281 /* extensionsUtilites */,
 				BEF975152707294100325281 /* viewControllers */,
 				BEF974DD2707146300325281 /* AppDelegate.swift */,
@@ -195,6 +224,8 @@
 				BEF97538270AE07400325281 /* loginViewController.swift */,
 				BEF9753C270AE0E500325281 /* paramedicHomeViewController.swift */,
 				BEF9753A270AE0D100325281 /* userHomeViewController.swift */,
+				BE34F69E270F31A00093C633 /* requestsViewController.swift */,
+				BE34F6A5270F327A0093C633 /* viewLocationViewController.swift */,
 			);
 			path = viewControllers;
 			sourceTree = "<group>";
@@ -448,14 +479,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				BEF9751827076C0800325281 /* stringExtension.swift in Sources */,
+				BE34F6A4270F32260093C633 /* SRCACenters.swift in Sources */,
+				BE34F6A2270F31FB0093C633 /* Request.swift in Sources */,
 				BEF9751B2707D63A00325281 /* dateExtension.swift in Sources */,
 				BEF975142707293600325281 /* signUpSecondViewController.swift in Sources */,
+				BE34F69D270F30B70093C633 /* requestCollectionViewCell.swift in Sources */,
 				BEF975102707291F00325281 /* HomeViewController.swift in Sources */,
 				BEF9753D270AE0E500325281 /* paramedicHomeViewController.swift in Sources */,
 				BEF97539270AE07400325281 /* loginViewController.swift in Sources */,
 				BEF974DE2707146300325281 /* AppDelegate.swift in Sources */,
 				BEF974E02707146300325281 /* SceneDelegate.swift in Sources */,
 				BEF9753B270AE0D100325281 /* userHomeViewController.swift in Sources */,
+				BE34F6A6270F327A0093C633 /* viewLocationViewController.swift in Sources */,
+				BE34F69F270F31A00093C633 /* requestsViewController.swift in Sources */,
 				BEF975122707292C00325281 /* signUpFirstViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -562,7 +598,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -617,7 +653,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
