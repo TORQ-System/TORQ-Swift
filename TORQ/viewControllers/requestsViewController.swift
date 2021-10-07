@@ -32,6 +32,7 @@ class requestsViewController: UIViewController {
 //            self.requests.append(request)
             self.nearest(longitude: request.getLongitude(), latitude: request.getLatitude(), request: request)
 //            self.requestsColletionView.reloadData()
+//            print(request)
         }
     }
     
@@ -48,6 +49,7 @@ class requestsViewController: UIViewController {
     func nearest(longitude: String, latitude:String, request: Request){
         let nearest = SRCACenters.getNearest(longitude: Double(longitude)!, latitude: Double(latitude)!)
         if nearest["name"] as! String == "almalqa" {
+            print(request)
             myRequests.append(request)
             self.requestsColletionView.reloadData()
 
@@ -98,7 +100,7 @@ extension requestsViewController: UICollectionViewDataSource{
 extension requestsViewController: UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: 185)
+        return CGSize(width: collectionView.frame.width, height: 119)
     }
     
 }
