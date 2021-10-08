@@ -68,7 +68,7 @@ class signUpFirstViewController: UIViewController {
         if firstName.text == nil || firstName.text == "" {
             error["firstName"] = "First Name can't be empty"
         }
-        else if firstName.text!.count < 2{
+        else if firstName.text!.count <= 2{
             error["firstName"] = "First Name must be greater than two characters"
         }
         else if !firstName.text!.isValidName{
@@ -80,7 +80,7 @@ class signUpFirstViewController: UIViewController {
         if lastName.text == nil || lastName.text == ""{
             error["lastName"] = "Last Name can't be empty"
         }
-        else if lastName.text!.count < 2 {
+        else if lastName.text!.count <= 2 {
             error["lastName"] = "Last Name must be greater than two characters"
         }
         else if !lastName.text!.isValidName{
