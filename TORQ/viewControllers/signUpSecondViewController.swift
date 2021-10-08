@@ -1,7 +1,3 @@
-//
-//  signUpSecondViewController.swift
-//  TORQ
-
 import UIKit
 import Firebase
 import FirebaseAuth

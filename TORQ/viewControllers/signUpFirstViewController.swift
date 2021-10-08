@@ -1,6 +1,3 @@
-//
-//  signUpFirstViewController.swift
-//  TORQ
 import UIKit
 
 class signUpFirstViewController: UIViewController {

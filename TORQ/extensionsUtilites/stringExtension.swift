@@ -1,10 +1,3 @@
-//
-//  stringExtension.swift
-//  TORQ
-//
-//  Created by Noura Alsulayfih on 01/10/2021.
-//
-
 import Foundation
 
 extension String {

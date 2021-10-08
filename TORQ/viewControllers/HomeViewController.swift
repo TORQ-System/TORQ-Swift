@@ -1,8 +1,3 @@
-//
-//  HomeViewController.swift
-//  TORQ
-
-
 import UIKit
 import CoreLocation
 import SwiftUI

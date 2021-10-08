@@ -1,10 +1,3 @@
-//
-//  requestCollectionViewCell.swift
-//  TORQ
-//
-//  Created by Noura Alsulayfih on 07/10/2021.
-//
-
 import UIKit
 import FirebaseDatabase
 

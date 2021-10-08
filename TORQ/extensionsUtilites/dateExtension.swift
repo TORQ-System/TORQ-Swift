@@ -1,10 +1,3 @@
-//
-//  dateExtension.swift
-//  Pods
-//
-//  Created by Noura Alsulayfih on 02/10/2021.
-//
-
 import Foundation
 
 extension Date {
