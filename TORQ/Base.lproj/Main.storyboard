@@ -413,53 +413,6 @@
             </objects>
             <point key="canvasLocation" x="805.79710144927537" y="736.60714285714278"/>
         </scene>
-        <!--Home View Controller-->
-        <scene sceneID="3ds-3L-wCQ">
-            <objects>
-                <viewController storyboardIdentifier="HomeViewController" id="e3C-OC-Igh" customClass="HomeViewController" customModule="TORQ" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="rs6-JG-e7w">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your All Set up !" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AfU-0E-Eoj">
-                                <rect key="frame" x="103" y="244" width="208.5" height="37"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="31"/>
-                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to TORQ App, your safty is our concern!" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RVW-xh-oyz">
-                                <rect key="frame" x="18" y="306" width="378" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="050-ga-44b">
-                                <rect key="frame" x="197" y="376.5" width="20" height="22"/>
-                                <color key="tintColor" red="0.97418779129999999" green="0.66629880669999997" blue="0.34109103680000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <state key="normal" image="arrow.right" catalog="system">
-                                    <color key="titleColor" red="0.97418779129999999" green="0.66629880669999997" blue="0.34109103680000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                </state>
-                                <connections>
-                                    <action selector="back:" destination="e3C-OC-Igh" eventType="touchUpInside" id="NvD-Sq-rdh"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="ecU-WG-Gyf"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="RVW-xh-oyz" firstAttribute="top" secondItem="AfU-0E-Eoj" secondAttribute="bottom" constant="25" id="AmL-bF-Kge"/>
-                            <constraint firstItem="RVW-xh-oyz" firstAttribute="centerX" secondItem="rs6-JG-e7w" secondAttribute="centerX" id="KJ6-lz-2pJ"/>
-                            <constraint firstItem="AfU-0E-Eoj" firstAttribute="top" secondItem="ecU-WG-Gyf" secondAttribute="top" constant="200" id="MKF-vP-sdF"/>
-                            <constraint firstItem="050-ga-44b" firstAttribute="top" secondItem="RVW-xh-oyz" secondAttribute="bottom" constant="50" id="REQ-ey-MJf"/>
-                            <constraint firstItem="050-ga-44b" firstAttribute="centerX" secondItem="rs6-JG-e7w" secondAttribute="centerX" id="cA2-0g-Ft4"/>
-                            <constraint firstItem="AfU-0E-Eoj" firstAttribute="centerX" secondItem="rs6-JG-e7w" secondAttribute="centerX" id="xOW-JT-chB"/>
-                        </constraints>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="9d1-Gz-VCj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1483" y="737"/>
-        </scene>
         <!--Paramedic Home View Controller-->
         <scene sceneID="9b7-6h-CPb">
             <objects>
@@ -742,7 +695,7 @@
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="d1h-vN-WCY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="m29-JK-i1g" firstAttribute="centerX" secondItem="MQE-it-ZYM" secondAttribute="centerX" id="JBI-ut-1vp"/>
                             <constraint firstItem="Ptd-QJ-LYf" firstAttribute="top" secondItem="m29-JK-i1g" secondAttribute="bottom" constant="30" id="KYa-EF-8xs"/>
