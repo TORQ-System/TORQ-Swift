@@ -1,5 +1,7 @@
 import UIKit
 import FirebaseAuth
+import FirebaseDatabase
+import CoreLocation
 
 class userHomeViewController: UIViewController {
     
@@ -8,19 +10,33 @@ class userHomeViewController: UIViewController {
     //MARK: - Variables
     var userEmail: String?
     var userID: String?
-    var loggedin: String?
+    let locationManager = CLLocationManager()
+    let ref = Database.database().reference()
 
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-    
-        
-        
+        configureLocationManager()
+
+  
     }
     
     //MARK: - Functions
+    
+    func configureLocationManager(){
+        
+        locationManager.delegate = self
+        locationManager.allowsBackgroundLocationUpdates = true
+        locationManager.showsBackgroundLocationIndicator = true
+        guard CLLocationManager.locationServicesEnabled() else {
+            //show alert.
+            self.showALert(message: "the location services isn't enabled")
+            return
+        }
+        locationManager.requestAlwaysAuthorization()
+        
+    }
     
     func showALert(message:String){
         //show alert based on the message that is being paased as parameter
@@ -51,5 +67,50 @@ class userHomeViewController: UIViewController {
     }
     
 
+    
+}
+
+//MARK: - Extensions
+extension userHomeViewController: CLLocationManagerDelegate{
+    
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        
+        let status = CLLocationManager.authorizationStatus()
+        switch status {
+        
+        case .authorizedAlways:
+            print("authorizedAlways")
+            locationManager.startUpdatingLocation()
+            
+        case .authorizedWhenInUse:
+            print("authorizedWhenInUse")
+            locationManager.startUpdatingLocation()
+            
+        case .denied:
+            print("denied")
+             showALert(message: "Location access is needed to get your current location")
+
+        case .notDetermined:
+            print("notDetermined")
+        case .restricted:
+            print("restricted")
+            showALert(message: "Location access is needed to get your current location")
+        default:
+            print("unknown")
+        }
+        
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let longitude = locations.last?.coordinate.longitude
+        let latitude = locations.last?.coordinate.latitude
+        let time = locations.last?.timestamp
+        print("longitude: \(String(describing: longitude!))")
+        print("latitude: \(String(describing: latitude!))")
+        print("time: \(String(describing: time!))")
+        ref.child("Sensor").child("S\(userID!)/longitude").setValue((String(describing: longitude!)))
+        ref.child("Sensor").child("S\(userID!)/latitude").setValue((String(describing: latitude!)))
+        ref.child("Sensor").child("S\(userID!)/time").setValue((String(describing: time!)))
+    }
     
 }

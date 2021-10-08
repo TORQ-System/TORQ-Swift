@@ -9,6 +9,8 @@ class loginViewController: UIViewController {
     @IBOutlet weak var nextbutton: UIButton!
     
     //MARK: - Vraibales
+    var userID: String?
+    var userEmail: String?
     
     //MARK: - Overriden Functions
     override func viewDidLoad() {
@@ -19,7 +21,6 @@ class loginViewController: UIViewController {
     
     
     //MARK: - Functions
-    
     
     func configureKeyboardNotification(){
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
@@ -56,16 +57,12 @@ class loginViewController: UIViewController {
     func validateFields()->[String: String]{
         var errors = ["email":"", "password":""]
         
-        if !email.text!.isValidEmail{
-            errors["email"] = "The email entered is not invalid"
+        if email.text == nil || email.text == ""{
+            errors["email"] = "Email can't be empty"
         }
         
-        if !password.text!.isValidPassword{
-            errors["password"] = "Password is invalid"
-        }
-        
-        if email.text == nil || email.text == "" || password.text == nil || password.text == ""  {
-            errors["email"] = "Fields cannot be empty"
+        if password.text == nil || password.text == ""  {
+            errors["email"] = "password cannot be empty"
         }
         
         return errors
@@ -75,6 +72,8 @@ class loginViewController: UIViewController {
     func goToUserHome(){
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "userHomeViewController") as! userHomeViewController
+        vc.userEmail = email.text
+        vc.userID = userID
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
     }
@@ -106,6 +105,7 @@ class loginViewController: UIViewController {
         
         let errors = validateFields()
         
+        
         guard errors["email"] == "" else {
             showALert(message: errors["email"]!)
             return
@@ -117,7 +117,8 @@ class loginViewController: UIViewController {
         }
         
         Auth.auth().signIn(withEmail: email.text!, password: password.text!) { authResult, error in
-            if error != nil {
+            
+            guard error == nil else{
                 let errCode = AuthErrorCode(rawValue: error!._code)
                 switch errCode {
                 case .invalidEmail:
@@ -127,20 +128,22 @@ class loginViewController: UIViewController {
                 default:
                     self.showALert(message: "Incorrect email or password")
                 }
+                return
             }
+        
             // role authentication
-            else{
                 if(self.email.text!.isParamedicUser){
                     self.goToParamedicHome()
                 }
                 else{
-                    _ = authResult?.user.uid
+                    self.userID = authResult!.user.uid
                     self.goToUserHome()
                 }
-            }
         }
         
     }
+    
+    
 }
 
 

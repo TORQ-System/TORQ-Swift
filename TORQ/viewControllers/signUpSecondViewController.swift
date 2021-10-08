@@ -15,6 +15,7 @@ class signUpSecondViewController: UIViewController {
     //MARK: - Variables
     var ref = Database.database().reference()
     let datePicker = UIDatePicker()
+    var userID: String?
     var userFirstName: String!
     var userLastName: String!
     var userEmail: String!
@@ -138,6 +139,8 @@ class signUpSecondViewController: UIViewController {
     func goToHomeScreen() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "userHomeViewController") as! userHomeViewController
+        vc.userEmail = userEmail
+        vc.userID = userID
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
     }
@@ -216,11 +219,12 @@ class signUpSecondViewController: UIViewController {
             }
             
                 // go to user home screen
-                let id = Result!.user.uid
-                self.ref.child("User").child(id).setValue(user)
-                self.ref.child("Sensor").child("S\(id)/longitude").setValue("0")
-                self.ref.child("Sensor").child("S\(id)/latitude").setValue("0")
-                self.ref.child("Sensor").child("S\(id)/time").setValue("0")
+                self.userID = Result!.user.uid
+                let id = self.userID
+                self.ref.child("User").child(id!).setValue(user)
+                self.ref.child("Sensor").child("S\(id!)/longitude").setValue("0")
+                self.ref.child("Sensor").child("S\(id!)/latitude").setValue("0")
+                self.ref.child("Sensor").child("S\(id!)/time").setValue("0")
             
                 //alert sheet to indicate success
                 let alert = UIAlertController(title: "You're all set up!", message: "Welcome to TORQ App, your safty is our concern!", preferredStyle: .actionSheet)
