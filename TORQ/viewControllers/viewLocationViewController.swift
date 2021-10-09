@@ -20,12 +20,14 @@ class viewLocationViewController: UIViewController {
     }
     
     //MARK: - Functions
-    
     func setPinUsingMKPlacemark(location: CLLocationCoordinate2D) {
-       let pin = MKPlacemark(coordinate: location)
-       let coordinateRegion = MKCoordinateRegion(center: pin.coordinate, latitudinalMeters: 800, longitudinalMeters: 800)
-       map.setRegion(coordinateRegion, animated: true)
-       map.addAnnotation(pin)
+        let pin = MKPlacemark(coordinate: location)
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = pin.coordinate
+        annotation.title = ""
+        let coordinateRegion = MKCoordinateRegion(center: pin.coordinate, latitudinalMeters: 800, longitudinalMeters: 800)
+        map.setRegion(coordinateRegion, animated: true)
+        map.addAnnotation(annotation)
     }
     
     func setView() {
@@ -39,5 +41,5 @@ class viewLocationViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-
+    
 }
