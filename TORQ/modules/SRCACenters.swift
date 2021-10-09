@@ -179,7 +179,6 @@ class SRCACenters {
         for center in centers {
             let centerName = center["name"] as! String
             if centerName == name {
-                print("srca: \(center)")
                 return center
             }
         }
