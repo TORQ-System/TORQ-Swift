@@ -66,7 +66,10 @@ class requestsViewController: UIViewController {
     }
 
     //MARK: - @IBActions
-
+    @IBAction func backbutton(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
 }
 
 //MARK: - Extension
