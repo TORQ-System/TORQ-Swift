@@ -32,7 +32,7 @@ class requestsViewController: UIViewController {
     
     func getRequests(){
         //set an observer to get the requests
-        ref.child("Request").observe(.childAdded) { snapshot in
+        ref.child("Request").queryOrdered(byChild: "time_stamp").observe(.childAdded) { snapshot in
             let object = snapshot.value as! [String: Any]
             let request = Request(user_id: object["user_id"] as! String, sensor_id: object["sensor_id"] as! String, request_id: object["request_id"] as! String, dateTime: object["time_stamp"] as! String, longitude: object["longitude"] as! String, latitude: object["latitude"] as! String, vib: object["vib"] as! String, rotation: object["rotation"] as! String, status: object["status"] as! String)
             self.requests.append(request)
