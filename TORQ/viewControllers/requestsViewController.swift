@@ -102,6 +102,7 @@ extension requestsViewController: UICollectionViewDataSource{
         cell.layer.borderWidth = 2
         cell.layer.masksToBounds = true;
         cell.layer.cornerRadius = 20
+        cell.name.text = "Accident #\(indexPath.row)"
         cell.dateTime.text = "\(myRequests[indexPath.row].getDateTime())"
         var state = "Processed"
         if myRequests[indexPath.row].getStatus() == "0" {
