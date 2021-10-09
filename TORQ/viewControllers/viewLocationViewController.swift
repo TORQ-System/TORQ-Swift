@@ -24,7 +24,7 @@ class viewLocationViewController: UIViewController {
         let pin = MKPlacemark(coordinate: location)
         let annotation = MKPointAnnotation()
         annotation.coordinate = pin.coordinate
-        annotation.title = ""
+        annotation.title = "Accident Location"
         let coordinateRegion = MKCoordinateRegion(center: pin.coordinate, latitudinalMeters: 800, longitudinalMeters: 800)
         map.setRegion(coordinateRegion, animated: true)
         map.addAnnotation(annotation)
