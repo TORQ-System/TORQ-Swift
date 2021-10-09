@@ -14,6 +14,10 @@
 		BE34F6A2270F31FB0093C633 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE34F6A1270F31FB0093C633 /* Request.swift */; };
 		BE34F6A4270F32260093C633 /* SRCACenters.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE34F6A3270F32260093C633 /* SRCACenters.swift */; };
 		BE34F6A6270F327A0093C633 /* viewLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE34F6A5270F327A0093C633 /* viewLocationViewController.swift */; };
+		BE34F6A9271182FA0093C633 /* launchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE34F6A8271182F90093C633 /* launchViewController.swift */; };
+		BE34F6AB27118A800093C633 /* onboardingScreen1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE34F6AA27118A800093C633 /* onboardingScreen1ViewController.swift */; };
+		BE34F6AD27118A8F0093C633 /* onboardingScreen2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE34F6AC27118A8F0093C633 /* onboardingScreen2ViewController.swift */; };
+		BE34F6AF27118A9E0093C633 /* onboardingScreen3ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE34F6AE27118A9E0093C633 /* onboardingScreen3ViewController.swift */; };
 		BEF974DE2707146300325281 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF974DD2707146300325281 /* AppDelegate.swift */; };
 		BEF974E02707146300325281 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF974DF2707146300325281 /* SceneDelegate.swift */; };
 		BEF974E52707146300325281 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEF974E32707146300325281 /* Main.storyboard */; };
@@ -65,6 +69,10 @@
 		BE34F6A1270F31FB0093C633 /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		BE34F6A3270F32260093C633 /* SRCACenters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SRCACenters.swift; sourceTree = "<group>"; };
 		BE34F6A5270F327A0093C633 /* viewLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewLocationViewController.swift; sourceTree = "<group>"; };
+		BE34F6A8271182F90093C633 /* launchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = launchViewController.swift; sourceTree = "<group>"; };
+		BE34F6AA27118A800093C633 /* onboardingScreen1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = onboardingScreen1ViewController.swift; sourceTree = "<group>"; };
+		BE34F6AC27118A8F0093C633 /* onboardingScreen2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = onboardingScreen2ViewController.swift; sourceTree = "<group>"; };
+		BE34F6AE27118A9E0093C633 /* onboardingScreen3ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = onboardingScreen3ViewController.swift; sourceTree = "<group>"; };
 		BEF974DA2707146300325281 /* TORQ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TORQ.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEF974DD2707146300325281 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BEF974DF2707146300325281 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -234,6 +242,10 @@
 				BEF9753A270AE0D100325281 /* userHomeViewController.swift */,
 				BE34F69E270F31A00093C633 /* requestsViewController.swift */,
 				BE34F6A5270F327A0093C633 /* viewLocationViewController.swift */,
+				BE34F6A8271182F90093C633 /* launchViewController.swift */,
+				BE34F6AA27118A800093C633 /* onboardingScreen1ViewController.swift */,
+				BE34F6AC27118A8F0093C633 /* onboardingScreen2ViewController.swift */,
+				BE34F6AE27118A9E0093C633 /* onboardingScreen3ViewController.swift */,
 			);
 			path = viewControllers;
 			sourceTree = "<group>";
@@ -486,12 +498,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE34F6AD27118A8F0093C633 /* onboardingScreen2ViewController.swift in Sources */,
 				BEF9751827076C0800325281 /* stringExtension.swift in Sources */,
 				BE34F6A4270F32260093C633 /* SRCACenters.swift in Sources */,
 				BE34F6A2270F31FB0093C633 /* Request.swift in Sources */,
 				BEF9751B2707D63A00325281 /* dateExtension.swift in Sources */,
 				BEF975142707293600325281 /* signUpSecondViewController.swift in Sources */,
+				BE34F6AB27118A800093C633 /* onboardingScreen1ViewController.swift in Sources */,
 				BE34F69D270F30B70093C633 /* requestCollectionViewCell.swift in Sources */,
+				BE34F6AF27118A9E0093C633 /* onboardingScreen3ViewController.swift in Sources */,
 				BEF975102707291F00325281 /* HomeViewController.swift in Sources */,
 				BEF9753D270AE0E500325281 /* paramedicHomeViewController.swift in Sources */,
 				BEF97539270AE07400325281 /* loginViewController.swift in Sources */,
@@ -501,6 +516,7 @@
 				BE34F6A6270F327A0093C633 /* viewLocationViewController.swift in Sources */,
 				BE34F69F270F31A00093C633 /* requestsViewController.swift in Sources */,
 				BEF975122707292C00325281 /* signUpFirstViewController.swift in Sources */,
+				BE34F6A9271182FA0093C633 /* launchViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
