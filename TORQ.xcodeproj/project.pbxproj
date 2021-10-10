@@ -3,21 +3,37 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		3DDC91A2940F7463283FBFE6 /* Pods_TORQ_TORQUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 404C9ACD593D6364A24EFF38 /* Pods_TORQ_TORQUITests.framework */; };
 		8FA67A0F52162B410B79BAF0 /* Pods_TORQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9EC7D60F5128DCF29B3517 /* Pods_TORQ.framework */; };
+		BE34F69D270F30B70093C633 /* requestCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE34F69C270F30B70093C633 /* requestCollectionViewCell.swift */; };
+		BE34F69F270F31A00093C633 /* requestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE34F69E270F31A00093C633 /* requestsViewController.swift */; };
+		BE34F6A2270F31FB0093C633 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE34F6A1270F31FB0093C633 /* Request.swift */; };
+		BE34F6A4270F32260093C633 /* SRCACenters.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE34F6A3270F32260093C633 /* SRCACenters.swift */; };
+		BE34F6A6270F327A0093C633 /* viewLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE34F6A5270F327A0093C633 /* viewLocationViewController.swift */; };
+		BE34F6A9271182FA0093C633 /* launchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE34F6A8271182F90093C633 /* launchViewController.swift */; };
+		BE34F6AB27118A800093C633 /* onboardingScreen1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE34F6AA27118A800093C633 /* onboardingScreen1ViewController.swift */; };
+		BE34F6AD27118A8F0093C633 /* onboardingScreen2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE34F6AC27118A8F0093C633 /* onboardingScreen2ViewController.swift */; };
+		BE34F6AF27118A9E0093C633 /* onboardingScreen3ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE34F6AE27118A9E0093C633 /* onboardingScreen3ViewController.swift */; };
 		BEF974DE2707146300325281 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF974DD2707146300325281 /* AppDelegate.swift */; };
 		BEF974E02707146300325281 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF974DF2707146300325281 /* SceneDelegate.swift */; };
-		BEF974E22707146300325281 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF974E12707146300325281 /* ViewController.swift */; };
 		BEF974E52707146300325281 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEF974E32707146300325281 /* Main.storyboard */; };
 		BEF974E72707146500325281 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEF974E62707146500325281 /* Assets.xcassets */; };
 		BEF974EA2707146500325281 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEF974E82707146500325281 /* LaunchScreen.storyboard */; };
 		BEF974F52707146500325281 /* TORQTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF974F42707146500325281 /* TORQTests.swift */; };
 		BEF975002707146500325281 /* TORQUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF974FF2707146500325281 /* TORQUITests.swift */; };
 		BEF9750E2707153E00325281 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BEF9750D2707153E00325281 /* GoogleService-Info.plist */; };
+		BEF975102707291F00325281 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9750F2707291F00325281 /* HomeViewController.swift */; };
+		BEF975122707292C00325281 /* signUpFirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF975112707292C00325281 /* signUpFirstViewController.swift */; };
+		BEF975142707293600325281 /* signUpSecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF975132707293600325281 /* signUpSecondViewController.swift */; };
+		BEF9751827076C0800325281 /* stringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9751727076C0800325281 /* stringExtension.swift */; };
+		BEF9751B2707D63A00325281 /* dateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9751A2707D63A00325281 /* dateExtension.swift */; };
+		BEF97539270AE07400325281 /* loginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF97538270AE07400325281 /* loginViewController.swift */; };
+		BEF9753B270AE0D100325281 /* userHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9753A270AE0D100325281 /* userHomeViewController.swift */; };
+		BEF9753D270AE0E500325281 /* paramedicHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9753C270AE0E500325281 /* paramedicHomeViewController.swift */; };
 		FC4BF75E181535F7BB4C96B1 /* Pods_TORQTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D35DF5D9259C289028E18D8 /* Pods_TORQTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -48,10 +64,18 @@
 		404C9ACD593D6364A24EFF38 /* Pods_TORQ_TORQUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TORQ_TORQUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9850D36D8AB92301B2DFBE7D /* Pods-TORQ-TORQUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TORQ-TORQUITests.debug.xcconfig"; path = "Target Support Files/Pods-TORQ-TORQUITests/Pods-TORQ-TORQUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		9F0737DF72CCC79CA95FDC8D /* Pods-TORQ.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TORQ.debug.xcconfig"; path = "Target Support Files/Pods-TORQ/Pods-TORQ.debug.xcconfig"; sourceTree = "<group>"; };
+		BE34F69C270F30B70093C633 /* requestCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = requestCollectionViewCell.swift; sourceTree = "<group>"; };
+		BE34F69E270F31A00093C633 /* requestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = requestsViewController.swift; sourceTree = "<group>"; };
+		BE34F6A1270F31FB0093C633 /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		BE34F6A3270F32260093C633 /* SRCACenters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SRCACenters.swift; sourceTree = "<group>"; };
+		BE34F6A5270F327A0093C633 /* viewLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewLocationViewController.swift; sourceTree = "<group>"; };
+		BE34F6A8271182F90093C633 /* launchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = launchViewController.swift; sourceTree = "<group>"; };
+		BE34F6AA27118A800093C633 /* onboardingScreen1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = onboardingScreen1ViewController.swift; sourceTree = "<group>"; };
+		BE34F6AC27118A8F0093C633 /* onboardingScreen2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = onboardingScreen2ViewController.swift; sourceTree = "<group>"; };
+		BE34F6AE27118A9E0093C633 /* onboardingScreen3ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = onboardingScreen3ViewController.swift; sourceTree = "<group>"; };
 		BEF974DA2707146300325281 /* TORQ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TORQ.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEF974DD2707146300325281 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BEF974DF2707146300325281 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		BEF974E12707146300325281 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		BEF974E42707146300325281 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BEF974E62707146500325281 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BEF974E92707146500325281 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -63,6 +87,14 @@
 		BEF974FF2707146500325281 /* TORQUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TORQUITests.swift; sourceTree = "<group>"; };
 		BEF975012707146500325281 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BEF9750D2707153E00325281 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		BEF9750F2707291F00325281 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		BEF975112707292C00325281 /* signUpFirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = signUpFirstViewController.swift; sourceTree = "<group>"; };
+		BEF975132707293600325281 /* signUpSecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = signUpSecondViewController.swift; sourceTree = "<group>"; };
+		BEF9751727076C0800325281 /* stringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = stringExtension.swift; sourceTree = "<group>"; };
+		BEF9751A2707D63A00325281 /* dateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dateExtension.swift; sourceTree = "<group>"; };
+		BEF97538270AE07400325281 /* loginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginViewController.swift; sourceTree = "<group>"; };
+		BEF9753A270AE0D100325281 /* userHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userHomeViewController.swift; sourceTree = "<group>"; };
+		BEF9753C270AE0E500325281 /* paramedicHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = paramedicHomeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,8 +145,33 @@
 				2021F18F1B90EB235EC5095C /* Pods-TORQTests.debug.xcconfig */,
 				2FF5348CF2C51FD8DA9067F8 /* Pods-TORQTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		BE34F69B270F30850093C633 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				BE34F69C270F30B70093C633 /* requestCollectionViewCell.swift */,
+			);
+			path = views;
+			sourceTree = "<group>";
+		};
+		BE34F6A0270F31C50093C633 /* modules */ = {
+			isa = PBXGroup;
+			children = (
+				BE34F6A1270F31FB0093C633 /* Request.swift */,
+				BE34F6A3270F32260093C633 /* SRCACenters.swift */,
+			);
+			path = modules;
+			sourceTree = "<group>";
+		};
+		BE34F6A7270FFF470093C633 /* delegates */ = {
+			isa = PBXGroup;
+			children = (
+				BEF974DD2707146300325281 /* AppDelegate.swift */,
+				BEF974DF2707146300325281 /* SceneDelegate.swift */,
+			);
+			path = delegates;
 			sourceTree = "<group>";
 		};
 		BEF974D12707146300325281 = {
@@ -142,9 +199,11 @@
 		BEF974DC2707146300325281 /* TORQ */ = {
 			isa = PBXGroup;
 			children = (
-				BEF974DD2707146300325281 /* AppDelegate.swift */,
-				BEF974DF2707146300325281 /* SceneDelegate.swift */,
-				BEF974E12707146300325281 /* ViewController.swift */,
+				BE34F6A0270F31C50093C633 /* modules */,
+				BE34F69B270F30850093C633 /* views */,
+				BEF9751627076BE000325281 /* extensionsUtilites */,
+				BEF975152707294100325281 /* viewControllers */,
+				BE34F6A7270FFF470093C633 /* delegates */,
 				BEF974E32707146300325281 /* Main.storyboard */,
 				BEF974E62707146500325281 /* Assets.xcassets */,
 				BEF974E82707146500325281 /* LaunchScreen.storyboard */,
@@ -170,6 +229,34 @@
 				BEF975012707146500325281 /* Info.plist */,
 			);
 			path = TORQUITests;
+			sourceTree = "<group>";
+		};
+		BEF975152707294100325281 /* viewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				BEF9750F2707291F00325281 /* HomeViewController.swift */,
+				BEF975112707292C00325281 /* signUpFirstViewController.swift */,
+				BEF975132707293600325281 /* signUpSecondViewController.swift */,
+				BEF97538270AE07400325281 /* loginViewController.swift */,
+				BEF9753C270AE0E500325281 /* paramedicHomeViewController.swift */,
+				BEF9753A270AE0D100325281 /* userHomeViewController.swift */,
+				BE34F69E270F31A00093C633 /* requestsViewController.swift */,
+				BE34F6A5270F327A0093C633 /* viewLocationViewController.swift */,
+				BE34F6A8271182F90093C633 /* launchViewController.swift */,
+				BE34F6AA27118A800093C633 /* onboardingScreen1ViewController.swift */,
+				BE34F6AC27118A8F0093C633 /* onboardingScreen2ViewController.swift */,
+				BE34F6AE27118A9E0093C633 /* onboardingScreen3ViewController.swift */,
+			);
+			path = viewControllers;
+			sourceTree = "<group>";
+		};
+		BEF9751627076BE000325281 /* extensionsUtilites */ = {
+			isa = PBXGroup;
+			children = (
+				BEF9751727076C0800325281 /* stringExtension.swift */,
+				BEF9751A2707D63A00325281 /* dateExtension.swift */,
+			);
+			path = extensionsUtilites;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -411,9 +498,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BEF974E22707146300325281 /* ViewController.swift in Sources */,
+				BE34F6AD27118A8F0093C633 /* onboardingScreen2ViewController.swift in Sources */,
+				BEF9751827076C0800325281 /* stringExtension.swift in Sources */,
+				BE34F6A4270F32260093C633 /* SRCACenters.swift in Sources */,
+				BE34F6A2270F31FB0093C633 /* Request.swift in Sources */,
+				BEF9751B2707D63A00325281 /* dateExtension.swift in Sources */,
+				BEF975142707293600325281 /* signUpSecondViewController.swift in Sources */,
+				BE34F6AB27118A800093C633 /* onboardingScreen1ViewController.swift in Sources */,
+				BE34F69D270F30B70093C633 /* requestCollectionViewCell.swift in Sources */,
+				BE34F6AF27118A9E0093C633 /* onboardingScreen3ViewController.swift in Sources */,
+				BEF975102707291F00325281 /* HomeViewController.swift in Sources */,
+				BEF9753D270AE0E500325281 /* paramedicHomeViewController.swift in Sources */,
+				BEF97539270AE07400325281 /* loginViewController.swift in Sources */,
 				BEF974DE2707146300325281 /* AppDelegate.swift in Sources */,
 				BEF974E02707146300325281 /* SceneDelegate.swift in Sources */,
+				BEF9753B270AE0D100325281 /* userHomeViewController.swift in Sources */,
+				BE34F6A6270F327A0093C633 /* viewLocationViewController.swift in Sources */,
+				BE34F69F270F31A00093C633 /* requestsViewController.swift in Sources */,
+				BEF975122707292C00325281 /* signUpFirstViewController.swift in Sources */,
+				BE34F6A9271182FA0093C633 /* launchViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -519,7 +622,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -574,7 +677,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -591,13 +694,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Q839S77BZ7;
+				DEVELOPMENT_TEAM = 3XY36RL6YG;
 				INFOPLIST_FILE = TORQ/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Alsulayfih.TORQ;
+				PRODUCT_BUNDLE_IDENTIFIER = noura.TORQ;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -611,13 +714,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Q839S77BZ7;
+				DEVELOPMENT_TEAM = 3XY36RL6YG;
 				INFOPLIST_FILE = TORQ/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Alsulayfih.TORQ;
+				PRODUCT_BUNDLE_IDENTIFIER = noura.TORQ;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
