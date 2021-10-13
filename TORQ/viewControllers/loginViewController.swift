@@ -3,10 +3,12 @@ import FirebaseAuth
 
 class loginViewController: UIViewController {
     
-    //MARK:- @IBOutlets
+    //MARK: - @IBOutlets
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var password: UITextField!
     @IBOutlet weak var nextbutton: UIButton!
+    @IBOutlet weak var errorView: UIStackView!
+    @IBOutlet weak var errorMessageLabel: UILabel!
     
     //MARK: - Vraibales
     var userID: String?
@@ -15,13 +17,25 @@ class loginViewController: UIViewController {
     //MARK: - Overriden Functions
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // hide the error message and add the border
+        errorView.isHidden = true
+        email.layer.cornerRadius = 8.0
+        email.layer.masksToBounds = true
+        email.layer.borderColor = UIColor( red: 54/255, green: 53/255, blue:87/255, alpha: 1.0 ).cgColor
+        email.layer.borderWidth = 2.0
+        
+        password.layer.cornerRadius = 8.0
+        password.layer.masksToBounds = true
+        password.layer.borderColor = UIColor( red: 54/255, green: 53/255, blue:87/255, alpha: 1.0 ).cgColor
+        password.layer.borderWidth = 2.0
+        
         configureKeyboardNotification()
-
+        
     }
     
     
     //MARK: - Functions
-    
     func configureKeyboardNotification(){
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         self.view!.addGestureRecognizer(tap)
@@ -35,7 +49,6 @@ class loginViewController: UIViewController {
     }
     
     @objc func keyboardwillShow(notification: NSNotification){
-        
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue{
             let keyboardHieght = keyboardFrame.cgRectValue.height
             let bottomSpace = self.view.frame.height - (self.nextbutton.frame.origin.y + nextbutton.frame.height)
@@ -57,13 +70,15 @@ class loginViewController: UIViewController {
     func validateFields()->[String: String]{
         var errors = ["email":"", "password":""]
         
-        if email.text == nil || email.text == ""{
-            errors["email"] = "Email can't be empty"
+        // checking empty fields
+        if email.text == nil || email.text == "" || !email.text!.trimWhiteSpace().isValidEmail{
+            errors["email"] = "Incorrect email"
         }
         
-        if password.text == nil || password.text == ""  {
-            errors["email"] = "password cannot be empty"
+        if password.text == nil || password.text == "" || !password.text!.isValidPassword {
+            errors["password"] = "Incorrect password"
         }
+        
         
         return errors
         
@@ -105,45 +120,52 @@ class loginViewController: UIViewController {
         
         let errors = validateFields()
         
-        
-        guard errors["email"] == "" else {
-            showALert(message: errors["email"]!)
-            return
-        }
-        guard errors["password"] == "" else {
-            //handle the error
-            showALert(message: errors["password"]!)
+        // if there are any errors show the error view
+        guard errors["email"] == "" && errors["password"] == "" else {
+            //showALert(message: errors["email"]!)
+            errorMessageLabel.text = "Invalid email or password"
+            errorView.isHidden = false
             return
         }
         
-        Auth.auth().signIn(withEmail: email.text!, password: password.text!) { authResult, error in
+        errorView.isHidden = true
+        
+        Auth.auth().signIn(withEmail: email.text!.trimWhiteSpace(), password: password.text!) { authResult, error in
             
             guard error == nil else{
-                let errCode = AuthErrorCode(rawValue: error!._code)
-                switch errCode {
-                case .invalidEmail:
-                    self.showALert(message: "Invalid email")
-                case .wrongPassword:
-                    self.showALert(message: "Incorrect email or password")
-                default:
-                    self.showALert(message: "Incorrect email or password")
-                }
+                //self.showALert(message: "Please ensure all fields are correct")
+                self.errorMessageLabel.text = "Invalid credentials"
+                self.errorView.isHidden = false
                 return
             }
-        
+            
             // role authentication
-                if(self.email.text!.isParamedicUser){
-                    self.goToParamedicHome()
-                }
-                else{
-                    self.userID = authResult!.user.uid
-                    self.goToUserHome()
-                }
+            if(self.email.text!.isParamedicUser){
+                self.goToParamedicHome()
+            }
+            else{
+                self.userID = authResult!.user.uid
+                self.goToUserHome()
+            }
         }
-        
     }
     
-    
+    @IBAction func textFieldEditingChanged(_ sender: UITextField) {
+        if email.text == nil || email.text == "" || !email.text!.trimWhiteSpace().isValidEmail{
+            email.layer.borderColor = UIColor( red: 255/255, green: 94/255, blue:102/255, alpha: 1.0 ).cgColor
+        } else{
+            email.layer.borderColor = UIColor( red: 54/255, green: 53/255, blue:87/255, alpha: 1.0 ).cgColor
+        }
+        
+        if password.text == nil || password.text == "" || !password.text!.isValidPassword {
+            password.layer.borderColor = UIColor( red: 255/255, green: 94/255, blue:102/255, alpha: 1.0 ).cgColor
+        } else{
+            
+            password.layer.borderColor = UIColor( red: 54/255, green: 53/255, blue:87/255, alpha: 1.0 ).cgColor
+        }
+        
+        
+    }
 }
 
 

@@ -45,5 +45,14 @@ extension String {
         return domainTest.elementsEqual("srca.org.sa")
     }
     
+    // a function that trims trailing white spaces
+    func trimWhiteSpace() -> String {
+            if let trailingWs = self.range(of: "\\s+$", options: .regularExpression) {
+                return self.replacingCharacters(in: trailingWs, with: "")
+            } else {
+                return self
+            }
+        }
+    
 }
 
