@@ -104,11 +104,11 @@ extension requestsViewController: UICollectionViewDataSource{
         cell.layer.cornerRadius = 20
         cell.name.text = "Accident #\(indexPath.row)"
         cell.dateTime.text = "\(myRequests[indexPath.row].getDateTime())"
-        var state = "Processed"
+        var state = " "
         if myRequests[indexPath.row].getStatus() == "0" {
             state = "Active"
         }
-        cell.status.text = "status: \(state)"
+        cell.status.text = ""
         return cell
     }
     
