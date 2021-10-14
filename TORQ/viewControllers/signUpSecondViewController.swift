@@ -11,6 +11,8 @@ class signUpSecondViewController: UIViewController {
     @IBOutlet weak var nationalID: UITextField!
     @IBOutlet weak var phone: UITextField!
     @IBOutlet weak var nextButton: UIButton!
+    @IBOutlet weak var errorView: UIStackView!
+    @IBOutlet weak var errorLabel: UILabel!
     
     //MARK: - Variables
     var ref = Database.database().reference()
@@ -30,6 +32,24 @@ class signUpSecondViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // hide the error message and add the border
+        errorView.isHidden = true
+        // national ID border
+        nationalID.layer.cornerRadius = 8.0
+        nationalID.layer.masksToBounds = true
+        nationalID.layer.borderColor = UIColor( red: 54/255, green: 53/255, blue:87/255, alpha: 1.0 ).cgColor
+        nationalID.layer.borderWidth = 1.0
+        // date border
+        date.layer.cornerRadius = 8.0
+        date.layer.masksToBounds = true
+        date.layer.borderColor = UIColor( red: 54/255, green: 53/255, blue:87/255, alpha: 1.0 ).cgColor
+        date.layer.borderWidth = 1.0
+        // phone border
+        phone.layer.cornerRadius = 8.0
+        phone.layer.masksToBounds = true
+        phone.layer.borderColor = UIColor( red: 54/255, green: 53/255, blue:87/255, alpha: 1.0 ).cgColor
+        phone.layer.borderWidth = 1.0
+     
         setupDatePickerView()
         configureKeyboard()
         
@@ -85,7 +105,7 @@ class signUpSecondViewController: UIViewController {
         //CASE-2: date of birth
         // no validation is needed since the date picker has the minimum date as the deafult, thus we're preventing the error from the first place.
         if date.text == nil || date.text == "" {
-            errors["date"] = "date cannot be empty"
+            errors["date"] = "Date of Birth cannot be empty"
         }
                 
         //CASE-3: This case validate if the user enters empty or nil or a nationalID that has chracters.each case with it sub-cases detailed messages explained below.
@@ -93,7 +113,7 @@ class signUpSecondViewController: UIViewController {
             errors["phone"] = "Phone number cannot be empty"
         }
         else if !phone.text!.isValidPhone {
-            errors["phone"] = "Please enter a valid phone number"
+            errors["phone"] = "Invalid phone number"
         }
         
         //CASE-4: gender
@@ -107,7 +127,7 @@ class signUpSecondViewController: UIViewController {
         let formatter = DateFormatter()
         formatter.dateFormat = "MM/dd/yyyy"
         datePicker.maximumDate = Date("12-31-2012")
-        datePicker.minimumDate = Date("01-01-1950")
+        datePicker.minimumDate = Date("01-01-1930")
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(chooseDate))
@@ -118,7 +138,7 @@ class signUpSecondViewController: UIViewController {
         datePicker.datePickerMode = .date
         
     }
-    
+    // is not needed
     func showALert(message:String){
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: "Ok", style: .default)
@@ -154,23 +174,30 @@ class signUpSecondViewController: UIViewController {
     @IBAction func goToHomeScreen(_ sender: Any) {
         
         let errors = validateFields()
+        
         // if national id has an error
         guard errors["nationalID"] == "" else {
             //handle the error
-            showALert(message: errors["nationalID"]!)
+//            showALert(message: errors["nationalID"]!)
+            errorLabel.text = errors["nationalID"]!
+            errorView.isHidden = false
             return
         }
-        
+        // if Date of Birth has an error
         guard errors["date"] == "" else {
             //handle the error
-            showALert(message: "Date cannot be empty")
+//            showALert(message: errors["date"]!)
+            errorLabel.text = errors["date"]!
+            errorView.isHidden = false
             return
         }
         
         // if phone number has an error
         guard errors["phone"] == "" else {
             //handle the error
-            showALert(message: errors["phone"]!)
+//            showALert(message: errors["phone"]!)
+            errorLabel.text = errors["phone"]!
+            errorView.isHidden = false
             return
         }
         
@@ -208,11 +235,11 @@ class signUpSecondViewController: UIViewController {
                 if let errCode = AuthErrorCode(rawValue: error!._code) {
                     switch errCode {
                     case .invalidEmail:
-                        self.showALert(message: "invalid email, please try again")
+                        self.showALert(message: "Invalid email, please try again")
                     case .emailAlreadyInUse:
-                        self.showALert(message: "this email is in use try with another one")
+                        self.showALert(message: "This email is in use try with another one")
                     default:
-                        self.showALert(message: "invalid credentials")
+                        self.showALert(message: "Invalid credentials")
                     }
                 }
                 return
@@ -227,16 +254,59 @@ class signUpSecondViewController: UIViewController {
                 self.ref.child("Sensor").child("S\(id!)/time").setValue("0")
             
                 //alert sheet to indicate success
-                let alert = UIAlertController(title: "You're all set up!", message: "Welcome to TORQ App, your safty is our concern!", preferredStyle: .actionSheet)
+                let alert = UIAlertController(title: "You're all set up!", message: "Welcome to TORQ App, your safety is our concern!", preferredStyle: .actionSheet)
                 let acceptAction = UIAlertAction(title: "Ok", style: .default) { (_) -> Void in
                     self.goToHomeScreen()
                 }
                 alert.addAction(acceptAction)
                 self.present(alert, animated: true, completion: nil)
-        }
+        }//Auth
         
+    }//Go to home screen
+    
+    @IBAction func nationalIdEditingChanged(_ sender: UITextField) {
+        let errors = validateFields()
+                // change national ID border if national ID is not valid, and set error msg
+               if  errors["nationalID"] != "" {
+                   nationalID.layer.borderColor = UIColor(red: 255/255, green: 94/255, blue:102/255, alpha: 1.0 ).cgColor
+                   errorLabel.text = errors["nationalID"]!
+                   errorView.isHidden = false
+               }
+                else {
+                    nationalID.layer.borderColor = UIColor( red: 54/255, green: 53/255, blue:87/255, alpha: 1.0 ).cgColor
+                    errorView.isHidden = true
+               }
     }
     
+//    @IBAction func dobEditingChanged(_ sender: UITextField) {
+//        let errors = validateFields()
+//                // change date border if  date is not valid, and set error msg
+//               if  errors["date"] != "" {
+//                   date.layer.borderColor = UIColor(red: 255/255, green: 94/255, blue:102/255, alpha: 1.0 ).cgColor
+//                   errorLabel.text = errors["date"]!
+//                   errorView.isHidden = false
+//               }
+//                else {
+//                    date.layer.borderColor = UIColor( red: 54/255, green: 53/255, blue:87/255, alpha: 1.0 ).cgColor
+//                    errorView.isHidden = true
+//               }
+//
+//    }
+    
+    
+    @IBAction func phoneEditingChanged(_ sender: UITextField) {
+        let errors = validateFields()
+                // change phone border if phone is not valid, and set error msg
+               if  errors["phone"] != "" {
+                   phone.layer.borderColor = UIColor(red: 255/255, green: 94/255, blue:102/255, alpha: 1.0 ).cgColor
+                   errorLabel.text = errors["phone"]!
+                   errorView.isHidden = false
+               }
+                else {
+                    phone.layer.borderColor = UIColor( red: 54/255, green: 53/255, blue:87/255, alpha: 1.0 ).cgColor
+                    errorView.isHidden = true
+               }
+    }
 }
 
 //MARK: - Extensions
