@@ -1,6 +1,7 @@
 import UIKit
 import FirebaseAuth
 
+
 class loginViewController: UIViewController {
     
     //MARK: - @IBOutlets
@@ -18,17 +19,24 @@ class loginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // hide the error message and add the border
-        errorView.isHidden = true
-        email.layer.cornerRadius = 8.0
-        email.layer.masksToBounds = true
-        email.layer.borderColor = UIColor( red: 54/255, green: 53/255, blue:87/255, alpha: 1.0 ).cgColor
-        email.layer.borderWidth = 2.0
+        // setup default border
+        email.setBorder(color: "default", image: UIImage(named: "emailDefault")!)
+        password.setBorder(color: "default", image: UIImage(named: "lockDefault")!)
         
-        password.layer.cornerRadius = 8.0
-        password.layer.masksToBounds = true
-        password.layer.borderColor = UIColor( red: 54/255, green: 53/255, blue:87/255, alpha: 1.0 ).cgColor
-        password.layer.borderWidth = 2.0
+        errorView.isHidden = true
+        
+        // hide the error message and add the border
+        /*
+         email.layer.cornerRadius = 8.0
+         email.layer.masksToBounds = true
+         email.layer.borderColor = UIColor( red: 54/255, green: 53/255, blue:87/255, alpha: 1.0 ).cgColor
+         email.layer.borderWidth = 2.0
+         
+         password.layer.cornerRadius = 8.0
+         password.layer.masksToBounds = true
+         password.layer.borderColor = UIColor( red: 54/255, green: 53/255, blue:87/255, alpha: 1.0 ).cgColor
+         password.layer.borderWidth = 2.0
+         */
         
         configureKeyboardNotification()
         
@@ -70,7 +78,7 @@ class loginViewController: UIViewController {
     func validateFields()->[String: String]{
         var errors = ["email":"", "password":""]
         
-        // checking empty fields
+        // checking errors
         if email.text == nil || email.text == "" || !email.text!.trimWhiteSpace().isValidEmail{
             errors["email"] = "Incorrect email"
         }
@@ -78,7 +86,6 @@ class loginViewController: UIViewController {
         if password.text == nil || password.text == "" || !password.text!.isValidPassword {
             errors["password"] = "Incorrect password"
         }
-        
         
         return errors
         
@@ -116,8 +123,24 @@ class loginViewController: UIViewController {
     
     
     //MARK: - @IBActions
+    @IBAction func emailEditingChanged(_ sender: UITextField) {
+        // validate the email
+        if sender.text == nil || !sender.text!.trimWhiteSpace().isValidEmail || sender.text == ""{
+            sender.setBorder(color: "error", image: UIImage(named: "emailError")!)
+        } else{
+            sender.setBorder(color: "valid", image:  UIImage(named: "emailValid")!)
+        }
+    }
+    
+    @IBAction func passwordEditingChanged(_ sender: UITextField) {
+        if password.text == nil || password.text == "" {
+            password.setBorder(color: "error", image: UIImage(named: "lockError")!)
+        } else{
+            password.setBorder(color: "valid", image:  UIImage(named: "lockValid")!)
+        }
+    }
     @IBAction func loginpressed(_ sender: Any) {
-        
+    
         let errors = validateFields()
         
         // if there are any errors show the error view
@@ -150,22 +173,6 @@ class loginViewController: UIViewController {
         }
     }
     
-    @IBAction func textFieldEditingChanged(_ sender: UITextField) {
-        if email.text == nil || email.text == "" || !email.text!.trimWhiteSpace().isValidEmail{
-            email.layer.borderColor = UIColor( red: 255/255, green: 94/255, blue:102/255, alpha: 1.0 ).cgColor
-        } else{
-            email.layer.borderColor = UIColor( red: 54/255, green: 53/255, blue:87/255, alpha: 1.0 ).cgColor
-        }
-        
-        if password.text == nil || password.text == "" || !password.text!.isValidPassword {
-            password.layer.borderColor = UIColor( red: 255/255, green: 94/255, blue:102/255, alpha: 1.0 ).cgColor
-        } else{
-            
-            password.layer.borderColor = UIColor( red: 54/255, green: 53/255, blue:87/255, alpha: 1.0 ).cgColor
-        }
-        
-        
-    }
 }
 
 

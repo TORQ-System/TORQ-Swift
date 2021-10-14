@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3DDC91A2940F7463283FBFE6 /* Pods_TORQ_TORQUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 404C9ACD593D6364A24EFF38 /* Pods_TORQ_TORQUITests.framework */; };
+		71A2AD9A271880FD0066D252 /* textFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A2AD99271880FC0066D252 /* textFieldExtension.swift */; };
 		8FA67A0F52162B410B79BAF0 /* Pods_TORQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9EC7D60F5128DCF29B3517 /* Pods_TORQ.framework */; };
 		BE34F69D270F30B70093C633 /* requestCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE34F69C270F30B70093C633 /* requestCollectionViewCell.swift */; };
 		BE34F69F270F31A00093C633 /* requestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE34F69E270F31A00093C633 /* requestsViewController.swift */; };
@@ -62,6 +63,7 @@
 		2FF5348CF2C51FD8DA9067F8 /* Pods-TORQTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TORQTests.release.xcconfig"; path = "Target Support Files/Pods-TORQTests/Pods-TORQTests.release.xcconfig"; sourceTree = "<group>"; };
 		3AAFD3CBF88AE59FE9BCC730 /* Pods-TORQ-TORQUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TORQ-TORQUITests.release.xcconfig"; path = "Target Support Files/Pods-TORQ-TORQUITests/Pods-TORQ-TORQUITests.release.xcconfig"; sourceTree = "<group>"; };
 		404C9ACD593D6364A24EFF38 /* Pods_TORQ_TORQUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TORQ_TORQUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		71A2AD99271880FC0066D252 /* textFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = textFieldExtension.swift; sourceTree = "<group>"; };
 		9850D36D8AB92301B2DFBE7D /* Pods-TORQ-TORQUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TORQ-TORQUITests.debug.xcconfig"; path = "Target Support Files/Pods-TORQ-TORQUITests/Pods-TORQ-TORQUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		9F0737DF72CCC79CA95FDC8D /* Pods-TORQ.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TORQ.debug.xcconfig"; path = "Target Support Files/Pods-TORQ/Pods-TORQ.debug.xcconfig"; sourceTree = "<group>"; };
 		BE34F69C270F30B70093C633 /* requestCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = requestCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -255,6 +257,7 @@
 			children = (
 				BEF9751727076C0800325281 /* stringExtension.swift */,
 				BEF9751A2707D63A00325281 /* dateExtension.swift */,
+				71A2AD99271880FC0066D252 /* textFieldExtension.swift */,
 			);
 			path = extensionsUtilites;
 			sourceTree = "<group>";
@@ -499,6 +502,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BE34F6AD27118A8F0093C633 /* onboardingScreen2ViewController.swift in Sources */,
+				71A2AD9A271880FD0066D252 /* textFieldExtension.swift in Sources */,
 				BEF9751827076C0800325281 /* stringExtension.swift in Sources */,
 				BE34F6A4270F32260093C633 /* SRCACenters.swift in Sources */,
 				BE34F6A2270F31FB0093C633 /* Request.swift in Sources */,
