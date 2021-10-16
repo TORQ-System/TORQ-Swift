@@ -19,12 +19,9 @@ extension UITextField{
         // initialization
         let border = CALayer()
         let borderWidth = CGFloat(2.0)
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 18, height: 18))
         let attributedText = NSMutableAttributedString(attributedString: self.attributedText!)
        
-   
-             
-        
         if(color == "error"){
             border.borderColor = red
             attributedText.setAttributes([NSAttributedString.Key.foregroundColor : UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )], range: NSMakeRange(0, attributedText.length))
@@ -42,6 +39,7 @@ extension UITextField{
         
         border.frame = CGRect(origin: CGPoint(x: 0,y :self.frame.size.height - borderWidth), size: CGSize(width: self.frame.size.width, height: self.frame.size.height))
         border.borderWidth = borderWidth
+        
         imageView.image = image
         
         self.layer.addSublayer(border)
