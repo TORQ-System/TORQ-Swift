@@ -19,7 +19,7 @@ extension UITextField{
         // initialization
         let border = CALayer()
         let borderWidth = CGFloat(2.0)
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 18, height: 18))
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 28, height: 20))
         let attributedText = NSMutableAttributedString(attributedString: self.attributedText!)
        
         if(color == "error"){
