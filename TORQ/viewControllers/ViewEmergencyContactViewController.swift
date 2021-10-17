@@ -6,9 +6,21 @@
 //
 
 import UIKit
+import FirebaseDatabase
 
 class ViewEmergencyContactViewController: UIViewController {
-
+    
+    //MARK: - @IBOutlets
+    @IBOutlet weak var contacts: UICollectionView!
+    
+    //MARK: - Variables
+    var ref = Database.database().reference()
+    var EmergencyContacts: [emergencyContact] = []
+    var userEmail: String?
+    var userID: String?
+    var myRequests: [emergencyContact] = []
+    
+    //MARK: - Overriden function
     override func viewDidLoad() {
         super.viewDidLoad()
 
