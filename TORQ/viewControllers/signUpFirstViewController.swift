@@ -8,8 +8,11 @@ class signUpFirstViewController: UIViewController {
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var password: UITextField!
     @IBOutlet weak var nextbutton: UIButton!
-    @IBOutlet weak var errorView: UIStackView!
-    @IBOutlet weak var errorLabel: UILabel!
+    @IBOutlet weak var errorFirstName: UILabel!
+    @IBOutlet weak var errorLastName: UILabel!
+    @IBOutlet weak var errorEmail: UILabel!
+    @IBOutlet weak var errorPassword: UILabel!
+    
     
     
     //MARK: - Variables
@@ -24,27 +27,22 @@ class signUpFirstViewController: UIViewController {
         super.viewDidLoad()
         
         // hide the error message and add the border
-        errorView.isHidden = true
+        errorFirstName.alpha = 0
+        errorLastName.alpha = 0
+        errorEmail.alpha = 0
+        errorPassword.alpha = 0
+      
         // First name border
-        firstName.layer.cornerRadius = 8.0
-        firstName.layer.masksToBounds = true
-        firstName.layer.borderColor = UIColor( red: 54/255, green: 53/255, blue:87/255, alpha: 1.0 ).cgColor
-        firstName.layer.borderWidth = 1.0
+        firstName.setBorder(color: "default", image: UIImage(named: "personDefault")!)
+        
         // Last name border
-        lastName.layer.cornerRadius = 8.0
-        lastName.layer.masksToBounds = true
-        lastName.layer.borderColor = UIColor( red: 54/255, green: 53/255, blue:87/255, alpha: 1.0 ).cgColor
-        lastName.layer.borderWidth = 1.0
+        lastName.setBorder(color: "default", image: UIImage(named: "personDefault")!)
+       
         // email border
-        email.layer.cornerRadius = 8.0
-        email.layer.masksToBounds = true
-        email.layer.borderColor = UIColor( red: 54/255, green: 53/255, blue:87/255, alpha: 1.0 ).cgColor
-        email.layer.borderWidth = 1.0
+        email.setBorder(color: "default", image: UIImage(named: "emailDefault")!)
+        
         // password border
-        password.layer.cornerRadius = 8.0
-        password.layer.masksToBounds = true
-        password.layer.borderColor = UIColor( red: 54/255, green: 53/255, blue:87/255, alpha: 1.0 ).cgColor
-        password.layer.borderWidth = 1.0
+        password.setBorder(color: "default", image: UIImage(named: "lockDefault")!)
         
         configureKeyboard()
     }
@@ -176,16 +174,33 @@ class signUpFirstViewController: UIViewController {
         
         // if all fields were empty
         guard errors["Empty"] == ""  else {
-            errorLabel.text = "Fields cannot be empty"
-            errorView.isHidden = false
+            
+            // show error message
+            errorFirstName.text = "First name cannot be empty"
+//            errorFirstName.isHidden = false
+            errorFirstName.alpha = 1
+            
+            errorLastName.text = "Last name cannot be empty"
+//            errorLastName.isHidden = false
+            errorLastName.alpha = 1
+            
+            errorEmail.text = "Email cannot be empty"
+//            errorEmail.isHidden = false
+            errorEmail.alpha = 1
+            
+            errorPassword.text = "Password cannot be empty"
+//            password.isHidden = false
+            errorPassword.alpha = 1
+            
             return
         }
         // if the first name has an error
         guard errors["firstName"] == "" else {
             //No need for alerts anymore
             //showALert(message: errors["firstName"]!)
-            errorLabel.text = errors["firstName"]!
-            errorView.isHidden = false
+            errorFirstName.text = errors["firstName"]!
+//            errorFirstName.isHidden = false
+            errorFirstName.alpha = 1
             return
         }
         // if the last name has an error
@@ -193,8 +208,9 @@ class signUpFirstViewController: UIViewController {
             //No need for alerts anymore
             //showALert(message: errors["lastName"]!)
             //handle the error
-            errorLabel.text = errors["lastName"]!
-            errorView.isHidden = false
+            errorLastName.text = errors["lastName"]!
+//            errorLastName.isHidden = false
+            errorLastName.alpha = 1
             return
         }
         // if the email has an error
@@ -202,8 +218,9 @@ class signUpFirstViewController: UIViewController {
             //No need for alerts anymore
             //showALert(message: errors["email"]!)
             //handle the error
-            errorLabel.text = errors["email"]
-            errorView.isHidden = false
+            errorEmail.text = errors["email"]
+//            errorEmail.isHidden = false
+            errorEmail.alpha = 1
             return
         }
         // if the password has an error
@@ -211,12 +228,15 @@ class signUpFirstViewController: UIViewController {
             //No need for alerts anymore
             //showALert(message: errors["password"]!)
             //handle the error
-            errorLabel.text = errors["password"]
-            errorView.isHidden = false
+            errorPassword.text = errors["password"]
+            errorPassword.alpha = 1
             return
         }
         // if no error is detected hide the error view
-        errorView.isHidden = true
+        errorFirstName.alpha = 0
+        errorLastName.alpha = 0
+        errorEmail.alpha = 0
+        errorPassword.alpha = 0
         
         //2- caching the first sign up screen information
         userFirstName = firstName.text
@@ -234,13 +254,17 @@ class signUpFirstViewController: UIViewController {
         let errors = validateFields()
                 // change first name border if  name is not valid, and set error msg
                if  errors["firstName"] != "" {
-                   firstName.layer.borderColor = UIColor(red: 255/255, green: 94/255, blue:102/255, alpha: 1.0 ).cgColor
-                   errorLabel.text = errors["firstName"]!
-                   errorView.isHidden = false
+                   // first name invalid
+                   firstName.setBorder(color: "error", image: UIImage(named: "personError")!)
+                   errorFirstName.text = errors["firstName"]!
+//                   errorFirstName.isHidden = false
+                   errorFirstName.alpha = 1
                }
                 else {
-                   firstName.layer.borderColor = UIColor( red: 54/255, green: 53/255, blue:87/255, alpha: 1.0 ).cgColor
-                    errorView.isHidden = true
+                    // first name valid
+                    firstName.setBorder(color: "valid", image: UIImage(named: "personValid")!)
+//                    errorFirstName.isHidden = true
+                    errorFirstName.alpha = 0
                }
     }
     
@@ -249,13 +273,17 @@ class signUpFirstViewController: UIViewController {
                 // change last name border if  name is not valid, and set error msg
 
                if  errors["lastName"] != "" {
-                   lastName.layer.borderColor = UIColor(red: 255/255, green: 94/255, blue:102/255, alpha: 1.0 ).cgColor
-                   errorLabel.text = errors["lastName"]!
-                   errorView.isHidden = false
+                   // last name is invalid
+                   lastName.setBorder(color: "error", image: UIImage(named: "personError")!)
+                   errorLastName.text = errors["lastName"]!
+//                   errorLastName.isHidden = false
+                   errorLastName.alpha = 1
                }
                 else {
-                    lastName.layer.borderColor = UIColor( red: 54/255, green: 53/255, blue:87/255, alpha: 1.0 ).cgColor
-                    errorView.isHidden = true
+                    // last name is valid
+                    lastName.setBorder(color: "valid", image: UIImage(named: "personValid")!)
+//                    errorLastName.isHidden = true
+                    errorLastName.alpha = 0
                }
     }
     
@@ -264,26 +292,32 @@ class signUpFirstViewController: UIViewController {
                 // change email  border if email is not valid, and set error msg
 
                if  errors["email"] != "" {
-                   email.layer.borderColor = UIColor(red: 255/255, green: 94/255, blue:102/255, alpha: 1.0 ).cgColor
-                   errorLabel.text = errors["email"]!
-                   errorView.isHidden = false
+                   email.setBorder(color: "error", image: UIImage(named: "emailError")!)
+                   errorEmail.text = errors["email"]!
+//                   errorEmail.isHidden = false
+                   errorEmail.alpha = 1
                }
                 else {
-                    email.layer.borderColor = UIColor( red: 54/255, green: 53/255, blue:87/255, alpha: 1.0 ).cgColor
-                    errorView.isHidden = true
+                    email.setBorder(color: "valid", image: UIImage(named: "emailValid")!)
+//                    errorEmail.isHidden = true
+                    errorEmail.alpha = 0
                }
     }
     
     @IBAction func passwordEditingChanged(_ sender: Any) {
         let errors = validateFields()
         // change password  border if password is not valid, and set error msg
-        if password.text == nil || password.text == "" || errors["password"] != "" {
-            password.layer.borderColor = UIColor( red: 255/255, green: 94/255, blue:102/255, alpha: 1.0 ).cgColor
-            errorLabel.text = errors["password"]!
-            errorView.isHidden = false
-        } else{
-            password.layer.borderColor = UIColor( red: 54/255, green: 53/255, blue:87/255, alpha: 1.0 ).cgColor
-            errorView.isHidden = true
+            if password.text == nil || password.text == "" || errors["password"] != "" {
+                // password is invalid
+                password.setBorder(color: "error", image: UIImage(named: "lockError")!)
+                errorPassword.text = errors["password"]!
+//                errorPassword.isHidden = false
+                errorPassword.alpha = 1
+            } else{
+                // password is valid
+                password.setBorder(color: "valid", image: UIImage(named: "lockValid")!)
+//                errorPassword.isHidden = true
+                errorPassword.alpha = 0
         }
     }
     
