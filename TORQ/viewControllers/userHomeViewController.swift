@@ -12,7 +12,7 @@ class userHomeViewController: UIViewController {
     var userID: String?
     let locationManager = CLLocationManager()
     let ref = Database.database().reference()
-    var myContacts: [String: Any] = [:]
+    var myContacts: [emergencyContact] = []
 
     
 
@@ -68,24 +68,53 @@ class userHomeViewController: UIViewController {
     }
     
     @IBAction func sendNotification(_ sender: Any) {
-        //1-  get my emergency contact.
-        ref.child("EmergencyContact").getData(completion:  { error, snapshot in
-          guard error == nil else {
-            print(error!.localizedDescription)
-            return;
-          }
-            
-//            let ec = snapshot.value as! [String: Any]
-//            if ec["sender"] as! String == self.userID{
-//                self.myContacts
-//            }
-            
-            
-
-
-        });
+        
+        
+//        DispatchQueue.main.sync {
+        var snap: DataSnapshot = DataSnapshot()
+            //1-  get my emergency contact.
+            self.ref.child("EmergencyContact").observeSingleEvent(of: .value) { snapshot in
+                snap = snapshot
+                print(snapshot.value as! [String: Any])
+                                
+                for contact in snapshot.children{
+                    let obj = contact as! DataSnapshot
+                    let contactId = obj.childSnapshot(forPath: "contactID").value as! Int
+                    let name = obj.childSnapshot(forPath: "name").value as! String
+                    let phone = obj.childSnapshot(forPath: "phone").value as! String
+                    let senderID = obj.childSnapshot(forPath: "sender").value as! String
+                    let receiverID = obj.childSnapshot(forPath: "reciever").value as! String
+                    let sent = obj.childSnapshot(forPath: "sent").value as! String
+                    let msg = obj.childSnapshot(forPath: "msg").value as! String
+                    //create a EC object
+                    let emergencyContact = emergencyContact(name: name, phone_number: phone, senderID:senderID, recieverID: receiverID, sent: sent, contactID: contactId, msg: msg)
+                    
+                    if (emergencyContact.getSenderID()) == self.userID{
+                        print("inside if statement")
+                        //add it to the myContacts array
+                        self.myContacts.append(emergencyContact)
+                    }
+                    print("printing the global array in : \(self.myContacts)")
+  
+                }
+            }
         
         //2- update thier sent attribute form No to Yes.
+        
+        self.ref.child("EmergencyContact").child(snap.key).setValue(["sent": "Yes"]) {
+          (error:Error?, ref:DatabaseReference) in
+          if let error = error {
+            print("Data could not be saved: \(error).")
+          } else {
+            print("Data updated successfully!")
+          }
+        }
+        
+        
+//        }
+        //2- update thier sent attribute form No to Yes.
+//        print("printing the global array out : \(self.myContacts)")
+
         
         
 
@@ -129,9 +158,9 @@ extension userHomeViewController: CLLocationManagerDelegate{
         let longitude = locations.last?.coordinate.longitude
         let latitude = locations.last?.coordinate.latitude
         let time = locations.last?.timestamp
-        print("longitude: \(String(describing: longitude!))")
-        print("latitude: \(String(describing: latitude!))")
-        print("time: \(String(describing: time!))")
+//        print("longitude: \(String(describing: longitude!))")
+//        print("latitude: \(String(describing: latitude!))")
+//        print("time: \(String(describing: time!))")
         ref.child("Sensor").child("S\(userID!)/longitude").setValue((String(describing: longitude!)))
         ref.child("Sensor").child("S\(userID!)/latitude").setValue((String(describing: latitude!)))
         ref.child("Sensor").child("S\(userID!)/time").setValue((String(describing: time!)))
