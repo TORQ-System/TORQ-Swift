@@ -12,6 +12,7 @@ class userHomeViewController: UIViewController {
     var userID: String?
     let locationManager = CLLocationManager()
     let ref = Database.database().reference()
+    var myContacts: [String: Any] = [:]
 
     
 
@@ -66,7 +67,30 @@ class userHomeViewController: UIViewController {
         }
     }
     
+    @IBAction func sendNotification(_ sender: Any) {
+        //1-  get my emergency contact.
+        ref.child("EmergencyContact").getData(completion:  { error, snapshot in
+          guard error == nil else {
+            print(error!.localizedDescription)
+            return;
+          }
+            
+//            let ec = snapshot.value as! [String: Any]
+//            if ec["sender"] as! String == self.userID{
+//                self.myContacts
+//            }
+            
+            
 
+
+        });
+        
+        //2- update thier sent attribute form No to Yes.
+        
+        
+
+    }
+    
     
 }
 

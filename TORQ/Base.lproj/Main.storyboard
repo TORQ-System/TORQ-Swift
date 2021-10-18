@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Bol-9Y-gbQ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Bol-9Y-gbQ">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -351,11 +351,6 @@
                                 </constraints>
                                 <color key="tintColor" red="0.21176470589999999" green="0.20392156859999999" blue="0.3411764706" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" image="arrow.right" catalog="system"/>
-                                <buttonConfiguration key="configuration" style="tinted" cornerStyle="capsule">
-                                    <imageReference key="image" image="arrow.right" catalog="system" symbolScale="large"/>
-                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large" weight="bold"/>
-                                    <color key="baseBackgroundColor" red="0.21176470589999999" green="0.20392156859999999" blue="0.3411764706" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                </buttonConfiguration>
                                 <connections>
                                     <action selector="loginpressed:" destination="QY7-7g-n7i" eventType="touchUpInside" id="yl3-Ax-oO7"/>
                                 </connections>
@@ -791,13 +786,23 @@
                                     <action selector="logoutPressed:" destination="7h6-9b-u4o" eventType="touchUpInside" id="OmB-bq-pb2"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Y3-n2-fUb">
+                                <rect key="frame" x="150" y="548.5" width="114" height="30"/>
+                                <color key="tintColor" red="0.83749955890000005" green="0.33231014009999998" blue="0.42352765799999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <state key="normal" title="send notification"/>
+                                <connections>
+                                    <action selector="sendNotification:" destination="7h6-9b-u4o" eventType="touchUpInside" id="6fT-ts-hXX"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="UfT-s4-f11"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="9Y3-n2-fUb" firstAttribute="top" secondItem="iH6-TZ-waS" secondAttribute="bottom" constant="30" id="3k8-11-kMU"/>
                             <constraint firstItem="iH6-TZ-waS" firstAttribute="centerX" secondItem="8Uv-OH-SaR" secondAttribute="centerX" id="Yxt-dj-msj"/>
                             <constraint firstItem="9IE-2B-EaL" firstAttribute="centerX" secondItem="8Uv-OH-SaR" secondAttribute="centerX" id="ZLD-oc-JWO"/>
                             <constraint firstItem="iH6-TZ-waS" firstAttribute="top" secondItem="9IE-2B-EaL" secondAttribute="bottom" constant="30" id="kJg-Kz-zzD"/>
+                            <constraint firstItem="9Y3-n2-fUb" firstAttribute="centerX" secondItem="8Uv-OH-SaR" secondAttribute="centerX" id="mu6-nc-tho"/>
                             <constraint firstItem="9IE-2B-EaL" firstAttribute="centerY" secondItem="8Uv-OH-SaR" secondAttribute="centerY" id="wF7-hr-Ofh"/>
                         </constraints>
                     </view>
@@ -1072,7 +1077,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="KP3-F4-aOX"/>
         <segue reference="73n-cz-wVN"/>
     </inferredMetricsTieBreakers>
     <resources>
