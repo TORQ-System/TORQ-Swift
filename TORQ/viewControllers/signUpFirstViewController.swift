@@ -3,21 +3,20 @@ import UIKit
 class signUpFirstViewController: UIViewController {
     
     //MARK: - @IBOutlets
-    @IBOutlet weak var firstName: UITextField!
-    @IBOutlet weak var lastName: UITextField!
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var password: UITextField!
     @IBOutlet weak var nextbutton: UIButton!
-    @IBOutlet weak var errorFirstName: UILabel!
-    @IBOutlet weak var errorLastName: UILabel!
     @IBOutlet weak var errorEmail: UILabel!
     @IBOutlet weak var errorPassword: UILabel!
-    
+    @IBOutlet weak var confirmPassword: UITextField!
+    @IBOutlet weak var errorConfirmPassword: UILabel!
+    @IBOutlet weak var errorFullName: UILabel!
+    @IBOutlet weak var fullName: UITextField!
     
     
     //MARK: - Variables
-    var userFirstName: String?
-    var userLastName: String?
+    var userFullName: String?
+//    var userLastName: String?
     var userEmail: String?
     var userPassword: String?
     
@@ -27,16 +26,16 @@ class signUpFirstViewController: UIViewController {
         super.viewDidLoad()
         
         // hide the error message and add the border
-        errorFirstName.alpha = 0
-        errorLastName.alpha = 0
+        errorFullName.alpha = 0
+        errorConfirmPassword.alpha = 0
         errorEmail.alpha = 0
         errorPassword.alpha = 0
       
         // First name border
-        firstName.setBorder(color: "default", image: UIImage(named: "personDefault")!)
+        fullName.setBorder(color: "default", image: UIImage(named: "personDefault")!)
         
         // Last name border
-        lastName.setBorder(color: "default", image: UIImage(named: "personDefault")!)
+        confirmPassword.setBorder(color: "default", image: UIImage(named: "lockDefault")!)
        
         // email border
         email.setBorder(color: "default", image: UIImage(named: "emailDefault")!)
@@ -85,41 +84,26 @@ class signUpFirstViewController: UIViewController {
     
     
     func validateFields() -> [String: String ]{
-        var error: [String: String ] = ["Empty": "","firstName": "" ,"lastName": "" ,"email": "", "password":""]
+        var error: [String: String ] = ["Empty": "","fullName": "" ,"confirmPass": "" ,"email": "", "password":""]
         
         // CASE-0: This case validates if the user submits the form with empty fields
-        if firstName.text == "" && lastName.text == "" && email.text == "" && password.text == "" {
+        if fullName.text == "" && email.text == "" && password.text == "" && confirmPassword.text == ""{
             error["Empty"] = "Empty Fields"
         }
         
-        //CASE-1: This case validate if the user enters empty or nil or a first name that is less tha two charecters. each case with it sub-cases detailed messages explained below.
+        //CASE-1: This case validate if the user enters empty or nil or a full Name that is less tha two charecters. each case with it sub-cases detailed messages explained below.
         
-        if firstName.text == nil || firstName.text == "" {
-            error["firstName"] = "First Name cannot be empty"
+        if fullName.text == nil || fullName.text == "" {
+            error["fullName"] = "Full Name cannot be empty"
         }
-        else if !firstName.text!.isValidName{
+        else if !fullName.text!.isValidName{
 //            error["firstName"] = "First Name must be a valid name that has no spaces nor numbers"
-              error["firstName"] = "First Name cannot have spaces or numbers"
+              error["fullName"] = "Full Name should contain two words, and no numbers"
         }
-        else if firstName.text!.count <= 2{
-            error["firstName"] = "First Name must be greater than two characters"
+        else if fullName.text!.count <= 2{
+            error["fullName"] = "Full Name must be greater than two characters"
         }
-        
-        
-        //CASE-2: This case validate if the user enters empty or nil or a last name that is less tha two charecters. each case with it sub-cases detailed messages explained below.
-        
-        if lastName.text == nil || lastName.text == ""{
-            error["lastName"] = "Last Name cannot be empty"
-        }
-        else if !lastName.text!.isValidName{
-//            error["lastName"] = "Last Name must be a valid name that has no spaces nor numbers"
-            error["lastName"] = "Last Name cannot have spaces or numbers"
-        }
-        else if lastName.text!.count <= 2 {
-            error["lastName"] = "Last Name must be greater than two characters"
-        }
-        
-        
+    
         //CASE-3: This case validate if the user enters empty or nil or an invalid email address or if it restricted ( has the same domain as the paramedics "@srca.org.sa" )
         
         if email.text == nil || email.text == "" {
@@ -140,6 +124,14 @@ class signUpFirstViewController: UIViewController {
         else if !password.text!.isValidPassword{
             error["password"] = "Password should not be less than 6 characters"
         }
+        // confirm password checking
+        if confirmPassword.text == nil || confirmPassword.text == ""{
+            error["confirmPass"] = "Confirm Password cannot be empty"
+        }
+        else if confirmPassword.text != password.text!{
+            error["confirmPass"] = "Passwords does not match"
+            error["password"] = "Passwords does not match"
+        }
 
         return error
     }
@@ -148,8 +140,8 @@ class signUpFirstViewController: UIViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "signUpSecondViewController") as! signUpSecondViewController
         vc.modalPresentationStyle = .fullScreen
-        vc.userFirstName = userFirstName
-        vc.userLastName = userLastName
+        vc.userFirstName = userFullName
+//        vc.userLastName = userLastName
         vc.userEmail = userEmail
         vc.userPassword = userPassword
         present(vc, animated: true, completion: nil)
@@ -176,71 +168,57 @@ class signUpFirstViewController: UIViewController {
         guard errors["Empty"] == ""  else {
             
             // show error message
-            errorFirstName.text = "First name cannot be empty"
-//            errorFirstName.isHidden = false
-            errorFirstName.alpha = 1
+            errorFullName.text = "Full name cannot be empty"
+            errorFullName.alpha = 1
             
-            errorLastName.text = "Last name cannot be empty"
-//            errorLastName.isHidden = false
-            errorLastName.alpha = 1
+            errorConfirmPassword.text = "Confirm password cannot be empty"
+            errorConfirmPassword.alpha = 1
             
             errorEmail.text = "Email cannot be empty"
-//            errorEmail.isHidden = false
             errorEmail.alpha = 1
             
             errorPassword.text = "Password cannot be empty"
-//            password.isHidden = false
             errorPassword.alpha = 1
             
             return
         }
-        // if the first name has an error
-        guard errors["firstName"] == "" else {
-            //No need for alerts anymore
-            //showALert(message: errors["firstName"]!)
-            errorFirstName.text = errors["firstName"]!
-//            errorFirstName.isHidden = false
-            errorFirstName.alpha = 1
+        // if full name has an error
+        guard errors["fullName"] == "" else {
+            //handle the error
+            errorFullName.text = errors["fullName"]!
+            errorFullName.alpha = 1
             return
         }
-        // if the last name has an error
-        guard errors["lastName"] == "" else {
-            //No need for alerts anymore
-            //showALert(message: errors["lastName"]!)
+        // if the Confirm pass has an error
+        guard errors["confirmPass"] == "" else {
             //handle the error
-            errorLastName.text = errors["lastName"]!
-//            errorLastName.isHidden = false
-            errorLastName.alpha = 1
+            errorConfirmPassword.text = errors["confirmPass"]
+            errorConfirmPassword.alpha = 1
             return
         }
         // if the email has an error
         guard errors["email"] == "" else {
-            //No need for alerts anymore
-            //showALert(message: errors["email"]!)
             //handle the error
             errorEmail.text = errors["email"]
-//            errorEmail.isHidden = false
             errorEmail.alpha = 1
             return
         }
         // if the password has an error
         guard errors["password"] == "" else {
-            //No need for alerts anymore
-            //showALert(message: errors["password"]!)
             //handle the error
             errorPassword.text = errors["password"]
             errorPassword.alpha = 1
             return
         }
         // if no error is detected hide the error view
-        errorFirstName.alpha = 0
-        errorLastName.alpha = 0
+        errorFullName.alpha = 0
+        errorConfirmPassword.alpha = 0
         errorEmail.alpha = 0
         errorPassword.alpha = 0
         
         //2- caching the first sign up screen information
-        userFirstName = firstName.text
-        userLastName = lastName.text
+        userFullName = fullName.text
+//        userLastName = lastName.text
         userEmail = email.text
         userPassword = password.text
         
@@ -252,71 +230,64 @@ class signUpFirstViewController: UIViewController {
     @IBAction func firstNameChanged(_ sender: UITextField) {
 
         let errors = validateFields()
-                // change first name border if  name is not valid, and set error msg
-               if  errors["firstName"] != "" {
+                // change full Name border if  name invalid, and set error msg
+               if  errors["fullName"] != "" {
                    // first name invalid
-                   firstName.setBorder(color: "error", image: UIImage(named: "personError")!)
-                   errorFirstName.text = errors["firstName"]!
-//                   errorFirstName.isHidden = false
-                   errorFirstName.alpha = 1
+                   fullName.setBorder(color: "error", image: UIImage(named: "personError")!)
+                   errorFullName.text = errors["fullName"]!
+                   errorFullName.alpha = 1
                }
                 else {
-                    // first name valid
-                    firstName.setBorder(color: "valid", image: UIImage(named: "personValid")!)
-//                    errorFirstName.isHidden = true
-                    errorFirstName.alpha = 0
+                    // full Name valid
+                    fullName.setBorder(color: "valid", image: UIImage(named: "personValid")!)
+                    errorFullName.alpha = 0
                }
     }
     
     @IBAction func lastNameEditingChanged(_ sender: UITextField) {
+        confirmPassword.isSecureTextEntry = true
         let errors = validateFields()
-                // change last name border if  name is not valid, and set error msg
-
-               if  errors["lastName"] != "" {
-                   // last name is invalid
-                   lastName.setBorder(color: "error", image: UIImage(named: "personError")!)
-                   errorLastName.text = errors["lastName"]!
-//                   errorLastName.isHidden = false
-                   errorLastName.alpha = 1
+                
+        // change last name border if confirm Password is invalid, and set error msg
+               if  errors["confirmPass"] != "" {
+                   // confirm Pass is invalid
+                   confirmPassword.setBorder(color: "error", image: UIImage(named: "lockError")!)
+                   errorConfirmPassword.text = errors["confirmPass"]!
+                   errorConfirmPassword.alpha = 1
                }
                 else {
-                    // last name is valid
-                    lastName.setBorder(color: "valid", image: UIImage(named: "personValid")!)
-//                    errorLastName.isHidden = true
-                    errorLastName.alpha = 0
+                    // confirm Pass is valid
+                    confirmPassword.setBorder(color: "valid", image: UIImage(named: "lockValid")!)
+                    errorConfirmPassword.alpha = 0
                }
     }
     
     @IBAction func emailEditingChanged(_ sender: UITextField) {
         let errors = validateFields()
-                // change email  border if email is not valid, and set error msg
-
+              
+        // change email  border if email invalid, and set error msg
                if  errors["email"] != "" {
                    email.setBorder(color: "error", image: UIImage(named: "emailError")!)
                    errorEmail.text = errors["email"]!
-//                   errorEmail.isHidden = false
                    errorEmail.alpha = 1
                }
                 else {
                     email.setBorder(color: "valid", image: UIImage(named: "emailValid")!)
-//                    errorEmail.isHidden = true
                     errorEmail.alpha = 0
                }
     }
     
     @IBAction func passwordEditingChanged(_ sender: Any) {
         let errors = validateFields()
-        // change password  border if password is not valid, and set error msg
+        // change password  border if password invalid, and set error msg
             if password.text == nil || password.text == "" || errors["password"] != "" {
                 // password is invalid
                 password.setBorder(color: "error", image: UIImage(named: "lockError")!)
                 errorPassword.text = errors["password"]!
-//                errorPassword.isHidden = false
                 errorPassword.alpha = 1
             } else{
                 // password is valid
                 password.setBorder(color: "valid", image: UIImage(named: "lockValid")!)
-//                errorPassword.isHidden = true
                 errorPassword.alpha = 0
         }
     }

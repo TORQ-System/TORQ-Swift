@@ -513,148 +513,6 @@
                                     <constraint firstAttribute="width" constant="350" id="buV-9Z-VRM"/>
                                 </constraints>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" spacing="35" translatesAutoresizingMaskIntoConstraints="NO" id="5Wv-sj-L5v">
-                                <rect key="frame" x="17" y="310" width="353.5" height="315"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="YcY-r1-U5q">
-                                        <rect key="frame" x="0.0" y="0.0" width="353.5" height="52.5"/>
-                                        <subviews>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="First Name" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SfO-bf-3pL">
-                                                <rect key="frame" x="0.0" y="0.0" width="353.5" height="38"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <color key="tintColor" red="0.1178350076" green="0.1291675568" blue="0.14117830989999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="38" id="av5-RZ-xLo"/>
-                                                    <constraint firstAttribute="width" constant="354" id="pOe-1J-sgF"/>
-                                                </constraints>
-                                                <color key="textColor" red="0.1178350076" green="0.1291675568" blue="0.14117830989999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES" textContentType="name"/>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderLabel.textColor">
-                                                        <color key="value" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                                <connections>
-                                                    <action selector="firstNameChanged:" destination="WzW-Xp-KNk" eventType="editingChanged" id="jCM-na-XIF"/>
-                                                    <outlet property="delegate" destination="WzW-Xp-KNk" id="z9z-w1-v27"/>
-                                                </connections>
-                                            </textField>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error first name" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VT0-Cn-jlk">
-                                                <rect key="frame" x="0.0" y="38" width="353.5" height="14.5"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                <color key="textColor" red="0.7782370448" green="0.25408077239999999" blue="0.32155948880000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="r6J-EW-O5N">
-                                        <rect key="frame" x="0.0" y="87.5" width="353.5" height="52.5"/>
-                                        <subviews>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Last Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bxs-Gj-6gk">
-                                                <rect key="frame" x="0.0" y="0.0" width="353.5" height="38"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="38" id="0KC-NH-7T6"/>
-                                                </constraints>
-                                                <color key="textColor" red="0.89655125140000003" green="0.55289399620000002" blue="0.57254439589999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next" enablesReturnKeyAutomatically="YES" textContentType="email"/>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderLabel.textColor">
-                                                        <color key="value" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                                <connections>
-                                                    <action selector="lastNameEditingChanged:" destination="WzW-Xp-KNk" eventType="editingChanged" id="t5O-En-be8"/>
-                                                    <outlet property="delegate" destination="WzW-Xp-KNk" id="X41-AQ-8sP"/>
-                                                </connections>
-                                            </textField>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error last name" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SIp-Ge-TfV">
-                                                <rect key="frame" x="0.0" y="38" width="353.5" height="14.5"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                <color key="textColor" red="0.7782370448" green="0.25408077239999999" blue="0.32155948880000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="360" id="tui-qj-b9I"/>
-                                        </constraints>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="lH7-q3-gHO">
-                                        <rect key="frame" x="0.0" y="175" width="353.5" height="52.5"/>
-                                        <subviews>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bxA-o2-PSq">
-                                                <rect key="frame" x="0.0" y="0.0" width="353.5" height="38"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="38" id="7Ie-K7-AwL"/>
-                                                </constraints>
-                                                <color key="textColor" red="0.89655125140000003" green="0.55289399620000002" blue="0.57254439589999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next" enablesReturnKeyAutomatically="YES" textContentType="email"/>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderLabel.textColor">
-                                                        <color key="value" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                                <connections>
-                                                    <action selector="emailEditingChanged:" destination="WzW-Xp-KNk" eventType="editingChanged" id="rLi-iF-83f"/>
-                                                    <outlet property="delegate" destination="WzW-Xp-KNk" id="RJl-Y3-OUX"/>
-                                                </connections>
-                                            </textField>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error email" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2ez-fO-gvA">
-                                                <rect key="frame" x="0.0" y="38" width="353.5" height="14.5"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                <color key="textColor" red="0.7782370448" green="0.25408077239999999" blue="0.32155948880000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="360" id="NTD-Rf-9r2"/>
-                                        </constraints>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="3r0-kv-buo">
-                                        <rect key="frame" x="0.0" y="262.5" width="353.5" height="52.5"/>
-                                        <subviews>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="h37-eX-keh">
-                                                <rect key="frame" x="0.0" y="0.0" width="353.5" height="38"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="38" id="MMR-Xd-6W9"/>
-                                                    <constraint firstAttribute="width" constant="354" id="gEP-Ie-RVg"/>
-                                                </constraints>
-                                                <color key="textColor" red="0.89655125140000003" green="0.55289399620000002" blue="0.57254439589999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES" secureTextEntry="YES" textContentType="password"/>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderLabel.textColor">
-                                                        <color key="value" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                                <connections>
-                                                    <action selector="passwordEditingChanged:" destination="WzW-Xp-KNk" eventType="editingChanged" id="4AV-fE-Rb5"/>
-                                                    <outlet property="delegate" destination="WzW-Xp-KNk" id="caI-ce-aXH"/>
-                                                </connections>
-                                            </textField>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error password" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dsr-vr-2pk">
-                                                <rect key="frame" x="0.0" y="38" width="353.5" height="14.5"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                <color key="textColor" red="0.7782370448" green="0.25408077239999999" blue="0.32155948880000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="360" id="kt5-rU-8fg"/>
-                                        </constraints>
-                                    </stackView>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="h37-eX-keh" firstAttribute="top" secondItem="2ez-fO-gvA" secondAttribute="bottom" constant="35" id="4O1-19-AfQ"/>
-                                    <constraint firstItem="bxs-Gj-6gk" firstAttribute="top" secondItem="YcY-r1-U5q" secondAttribute="bottom" constant="35" id="5vB-bc-vKW"/>
-                                    <constraint firstItem="bxA-o2-PSq" firstAttribute="top" secondItem="SIp-Ge-TfV" secondAttribute="bottom" constant="35" id="bCE-0D-ZW0"/>
-                                </constraints>
-                            </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NJO-gw-My9">
                                 <rect key="frame" x="100" y="787" width="213.5" height="32"/>
                                 <subviews>
@@ -722,11 +580,137 @@
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="tEs-qX-dfB"/>
                                 </constraints>
                             </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="35" translatesAutoresizingMaskIntoConstraints="NO" id="5Wv-sj-L5v">
+                                <rect key="frame" x="30" y="316" width="353.5" height="315"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="YcY-r1-U5q">
+                                        <rect key="frame" x="0.0" y="0.0" width="353.5" height="52.5"/>
+                                        <subviews>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Full Name" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SfO-bf-3pL">
+                                                <rect key="frame" x="0.0" y="0.0" width="353.5" height="38"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="tintColor" red="0.1178350076" green="0.1291675568" blue="0.14117830989999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="38" id="av5-RZ-xLo"/>
+                                                </constraints>
+                                                <color key="textColor" red="0.1178350076" green="0.1291675568" blue="0.14117830989999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES" textContentType="name"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderLabel.textColor">
+                                                        <color key="value" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="firstNameChanged:" destination="WzW-Xp-KNk" eventType="editingChanged" id="jCM-na-XIF"/>
+                                                    <outlet property="delegate" destination="WzW-Xp-KNk" id="z9z-w1-v27"/>
+                                                </connections>
+                                            </textField>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error first name" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VT0-Cn-jlk">
+                                                <rect key="frame" x="0.0" y="38" width="353.5" height="14.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <color key="textColor" red="0.7782370448" green="0.25408077239999999" blue="0.32155948880000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="lH7-q3-gHO">
+                                        <rect key="frame" x="0.0" y="87.5" width="353.5" height="52.5"/>
+                                        <subviews>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bxA-o2-PSq">
+                                                <rect key="frame" x="0.0" y="0.0" width="353.5" height="38"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="38" id="7Ie-K7-AwL"/>
+                                                </constraints>
+                                                <color key="textColor" red="0.20916676519999999" green="0.20428097249999999" blue="0.34119099380000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next" enablesReturnKeyAutomatically="YES" textContentType="email"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderLabel.textColor">
+                                                        <color key="value" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="emailEditingChanged:" destination="WzW-Xp-KNk" eventType="editingChanged" id="rLi-iF-83f"/>
+                                                    <outlet property="delegate" destination="WzW-Xp-KNk" id="RJl-Y3-OUX"/>
+                                                </connections>
+                                            </textField>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error email" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2ez-fO-gvA">
+                                                <rect key="frame" x="0.0" y="38" width="353.5" height="14.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <color key="textColor" red="0.7782370448" green="0.25408077239999999" blue="0.32155948880000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="3r0-kv-buo">
+                                        <rect key="frame" x="0.0" y="175" width="353.5" height="52.5"/>
+                                        <subviews>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="h37-eX-keh">
+                                                <rect key="frame" x="0.0" y="0.0" width="353.5" height="38"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="38" id="MMR-Xd-6W9"/>
+                                                </constraints>
+                                                <color key="textColor" red="0.20916676519999999" green="0.20428097249999999" blue="0.34119099380000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES" secureTextEntry="YES" textContentType="password"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderLabel.textColor">
+                                                        <color key="value" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="passwordEditingChanged:" destination="WzW-Xp-KNk" eventType="editingChanged" id="4AV-fE-Rb5"/>
+                                                    <outlet property="delegate" destination="WzW-Xp-KNk" id="caI-ce-aXH"/>
+                                                </connections>
+                                            </textField>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error password" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dsr-vr-2pk">
+                                                <rect key="frame" x="0.0" y="38" width="353.5" height="14.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <color key="textColor" red="0.7782370448" green="0.25408077239999999" blue="0.32155948880000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="r6J-EW-O5N" userLabel="Confirm Pass">
+                                        <rect key="frame" x="0.0" y="262.5" width="353.5" height="52.5"/>
+                                        <subviews>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bxs-Gj-6gk">
+                                                <rect key="frame" x="0.0" y="0.0" width="353.5" height="38"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="38" id="0KC-NH-7T6"/>
+                                                </constraints>
+                                                <color key="textColor" red="0.20916676519999999" green="0.20428097249999999" blue="0.34119099380000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES" textContentType="password"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderLabel.textColor">
+                                                        <color key="value" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="lastNameEditingChanged:" destination="WzW-Xp-KNk" eventType="editingChanged" id="t5O-En-be8"/>
+                                                    <outlet property="delegate" destination="WzW-Xp-KNk" id="X41-AQ-8sP"/>
+                                                </connections>
+                                            </textField>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error confirm password" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SIp-Ge-TfV">
+                                                <rect key="frame" x="0.0" y="38" width="353.5" height="14.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <color key="textColor" red="0.7782370448" green="0.25408077239999999" blue="0.32155948880000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="qsJ-AD-g2D"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="5Wv-sj-L5v" firstAttribute="top" secondItem="5gB-P4-08z" secondAttribute="bottom" constant="99.5" id="Ktb-wj-jvH"/>
+                            <constraint firstItem="5Wv-sj-L5v" firstAttribute="top" secondItem="5gB-P4-08z" secondAttribute="bottom" constant="102.5" id="Ktb-wj-jvH"/>
                             <constraint firstItem="5Wv-sj-L5v" firstAttribute="leading" secondItem="qsJ-AD-g2D" secondAttribute="leading" constant="30" id="N5u-sf-6Ms"/>
                             <constraint firstItem="qsJ-AD-g2D" firstAttribute="trailing" secondItem="5gB-P4-08z" secondAttribute="trailing" constant="95.5" id="S1U-Ra-J8B"/>
                             <constraint firstItem="NJO-gw-My9" firstAttribute="leading" secondItem="qsJ-AD-g2D" secondAttribute="leading" constant="100" id="Sar-Ih-FlK"/>
@@ -736,18 +720,18 @@
                             <constraint firstItem="RHM-fr-DLZ" firstAttribute="leading" secondItem="qsJ-AD-g2D" secondAttribute="leading" constant="250" id="lPZ-eW-iDu"/>
                             <constraint firstItem="5gB-P4-08z" firstAttribute="top" secondItem="qsJ-AD-g2D" secondAttribute="top" constant="74" id="r4I-g6-AD1"/>
                             <constraint firstItem="5gB-P4-08z" firstAttribute="leading" secondItem="qsJ-AD-g2D" secondAttribute="leading" constant="102" id="sVD-Nc-9d0"/>
-                            <constraint firstItem="RHM-fr-DLZ" firstAttribute="top" secondItem="5Wv-sj-L5v" secondAttribute="bottom" constant="70" id="u0D-sy-pzW"/>
+                            <constraint firstItem="RHM-fr-DLZ" firstAttribute="top" secondItem="5Wv-sj-L5v" secondAttribute="bottom" constant="67" id="u0D-sy-pzW"/>
                             <constraint firstItem="qsJ-AD-g2D" firstAttribute="trailing" secondItem="RHM-fr-DLZ" secondAttribute="trailing" constant="32" id="wJV-Ig-MEj"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="confirmPassword" destination="bxs-Gj-6gk" id="Z3m-rT-qWK"/>
                         <outlet property="email" destination="bxA-o2-PSq" id="4FN-7F-fEB"/>
+                        <outlet property="errorConfirmPassword" destination="SIp-Ge-TfV" id="NfE-26-2ir"/>
                         <outlet property="errorEmail" destination="2ez-fO-gvA" id="qk6-DB-VpJ"/>
-                        <outlet property="errorFirstName" destination="VT0-Cn-jlk" id="FPq-p9-M2T"/>
-                        <outlet property="errorLastName" destination="SIp-Ge-TfV" id="oGZ-rC-JY4"/>
+                        <outlet property="errorFullName" destination="VT0-Cn-jlk" id="xVt-8o-IpU"/>
                         <outlet property="errorPassword" destination="Dsr-vr-2pk" id="r9Z-M2-fp0"/>
-                        <outlet property="firstName" destination="SfO-bf-3pL" id="yFR-Xk-NZQ"/>
-                        <outlet property="lastName" destination="bxs-Gj-6gk" id="J2g-hv-rp7"/>
+                        <outlet property="fullName" destination="SfO-bf-3pL" id="fxl-pQ-zAF"/>
                         <outlet property="nextbutton" destination="oV9-6s-Lwv" id="GEB-rv-Brm"/>
                         <outlet property="password" destination="h37-eX-keh" id="8Op-G7-Qia"/>
                     </connections>

@@ -19,7 +19,7 @@ class signUpSecondViewController: UIViewController {
     let datePicker = UIDatePicker()
     var userID: String?
     var userFirstName: String!
-    var userLastName: String!
+//    var userLastName: String!
     var userEmail: String!
     var userPassword: String!
     var userDate: String?
@@ -217,7 +217,7 @@ class signUpSecondViewController: UIViewController {
         
         let user: [String: Any] = [
             "firstName": userFirstName!,
-            "lastName": userLastName!,
+//            "lastName": userLastName!,
             "email": userEmail!,
             "password": userPassword!,
             "dateOfBirth": userDate!,
@@ -278,20 +278,6 @@ class signUpSecondViewController: UIViewController {
                }
     }
     
-//    @IBAction func dobEditingChanged(_ sender: UITextField) {
-//        let errors = validateFields()
-//                // change date border if  date is not valid, and set error msg
-//               if  errors["date"] != "" {
-//                   date.layer.borderColor = UIColor(red: 255/255, green: 94/255, blue:102/255, alpha: 1.0 ).cgColor
-//                   errorLabel.text = errors["date"]!
-//                   errorView.isHidden = false
-//               }
-//                else {
-//                    date.layer.borderColor = UIColor( red: 54/255, green: 53/255, blue:87/255, alpha: 1.0 ).cgColor
-//                    errorView.isHidden = true
-//               }
-//
-//    }
     
     
     @IBAction func phoneEditingChanged(_ sender: UITextField) {
