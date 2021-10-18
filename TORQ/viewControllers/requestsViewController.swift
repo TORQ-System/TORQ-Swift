@@ -8,6 +8,7 @@ class requestsViewController: UIViewController {
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var assignedRequests: UILabel!
     
+    @IBOutlet weak var namecenter: UILabel!
     //MARK: - Variables
     var ref = Database.database().reference()
     var requests: [Request] = []
@@ -59,6 +60,7 @@ class requestsViewController: UIViewController {
         let domainRange = loggedInCenterEmail.range(of: "@")!
         let centerName = loggedInCenterEmail[..<domainRange.lowerBound]
         loggedInCenter = SRCACenters.getSRCAInfo(name: String(centerName))
+        namecenter.text="\(centerName) Requests"
 //        print("view: \(String(describing: centerName))")
 //        print("view: \(String(describing: self.loggedInCenterEmail))")
 //        print("view: \(String(describing: self.loggedInCenter))")
@@ -68,10 +70,37 @@ class requestsViewController: UIViewController {
         let nearest = SRCACenters.getNearest(longitude: Double(longitude)!, latitude: Double(latitude)!)
 //        print("vieww: \(loggedInCenter!["name"] as! String)")
         if nearest["name"] as! String == loggedInCenter!["name"] as! String{
+        
             myRequests.append(request)
             self.requestsColletionView.reloadData()
 
         }
+    }
+    func locf(lon:String,lang:String) -> String{
+        return lon
+   
+        
+    }
+    @objc
+    func findloc(sender:UIButton){
+        
+        print("try")
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+               let vc = storyboard.instantiateViewController(identifier: "viewLocation") as! viewLocationViewController
+        vc.latitude = Double(myRequests[sender.tag].getLatitude())!
+        vc.longitude = Double(myRequests[sender.tag].getLongitude())!
+               vc.modalPresentationStyle = .fullScreen
+               self.present(vc, animated: true, completion: nil)
+    }
+    @objc
+    func viewbutten(sender:UIButton){
+        
+        print("view")
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+               let vc = storyboard.instantiateViewController(identifier: "ViewRequest_Report") as! ViewRequest_Report
+        vc.modalPresentationStyle = .fullScreen
+               self.present(vc, animated: true, completion: nil)
+       
     }
 
     //MARK: - @IBActions
@@ -85,12 +114,12 @@ class requestsViewController: UIViewController {
 extension requestsViewController: UICollectionViewDelegate{
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(identifier: "viewLocation") as! viewLocationViewController
-        vc.latitude = Double(myRequests[indexPath.row].getLatitude())!
-        vc.longitude = Double(myRequests[indexPath.row].getLongitude())!
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: true, completion: nil)
+//        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+//        let vc = storyboard.instantiateViewController(identifier: "viewLocation") as! viewLocationViewController
+//        vc.latitude = Double(myRequests[indexPath.row].getLatitude())!
+//        vc.longitude = Double(myRequests[indexPath.row].getLongitude())!
+//        vc.modalPresentationStyle = .fullScreen
+//        self.present(vc, animated: true, completion: nil)
     }
     
 }
@@ -112,12 +141,32 @@ extension requestsViewController: UICollectionViewDataSource{
         cell.layer.masksToBounds = true;
         cell.layer.cornerRadius = 20
         cell.name.text = "Accident #\(indexPath.row)"
-        cell.dateTime.text = "\(myRequests[indexPath.row].getDateTime())"
-        var state = " "
-        if myRequests[indexPath.row].getStatus() == "0" {
-            state = "Active"
-        }
-        cell.status.text = ""
+       // cell.dateTime.text = "\(myRequests[indexPath.row].getDateTime())"
+        //  cell.dateTime.text =
+          let date1 = "\(myRequests[indexPath.row].getDateTime())"
+          let find = date1.firstIndex(of: "+") ?? date1.endIndex
+          let find2 = date1[..<find]
+          let start = find2.index(find2.startIndex, offsetBy: 0)
+          let end = find2.index(find2.startIndex, offsetBy: 10)
+          let range = start...end
+
+          let newString = String(find2[range])
+          let start1 = find2.index(find2.startIndex, offsetBy: 10)
+          let end1 = find2.index(find2.startIndex, offsetBy:18)
+          let range1 = start1...end1
+
+          let newString1 = String(find2[range1])
+          cell.dateTime.text = "\(newString), \(newString1) "
+          var state = " "
+          if myRequests[indexPath.row].getStatus() == "0" {
+              state = ""
+          }
+          cell.status.text = state
+        cell.location.tag=indexPath.row
+        
+        cell.location.addTarget(self, action: #selector(findloc(sender: )), for: .touchUpInside)
+        cell.viewbutten.tag=indexPath.row
+        cell.viewbutten.addTarget(self, action: #selector(viewbutten(sender: )), for: .touchUpInside)
         return cell
     }
     
@@ -131,3 +180,4 @@ extension requestsViewController: UICollectionViewDelegateFlowLayout{
     }
     
 }
+
