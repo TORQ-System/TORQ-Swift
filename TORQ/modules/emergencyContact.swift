@@ -1,11 +1,3 @@
-//
-//  emergencyContact.swift
-//  TORQ
-//
-//  Created by Norua Alsalem on 18/10/2021.
-//
-
-import Foundation
 import Foundation
 
 struct emergencyContact {
@@ -16,8 +8,9 @@ struct emergencyContact {
     var sent: String
     var contactID: Int
     var msg: String
+    var relation: String
 
-    init(name: String, phone_number: String, senderID: String, recieverID: String, sent: String, contactID: Int, msg: String) {
+    init(name: String, phone_number: String, senderID: String, recieverID: String, sent: String, contactID: Int, msg: String, relation: String) {
         self.name = name
         self.phone_number = phone_number
         self.senderID = senderID
@@ -25,6 +18,7 @@ struct emergencyContact {
         self.contactID = contactID
         self.msg = msg
         self.sent = sent
+        self.relation = relation
     }
     
     func getName()->String{
@@ -54,4 +48,10 @@ struct emergencyContact {
     func getSent()->String{
         return sent
     }
+    
+    func getRelation()->String{
+        return relation
+    }
+    
+    
 }

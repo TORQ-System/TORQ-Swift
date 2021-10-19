@@ -80,6 +80,7 @@ class userHomeViewController: UIViewController {
                                 
                 for contact in snapshot.children{
                     let obj = contact as! DataSnapshot
+                    let relation = obj.childSnapshot(forPath: "relation").value as! String
                     let contactId = obj.childSnapshot(forPath: "contactID").value as! Int
                     let name = obj.childSnapshot(forPath: "name").value as! String
                     let phone = obj.childSnapshot(forPath: "phone").value as! String
@@ -88,12 +89,12 @@ class userHomeViewController: UIViewController {
                     let sent = obj.childSnapshot(forPath: "sent").value as! String
                     let msg = obj.childSnapshot(forPath: "msg").value as! String
                     //create a EC object
-                    let emergencyContact = emergencyContact(name: name, phone_number: phone, senderID:senderID, recieverID: receiverID, sent: sent, contactID: contactId, msg: msg)
+                    let emergencyContact = emergencyContact(name: name, phone_number: phone, senderID:senderID, recieverID: receiverID, sent: sent, contactID: contactId, msg: msg, relation: relation)
                     
                     if (emergencyContact.getSenderID()) == self.userID{
 //                        print("inside if statement")
                         //add it to the myContacts array
-                        self.myContacts.append(emergencyContact)
+//                        self.myContacts.append(emergencyContact)
                         
                         updateQueue.sync {
                             //2- update thier sent attribute form No to Yes.
