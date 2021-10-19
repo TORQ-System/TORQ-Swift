@@ -36,7 +36,6 @@ class userHomeViewController: UIViewController {
             return
         }
         locationManager.requestAlwaysAuthorization()
-        
     }
     
     func showALert(message:String){
@@ -55,7 +54,8 @@ class userHomeViewController: UIViewController {
     }
     
     
-
+    //MARK: - @IBActions
+    
     @IBAction func logoutPressed(_ sender: Any) {
         do {
             try Auth.auth().signOut()
@@ -68,15 +68,15 @@ class userHomeViewController: UIViewController {
     }
     
     @IBAction func sendNotification(_ sender: Any) {
-        
+
+        // we had to create two threads because we can't assure that the update segment of code will always be executed after the searching code segment , to avoid such a situation we created queue for searching and queue for updating that will work Syncronously.
         let searchQueue = DispatchQueue.init(label: "searchQueue")
         let updateQueue = DispatchQueue.init(label: "updateQueue")
-        
         
         searchQueue.sync {
             //1-  get my emergency contact.
             self.ref.child("EmergencyContact").observeSingleEvent(of: .value) { snapshot in
-                print(snapshot.value as! [String: Any])
+//                print(snapshot.value as! [String: Any])
                                 
                 for contact in snapshot.children{
                     let obj = contact as! DataSnapshot
@@ -91,28 +91,26 @@ class userHomeViewController: UIViewController {
                     let emergencyContact = emergencyContact(name: name, phone_number: phone, senderID:senderID, recieverID: receiverID, sent: sent, contactID: contactId, msg: msg)
                     
                     if (emergencyContact.getSenderID()) == self.userID{
-                        print("inside if statement")
+//                        print("inside if statement")
                         //add it to the myContacts array
                         self.myContacts.append(emergencyContact)
                         
                         updateQueue.sync {
                             //2- update thier sent attribute form No to Yes.
-                            print(obj.key)
+//                            print(obj.key)
                             
-                            self.ref.child("EmergencyContact").child(obj.key).setValue(["sent": "Yes"]) {(error, ref) in
+                            self.ref.child("EmergencyContact").child(obj.key).updateChildValues(["sent": "Yes"]) {(error, ref) in
                               if let error = error {
                                 print("Data could not be saved: \(error.localizedDescription).")
                               } else {
-                                print("Data updated successfully!")
+//                                print("Data updated successfully!")
                               }
                             }
                         }
                     }
-                    print("printing the global array in : \(self.myContacts)")
-  
+//                    print("printing the global array in : \(self.myContacts)")
                 }
-                
-                print("printing the global array out : \(self.myContacts)")
+//                print("printing the global array out : \(self.myContacts)")
             }
         }
     }
