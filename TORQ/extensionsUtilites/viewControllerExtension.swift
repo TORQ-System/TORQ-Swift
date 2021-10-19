@@ -37,6 +37,8 @@ extension UIViewController {
                 if (emergencyContact.getReciverID()) == userID && (emergencyContact.getSent() == "Yes"){
                     //show me notification
                     
+                    
+                    var center = UNUserNotificationCenter.current()
                     center = UNUserNotificationCenter.current()
                     center.requestAuthorization(options: [.alert,.sound]) { grantedPermisssion, error in
                         guard error == nil else{

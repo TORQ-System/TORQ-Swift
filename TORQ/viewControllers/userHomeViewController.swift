@@ -13,20 +13,15 @@ class userHomeViewController: UIViewController {
     let locationManager = CLLocationManager()
     let ref = Database.database().reference()
     var myContacts: [emergencyContact] = []
-    var center : UNUserNotificationCenter?
+    var center : UNUserNotificationCenter = UNUserNotificationCenter.current()
 
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureLocationManager()
-        registerToNotifications(userID: userID!, center: center!)
-
-        self.center!.delegate = self
-
-        self.requestNotificationAuthorization()
-        self.sendNotification()
-  
+        self.center.delegate = self
+        registerToNotifications(userID: userID!, center: center)
     }
     
     //MARK: - Functions
