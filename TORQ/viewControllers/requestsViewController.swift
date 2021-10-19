@@ -98,6 +98,28 @@ class requestsViewController: UIViewController {
         print("view")
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
                let vc = storyboard.instantiateViewController(identifier: "ViewRequest_Report") as! ViewRequest_Report
+        vc.lang = Double(myRequests[sender.tag].getLatitude())!
+        vc.long = Double(myRequests[sender.tag].getLongitude())!
+        vc.time = myRequests[sender.tag].getDateTime()
+        vc.UID=String(myRequests[sender.tag].getUserID())
+        
+//        ref.child("User/\(myRequests[sender.tag].getUserID())/firstName").observeSingleEvent(of: .value, with: { snapshot in  guard let value1 = snapshot.value as? String else {return}
+//            print(value1)
+//            vc.UID = "hi\(value1)"
+//
+//                })
+//        ref.child("User").child((myRequests[sender.tag].getUserID())).observe(.value, with: {(snapshot) in
+//            if let dec = snapshot.value as? [String :Any]
+//            {
+//             let Fname = dec["firstName"] as! String
+//                print("hi\(Fname)")
+//                vc.UID = "hi\(Fname)"
+//                print("hiii\(vc.UID)")
+//
+//            }
+//
+//        })
+      
         vc.modalPresentationStyle = .fullScreen
                self.present(vc, animated: true, completion: nil)
        
