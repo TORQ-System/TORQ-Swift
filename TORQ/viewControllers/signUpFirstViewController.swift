@@ -122,7 +122,7 @@ class signUpFirstViewController: UIViewController {
             error["password"] = "Password cannot be empty"
         }
         else if !password.text!.isValidPassword{
-            error["password"] = "Password should not be less than 6 characters"
+            error["password"] = "Password should have 8 characters with capital & small letters"
         }
         // confirm password checking
         if confirmPassword.text == nil || confirmPassword.text == ""{
@@ -130,7 +130,6 @@ class signUpFirstViewController: UIViewController {
         }
         else if confirmPassword.text != password.text!{
             error["confirmPass"] = "Passwords does not match"
-            error["password"] = "Passwords does not match"
         }
 
         return error
@@ -158,7 +157,7 @@ class signUpFirstViewController: UIViewController {
     
     
     //MARK: - @IBActions
-    
+    // next button
     @IBAction func goToSecondScreen(_ sender: Any) {
         
         //1- validation of the fields
@@ -178,6 +177,19 @@ class signUpFirstViewController: UIViewController {
             errorEmail.alpha = 1
             
             errorPassword.text = "Password cannot be empty"
+            errorPassword.alpha = 1
+            
+            // set borders
+            fullName.setBorder(color: "error", image: UIImage(named: "personError")!)
+            errorFullName.alpha = 1
+           
+            confirmPassword.setBorder(color: "error", image: UIImage(named: "lockError")!)
+            errorConfirmPassword.alpha = 1
+            
+            email.setBorder(color: "error", image: UIImage(named: "emailError")!)
+            errorEmail.alpha = 1
+            
+            password.setBorder(color: "error", image: UIImage(named: "lockError")!)
             errorPassword.alpha = 1
             
             return

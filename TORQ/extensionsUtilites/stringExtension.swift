@@ -23,7 +23,9 @@ extension String {
  
     var isValidPassword: Bool {
        // validate the password format:
-        return self.count >= 6
+        let regxForPassword = "^(?=.*[a-z])(?=.*[0-9])(?=.*[A-Z]).{8,}$"
+        let passwordText = NSPredicate(format:"SELF MATCHES %@", regxForPassword)
+        return passwordText.evaluate(with: self)
     }
     
     var isValidDomain: Bool {
