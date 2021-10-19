@@ -69,12 +69,13 @@ class userHomeViewController: UIViewController {
     
     @IBAction func sendNotification(_ sender: Any) {
         
+        let searchQueue = DispatchQueue.init(label: "searchQueue")
+        let updateQueue = DispatchQueue.init(label: "updateQueue")
         
-//        DispatchQueue.main.sync {
-        var snap: DataSnapshot = DataSnapshot()
+        
+        searchQueue.sync {
             //1-  get my emergency contact.
             self.ref.child("EmergencyContact").observeSingleEvent(of: .value) { snapshot in
-                snap = snapshot
                 print(snapshot.value as! [String: Any])
                                 
                 for contact in snapshot.children{
@@ -93,34 +94,28 @@ class userHomeViewController: UIViewController {
                         print("inside if statement")
                         //add it to the myContacts array
                         self.myContacts.append(emergencyContact)
+                        
+                        updateQueue.sync {
+                            //2- update thier sent attribute form No to Yes.
+                            print(obj.key)
+                            
+                            self.ref.child("EmergencyContact").child(obj.key).setValue(["sent": "Yes"]) {(error, ref) in
+                              if let error = error {
+                                print("Data could not be saved: \(error.localizedDescription).")
+                              } else {
+                                print("Data updated successfully!")
+                              }
+                            }
+                        }
                     }
                     print("printing the global array in : \(self.myContacts)")
   
                 }
+                
+                print("printing the global array out : \(self.myContacts)")
             }
-        
-        //2- update thier sent attribute form No to Yes.
-        
-        self.ref.child("EmergencyContact").child(snap.key).setValue(["sent": "Yes"]) {
-          (error:Error?, ref:DatabaseReference) in
-          if let error = error {
-            print("Data could not be saved: \(error).")
-          } else {
-            print("Data updated successfully!")
-          }
         }
-        
-        
-//        }
-        //2- update thier sent attribute form No to Yes.
-//        print("printing the global array out : \(self.myContacts)")
-
-        
-        
-
     }
-    
-    
 }
 
 //MARK: - Extensions
