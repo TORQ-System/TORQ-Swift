@@ -11,8 +11,9 @@ class signUpSecondViewController: UIViewController {
     @IBOutlet weak var nationalID: UITextField!
     @IBOutlet weak var phone: UITextField!
     @IBOutlet weak var nextButton: UIButton!
-    @IBOutlet weak var errorView: UIStackView!
-    @IBOutlet weak var errorLabel: UILabel!
+    @IBOutlet weak var errorNationalID: UILabel!
+    @IBOutlet weak var errorPhone: UILabel!
+    @IBOutlet weak var errorDOB: UILabel!
     
     //MARK: - Variables
     var ref = Database.database().reference()
@@ -33,22 +34,16 @@ class signUpSecondViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // hide the error message and add the border
-        errorView.isHidden = true
+        errorNationalID.alpha = 0
+        errorPhone.alpha = 0
+        errorDOB.alpha = 0
+
         // national ID border
-        nationalID.layer.cornerRadius = 8.0
-        nationalID.layer.masksToBounds = true
-        nationalID.layer.borderColor = UIColor( red: 54/255, green: 53/255, blue:87/255, alpha: 1.0 ).cgColor
-        nationalID.layer.borderWidth = 1.0
+        nationalID.setBorder(color: "default", image: UIImage(named: "idDefault")!)
         // date border
-        date.layer.cornerRadius = 8.0
-        date.layer.masksToBounds = true
-        date.layer.borderColor = UIColor( red: 54/255, green: 53/255, blue:87/255, alpha: 1.0 ).cgColor
-        date.layer.borderWidth = 1.0
+        date.setBorder(color: "default", image: UIImage(named: "calendarDefault")!)
         // phone border
-        phone.layer.cornerRadius = 8.0
-        phone.layer.masksToBounds = true
-        phone.layer.borderColor = UIColor( red: 54/255, green: 53/255, blue:87/255, alpha: 1.0 ).cgColor
-        phone.layer.borderWidth = 1.0
+        phone.setBorder(color: "default", image: UIImage(named: "phoneDefault")!)
      
         setupDatePickerView()
         configureKeyboard()
@@ -92,7 +87,12 @@ class signUpSecondViewController: UIViewController {
     }
     
     func validateFields() -> [String: String] {
-        var errors = ["nationalID":"", "phone":"","date":""]
+        var errors = ["Empty":"","nationalID":"", "phone":"","date":""]
+        
+        // CASE-0 : This case validates submitting form with empty fields
+        if nationalID.text == "" && phone.text == "" && date.text == "" {
+            errors["Empty"] = "Empty Fields"
+        }
         
         //CASE-1: This case validate if the user enters empty or nil or a nationalID that has chracters.each case with it sub-cases detailed messages explained below.
         if nationalID.text == nil || nationalID.text == ""{
@@ -165,7 +165,6 @@ class signUpSecondViewController: UIViewController {
         present(vc, animated: true, completion: nil)
     }
     
-    
     //MARK: - @IBActions
     @IBAction func back(_ sender: Any) {
         dismiss(animated: true, completion: nil)
@@ -175,32 +174,58 @@ class signUpSecondViewController: UIViewController {
         
         let errors = validateFields()
         
+        // if fields are empty
+        
+        guard errors["Empty"] == "" else {
+            
+            // show error message
+            errorNationalID.text = "National ID cannot be empty"
+            errorNationalID.alpha = 1
+            
+            errorPhone.text = "Phone cannot be empty"
+            errorPhone.alpha = 1
+            
+            errorDOB.text = "Date of Birth cannot be empty"
+            errorDOB.alpha = 1
+            
+            // set borders
+            nationalID.setBorder(color: "error", image: UIImage(named: "idError")!)
+           
+            phone.setBorder(color: "error", image: UIImage(named: "phoneError")!)
+            
+            date.setBorder(color: "error", image: UIImage(named: "calendarError")!)
+            
+            return
+        }
+        
         // if national id has an error
         guard errors["nationalID"] == "" else {
             //handle the error
-//            showALert(message: errors["nationalID"]!)
-            errorLabel.text = errors["nationalID"]!
-            errorView.isHidden = false
+            errorNationalID.text = errors["nationalID"]!
+            nationalID.setBorder(color: "error", image: UIImage(named: "idError")!)
+            errorNationalID.alpha = 1
             return
         }
         // if Date of Birth has an error
         guard errors["date"] == "" else {
             //handle the error
-//            showALert(message: errors["date"]!)
-            errorLabel.text = errors["date"]!
-            errorView.isHidden = false
+            errorDOB.text = errors["date"]!
+            date.setBorder(color: "error", image: UIImage(named: "calendarError")!)
+            errorDOB.alpha = 1
             return
         }
-        
         // if phone number has an error
         guard errors["phone"] == "" else {
             //handle the error
-//            showALert(message: errors["phone"]!)
-            errorLabel.text = errors["phone"]!
-            errorView.isHidden = false
+            errorPhone.text = errors["phone"]!
+            phone.setBorder(color: "error", image: UIImage(named: "phoneError")!)
+            errorPhone.alpha = 1
             return
         }
-        
+        // if no error is detected hide the error view
+        errorNationalID.alpha = 0
+        errorPhone.alpha = 0
+        errorDOB.alpha = 0
        
         //2- caching the first sign up screen information
         let genderType = gender.selectedSegmentIndex
@@ -268,13 +293,13 @@ class signUpSecondViewController: UIViewController {
         let errors = validateFields()
                 // change national ID border if national ID is not valid, and set error msg
                if  errors["nationalID"] != "" {
-                   nationalID.layer.borderColor = UIColor(red: 255/255, green: 94/255, blue:102/255, alpha: 1.0 ).cgColor
-                   errorLabel.text = errors["nationalID"]!
-                   errorView.isHidden = false
+                   nationalID.setBorder(color: "error", image: UIImage(named: "idError")!)
+                   errorNationalID.text = errors["nationalID"]!
+                   errorNationalID.alpha = 1
                }
                 else {
-                    nationalID.layer.borderColor = UIColor( red: 54/255, green: 53/255, blue:87/255, alpha: 1.0 ).cgColor
-                    errorView.isHidden = true
+                    nationalID.setBorder(color: "valid", image: UIImage(named: "idValid")!)
+                    errorNationalID.alpha = 0
                }
     }
     
@@ -284,14 +309,23 @@ class signUpSecondViewController: UIViewController {
         let errors = validateFields()
                 // change phone border if phone is not valid, and set error msg
                if  errors["phone"] != "" {
-                   phone.layer.borderColor = UIColor(red: 255/255, green: 94/255, blue:102/255, alpha: 1.0 ).cgColor
-                   errorLabel.text = errors["phone"]!
-                   errorView.isHidden = false
+                   phone.setBorder(color: "error", image: UIImage(named: "phoneError")!)
+                   errorPhone.text = errors["phone"]!
+                   errorPhone.alpha = 1
                }
                 else {
-                    phone.layer.borderColor = UIColor( red: 54/255, green: 53/255, blue:87/255, alpha: 1.0 ).cgColor
-                    errorView.isHidden = true
+                    phone.setBorder(color: "valid", image: UIImage(named: "phoneValid")!)
+                    errorPhone.alpha = 0
                }
+    }
+    
+    @IBAction func dateOfBirthEditing(_ sender: Any) {
+        let errors = validateFields()
+        if  errors["date"] == "" {
+                date.setBorder(color: "valid", image: UIImage(named: "calendarValid")!)
+                errorDOB.alpha = 0
+        }
+        
     }
 }
 

@@ -181,16 +181,12 @@ class signUpFirstViewController: UIViewController {
             
             // set borders
             fullName.setBorder(color: "error", image: UIImage(named: "personError")!)
-            errorFullName.alpha = 1
            
             confirmPassword.setBorder(color: "error", image: UIImage(named: "lockError")!)
-            errorConfirmPassword.alpha = 1
             
             email.setBorder(color: "error", image: UIImage(named: "emailError")!)
-            errorEmail.alpha = 1
             
             password.setBorder(color: "error", image: UIImage(named: "lockError")!)
-            errorPassword.alpha = 1
             
             return
         }

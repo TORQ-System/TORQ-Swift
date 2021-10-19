@@ -83,7 +83,7 @@ class loginViewController: UIViewController {
             errors["email"] = "Incorrect email"
         }
         
-        if password.text == nil || password.text == "" || !password.text!.isValidPassword {
+        if password.text == nil || password.text == ""  {
             errors["password"] = "Incorrect password"
         }
         
