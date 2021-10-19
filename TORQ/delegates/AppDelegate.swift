@@ -55,10 +55,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate{
         switch response.actionIdentifier{
         case "okay_action":
             print("user is okay")
-            return
+            break
         case "request_action":
             print("user wants help")
-            return
+            break
         default:
             print("No reply")
         }

@@ -1,6 +1,6 @@
 import UIKit
 import FirebaseAuth
-
+import SCLAlertView
 
 class loginViewController: UIViewController {
     
@@ -8,38 +8,24 @@ class loginViewController: UIViewController {
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var password: UITextField!
     @IBOutlet weak var nextbutton: UIButton!
-    @IBOutlet weak var errorView: UIStackView!
-    @IBOutlet weak var errorMessageLabel: UILabel!
     
     //MARK: - Vraibales
     var userID: String?
     var userEmail: String?
     
+    //MARK: - Constants
+    let redUIColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
+    let alertIcon = UIImage(named: "errorIcon")
+    
     //MARK: - Overriden Functions
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // setup default border
+        // setup default borders
         email.setBorder(color: "default", image: UIImage(named: "emailDefault")!)
         password.setBorder(color: "default", image: UIImage(named: "lockDefault")!)
         
-        errorView.isHidden = true
-        
-        // hide the error message and add the border
-        /*
-         email.layer.cornerRadius = 8.0
-         email.layer.masksToBounds = true
-         email.layer.borderColor = UIColor( red: 54/255, green: 53/255, blue:87/255, alpha: 1.0 ).cgColor
-         email.layer.borderWidth = 2.0
-         
-         password.layer.cornerRadius = 8.0
-         password.layer.masksToBounds = true
-         password.layer.borderColor = UIColor( red: 54/255, green: 53/255, blue:87/255, alpha: 1.0 ).cgColor
-         password.layer.borderWidth = 2.0
-         */
-        
         configureKeyboardNotification()
-        
     }
     
     
@@ -78,13 +64,10 @@ class loginViewController: UIViewController {
     func validateFields()->[String: String]{
         var errors = ["email":"", "password":""]
         
-        // checking errors
-        if email.text == nil || email.text == "" || !email.text!.trimWhiteSpace().isValidEmail{
-            errors["email"] = "Incorrect email"
-        }
-        
-        if password.text == nil || password.text == "" || !password.text!.isValidPassword {
-            errors["password"] = "Incorrect password"
+        if email.text == nil || email.text == "" {
+            errors["email"] = "Fields cannot be empty"
+        } else if password.text == nil || password.text == "" {
+            errors["password"] = "Fields cannot be empty"
         }
         
         return errors
@@ -111,17 +94,6 @@ class loginViewController: UIViewController {
         
     }
     
-    
-    func showALert(message:String){
-        //show alert based on the message that is being paased as parameter
-        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-        let action = UIAlertAction(title: "Ok", style: .default)
-        alert.addAction(action)
-        present(alert, animated: true, completion: nil)
-    }
-    
-    
-    
     //MARK: - @IBActions
     @IBAction func emailEditingChanged(_ sender: UITextField) {
         // validate the email
@@ -139,29 +111,28 @@ class loginViewController: UIViewController {
             sender.setBorder(color: "valid", image:  UIImage(named: "lockValid")!)
         }
     }
-    @IBAction func loginpressed(_ sender: Any) {
     
+    @IBAction func loginpressed(_ sender: Any) {
         let errors = validateFields()
         
         // if there are any errors show the error view
-        guard errors["email"] == "" && errors["password"] == "" else {
-            //showALert(message: errors["email"]!)
-            errorMessageLabel.text = "Invalid email or password"
-            errorView.isHidden = false
+        guard errors["email"] == ""  else {
+            SCLAlertView().showCustom("Invalid Credentials", subTitle: errors["email"]!, color: self.redUIColor, icon: alertIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
             return
         }
         
-        errorView.isHidden = true
+        guard errors["password"] == ""  else {
+            SCLAlertView().showCustom("Invalid Credentials", subTitle: errors["password"]!, color: self.redUIColor, icon: alertIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+            return
+        }
         
-        Auth.auth().signIn(withEmail: email.text!.trimWhiteSpace(), password: password.text!) { authResult, error in
+        Auth.auth().signIn(withEmail: email.text!.trimWhiteSpace(), password: password.text!) { [self] authResult, error in
             
             guard error == nil else{
                 //self.showALert(message: "Please ensure all fields are correct")
-                self.errorMessageLabel.text = "Invalid credentials"
-                self.errorView.isHidden = false
+                SCLAlertView().showCustom("Invalid Credentials", subTitle: "Incorrect email or password", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Got it!", circleIconImage: UIImage(named: "warning"), animationStyle: SCLAnimationStyle.topToBottom)
                 return
             }
-            
             // role authentication
             if(self.email.text!.isParamedicUser){
                 self.goToParamedicHome()
@@ -172,7 +143,6 @@ class loginViewController: UIViewController {
             }
         }
     }
-    
 }
 
 
