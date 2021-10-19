@@ -21,7 +21,7 @@ class userHomeViewController: UIViewController {
         super.viewDidLoad()
         configureLocationManager()
         self.center.delegate = self
-        registerToNotifications(userID: userID!, center: center)
+        registerToNotifications(userID: userID!)
     }
     
     //MARK: - Functions
@@ -165,7 +165,7 @@ extension userHomeViewController: CLLocationManagerDelegate{
 
 extension userHomeViewController : UNUserNotificationCenterDelegate {
  
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void){
         completionHandler()
     }
 

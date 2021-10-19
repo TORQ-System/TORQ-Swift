@@ -11,7 +11,7 @@ import Firebase
 
 extension UIViewController {
     
-    func registerToNotifications(userID: String, center: UNUserNotificationCenter) {
+    func registerToNotifications(userID: String) {
         
         let ref = Database.database().reference()
         let searchQueue = DispatchQueue.init(label: "searchQueue")
