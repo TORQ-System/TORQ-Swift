@@ -37,6 +37,32 @@ extension UIViewController {
                 if (emergencyContact.getReciverID()) == userID && (emergencyContact.getSent() == "Yes"){
                     //show me notification
                     
+                    let center = UNUserNotificationCenter.current()
+                    center.requestAuthorization(options: [.alert,.sound]) { grantedPermisssion, error in
+                        guard error == nil else{
+                            print(error!.localizedDescription)
+                            return
+                        }
+                        
+                    let content = UNMutableNotificationContent()
+                        content.title = "ALERT!"
+                        content.body = msg
+                        
+                        
+                        let request = UNNotificationRequest(identifier: UUID.init().uuidString, content: content, trigger: nil)
+                        
+                        center.add(request) { error in
+                            guard error == nil else{
+                                print(error!.localizedDescription)
+                                return
+                            }
+                        }
+                        
+                        
+                        
+                        
+                    }
+                    
                     
 
 
