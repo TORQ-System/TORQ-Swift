@@ -11,13 +11,13 @@ import Firebase
 
 extension UIViewController {
     
-    func registerToNotifications(userID: String) {
+    func registerToNotifications(userID: String, center: UNUserNotificationCenter) {
         
-        var ref = Database.database().reference()
+        let ref = Database.database().reference()
         let searchQueue = DispatchQueue.init(label: "searchQueue")
         let updateQueue = DispatchQueue.init(label: "updateQueue")
         
-        searchQueue.sync {
+       searchQueue.sync {
         
         
         ref.child("EmergencyContact").observe(.value) { snapshot in
@@ -37,7 +37,7 @@ extension UIViewController {
                 if (emergencyContact.getReciverID()) == userID && (emergencyContact.getSent() == "Yes"){
                     //show me notification
                     
-                    let center = UNUserNotificationCenter.current()
+                    center = UNUserNotificationCenter.current()
                     center.requestAuthorization(options: [.alert,.sound]) { grantedPermisssion, error in
                         guard error == nil else{
                             print(error!.localizedDescription)

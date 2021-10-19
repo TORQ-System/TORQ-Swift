@@ -13,14 +13,19 @@ class userHomeViewController: UIViewController {
     let locationManager = CLLocationManager()
     let ref = Database.database().reference()
     var myContacts: [emergencyContact] = []
+    var center : UNUserNotificationCenter?
 
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureLocationManager()
-        registerToNotifications(userID: userID!)
+        registerToNotifications(userID: userID!, center: center!)
 
+        self.center!.delegate = self
+
+        self.requestNotificationAuthorization()
+        self.sendNotification()
   
     }
     
@@ -161,4 +166,15 @@ extension userHomeViewController: CLLocationManagerDelegate{
         ref.child("Sensor").child("S\(userID!)/time").setValue((String(describing: time!)))
     }
     
+}
+
+extension userHomeViewController : UNUserNotificationCenterDelegate {
+ 
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        completionHandler()
+    }
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.alert, .badge, .sound])
+    }
 }
