@@ -159,7 +159,7 @@ extension requestsViewController: UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "requestCell", for: indexPath) as! requestCollectionViewCell
-        cell.layer.borderColor = CGColor(red: 0, green: 0, blue: 0, alpha: 1)
+        cell.layer.borderColor = CGColor(red: 255, green: 255, blue: 255, alpha: 1)
         cell.layer.borderWidth = 2
         cell.layer.masksToBounds = true;
         cell.layer.cornerRadius = 20
