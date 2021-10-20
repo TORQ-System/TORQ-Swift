@@ -65,6 +65,15 @@ class userHomeViewController: UIViewController {
             self.showALert(message: error.localizedDescription)
         }
     }
+    @IBAction func addEmergencyContactPressed(_ sender: Any){
+        goToAddEmergencyContactScreen()
+    }
+    func goToAddEmergencyContactScreen(){
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "addEmergencyContactViewController") as! addEmergencyContactViewController
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true, completion: nil)
+    }
     
 
     
