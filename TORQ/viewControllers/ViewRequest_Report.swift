@@ -16,6 +16,12 @@ class ViewRequest_Report: UIViewController {
     @IBOutlet weak var location_report: UIButton!
     @IBOutlet weak var namerequest: UILabel!
     
+    @IBOutlet weak var blood: UILabel!
+    @IBOutlet weak var disease: UILabel!
+    @IBOutlet weak var medation: UILabel!
+    @IBOutlet weak var algeer: UILabel!
+    @IBOutlet weak var medation0: UILabel!
+    @IBOutlet weak var algeer0: UILabel!
     ///
     var UID : String!
     var long : Double!
@@ -56,21 +62,64 @@ class ViewRequest_Report: UIViewController {
         let newString1 = String(find2[range1])
         data_timeRE.text = "\(newString), \(newString1) "
         ///
+//        ref.child("User").child(UID!).observe(.value, with: {(snapshot) in
+//                   if let dec = snapshot.value as? [String :Any]
+//                   {
+//                    let Fname = dec["firstName"] as! String
+//                       let lname = dec["lastName"] as! String
+//                       print("hi\(Fname)")
+//                       self.name_report.text = Fname+" "+lname
+//                       self.namerequest.text = "\(Fname)'s Request"
+//
+//                   }
+//
+//               })
         ref.child("User").child(UID!).observe(.value, with: {(snapshot) in
-                   if let dec = snapshot.value as? [String :Any]
-                   {
-                    let Fname = dec["firstName"] as! String
-                       let lname = dec["lastName"] as! String
-                       print("hi\(Fname)")
-                       self.name_report.text = Fname+" "+lname
-                       self.namerequest.text = "\(Fname)'s Request"
-       
-                   }
-       
-               })
+                        if let dec = snapshot.value as? [String :Any]
+                        {
+                         let Fname1 = dec["firstName"] as! String
+                            let lname1 = dec["lastName"] as! String
+                            print("hi\(Fname1)")
+                            self.name_report.text = Fname1+" "+lname1
+                            self.namerequest.text = "\(Fname1)'s Request"
+     
+                        }
+     
+                    })
+        ref.child("medical_info").queryOrdered(byChild:"user_id").observe(.childAdded, with: {(snapshot) in
+                           if let dec = snapshot.value as? [String :Any]
+                           {
+                               
+                               if (dec["user_id"] as! String == self.UID!){
+                            let try1 = dec["Blood"] as! String
+                            let try2 = dec["allergies"] as! String
+                            let try3 = dec["chronic_disease"] as! String
+                            let try4 = dec["prescribes_medication"] as! String
+
+
+                             //  let lname = dec["lastName"] as! String
+                                   self.blood.text = try1
+                                   self.disease.text = try3
+                                   self.algeer0.text = try2
+                                   self.medation0.text = try4
+                                   print("2-\(try1)")
+                                   print("1-\(try2)")
+                                   print("1-\(try3)")
+                                   print("1-\(try4)")
+
+
+                                   
+                               }
+                             //  self.name_report.text = Fname+" "+lname
+                            //   self.namerequest.text = "\(Fname)'s Request"
+               //o
+                           }
+               
+                       })
         //print(UID)
       //  DOB.text="WHY\(UID)"
         readDatabase()
+        
     }
     @IBAction func back_butten(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
