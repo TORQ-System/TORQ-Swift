@@ -65,6 +65,8 @@ extension UIViewController {
                         
                     }
                     
+                    self.getAccidentLocation(senderID: emergencyContact.getSenderID())
+                    
                     
 
 
@@ -85,6 +87,44 @@ extension UIViewController {
 //                    print("printing the global array in : \(self.myContacts)")
             }
         }
+    }
+}
+    func getAccidentLocation (senderID: String) {
+        
+        let ref = Database.database().reference()
+        let searchQueue = DispatchQueue.init(label: "searchQueue")
+        
+       searchQueue.sync {
+        
+        
+        ref.child("Request").observe(.value) { snapshot in
+            for request in snapshot.children{
+                let obj = request as! DataSnapshot
+                let latitude = obj.childSnapshot(forPath: "latitude").value as! String
+                let longitude = obj.childSnapshot(forPath: "longitude").value as! String
+                let request_id = obj.childSnapshot(forPath: "request_id").value as! String
+                let rotation = obj.childSnapshot(forPath: "rotation").value as! String
+                let sensor_id = obj.childSnapshot(forPath: "sensor_id").value as! String
+                let status = obj.childSnapshot(forPath: "status").value as! String
+                let time_stamp = obj.childSnapshot(forPath: "time_stamp").value as! String
+                let user_id = obj.childSnapshot(forPath: "user_id").value as! String
+                let vib = obj.childSnapshot(forPath: "vib").value as! String
+                //create a request object
+                let request = Request(user_id: user_id, sensor_id: sensor_id, request_id: request_id, dateTime: time_stamp, longitude: longitude, latitude: latitude, vib: vib, rotation: rotation, status: status)
+                
+                if (request.getUserID()) == senderID && (request.getStatus() == "0"){
+                    //get the location
+                    let lat = request.getLatitude()
+                    let long = request.getLongitude()
+//                    print(long)
+//                    print(lat)
+
+                }
+
+            }
+        }
+        
+        
     }
 }
 }
