@@ -252,11 +252,11 @@ class signUpFirstViewController: UIViewController {
                }
     }
     
-    @IBAction func lastNameEditingChanged(_ sender: UITextField) {
+    @IBAction func confirmPasswordEditingChanged(_ sender: UITextField) {
         confirmPassword.isSecureTextEntry = true
         let errors = validateFields()
                 
-        // change last name border if confirm Password is invalid, and set error msg
+        // change confirm Password border if confirm Password is invalid, and set error msg
                if  errors["confirmPass"] != "" {
                    // confirm Pass is invalid
                    confirmPassword.setBorder(color: "error", image: UIImage(named: "lockError")!)
