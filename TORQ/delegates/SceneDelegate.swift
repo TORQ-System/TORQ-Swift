@@ -45,48 +45,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
-        
-        triggerLocalNotification(title: "Are you okay?", body: "We detcted an impact on your veichle, reply within 10s or we will send an ambulance request.")
     }
     
-}
-
-extension SceneDelegate{
-    
-    func triggerLocalNotification(title: String, body: String){
-        
-        //Assign contents
-        let content = UNMutableNotificationContent()
-        content.title = title
-        content.body = body
-        content.sound = .default
-        content.categoryIdentifier = "okayCategory"
-        
-        //Create actions
-        let okayAction = UNNotificationAction(identifier: "okay_action", title: "I'm okay", options: UNNotificationActionOptions.init(rawValue: 0))
-        
-        let requestAction = UNNotificationAction(identifier: "request_action", title: "No, send request", options: UNNotificationActionOptions.init(rawValue: 0))
-        
-        let actionCategory = UNNotificationCategory(identifier: "okayCategory", actions: [okayAction, requestAction], intentIdentifiers: [], hiddenPreviewsBodyPlaceholder: "", options: .customDismissAction) //it will get dismissed
-        
-        
-        UNUserNotificationCenter.current().setNotificationCategories([actionCategory])
-        
-        //Trigger (time-based) - should be when a child is added from the database
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-        //Notification request
-        
-        let uuid = UUID().uuidString
-        let request = UNNotificationRequest(identifier: uuid, content: content, trigger: trigger)
-        
-        // reigester to the notification center
-        UNUserNotificationCenter.current().add(request) { error in
-            if error == nil{
-                NSLog("no error found")
-            }
-            else{
-                print("error found: ", error!.localizedDescription)
-            }
-        }
-    }
 }

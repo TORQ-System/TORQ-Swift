@@ -2,35 +2,43 @@ import UIKit
 import FirebaseAuth
 import FirebaseDatabase
 import CoreLocation
+import SCLAlertView
+
 
 class userHomeViewController: UIViewController {
     
-        
-
+    
+    
     //MARK: - Variables
     var userEmail: String?
     var userID: String?
+    var center : UNUserNotificationCenter = UNUserNotificationCenter.current()
+    
+    //MARK: - Constants
     let locationManager = CLLocationManager()
     let ref = Database.database().reference()
-
     
-
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureLocationManager()
-
-  
+        
+        userNotificationConfig()
+        registerToNotifications(userID: userID!)
     }
     
     //MARK: - Functions
     
     func configureLocationManager(){
-        
         locationManager.delegate = self
         locationManager.allowsBackgroundLocationUpdates = true
         locationManager.showsBackgroundLocationIndicator = true
         guard CLLocationManager.locationServicesEnabled() else {
             //show alert.
+            
+            SCLAlertView().showInfo("the location services isn't enabled", subTitle: "Location is Unaccesssible")
             self.showALert(message: "the location services isn't enabled")
             return
         }
@@ -53,8 +61,8 @@ class userHomeViewController: UIViewController {
         present(vc, animated: true, completion: nil)
     }
     
+    //MARK: - IBActions
     
-
     @IBAction func logoutPressed(_ sender: Any) {
         do {
             try Auth.auth().signOut()
@@ -65,9 +73,6 @@ class userHomeViewController: UIViewController {
             self.showALert(message: error.localizedDescription)
         }
     }
-    
-
-    
 }
 
 //MARK: - Extensions
@@ -77,7 +82,7 @@ extension userHomeViewController: CLLocationManagerDelegate{
         
         let status = CLLocationManager.authorizationStatus()
         switch status {
-        
+            
         case .authorizedAlways:
             print("authorizedAlways")
             locationManager.startUpdatingLocation()
@@ -88,17 +93,18 @@ extension userHomeViewController: CLLocationManagerDelegate{
             
         case .denied:
             print("denied")
-             showALert(message: "Location access is needed to get your current location")
-
+            showALert(message: "Location access is needed to get your current location")
+            
         case .notDetermined:
             print("notDetermined")
+            
         case .restricted:
             print("restricted")
             showALert(message: "Location access is needed to get your current location")
+            
         default:
             print("unknown")
         }
-        
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -114,3 +120,39 @@ extension userHomeViewController: CLLocationManagerDelegate{
     }
     
 }
+
+extension userHomeViewController{
+    private func userNotificationConfig(){
+        center.requestAuthorization(options: [.badge,.alert,.sound,.carPlay]) {granted, error in
+            if error == nil {
+                print("premission granted: \(granted)")
+                self.center.delegate = self
+            }
+        }
+    }
+}
+
+
+extension userHomeViewController: UNUserNotificationCenterDelegate{
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        switch response.actionIdentifier{
+        case "OKAY_ACTION":
+            print("user is okay")
+            break
+        case "REQUEST_ACTION":
+            print("user wants help")
+            break
+        default:
+            print("No reply")
+        }
+        completionHandler()
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.alert, .sound])
+    }
+}
+
+
+

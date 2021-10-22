@@ -15,7 +15,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        userNotificationConfig()
         FirebaseApp.configure()
         return true
     }
@@ -37,35 +36,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
 }
 
-extension AppDelegate{
-    private func userNotificationConfig(){
-        UNUserNotificationCenter.current().requestAuthorization(options: [.badge,.alert,.sound,.carPlay]) {granted, error in
-            if error == nil {
-                print("premission granted: \(granted)")
-                UNUserNotificationCenter.current().delegate = self
-            }
-        }
-    }
-}
-
-
-extension AppDelegate: UNUserNotificationCenterDelegate{
-    
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        switch response.actionIdentifier{
-        case "okay_action":
-            print("user is okay")
-            break
-        case "request_action":
-            print("user wants help")
-            break
-        default:
-            print("No reply")
-        }
-        completionHandler()
-    }
-    
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        completionHandler([.alert, .sound])
-    }
-}
