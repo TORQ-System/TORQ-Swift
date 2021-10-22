@@ -133,26 +133,6 @@ extension userHomeViewController{
 }
 
 
-extension userHomeViewController: UNUserNotificationCenterDelegate{
-    
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        switch response.actionIdentifier{
-        case "OKAY_ACTION":
-            print("user is okay")
-            break
-        case "REQUEST_ACTION":
-            print("user wants help")
-            break
-        default:
-            print("No reply")
-        }
-        completionHandler()
-    }
-    
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        completionHandler([.alert, .sound])
-    }
-}
 
 
 

@@ -11,6 +11,7 @@ struct Request {
     var rotation: String
     var status: String
     
+    
     init(user_id: String, sensor_id: String, request_id: String, dateTime: String, longitude: String, latitude: String, vib: String, rotation: String, status: String ) {
         self.user_id = user_id
         self.sensor_id = sensor_id
