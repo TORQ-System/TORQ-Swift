@@ -241,7 +241,7 @@ class signUpSecondViewController: UIViewController {
         //3- create user info
         
         let user: [String: Any] = [
-            "firstName": userFirstName!,
+            "fullName": userFirstName!,
 //            "lastName": userLastName!,
             "email": userEmail!,
             "password": userPassword!,
