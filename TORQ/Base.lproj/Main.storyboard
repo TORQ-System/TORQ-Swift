@@ -343,6 +343,32 @@
                                     <constraint firstAttribute="width" constant="307" id="pTT-MH-BjG"/>
                                 </constraints>
                             </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="7Lf-x7-hka">
+                                <rect key="frame" x="40" y="702" width="334" height="120"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VXD-VT-fFh">
+                                        <rect key="frame" x="0.0" y="0.0" width="334" height="50"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                        <state key="normal" title="Join Us">
+                                            <color key="titleColor" red="0.096692688760000006" green="0.14131301639999999" blue="0.30197626350000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="joinUsButton:" destination="qhE-UJ-tdX" eventType="touchUpInside" id="WlG-ek-dqm"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xcN-6T-YRF">
+                                        <rect key="frame" x="0.0" y="70" width="334" height="50"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                        <state key="normal" title="Login">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="loginButton:" destination="qhE-UJ-tdX" eventType="touchUpInside" id="fAR-uu-Yl3"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="i96-pj-tq0"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -353,9 +379,13 @@
                             <constraint firstItem="tBx-fw-kBg" firstAttribute="centerX" secondItem="Kmg-Rz-OtT" secondAttribute="centerX" id="9mF-gv-Yoz"/>
                             <constraint firstAttribute="bottom" secondItem="yo0-ps-9HH" secondAttribute="bottom" id="CYM-eA-RXa"/>
                             <constraint firstItem="pUb-fw-2di" firstAttribute="leading" secondItem="i96-pj-tq0" secondAttribute="leading" constant="20" id="DxW-Gf-8IK"/>
+                            <constraint firstItem="7Lf-x7-hka" firstAttribute="leading" secondItem="i96-pj-tq0" secondAttribute="leading" constant="40" id="HKB-DU-jXG"/>
                             <constraint firstItem="i96-pj-tq0" firstAttribute="bottom" secondItem="tBx-fw-kBg" secondAttribute="bottom" constant="410" id="LHM-aM-9ke"/>
                             <constraint firstItem="rSC-R7-uih" firstAttribute="leading" secondItem="Kmg-Rz-OtT" secondAttribute="leading" constant="20" id="MPc-3M-8cN"/>
+                            <constraint firstItem="7Lf-x7-hka" firstAttribute="top" secondItem="rSC-R7-uih" secondAttribute="bottom" constant="40" id="O7a-hk-XNn"/>
+                            <constraint firstItem="i96-pj-tq0" firstAttribute="bottom" secondItem="7Lf-x7-hka" secondAttribute="bottom" constant="40" id="RSA-vH-oGq"/>
                             <constraint firstItem="yo0-ps-9HH" firstAttribute="leading" secondItem="i96-pj-tq0" secondAttribute="leading" id="RfW-BC-aXT"/>
+                            <constraint firstItem="i96-pj-tq0" firstAttribute="trailing" secondItem="7Lf-x7-hka" secondAttribute="trailing" constant="40" id="Zt0-Fc-7t0"/>
                             <constraint firstItem="rgZ-pB-s0m" firstAttribute="centerX" secondItem="Kmg-Rz-OtT" secondAttribute="centerX" id="cKt-OL-Vac"/>
                             <constraint firstItem="yo0-ps-9HH" firstAttribute="trailing" secondItem="i96-pj-tq0" secondAttribute="trailing" id="oRe-Jq-eqH"/>
                             <constraint firstItem="i96-pj-tq0" firstAttribute="bottom" secondItem="rgZ-pB-s0m" secondAttribute="bottom" constant="30" id="sgw-cd-5e9"/>
@@ -363,6 +393,9 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="joinusButton" destination="VXD-VT-fFh" id="2ud-G9-a6d"/>
+                        <outlet property="loginButton" destination="xcN-6T-YRF" id="gib-W1-Qla"/>
+                        <outlet property="nextButton" destination="td9-fq-nJq" id="gHf-H4-vuG"/>
                         <outlet property="shapeContainer" destination="rgZ-pB-s0m" id="Haa-z9-ALu"/>
                     </connections>
                 </viewController>
@@ -548,7 +581,7 @@
         <!--Sign Up First View Controller-->
         <scene sceneID="k3M-hy-UDd">
             <objects>
-                <viewController id="WzW-Xp-KNk" customClass="signUpFirstViewController" customModule="TORQ" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="signUpFirstViewController" id="WzW-Xp-KNk" customClass="signUpFirstViewController" customModule="TORQ" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ir5-uq-o2S">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

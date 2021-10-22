@@ -60,9 +60,3 @@ class onboardingScreen1ViewController: UIViewController {
     
 }
 
-
-
-
-//        nextButton.layer.cornerRadius = 45
-//        nextButton.clipsToBounds = true
-//        nextButton.backgroundColor = UIColor(red: 246, green: 235, blue: 235, alpha: 1)

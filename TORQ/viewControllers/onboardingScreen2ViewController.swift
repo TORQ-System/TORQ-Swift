@@ -12,21 +12,21 @@ class onboardingScreen2ViewController: UIViewController {
         super.viewDidLoad()
         nextButton.layer.cornerRadius = 50
         nextButton.clipsToBounds = true
-        let bPath = UIBezierPath(arcCenter: CGPoint(x: shapeContainer.frame.width/2, y: shapeContainer.frame.height/2), radius: shapeContainer.frame.height/2, startAngle: 0, endAngle: (.pi * 2), clockwise: true)
+        let bPath = UIBezierPath(arcCenter: CGPoint(x: nextButton.frame.width/2, y: nextButton.frame.height/2), radius: nextButton.frame.height/2, startAngle: 0, endAngle: (.pi * 2), clockwise: true)
         
         let trackLayer = CAShapeLayer()
         trackLayer.path = bPath.cgPath
         trackLayer.lineWidth = 30
-        trackLayer.strokeColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.5).cgColor
+        trackLayer.strokeColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1).cgColor
         trackLayer.fillColor = UIColor.clear.cgColor
-        shapeContainer.layer.addSublayer(trackLayer)
+        nextButton.layer.addSublayer(trackLayer)
         let shape = CAShapeLayer()
         shape.path = bPath.cgPath
         shape.lineWidth = 30
         shape.strokeColor = UIColor(red: 0.83921569, green: 0.33333333, blue: 0.42352941, alpha: 1).cgColor
         shape.fillColor = UIColor.clear.cgColor
         shape.strokeEnd = 0
-        shapeContainer.layer.addSublayer(shape)
+        nextButton.layer.addSublayer(shape)
         
             let anim = CABasicAnimation(keyPath: "strokeEnd")
             anim.fromValue = 0
