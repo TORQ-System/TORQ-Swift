@@ -87,11 +87,15 @@ class loginViewController: UIViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "paramedicHomeViewController") as! paramedicHomeViewController
         vc.loggedinEmail = email.text
-        print("login: \(String(describing: email.text))")
-        print("login: \(String(describing: vc.loggedinEmail))")
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
         
+    }
+    func goToResetPassword(){
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "resetPasswordViewController") as! resetPasswordViewController
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true, completion: nil)
     }
     
     //MARK: - @IBActions
@@ -143,6 +147,11 @@ class loginViewController: UIViewController {
             }
         }
     }
+    
+    @IBAction func forgotPasswordPressed(_ sender: Any) {
+        goToResetPassword()
+    }
+    
 }
 
 
