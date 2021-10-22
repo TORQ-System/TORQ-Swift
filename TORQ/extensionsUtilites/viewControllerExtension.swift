@@ -101,7 +101,7 @@ extension UIViewController: UNUserNotificationCenterDelegate{
      */
     public func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         let updateQueue = DispatchQueue.init(label: "updateQueue")
-        _ = response.notification.request.content.userInfo["userID"]
+        _ = response.notification.request.content.userInfo["userID"] //Could be helpful for the emergency contacts
         let requestID = response.notification.request.content.userInfo["requestID"]
         let ref = Database.database().reference()
         
