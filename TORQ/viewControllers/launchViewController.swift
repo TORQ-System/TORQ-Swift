@@ -10,6 +10,9 @@ import UIKit
 class launchViewController: UIViewController {
     
     
+    //MARK: - @IBOutlets
+    @IBOutlet weak var logoImage: UIImageView!
+    
     
     //MARK: - Overriden functions
     override func viewDidLoad() {
@@ -17,6 +20,7 @@ class launchViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             self.goToLogin()
         }
+
     }
 
     //MARK: - Functions

@@ -29,7 +29,7 @@ class onboardingScreen2ViewController: UIViewController {
         nextButton.layer.addSublayer(shape)
         
             let anim = CABasicAnimation(keyPath: "strokeEnd")
-            anim.fromValue = 0
+        anim.fromValue = 0.33333334
             anim.toValue = 0.66666664
             anim.duration = 1
             anim.isRemovedOnCompletion = false

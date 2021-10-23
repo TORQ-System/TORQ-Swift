@@ -73,7 +73,7 @@ class onboardingScreen3ViewController: UIViewController {
     
     private func animateProgress()-> Void{
         let anim = CABasicAnimation(keyPath: "strokeEnd")
-        anim.fromValue = 0
+        anim.fromValue = 0.66666664
         anim.toValue = 1
         anim.duration = 1
         anim.isRemovedOnCompletion = false
