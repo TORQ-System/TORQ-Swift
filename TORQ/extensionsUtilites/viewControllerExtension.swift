@@ -39,56 +39,83 @@ extension UIViewController {
                     let userRequest = Request(user_id: user_id, sensor_id: sensor_id, request_id: request_id, dateTime: time_stamp, longitude: longitude, latitude: latitude, vib: vib, rotation: rotation, status: status)
                     
                     if (userRequest.getUserID()) == userID && (userRequest.getStatus() == "0"){
-                        
-                        // ref.child("Request").child("Req\(userRequest.getRequestID())").updateChildValues(["status":"2"])
-                        
                         var center = UNUserNotificationCenter.current()
                         center = UNUserNotificationCenter.current()
-                        center.requestAuthorization(options: [.alert,.sound, .badge, .carPlay]) { grantedPermisssion, error in
-                            guard error == nil else{
-                                print(error!.localizedDescription)
-                                return
-                            }
-                            
-                            print("has premission been granted: ", grantedPermisssion)
-                            
-                            //Assign contents
-                            let content = UNMutableNotificationContent()
-                            content.title = "Are you okay?"
-                            content.subtitle =  "We detcted an impact on your veichle"
-                            content.body = "Reply within 10s or we will send an ambulance request."
-                            content.sound = .default
-                            content.categoryIdentifier = "ACTIONS"
-                            content.userInfo = ["userID":userID, "requestID":request_id]
-                            
-                            //Create actions
-                            let okayAction = UNNotificationAction(identifier: "OKAY_ACTION", title: "I'm okay", options: UNNotificationActionOptions.init(rawValue: 0))
-                            
-                            let requestAction = UNNotificationAction(identifier: "REQUEST_ACTION", title: "No, send request", options: UNNotificationActionOptions.init(rawValue: 0))
-                            
-                            let actionCategory = UNNotificationCategory(identifier: "ACTIONS", actions: [okayAction, requestAction], intentIdentifiers: [], hiddenPreviewsBodyPlaceholder: "", options: .customDismissAction) //it will get dismissed
-                            
-                            center.setNotificationCategories([actionCategory])
-                            
-                            //Notification request
-                            let uuid = UUID().uuidString
-                            let request = UNNotificationRequest(identifier: uuid, content: content, trigger: nil)
-                            
-                            // reigester to the notification center
-                            center.add(request) { error in
-                                guard error == nil else{
-                                    print(error!.localizedDescription)
-                                    return
+                        //Assign contents
+                        let content = UNMutableNotificationContent()
+                        content.title = "Are you okay?"
+                        content.subtitle =  "We detcted an impact on your veichle"
+                        content.body = "Reply within 10s or we will send an ambulance request."
+                        content.sound = .default
+                        content.categoryIdentifier = "ACTIONS"
+                        content.userInfo = ["userID":userID, "requestID":request_id]
+                        
+                        //Create actions
+                        let okayAction = UNNotificationAction(identifier: "OKAY_ACTION", title: "I'm okay", options: UNNotificationActionOptions.init(rawValue: 0))
+                        
+                        let requestAction = UNNotificationAction(identifier: "REQUEST_ACTION", title: "No, send request", options: UNNotificationActionOptions.init(rawValue: 0))
+                        
+                        let actionCategory = UNNotificationCategory(identifier: "ACTIONS", actions: [okayAction, requestAction], intentIdentifiers: [], hiddenPreviewsBodyPlaceholder: "", options: .customDismissAction) //it will get dismissed
+                        
+                        center.setNotificationCategories([actionCategory])
+                        
+                        //Notification request
+                        let uuid = UUID().uuidString
+                        let request = UNNotificationRequest(identifier: uuid, content: content, trigger: nil)
+                        
+                        // reigester to the notification center
+                        
+                        center.getNotificationSettings { setting in
+                            if setting.authorizationStatus == .authorized{
+                                center.add(request) { error in
+                                    guard error == nil else{
+                                        print(error!.localizedDescription)
+                                        return
+                                    }
+                                    NSLog("sent");
                                 }
-                                NSLog("sent");
+                            } else {
+                                center.requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+                                    guard success else{
+                                        print("The user has not authorized")
+                                        return
+                                    }
+                                    center.add(request) { error in
+                                        guard error == nil else{
+                                            print(error!.localizedDescription)
+                                            return
+                                        }
+                                        NSLog("sent");
+                                    }
+                                }
                             }
                         }
+                        // ref.child("Request").child("Req\(userRequest.getRequestID())").updateChildValues(["status":"2"])
+                        
+                        /*
+                         
+                         center = UNUserNotificationCenter.current()
+                         center.requestAuthorization(options: [.alert,.sound, .badge, .carPlay]) { grantedPermisssion, error in
+                         guard error == nil else{
+                         print(error!.localizedDescription)
+                         return
+                         }
+                         
+                         
+                         print("has premission been granted: ", grantedPermisssion)
+                         */
+                        
+                        
+                        
+                        
+                        
                     }
                 }
             }
         }
     }
 }
+
 
 
 extension UIViewController: UNUserNotificationCenterDelegate{
@@ -108,6 +135,7 @@ extension UIViewController: UNUserNotificationCenterDelegate{
         updateQueue.sync {
             switch response.actionIdentifier{
             case "OKAY_ACTION": //Delete the node
+                print("user is okay \(String(describing: requestID))")
                 ref.child("Request").child("Req\(requestID!)").removeValue()
                 break
             case "REQUEST_ACTION":

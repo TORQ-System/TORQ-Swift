@@ -24,8 +24,7 @@ class userHomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureLocationManager()
-        
-        userNotificationConfig()
+        configureNotification()
         registerToNotifications(userID: userID!)
     }
     
@@ -122,15 +121,22 @@ extension userHomeViewController: CLLocationManagerDelegate{
 }
 
 extension userHomeViewController{
-    private func userNotificationConfig(){
-        center.requestAuthorization(options: [.badge,.alert,.sound,.carPlay]) {granted, error in
-            if error == nil {
-                print("premission granted: \(granted)")
-                self.center.delegate = self
+    private func configureNotification(){
+        center.getNotificationSettings { setting in
+            guard setting.authorizationStatus == .authorized else {
+                self.center.requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+                    guard success else{
+                        print("The user has not authorized")
+                        return
+                    }
+                }
+                return
             }
         }
+        self.center.delegate = self
     }
 }
+
 
 
 
