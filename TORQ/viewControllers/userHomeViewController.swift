@@ -6,6 +6,14 @@ import CoreLocation
 class userHomeViewController: UIViewController {
     
         
+    //MARK: - @IBOutlets
+    @IBOutlet weak var topView: UIView!
+    @IBOutlet weak var imageContainer: UIView!
+    @IBOutlet weak var profileContainer: UIView!
+    @IBOutlet weak var profileImage: UIImageView!
+    @IBOutlet weak var medicalReportContainer: UIView!
+    
+    
 
     //MARK: - Variables
     var userEmail: String?
@@ -18,6 +26,22 @@ class userHomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureLocationManager()
+        imageContainer.layer.cornerRadius = 100
+        imageContainer.layer.masksToBounds = true
+        profileContainer.layer.cornerRadius = 75
+        profileContainer.layer.masksToBounds = true
+        medicalReportContainer.layer.cornerRadius = 20
+        medicalReportContainer.layer.masksToBounds = true
+        medicalReportContainer.backgroundColor = UIColor(red: 0.83921569, green: 0.33333333, blue: 0.42352941, alpha: 1)
+        
+        medicalReportContainer.layer.shadowColor = UIColor.black.cgColor
+        medicalReportContainer.layer.shadowOffset = CGSize(width: 0.5, height: 0.4)  //Here you control x and y
+        medicalReportContainer.layer.shadowOpacity = 0.5
+        medicalReportContainer.layer.shadowRadius = 5.0 //Here your control your blur
+        medicalReportContainer.layer.masksToBounds =  false
+
+
+
 
   
     }
@@ -66,9 +90,16 @@ class userHomeViewController: UIViewController {
         }
     }
     
-
+    
+    @IBAction func menuPressed(_ sender: Any) {
+    }
+    
+    
     
 }
+
+
+
 
 //MARK: - Extensions
 extension userHomeViewController: CLLocationManagerDelegate{
@@ -105,9 +136,9 @@ extension userHomeViewController: CLLocationManagerDelegate{
         let longitude = locations.last?.coordinate.longitude
         let latitude = locations.last?.coordinate.latitude
         let time = locations.last?.timestamp
-        print("longitude: \(String(describing: longitude!))")
-        print("latitude: \(String(describing: latitude!))")
-        print("time: \(String(describing: time!))")
+//        print("longitude: \(String(describing: longitude!))")
+//        print("latitude: \(String(describing: latitude!))")
+//        print("time: \(String(describing: time!))")
         ref.child("Sensor").child("S\(userID!)/longitude").setValue((String(describing: longitude!)))
         ref.child("Sensor").child("S\(userID!)/latitude").setValue((String(describing: latitude!)))
         ref.child("Sensor").child("S\(userID!)/time").setValue((String(describing: time!)))
