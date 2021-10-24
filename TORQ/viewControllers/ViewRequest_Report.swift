@@ -32,7 +32,9 @@ class ViewRequest_Report: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         contetnt()
-        
+        let vc = HospitaList()
+        vc.text = "Hammock lomo literally microdosing street art pour-over"
+        vc.UID1 = UID
     }
     @objc
     func findloc(sender:UIButton){
@@ -74,6 +76,8 @@ class ViewRequest_Report: UIViewController {
 //                   }
 //
 //               })
+        
+        
         ref.child("User").child(UID!).observe(.value, with: {(snapshot) in
                         if let dec = snapshot.value as? [String :Any]
                         {
@@ -91,6 +95,7 @@ class ViewRequest_Report: UIViewController {
                            {
                                
                                if (dec["user_id"] as! String == self.UID!){
+                               
                             let try1 = dec["Blood"] as! String
                             let try2 = dec["allergies"] as! String
                             let try3 = dec["chronic_disease"] as! String
@@ -124,6 +129,16 @@ class ViewRequest_Report: UIViewController {
     @IBAction func back_butten(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
+    
+    @IBAction func prosessing(_ sender: Any) {
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+               let vc = storyboard.instantiateViewController(identifier: "HospitaList") as! HospitaList
+        vc.UID1 = String(UID)
+               self.present(vc, animated: true, completion: nil)
+    }
+    
+    
+    
     func readDatabase()
     
     {
