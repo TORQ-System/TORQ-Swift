@@ -19,15 +19,9 @@ class onboardingScreen3ViewController: UIViewController {
         configureButtons()
         ToggleButtonsAlpha(flag: true)
         configureLevelLayer()
-        
-        
-
-        
-
     }
     
     //MARK: - Functions
-    
     
     private func configureButtons() -> Void{
         joinusButton.layer.cornerRadius = 20
