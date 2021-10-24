@@ -83,6 +83,9 @@ class HospitaList: UIViewController ,UITableViewDelegate ,UITableViewDataSource,
             
             print(selhealth)
             print(UID1 as Any )
+            ref.child("medical_info").child("medical1").removeValue()
+                
+              
             ref.child("Request").queryOrdered(byChild:"user_id").observe(.childAdded, with: {(snapshot) in
                                if let dec = snapshot.value as? [String :Any]
                                {
