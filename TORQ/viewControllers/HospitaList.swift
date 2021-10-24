@@ -6,8 +6,10 @@
 //
 
 import UIKit
+import FirebaseDatabase
+var ref = Database.database().reference()
 
-class HospitaList: UIViewController ,UITableViewDelegate ,UITableViewDataSource{
+class HospitaList: UIViewController ,UITableViewDelegate ,UITableViewDataSource, UIAlertViewDelegate{
 
     @IBOutlet weak var error: UILabel!
     @IBOutlet weak var tableList: UITableView!
@@ -81,6 +83,31 @@ class HospitaList: UIViewController ,UITableViewDelegate ,UITableViewDataSource{
             
             print(selhealth)
             print(UID1 as Any )
+            ref.child("Request").queryOrdered(byChild:"user_id").observe(.childAdded, with: {(snapshot) in
+                               if let dec = snapshot.value as? [String :Any]
+                               {
+                                   
+                                   if (dec["user_id"] as! String == self.UID1!){
+                                     print(snapshot.key)
+                                       let num = snapshot.key
+                                       ref.child("Request").child(num).updateChildValues(["status": "1"])
+                                       let alert = UIAlertController(title: "Confirmed", message: "The request has been send to the health care cenetr", preferredStyle: UIAlertController.Style.alert)
+
+                                              // add an action (button)
+                                              alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+
+                                              // show the alert
+                                              self.present(alert, animated: true, completion: nil)
+//                                       ref.child("Request").child(num).setValue(["user_id":dec["user_id"] as! String, "sensor_id": dec["sensor_id"] as! String, "request_id": dec["request_id"] as! String, "dateTime": dec["time_stamp"] as! String, "longitude": dec["longitude"] as! String, "latitude": dec["latitude"] as! String, "vib": dec["vib"] as! String, "rotation": dec["rotation"] as! String, "status": "1", "healthcare" : self.selhealth ])
+
+                                       
+                                   }
+                                 //  self.name_report.text = Fname+" "+lname
+                                //   self.namerequest.text = "\(Fname)'s Request"
+                   //o
+                               }
+                   
+                           })
 
         }
     }
