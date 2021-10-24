@@ -1111,23 +1111,52 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="e1r-IS-Vaf">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="e1r-IS-Vaf" customClass="ECCollectionViewCell" customModule="TORQ" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="U9h-Rb-VUD">
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="U9h-Rb-VUD" customClass="ECCollectionViewCell" customModule="TORQ" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sarah Majed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S53-MH-Y7T">
+                                                    <rect key="frame" x="8" y="23" width="95" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0557112817" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0KX-wF-6bU">
+                                                    <rect key="frame" x="8" y="54" width="92" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sister" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R6M-0a-Sgw">
+                                                    <rect key="frame" x="8" y="83" width="44" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="S53-MH-Y7T" firstAttribute="top" secondItem="U9h-Rb-VUD" secondAttribute="top" constant="23" id="2MJ-Uh-0jX"/>
+                                                <constraint firstItem="R6M-0a-Sgw" firstAttribute="top" secondItem="0KX-wF-6bU" secondAttribute="bottom" constant="8" symbolic="YES" id="3Oc-Gf-Phj"/>
+                                                <constraint firstItem="R6M-0a-Sgw" firstAttribute="leading" secondItem="U9h-Rb-VUD" secondAttribute="leading" constant="8" id="3ZA-xD-ll0"/>
+                                                <constraint firstItem="0KX-wF-6bU" firstAttribute="leading" secondItem="U9h-Rb-VUD" secondAttribute="leading" constant="8" id="fur-b5-eKp"/>
+                                                <constraint firstItem="S53-MH-Y7T" firstAttribute="leading" secondItem="U9h-Rb-VUD" secondAttribute="leading" constant="8" id="sa7-fj-w9Z"/>
+                                                <constraint firstItem="0KX-wF-6bU" firstAttribute="top" secondItem="S53-MH-Y7T" secondAttribute="bottom" constant="10" id="yiz-d5-DBs"/>
+                                            </constraints>
                                         </collectionViewCellContentView>
-                                    </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="2Hl-jH-gBp">
-                                        <rect key="frame" x="190" y="0.0" width="128" height="128"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="urt-As-K5m">
-                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </collectionViewCellContentView>
+                                        <connections>
+                                            <outlet property="name" destination="S53-MH-Y7T" id="zEB-ch-2hh"/>
+                                            <outlet property="phone" destination="0KX-wF-6bU" id="fiP-NT-BAi"/>
+                                            <outlet property="relation" destination="R6M-0a-Sgw" id="XK0-m9-dwv"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="eZL-4K-sFa" id="cc4-Hc-y4Z"/>
+                                    <outlet property="delegate" destination="eZL-4K-sFa" id="QzT-CC-gKb"/>
+                                </connections>
                             </collectionView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="astrisk" translatesAutoresizingMaskIntoConstraints="NO" id="MDJ-fG-BVr">
                                 <rect key="frame" x="336" y="155" width="52" height="46"/>
@@ -1147,7 +1176,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="contacts" destination="xr1-QU-0uE" id="NDG-0d-Bm6"/>
+                        <outlet property="contacts" destination="xr1-QU-0uE" id="Pdf-Tt-4hC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V4q-MZ-jTF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

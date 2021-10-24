@@ -17,13 +17,11 @@ class ViewEmergencyContactViewController: UIViewController {
     var ref = Database.database().reference()
     var userEmail: String?
     var userID: String?
+    var eContacts: [emergencyContact] = []
     
     //MARK: - Overriden function
     override func viewDidLoad() {
         super.viewDidLoad()
-        let width = (view.frame.size.width - 10 ) / 2
-        let layout = contacts.collectionViewLayout as!  UICollectionViewFlowLayout
-        layout.itemSize = CGSize(width: width, height: width)
         // Do any additional setup after loading the view.
     }
     
@@ -49,26 +47,50 @@ class ViewEmergencyContactViewController: UIViewController {
                 //create a EC object
                 let emergencyContact = emergencyContact(name: name, phone_number: phone, senderID:senderID, recieverID: receiverID, sent: sent, contactID: contactId, msg: msg, relation: relation)
                 
-                if (emergencyContact.getSenderID()) == userID) {
-                    //show me my contacts
-                    
-            
-                 
+                if (emergencyContact.getSenderID()) == userID){
+                    self.eContacts.append(emergencyContact)
                 }
-            }
+                 
+                
+             }
           }
        }
     }
+}
+
+extension ViewEmergencyContactViewController: UICollectionViewDataSource{
+    
+    // tell the collection view how many cells to make
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return eContacts.count
+    }
+    
+    // make a cell for each cell index path
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        // get a reference to our storyboard cell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath as IndexPath) as! ECCollectionViewCell
+        
         
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        
+        return cell
     }
-    */
-
 }
+
+//func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+//
+//let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Identifier", forIndexPath: indexPath) as! YourCustomcell
+//
+//cell.imageView.image = UIImage(named: arryImage[indexPath.item] as String)
+//
+//return cell
+//}
+//func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
+//   if indexPath.item == 0 {
+//       //Code to add
+//   }else{
+//
+//   }
+//}
+
