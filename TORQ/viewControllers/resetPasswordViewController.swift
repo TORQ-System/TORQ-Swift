@@ -17,9 +17,13 @@ class resetPasswordViewController: UIViewController {
     
     //MARK: - Constants
     let redUIColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
-    let blueUIColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 )
+    let blueUIColor = UIColor( red: 49/255, green: 90/255, blue:149/255, alpha: 1.0 )
     let alertErrorIcon = UIImage(named: "errorIcon")
     let alertSuccessIcon = UIImage(named: "successIcon")
+    let apperance = SCLAlertView.SCLAppearance(
+        contentViewCornerRadius: 15,
+        buttonCornerRadius: 7,
+        hideWhenBackgroundViewIsTapped: true)
     
     
     override func viewDidLoad() {
@@ -48,11 +52,11 @@ class resetPasswordViewController: UIViewController {
     @IBAction func resetPasswordPressed(_ sender: Any) {
         Auth.auth().sendPasswordReset(withEmail: email.text!) { error in
             guard error == nil else{
-                SCLAlertView().showCustom("Oops", subTitle: "Make sure you entered a valid email address or try again later", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", circleIconImage: UIImage(named: "warning"),animationStyle: SCLAnimationStyle.topToBottom)
+                SCLAlertView(appearance: self.apperance).showCustom("Oops", subTitle: "Make sure you entered a valid email address or try again later", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", circleIconImage: UIImage(named: "warning"),animationStyle: SCLAnimationStyle.topToBottom)
                 return
             }
         
-            SCLAlertView().showCustom("Check Your Email", subTitle: "We have sent a password reset instruction to your email", color: self.blueUIColor, icon: self.alertSuccessIcon!, closeButtonTitle: "Okay", circleIconImage: UIImage(named: "warning"), animationStyle: SCLAnimationStyle.topToBottom)
+            SCLAlertView(appearance: self.apperance).showCustom("Check Your Email", subTitle: "We have sent a password reset instruction to your email", color: self.blueUIColor, icon: self.alertSuccessIcon!, closeButtonTitle: "Okay", circleIconImage: UIImage(named: "warning"), animationStyle: SCLAnimationStyle.topToBottom)
         }
     }
 }

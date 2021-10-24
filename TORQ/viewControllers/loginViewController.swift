@@ -1,6 +1,7 @@
 import UIKit
 import FirebaseAuth
 import SCLAlertView
+import SwiftUI
 
 class loginViewController: UIViewController {
     
@@ -16,6 +17,10 @@ class loginViewController: UIViewController {
     //MARK: - Constants
     let redUIColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
     let alertIcon = UIImage(named: "errorIcon")
+    let apperance = SCLAlertView.SCLAppearance(
+        contentViewCornerRadius: 15,
+        buttonCornerRadius: 7,
+        hideWhenBackgroundViewIsTapped: true)
     
     //MARK: - Overriden Functions
     override func viewDidLoad() {
@@ -26,7 +31,6 @@ class loginViewController: UIViewController {
         password.setBorder(color: "default", image: UIImage(named: "lockDefault")!)
     }
     
-    
     //MARK: - Functions
     func validateFields()->[String: String]{
         var errors = ["email":"", "password":""]
@@ -36,7 +40,6 @@ class loginViewController: UIViewController {
         } else if password.text == nil || password.text == "" {
             errors["password"] = "Fields cannot be empty"
         }
-        
         return errors
         
     }
@@ -58,6 +61,7 @@ class loginViewController: UIViewController {
         present(vc, animated: true, completion: nil)
         
     }
+    
     func goToResetPassword(){
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "resetPasswordViewController") as! resetPasswordViewController
@@ -88,12 +92,13 @@ class loginViewController: UIViewController {
         
         // if there are any errors show the error view
         guard errors["email"] == ""  else {
-            SCLAlertView().showCustom("Invalid Credentials", subTitle: errors["email"]!, color: self.redUIColor, icon: alertIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+            SCLAlertView(appearance: self.apperance).showCustom("Invalid Credentials", subTitle: errors["email"]!, color: self.redUIColor, icon: alertIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+            
             return
         }
         
         guard errors["password"] == ""  else {
-            SCLAlertView().showCustom("Invalid Credentials", subTitle: errors["password"]!, color: self.redUIColor, icon: alertIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+            SCLAlertView(appearance: self.apperance).showCustom("Invalid Credentials", subTitle: errors["password"]!, color: self.redUIColor, icon: alertIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
             return
         }
         
@@ -101,7 +106,7 @@ class loginViewController: UIViewController {
             
             guard error == nil else{
                 //self.showALert(message: "Please ensure all fields are correct")
-                SCLAlertView().showCustom("Invalid Credentials", subTitle: "Incorrect email or password", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Got it!", circleIconImage: UIImage(named: "warning"), animationStyle: SCLAnimationStyle.topToBottom)
+                SCLAlertView(appearance: self.apperance).showCustom("Invalid Credentials", subTitle: "Incorrect email or password", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Got it!", circleIconImage: UIImage(named: "warning"), animationStyle: SCLAnimationStyle.topToBottom)
                 return
             }
             // role authentication
