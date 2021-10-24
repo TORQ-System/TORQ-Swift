@@ -1093,9 +1093,6 @@
                                 <color key="textColor" red="0.1048104092" green="0.15278157589999999" blue="0.3451191783" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="contact" translatesAutoresizingMaskIntoConstraints="NO" id="y3V-S0-IHz">
-                                <rect key="frame" x="311" y="148" width="83" height="53"/>
-                            </imageView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iOZ-0R-V5P">
                                 <rect key="frame" x="48" y="250" width="318" height="420"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1114,7 +1111,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="e1r-IS-Vaf">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="e1r-IS-Vaf">
                                         <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="U9h-Rb-VUD">
@@ -1132,14 +1129,16 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="astrisk" translatesAutoresizingMaskIntoConstraints="NO" id="MDJ-fG-BVr">
+                                <rect key="frame" x="336" y="155" width="52" height="46"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="d0E-zD-1WC"/>
-                        <color key="backgroundColor" red="0.9959848523" green="0.9803945422" blue="0.98040062189999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" red="0.96853429079999998" green="0.95294374230000001" blue="0.95294946430000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="d0E-zD-1WC" firstAttribute="trailing" secondItem="iOZ-0R-V5P" secondAttribute="trailing" constant="48" id="2K5-Vg-map"/>
-                            <constraint firstItem="y3V-S0-IHz" firstAttribute="leading" secondItem="O0a-Pw-h7h" secondAttribute="trailing" constant="113" id="6bX-bK-Uv2"/>
                             <constraint firstItem="O0a-Pw-h7h" firstAttribute="leading" secondItem="d0E-zD-1WC" secondAttribute="leading" constant="70" id="FfT-Lo-Hf1"/>
-                            <constraint firstItem="y3V-S0-IHz" firstAttribute="leading" secondItem="O0a-Pw-h7h" secondAttribute="trailing" constant="113" id="IcQ-Jg-sv9"/>
                             <constraint firstItem="iOZ-0R-V5P" firstAttribute="leading" secondItem="d0E-zD-1WC" secondAttribute="leading" constant="64" id="Mng-Gt-gly"/>
                             <constraint firstItem="iOZ-0R-V5P" firstAttribute="top" secondItem="O0a-Pw-h7h" secondAttribute="bottom" constant="49" id="U2P-pk-1ra"/>
                             <constraint firstItem="d0E-zD-1WC" firstAttribute="trailing" secondItem="iOZ-0R-V5P" secondAttribute="trailing" constant="48" id="db8-La-pPY"/>
@@ -1163,9 +1162,9 @@
         <image name="NavArrow" width="202" height="167"/>
         <image name="arrow.backward" catalog="system" width="128" height="98"/>
         <image name="arrow.right" catalog="system" width="128" height="98"/>
+        <image name="astrisk" width="150" height="150"/>
         <image name="chevron.backward" catalog="system" width="96" height="128"/>
         <image name="chevron.right" catalog="system" width="96" height="128"/>
-        <image name="contact" width="236" height="236"/>
         <image name="errorIcon" width="1027" height="1027"/>
         <image name="illustration1" width="1529" height="1021"/>
         <image name="illustration2" width="942" height="851"/>
