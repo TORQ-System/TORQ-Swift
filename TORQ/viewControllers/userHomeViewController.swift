@@ -12,7 +12,7 @@ class userHomeViewController: UIViewController {
     @IBOutlet weak var profileContainer: UIView!
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var medicalReportContainer: UIView!
-    
+    @IBOutlet weak var profileBorader: UIView!
     
 
     //MARK: - Variables
@@ -30,14 +30,20 @@ class userHomeViewController: UIViewController {
         imageContainer.layer.masksToBounds = true
         profileContainer.layer.cornerRadius = 75
         profileContainer.layer.masksToBounds = true
+        profileBorader.layer.borderColor = UIColor(red: 0.201, green: 0.344, blue: 0.584, alpha: 1).cgColor
+        profileBorader.layer.borderWidth = 2
+        profileBorader.layer.cornerRadius = 80
+        
+        
+        
         medicalReportContainer.layer.cornerRadius = 20
         medicalReportContainer.layer.masksToBounds = true
         medicalReportContainer.backgroundColor = UIColor(red: 0.83921569, green: 0.33333333, blue: 0.42352941, alpha: 1)
         
-        medicalReportContainer.layer.shadowColor = UIColor.black.cgColor
-        medicalReportContainer.layer.shadowOffset = CGSize(width: 0.5, height: 0.4)  //Here you control x and y
-        medicalReportContainer.layer.shadowOpacity = 0.5
-        medicalReportContainer.layer.shadowRadius = 5.0 //Here your control your blur
+        medicalReportContainer.layer.shadowColor = UIColor(red: 0.83921569, green: 0.33333333, blue: 0.42352941, alpha: 1).cgColor
+        medicalReportContainer.layer.shadowOffset = CGSize(width: 0, height: 30)  //Here you control x and y
+        medicalReportContainer.layer.shadowOpacity = 0.35
+        medicalReportContainer.layer.shadowRadius = 50 //Here your control your blur
         medicalReportContainer.layer.masksToBounds =  false
 
 
