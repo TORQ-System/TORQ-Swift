@@ -142,7 +142,6 @@ extension userHomeViewController: CLLocationManagerDelegate{
 //MARK: - UICollectionViewDelegate Extensions
 
 extension userHomeViewController: UICollectionViewDelegate{
-    
 }
 
 
