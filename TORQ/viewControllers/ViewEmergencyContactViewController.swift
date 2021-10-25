@@ -72,10 +72,26 @@ extension ViewEmergencyContactViewController: UICollectionViewDataSource{
     }
     
     // make a cell for each cell index path
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        // get a reference to our storyboard cell
+//        let add = collectionView.dequeueReusableCell(withReuseIdentifier: "add", for: indexPath as IndexPath)
+//        add.layer.cornerRadius = 10
+//
+//        return add
+//
+//    }
         
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         // get a reference to our storyboard cell
+        if ( indexPath.row == 0 ) {
+            let add = collectionView.dequeueReusableCell(withReuseIdentifier: "add", for: indexPath as IndexPath)
+            add.layer.cornerRadius = 10
+            
+            return add
+        }
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath as IndexPath) as! ECCollectionViewCell
+        
         cell.layer.cornerRadius = 10
         cell.layer.masksToBounds = false
         cell.layer.shadowColor = UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1).cgColor
@@ -89,13 +105,7 @@ extension ViewEmergencyContactViewController: UICollectionViewDataSource{
         
         return cell
     }
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
-       if indexPath.item == 0 {
-           //code
-       }else{
 
-       }
-    }
 }
 
 extension ViewEmergencyContactViewController: UICollectionViewDelegateFlowLayout{
