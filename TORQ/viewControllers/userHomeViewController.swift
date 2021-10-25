@@ -13,6 +13,7 @@ class userHomeViewController: UIViewController {
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var medicalReportContainer: UIView!
     @IBOutlet weak var profileBorader: UIView!
+    @IBOutlet weak var servicesCollectionView: UICollectionView!
     
 
     //MARK: - Variables
@@ -27,6 +28,15 @@ class userHomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureLocationManager()
+        configureLayout()
+
+    }
+    
+    //MARK: - Functions
+    
+    private func configureLayout(){
+        topView.layer.cornerRadius = 50
+        topView.layer.maskedCorners = [.layerMaxXMaxYCorner,.layerMinXMaxYCorner]
         imageContainer.layer.cornerRadius = 100
         imageContainer.layer.masksToBounds = true
         profileContainer.layer.cornerRadius = 75
@@ -34,43 +44,28 @@ class userHomeViewController: UIViewController {
         profileBorader.layer.borderColor = UIColor(red: 0.201, green: 0.344, blue: 0.584, alpha: 1).cgColor
         profileBorader.layer.borderWidth = 2
         profileBorader.layer.cornerRadius = 80
-        
-        
-        
         medicalReportContainer.layer.cornerRadius = 20
         medicalReportContainer.layer.masksToBounds = true
         medicalReportContainer.backgroundColor = UIColor(red: 0.83921569, green: 0.33333333, blue: 0.42352941, alpha: 1)
-        
         medicalReportContainer.layer.shadowColor = UIColor(red: 0.83921569, green: 0.33333333, blue: 0.42352941, alpha: 1).cgColor
-        medicalReportContainer.layer.shadowOffset = CGSize(width: 0, height: 30)  //Here you control x and y
+        medicalReportContainer.layer.shadowOffset = CGSize(width: 0, height: 30)
         medicalReportContainer.layer.shadowOpacity = 0.35
-        medicalReportContainer.layer.shadowRadius = 50 //Here your control your blur
+        medicalReportContainer.layer.shadowRadius = 50
         medicalReportContainer.layer.masksToBounds =  false
-
-
-
-
-  
     }
     
-    //MARK: - Functions
-    
     func configureLocationManager(){
-        
         locationManager.delegate = self
         locationManager.allowsBackgroundLocationUpdates = true
         locationManager.showsBackgroundLocationIndicator = true
         guard CLLocationManager.locationServicesEnabled() else {
-            //show alert.
             self.showALert(message: "the location services isn't enabled")
             return
         }
         locationManager.requestAlwaysAuthorization()
-        
     }
     
     func showALert(message:String){
-        //show alert based on the message that is being paased as parameter
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: "Ok", style: .default)
         alert.addAction(action)
@@ -85,7 +80,7 @@ class userHomeViewController: UIViewController {
     }
     
     
-
+    //MARK: - 
     @IBAction func logoutPressed(_ sender: Any) {
         do {
             try Auth.auth().signOut()
@@ -151,4 +146,37 @@ extension userHomeViewController: CLLocationManagerDelegate{
         ref.child("Sensor").child("S\(userID!)/time").setValue((String(describing: time!)))
     }
     
+}
+
+extension userHomeViewController: UICollectionViewDelegate{
+    
+}
+
+extension userHomeViewController: UICollectionViewDataSource{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return services.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "servicesCell", for: indexPath) as! servicesCollectionViewCell
+        cell.layer.cornerRadius = 10
+        cell.layer.masksToBounds = true
+        cell.layer.shadowColor = UIColor(red: 0.659, green: 0.835, blue: 0.906, alpha: 1).cgColor
+        cell.layer.shadowOffset = CGSize(width: 15, height: 5)  //Here you control x and y
+        cell.layer.shadowOpacity = 0.35
+        cell.layer.shadowRadius = 10 //Here your control your blur
+        cell.layer.masksToBounds =  false
+        cell.serviceLabel.text = services[indexPath.row]
+        switch indexPath.row {
+        case 0:
+            cell.serviceImage.image = UIImage(imageLiteralResourceName: "pulse")
+        case 1:
+            cell.serviceImage.image = UIImage(imageLiteralResourceName: "telephone")
+        case 2:
+            cell.serviceImage.image = UIImage(imageLiteralResourceName: "clock")
+        default:
+            print("unknown")
+        }
+        return cell
+    }
 }

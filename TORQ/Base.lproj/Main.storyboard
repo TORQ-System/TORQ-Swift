@@ -258,7 +258,7 @@
             </objects>
             <point key="canvasLocation" x="-2528.985507246377" y="736.60714285714278"/>
         </scene>
-        <!--Onboarding Screen3 View Controller-->
+        <!--Item-->
         <scene sceneID="RTS-KB-3TV">
             <objects>
                 <viewController storyboardIdentifier="onboardingScreen3" id="qhE-UJ-tdX" customClass="onboardingScreen3ViewController" customModule="TORQ" customModuleProvider="target" sceneMemberID="viewController">
@@ -380,6 +380,7 @@
                             <constraint firstAttribute="trailing" secondItem="rSC-R7-uih" secondAttribute="trailing" constant="20" id="xHW-aF-Rp6"/>
                         </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="NuL-9M-xd3"/>
                     <connections>
                         <outlet property="joinusButton" destination="VXD-VT-fFh" id="2ud-G9-a6d"/>
                         <outlet property="loginButton" destination="xcN-6T-YRF" id="gib-W1-Qla"/>
@@ -836,7 +837,7 @@
             </objects>
             <point key="canvasLocation" x="-2529" y="1419"/>
         </scene>
-        <!--User Home View Controller-->
+        <!--Home-->
         <scene sceneID="BCa-Oj-5BB">
             <objects>
                 <viewController storyboardIdentifier="userHomeViewController" id="fu1-8Q-DEh" customClass="userHomeViewController" customModule="TORQ" customModuleProvider="target" sceneMemberID="viewController">
@@ -990,14 +991,14 @@
                                 <color key="textColor" red="0.1020096019" green="0.15924707060000001" blue="0.37256866690000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" indicatorStyle="white" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Jp8-Y1-erz">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="white" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Jp8-Y1-erz">
                                 <rect key="frame" x="20" y="624.5" width="374" height="130"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="130" id="Gng-Mg-NP9"/>
                                 </constraints>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="J72-IG-R0w">
-                                    <size key="itemSize" width="128" height="128"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="15" id="J72-IG-R0w">
+                                    <size key="itemSize" width="130" height="130"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -1017,23 +1018,28 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pulse" translatesAutoresizingMaskIntoConstraints="NO" id="ys5-3D-XcH">
-                                                    <rect key="frame" x="8" y="8" width="114" height="73.5"/>
+                                                    <rect key="frame" x="15" y="15" width="100" height="64.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="ys5-3D-XcH" secondAttribute="height" multiplier="14:9" id="UwZ-8J-hmm"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="ys5-3D-XcH" firstAttribute="leading" secondItem="8Ln-G0-6Xo" secondAttribute="leading" constant="8" id="1OW-fF-jyC"/>
+                                                <constraint firstItem="ys5-3D-XcH" firstAttribute="leading" secondItem="8Ln-G0-6Xo" secondAttribute="leading" constant="15" id="1OW-fF-jyC"/>
                                                 <constraint firstAttribute="bottom" secondItem="0gf-gY-QJj" secondAttribute="bottom" constant="8" id="QsH-A4-cnx"/>
                                                 <constraint firstItem="0gf-gY-QJj" firstAttribute="leading" secondItem="8Ln-G0-6Xo" secondAttribute="leading" constant="8" id="VVX-2E-VvO"/>
-                                                <constraint firstItem="ys5-3D-XcH" firstAttribute="top" secondItem="8Ln-G0-6Xo" secondAttribute="top" constant="8" id="YlQ-3L-g2B"/>
-                                                <constraint firstAttribute="trailing" secondItem="ys5-3D-XcH" secondAttribute="trailing" constant="8" id="haD-RO-Zwn"/>
+                                                <constraint firstItem="ys5-3D-XcH" firstAttribute="top" secondItem="8Ln-G0-6Xo" secondAttribute="top" constant="15" id="YlQ-3L-g2B"/>
+                                                <constraint firstAttribute="trailing" secondItem="ys5-3D-XcH" secondAttribute="trailing" constant="15" id="haD-RO-Zwn"/>
                                                 <constraint firstAttribute="trailing" secondItem="0gf-gY-QJj" secondAttribute="trailing" constant="8" id="kGS-kx-af9"/>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <color key="backgroundColor" red="0.65900000000000003" green="0.83499999999999996" blue="0.90600000000000003" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="displayP3"/>
                                         <size key="customSize" width="130" height="130"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRaduis">
+                                                <integer key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <outlet property="serviceImage" destination="ys5-3D-XcH" id="PBd-I3-fo8"/>
                                             <outlet property="serviceLabel" destination="0gf-gY-QJj" id="ffX-2w-09c"/>
@@ -1067,18 +1073,132 @@
                             <constraint firstItem="wTS-Jh-Q22" firstAttribute="trailing" secondItem="Jp8-Y1-erz" secondAttribute="trailing" constant="20" id="zl7-nI-rJL"/>
                         </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Home" image="house.fill" catalog="system" id="gah-Yc-IZH"/>
                     <connections>
                         <outlet property="imageContainer" destination="rub-MO-qAI" id="Ujc-bX-xcA"/>
                         <outlet property="medicalReportContainer" destination="c54-iO-MPy" id="GKc-6w-jFy"/>
                         <outlet property="profileBorader" destination="Nzi-Wc-UDN" id="qBv-8C-A4z"/>
                         <outlet property="profileContainer" destination="i5o-Ub-XG2" id="C9c-61-uF3"/>
                         <outlet property="profileImage" destination="qRK-pQ-bUO" id="s1z-z3-R2V"/>
+                        <outlet property="servicesCollectionView" destination="Jp8-Y1-erz" id="c3R-1C-9xD"/>
                         <outlet property="topView" destination="icU-TH-MmX" id="mHK-9S-oZh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PLz-kw-jPN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1788.4057971014495" y="1418.9732142857142"/>
+            <point key="canvasLocation" x="-1033" y="1419"/>
+        </scene>
+        <!--Notification-->
+        <scene sceneID="mDa-Mq-pbF">
+            <objects>
+                <viewController id="YPn-lU-fpg" customClass="notificationCenterViewController" customModule="TORQ" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Ic1-4z-8wv">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notification Center" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="drn-iw-uQz">
+                                <rect key="frame" x="135.5" y="437.5" width="143.5" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="CgV-zZ-BdD"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="drn-iw-uQz" firstAttribute="centerX" secondItem="Ic1-4z-8wv" secondAttribute="centerX" id="om0-jr-OQE"/>
+                            <constraint firstItem="drn-iw-uQz" firstAttribute="centerY" secondItem="Ic1-4z-8wv" secondAttribute="centerY" id="ywe-hJ-Ab6"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Notification" image="bell.fill" catalog="system" id="4D7-V9-Qs7"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0XR-Au-YOC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-316" y="1419"/>
+        </scene>
+        <!--Map-->
+        <scene sceneID="Ayq-Dd-R4l">
+            <objects>
+                <viewController id="Fk2-vg-3zu" customClass="AccidentsViewController" customModule="TORQ" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="W0e-fJ-f6G">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" showsTraffic="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tra-3N-Avg">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Fk2-vg-3zu" id="tHI-0x-z79"/>
+                                </connections>
+                            </mapView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="0Qd-zL-aOg"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Tra-3N-Avg" firstAttribute="trailing" secondItem="0Qd-zL-aOg" secondAttribute="trailing" id="5SW-Ou-dLB"/>
+                            <constraint firstItem="Tra-3N-Avg" firstAttribute="top" secondItem="W0e-fJ-f6G" secondAttribute="top" id="ltx-g6-bQU"/>
+                            <constraint firstAttribute="bottom" secondItem="Tra-3N-Avg" secondAttribute="bottom" id="qOw-9T-7vk"/>
+                            <constraint firstItem="Tra-3N-Avg" firstAttribute="leading" secondItem="0Qd-zL-aOg" secondAttribute="leading" id="vwZ-DX-X86"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Map" image="map.fill" catalog="system" id="OpM-Bm-9bm"/>
+                    <connections>
+                        <outlet property="mapView" destination="Tra-3N-Avg" id="AEy-ze-AU5"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ygY-Er-hTK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="418.84057971014494" y="1418.9732142857142"/>
+        </scene>
+        <!--Profile-->
+        <scene sceneID="ibG-CI-Wn3">
+            <objects>
+                <viewController id="vQt-Fm-Uqf" customClass="profileViewController" customModule="TORQ" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="6To-DN-Agv">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Profile" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3oC-wz-rTg">
+                                <rect key="frame" x="182.5" y="437.5" width="49" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="EUO-HX-dGC"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="3oC-wz-rTg" firstAttribute="centerY" secondItem="6To-DN-Agv" secondAttribute="centerY" id="Jb0-j5-PX7"/>
+                            <constraint firstItem="3oC-wz-rTg" firstAttribute="centerX" secondItem="6To-DN-Agv" secondAttribute="centerX" id="fHy-9w-WB4"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Profile" image="person.fill" catalog="system" id="nAt-Hg-3bP"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Z0x-wK-rs9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1143" y="1419"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="Riq-G8-hwG">
+            <objects>
+                <tabBarController storyboardIdentifier="Home" modalPresentationStyle="fullScreen" id="v7A-Bj-9xH" customClass="tabBarController" customModule="TORQ" customModuleProvider="target" sceneMemberID="viewController">
+                    <nil key="simulatedTopBarMetrics"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="GgC-II-rac">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" red="0.76459763199999997" green="0.33231014009999998" blue="0.42352765799999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="selectedImageTintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="fu1-8Q-DEh" kind="relationship" relationship="viewControllers" id="iz9-xa-WNf"/>
+                        <segue destination="YPn-lU-fpg" kind="relationship" relationship="viewControllers" id="1hL-zN-fx7"/>
+                        <segue destination="Fk2-vg-3zu" kind="relationship" relationship="viewControllers" id="1wd-Xq-Wpf"/>
+                        <segue destination="vQt-Fm-Uqf" kind="relationship" relationship="viewControllers" id="LxB-0Z-vqf"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="djQ-Ly-24V" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1788" y="1419"/>
         </scene>
         <!--Paramedic Home View Controller-->
         <scene sceneID="WG2-Zs-PI7">
@@ -1351,20 +1471,23 @@
     <resources>
         <image name="arrow.backward" catalog="system" width="128" height="98"/>
         <image name="arrow.right" catalog="system" width="128" height="98"/>
+        <image name="bell.fill" catalog="system" width="128" height="124"/>
         <image name="chevron.backward" catalog="system" width="96" height="128"/>
         <image name="chevron.right" catalog="system" width="96" height="128"/>
         <image name="errorIcon" width="1027" height="1027"/>
+        <image name="house.fill" catalog="system" width="128" height="106"/>
         <image name="illustration1" width="1529" height="1021"/>
         <image name="illustration2" width="942" height="851"/>
         <image name="illustration3" width="1239" height="741"/>
         <image name="line.horizontal.3" catalog="system" width="128" height="64"/>
         <image name="logo" width="302" height="268"/>
+        <image name="map.fill" catalog="system" width="128" height="110"/>
         <image name="mappin.and.ellipse" catalog="system" width="118" height="128"/>
         <image name="onboarding1" width="1721" height="2885"/>
         <image name="onboarding2" width="1721" height="2765"/>
         <image name="onboarding3" width="1721" height="2664"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
-        <image name="pulse" width="300" height="301"/>
+        <image name="pulse" width="300" height="214"/>
         <image name="qr-code" width="1155" height="1155"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

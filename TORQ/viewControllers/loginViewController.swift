@@ -86,11 +86,15 @@ class loginViewController: UIViewController {
     
     func goToUserHome(){
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "userHomeViewController") as! userHomeViewController
-        vc.userEmail = email.text
-        vc.userID = userID
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true, completion: nil)
+        let tb = storyboard.instantiateViewController(identifier: "Home") as! UITabBarController
+        let vcs = tb.viewControllers!
+        let home = vcs[0] as! userHomeViewController
+//        let vc = storyboard.instantiateViewController(withIdentifier: "userHomeViewController") as! userHomeViewController
+        home.userEmail = email.text
+        home.userID = userID
+        home.modalPresentationStyle = .fullScreen
+//        navigationController?.pushViewController(home, animated: true)
+        present(tb, animated: true, completion: nil)
     }
     
     func goToParamedicHome(){

@@ -29,13 +29,13 @@ class onboardingScreen1ViewController: UIViewController {
         shape.strokeEnd = 0
         shapeContainer.layer.addSublayer(shape)
         
-            let anim = CABasicAnimation(keyPath: "strokeEnd")
-            anim.fromValue = 0
-            anim.toValue = 0.33333334
-            anim.duration = 1
-            anim.isRemovedOnCompletion = false
-            anim.fillMode = .forwards
-            shape.add(anim, forKey: "strokeEnd")
+        let anim = CABasicAnimation(keyPath: "strokeEnd")
+        anim.fromValue = 0
+        anim.toValue = 0.33333334
+        anim.duration = 1
+        anim.isRemovedOnCompletion = false
+        anim.fillMode = .forwards
+        shape.add(anim, forKey: "strokeEnd")
         
     }
     
