@@ -74,6 +74,7 @@ class hospitalsViewController: UIViewController ,UITableViewDelegate ,UITableVie
                         print(snapshot.key)
                         let num = snapshot.key
                         ref.child("Request").child(num).updateChildValues(["status": "1"])
+                        ref.child("processingRequest").childByAutoId().setValue(["healthcare":self.selhealth,"Rquest_id":dec["request_id"] as! String])
                         let alert = UIAlertController(title: "Confirmed", message: "The request has been send to the health care cenetr", preferredStyle: UIAlertController.Style.alert)
                         
                         // add an action (button)

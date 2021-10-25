@@ -873,10 +873,12 @@
                                                             <color key="highlightedColor" red="0.83921568629999999" green="0.33333333329999998" blue="0.42352941179999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x7v-hW-oVu">
-                                                            <rect key="frame" x="263" y="28" width="73" height="28"/>
+                                                            <rect key="frame" x="294" y="41" width="39" height="31"/>
+                                                            <rect key="contentStretch" x="1" y="0.0" width="1" height="1"/>
                                                             <color key="tintColor" red="0.83921568629999999" green="0.33333333329999998" blue="0.42352941179999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                            <size key="titleShadowOffset" width="2" height="0.0"/>
                                                             <state key="normal" title="Button"/>
-                                                            <buttonConfiguration key="configuration" style="filled" title="View">
+                                                            <buttonConfiguration key="configuration" style="filled" image="arrow.right" catalog="system">
                                                                 <color key="baseBackgroundColor" red="0.83921568629999999" green="0.33333333329999998" blue="0.42352941179999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                             </buttonConfiguration>
                                                         </button>
@@ -898,11 +900,11 @@
                                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="OJo-Zo-lYr" secondAttribute="trailing" constant="20" symbolic="YES" id="RfN-ZJ-hqy"/>
                                                         <constraint firstItem="57r-mX-ptT" firstAttribute="top" secondItem="TAs-Fu-hv4" secondAttribute="bottom" constant="7" id="Tha-qc-baj"/>
                                                         <constraint firstItem="Hid-ka-dTa" firstAttribute="top" secondItem="57r-mX-ptT" secondAttribute="top" constant="5" id="cJ0-2Q-HIU"/>
-                                                        <constraint firstAttribute="trailing" secondItem="x7v-hW-oVu" secondAttribute="trailing" constant="14" id="cYw-Ew-qub"/>
-                                                        <constraint firstItem="x7v-hW-oVu" firstAttribute="top" secondItem="dYp-KS-KAA" secondAttribute="top" constant="8" id="k8C-bP-um3"/>
+                                                        <constraint firstAttribute="trailing" secondItem="x7v-hW-oVu" secondAttribute="trailing" constant="19" id="cYw-Ew-qub"/>
+                                                        <constraint firstItem="x7v-hW-oVu" firstAttribute="top" secondItem="dYp-KS-KAA" secondAttribute="top" constant="29" id="k8C-bP-um3"/>
                                                         <constraint firstItem="wwQ-IU-KUy" firstAttribute="leading" secondItem="57r-mX-ptT" secondAttribute="trailing" constant="-38" id="kHd-hp-ThM"/>
                                                         <constraint firstItem="Hid-ka-dTa" firstAttribute="leading" secondItem="31P-UX-LEs" secondAttribute="leading" constant="62" id="n6J-dw-4Zh"/>
-                                                        <constraint firstAttribute="bottom" secondItem="x7v-hW-oVu" secondAttribute="bottom" constant="71" id="v9n-0Q-sYx"/>
+                                                        <constraint firstAttribute="bottom" secondItem="x7v-hW-oVu" secondAttribute="bottom" constant="47" id="v9n-0Q-sYx"/>
                                                         <constraint firstItem="TAs-Fu-hv4" firstAttribute="leading" secondItem="wwQ-IU-KUy" secondAttribute="leading" id="vWM-Bt-CIL"/>
                                                         <constraint firstAttribute="bottom" secondItem="57r-mX-ptT" secondAttribute="bottom" constant="19.5" id="zPP-R4-Tqh"/>
                                                         <constraint firstItem="x7v-hW-oVu" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="dYp-KS-KAA" secondAttribute="trailing" constant="8" symbolic="YES" id="zUR-4m-9i6"/>
@@ -1240,6 +1242,7 @@
                         <outlet property="medation0" destination="EVb-0x-wwy" id="3vg-b4-pkj"/>
                         <outlet property="name_report" destination="hJP-sL-iTl" id="TOU-Fb-uDm"/>
                         <outlet property="namerequest" destination="7Um-7J-0U3" id="a63-6C-FDi"/>
+                        <outlet property="prosseing0" destination="TDs-PT-qfF" id="vcQ-rc-Hub"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NQ4-ZC-dmi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

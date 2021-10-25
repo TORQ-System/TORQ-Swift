@@ -24,6 +24,7 @@ class requestReportViewController: UIViewController {
     @IBOutlet weak var medation0: UILabel!
     @IBOutlet weak var algeer0: UILabel!
     
+    @IBOutlet weak var prosseing0: UIButton!
     //MARK: - Variables
     var UID : String!
     var long : Double!
@@ -35,9 +36,25 @@ class requestReportViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         contetnt()
-        let vc = hospitalsViewController()
-        vc.text = "Hammock lomo literally microdosing street art pour-over"
-        vc.UID1 = UID
+       
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        ref.child("Request").queryOrdered(byChild:"user_id").observe(.childAdded, with: {(snapshot) in
+            if let dec = snapshot.value as? [String :Any]
+            {
+                
+                if (dec["user_id"] as! String == self.UID!){
+                    if (dec["status"] as! String == "1"){
+                        self.prosseing0.isHidden = true
+                    
+                    
+                }
+              
+                }
+                
+            }
+            
+        })
     }
     
     

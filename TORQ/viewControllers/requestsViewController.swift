@@ -1,5 +1,6 @@
 import UIKit
 import FirebaseDatabase
+import SwiftUI
 
 class requestsViewController: UIViewController {
     
@@ -15,6 +16,7 @@ class requestsViewController: UIViewController {
     var loggedInCenterEmail: String!
     var loggedInCenter: [String: Any]?
     var myRequests: [Request] = []
+    let refrechcon = UIRefreshControl()
     
     //MARK: - Overriden function
     override func viewWillAppear(_ animated: Bool) {
@@ -26,6 +28,15 @@ class requestsViewController: UIViewController {
         configureCenter()
         getRequests()
         configureContainerView()
+        refrechcon.addTarget(self, action: #selector(getdata), for: .valueChanged)
+        requestsColletionView.addSubview(refrechcon)
+    }
+    
+    @objc func getdata(){
+        refrechcon.endRefreshing()
+        getRequests()
+        requestsColletionView.reloadData()
+        
     }
     
     //MARK: - Functions
@@ -89,7 +100,7 @@ class requestsViewController: UIViewController {
     func findloc(sender:UIButton){
         print("try")
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(identifier: "viewLocation") as! viewLocationViewController
+        let vc = storyboard.instantiateViewController(identifier: "viewLocationViewController") as! viewLocationViewController
         vc.latitude = Double(myRequests[sender.tag].getLatitude())!
         vc.longitude = Double(myRequests[sender.tag].getLongitude())!
         vc.modalPresentationStyle = .fullScreen
