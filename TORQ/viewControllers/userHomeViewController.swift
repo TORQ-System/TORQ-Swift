@@ -54,6 +54,15 @@ class userHomeViewController: UIViewController {
     }
     
     
+    @IBAction func ViewECPressed(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "ViewEmergencyContactViewController") as! ViewEmergencyContactViewController
+        vc.userID = self.userID
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true, completion: nil)
+    }
+    
+    
 
     @IBAction func logoutPressed(_ sender: Any) {
         do {
@@ -105,9 +114,9 @@ extension userHomeViewController: CLLocationManagerDelegate{
         let longitude = locations.last?.coordinate.longitude
         let latitude = locations.last?.coordinate.latitude
         let time = locations.last?.timestamp
-        print("longitude: \(String(describing: longitude!))")
-        print("latitude: \(String(describing: latitude!))")
-        print("time: \(String(describing: time!))")
+//        print("longitude: \(String(describing: longitude!))")
+//        print("latitude: \(String(describing: latitude!))")
+//        print("time: \(String(describing: time!))")
         ref.child("Sensor").child("S\(userID!)/longitude").setValue((String(describing: longitude!)))
         ref.child("Sensor").child("S\(userID!)/latitude").setValue((String(describing: latitude!)))
         ref.child("Sensor").child("S\(userID!)/time").setValue((String(describing: time!)))
