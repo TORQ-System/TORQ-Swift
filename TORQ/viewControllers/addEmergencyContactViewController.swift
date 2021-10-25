@@ -23,10 +23,13 @@ class addEmergencyContactViewController: UIViewController, UIPickerViewDelegate,
     @IBOutlet weak var errorMessage: UILabel!
     @IBOutlet weak var relationshipButton: UIButton!
     @IBOutlet weak var dropdownButton: UIButton!
+    @IBOutlet weak var relationshipImageView: UIImageView!
     
     //MARK: - Variables
     var ref = Database.database().reference()
     var usrID = Auth.auth().currentUser?.uid
+    var usrName : String?
+    var userInfo = [userInformation]()
     var fullName: String?
     var phoneNumber: String?
     var emergencyMessage: String?
@@ -51,12 +54,16 @@ class addEmergencyContactViewController: UIViewController, UIPickerViewDelegate,
     let screenHeight = UIScreen.main.bounds.height/2
     var selectedRow = 0
     
-    // getting current user name
 
     
     //MARK: - Overriden Functions
     override func viewDidLoad() {
         super.viewDidLoad()
+       
+        getUserName()
+//        for user in userInfo{
+//            print(user.fullName)
+//        }
         
         // remove title from drop down button
         dropdownButton.setTitle("", for: .normal)
@@ -71,15 +78,33 @@ class addEmergencyContactViewController: UIViewController, UIPickerViewDelegate,
         emergencyContactFullName.setBorder(color: "default", image: UIImage(named: "personDefault")!)
         // phone border
         emergencyContactPhoneNumber.setBorder(color: "default", image: UIImage(named: "phoneDefault")!)
-        
-        // relationship border
-//        relationship.setBorder(color: "default", image: UIImage(named: "relationshipDefault")!)
-        
+        // relationship button
+        relationshipButton.titleLabel?.font =  .systemFont(ofSize: 14)
         // message border
         message.setBorder(color: "default", image: UIImage(named: "messageDefault")!)
 
     }
     //MARK: - Functions
+    
+    // getting current user name
+    func getUserName(){
+        ref.child("User").child(usrID!).observeSingleEvent(of: .value , with: { snapshot in
+
+            guard let dictionary = snapshot.value as? [String:Any] else {
+                return
+                }
+            let user = userInformation(fullName: dictionary["fullName"] as! String,
+                                       email: dictionary["email"] as! String,
+                                       password: dictionary["password"] as! String,
+                                       nationalID: dictionary["nationalID"] as! String,
+                                       dateOfBirth: dictionary["dateOfBirth"] as! String,
+                                       phone: dictionary["phone"] as! String,
+                                       gender: dictionary["gender"] as! String)
+            self.userInfo.append(user)
+            print(user.fullName)
+        })
+    }
+   
     // should go to emergency contacts screen
     @IBAction func back(_ sender:Any){
         dismiss(animated: true, completion: nil)
@@ -88,7 +113,7 @@ class addEmergencyContactViewController: UIViewController, UIPickerViewDelegate,
     // validate form entries
     func validateFields() -> [String: String] {
        
-        var errors = ["Empty":"","fullName":"", "phone":"","relationship":"","msg":""]
+        var errors = ["Empty":"","fullName":"", "phone":"","relationship":"","msg":"","phoneDNE":""]
         
         // CASE: empty fields
         if emergencyContactFullName.text == "" && emergencyContactPhoneNumber.text == "" && selectedRow == 0 {
@@ -113,6 +138,14 @@ class addEmergencyContactViewController: UIViewController, UIPickerViewDelegate,
         else if !emergencyContactPhoneNumber.text!.isValidPhone {
             errors["phone"] = "Invalid phone number"
         }
+        // CASE: relationship not selected
+        if selectedRow == 0 {
+            errors["relationship"] = "Relationship cannot be empty"
+        }
+        // CASE:  msg greater than 60 characters
+        if message.text!.count >= 80 {
+            errors["msg"] = "message is too long, try to shorten it"
+        }
         
         // check of emergency contact number exists in user table in the database and retrieve its info
         ref.child("User").queryOrdered(byChild: "phone").queryEqual(toValue: emergencyContactPhoneNumber.text).observeSingleEvent(of: .value , with: { snapshot in
@@ -127,42 +160,12 @@ class addEmergencyContactViewController: UIViewController, UIPickerViewDelegate,
             })
         })
         if recieverID == "" || recieverID == nil {
-            errors["phone"] = "The phone number must be registered in TORQ"
+            errors["phoneDNE"] = "The phone number must be registered in TORQ"
         }
-        // CASE: relationship not selected
-        if selectedRow == 0 {
-            errors["relationship"] = "Relationship cannot be empty"
-        }
-        
-        // CASE:  msg greater than 60 characters
-        if message.text!.count >= 60 {
-            errors["msg"] = "message is too long, try to shorten it"
-        }
+       
         
         return errors
     }
-//      Bad try
-//    func checkPhoneNumber() -> Bool{
-//        var flag = true
-//        let searchQueue = DispatchQueue.init(label: "searchQueue")
-//
-//        searchQueue.sync {
-//            //1-  check if  phone number  exists.
-//            ref.child("User").queryOrdered(byChild: "phone").queryEqual(toValue: emergencyContactPhoneNumber.text).observeSingleEvent(of: .value , with: { snapshot in
-//                guard let dictionary = snapshot.value as? [String:Any] else {
-//                    flag = false
-//                    return
-//                    }
-//                    dictionary.forEach({ (key , value) in
-//                        self.recieverID = key
-//                        Swift.print("Key \(key), value \(value)")
-//                })
-//            })
-//
-//        }
-//        return flag
-//    }
-    
     
     func goToHomeScreen() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -172,6 +175,16 @@ class addEmergencyContactViewController: UIViewController, UIPickerViewDelegate,
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
     }
+    
+    func showALert(message:String){
+        //show alert based on the message that is being paased as parameter
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: "Ok", style: .default)
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+        
+    }
+    
     // Go to Emergency Contatcs View After successfull addition
     @IBAction func goToEmergencyContactsScreen(_ sender: Any) {
         
@@ -214,17 +227,17 @@ class addEmergencyContactViewController: UIViewController, UIPickerViewDelegate,
             errorPhoneNumber.alpha = 1
             return
         }
-//        guard checkPhoneNumber() == true else {
-//            errorPhoneNumber.text = "The phone number must be registered in TORQ"
-//            emergencyContactPhoneNumber.setBorder(color: "error", image: UIImage(named: "phoneError")!)
-//            errorPhoneNumber.alpha = 1
-//            return
-//        }
+        guard errors["phoneDNE"] == "" else {
+        //handle the error
+        showALert(message: errors["phoneDNE"]!)
+        return
+        }
         // relationship error
         guard errors["relationship"] == "" else {
             //handle the error
             errorRelationship.text = errors["relationship"]!
             errorRelationship.alpha = 1
+            relationshipImageView.image = UIImage(named: "relationshipError")
             return
         }
         guard errors["msg"] == "" else {
@@ -270,7 +283,7 @@ class addEmergencyContactViewController: UIViewController, UIPickerViewDelegate,
         
         //5- alert of success
         let alert = UIAlertController(title: "Emergency Contact Added!", message: "you can delete it anytime from your emergeny contacts list", preferredStyle: .actionSheet)
-        let acceptAction = UIAlertAction(title: "Ok", style: .default) { (_) -> Void in
+        let acceptAction = UIAlertAction(title: "OK", style: .default) { (_) -> Void in
             self.goToHomeScreen()
         }
         alert.addAction(acceptAction)
@@ -300,11 +313,6 @@ class addEmergencyContactViewController: UIViewController, UIPickerViewDelegate,
     @IBAction func phoneNumberEditingChanged(_ sender: UITextField) {
         let errors = validateFields()
                 
-//                if recieverID == "" {
-//                    emergencyContactPhoneNumber.setBorder(color: "error", image: UIImage(named: "phoneError")!)
-//                    errorPhoneNumber.text = "The phone number must be registered in TORQ"
-//                    errorPhoneNumber.alpha = 1
-//                }
                 // change phone border if phone is not valid, and set error msg
                if  errors["phone"] != "" {
                    emergencyContactPhoneNumber.setBorder(color: "error", image: UIImage(named: "phoneError")!)
@@ -322,9 +330,11 @@ class addEmergencyContactViewController: UIViewController, UIPickerViewDelegate,
                if  errors["relationship"] != "" {
                    errorRelationship.text = errors["relationship"]!
                    errorRelationship.alpha = 1
+                   relationshipImageView.image = UIImage(named: "relationshipError")
                }
                 else {
                     errorRelationship.alpha = 0
+                    relationshipImageView.image = UIImage(named: "relationshipValid")
                }
     }
     
@@ -367,6 +377,7 @@ class addEmergencyContactViewController: UIViewController, UIPickerViewDelegate,
             let name = selected
             self.selectedRelationship = name
             self.relationshipButton.setTitle(name, for: .normal)
+            self.relationshipButton.setTitleColor(UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 ), for: .normal)
         }))
         self.present(alert, animated: true, completion: nil)
     }
