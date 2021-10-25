@@ -34,9 +34,8 @@
 		BEF97539270AE07400325281 /* loginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF97538270AE07400325281 /* loginViewController.swift */; };
 		BEF9753B270AE0D100325281 /* userHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9753A270AE0D100325281 /* userHomeViewController.swift */; };
 		BEF9753D270AE0E500325281 /* paramedicHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9753C270AE0E500325281 /* paramedicHomeViewController.swift */; };
-		F5F18B612717B1E900E624CB /* viewREP.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F18B602717B1E900E624CB /* viewREP.swift */; };
-		F5F18B65271E308200E624CB /* ViewRequest_Report.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F18B64271E308200E624CB /* ViewRequest_Report.swift */; };
-		F5F18B672720BC2F00E624CB /* HospitaList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F18B662720BC2F00E624CB /* HospitaList.swift */; };
+		F5F18B65271E308200E624CB /* requestReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F18B64271E308200E624CB /* requestReportViewController.swift */; };
+		F5F18B672720BC2F00E624CB /* hospitalsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F18B662720BC2F00E624CB /* hospitalsViewController.swift */; };
 		FC4BF75E181535F7BB4C96B1 /* Pods_TORQTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D35DF5D9259C289028E18D8 /* Pods_TORQTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -98,9 +97,8 @@
 		BEF97538270AE07400325281 /* loginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginViewController.swift; sourceTree = "<group>"; };
 		BEF9753A270AE0D100325281 /* userHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userHomeViewController.swift; sourceTree = "<group>"; };
 		BEF9753C270AE0E500325281 /* paramedicHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = paramedicHomeViewController.swift; sourceTree = "<group>"; };
-		F5F18B602717B1E900E624CB /* viewREP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewREP.swift; sourceTree = "<group>"; };
-		F5F18B64271E308200E624CB /* ViewRequest_Report.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRequest_Report.swift; sourceTree = "<group>"; };
-		F5F18B662720BC2F00E624CB /* HospitaList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HospitaList.swift; sourceTree = "<group>"; };
+		F5F18B64271E308200E624CB /* requestReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = requestReportViewController.swift; sourceTree = "<group>"; };
+		F5F18B662720BC2F00E624CB /* hospitalsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = hospitalsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -241,7 +239,6 @@
 			isa = PBXGroup;
 			children = (
 				BEF9750F2707291F00325281 /* HomeViewController.swift */,
-				F5F18B602717B1E900E624CB /* viewREP.swift */,
 				BEF975112707292C00325281 /* signUpFirstViewController.swift */,
 				BEF975132707293600325281 /* signUpSecondViewController.swift */,
 				BEF97538270AE07400325281 /* loginViewController.swift */,
@@ -253,8 +250,8 @@
 				BE34F6AA27118A800093C633 /* onboardingScreen1ViewController.swift */,
 				BE34F6AC27118A8F0093C633 /* onboardingScreen2ViewController.swift */,
 				BE34F6AE27118A9E0093C633 /* onboardingScreen3ViewController.swift */,
-				F5F18B64271E308200E624CB /* ViewRequest_Report.swift */,
-				F5F18B662720BC2F00E624CB /* HospitaList.swift */,
+				F5F18B64271E308200E624CB /* requestReportViewController.swift */,
+				F5F18B662720BC2F00E624CB /* hospitalsViewController.swift */,
 			);
 			path = viewControllers;
 			sourceTree = "<group>";
@@ -508,8 +505,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				BE34F6AD27118A8F0093C633 /* onboardingScreen2ViewController.swift in Sources */,
-				F5F18B65271E308200E624CB /* ViewRequest_Report.swift in Sources */,
-				F5F18B672720BC2F00E624CB /* HospitaList.swift in Sources */,
+				F5F18B65271E308200E624CB /* requestReportViewController.swift in Sources */,
+				F5F18B672720BC2F00E624CB /* hospitalsViewController.swift in Sources */,
 				BEF9751827076C0800325281 /* stringExtension.swift in Sources */,
 				BE34F6A4270F32260093C633 /* SRCACenters.swift in Sources */,
 				BE34F6A2270F31FB0093C633 /* Request.swift in Sources */,
@@ -520,7 +517,6 @@
 				BE34F6AF27118A9E0093C633 /* onboardingScreen3ViewController.swift in Sources */,
 				BEF975102707291F00325281 /* HomeViewController.swift in Sources */,
 				BEF9753D270AE0E500325281 /* paramedicHomeViewController.swift in Sources */,
-				F5F18B612717B1E900E624CB /* viewREP.swift in Sources */,
 				BEF97539270AE07400325281 /* loginViewController.swift in Sources */,
 				BEF974DE2707146300325281 /* AppDelegate.swift in Sources */,
 				BEF974E02707146300325281 /* SceneDelegate.swift in Sources */,

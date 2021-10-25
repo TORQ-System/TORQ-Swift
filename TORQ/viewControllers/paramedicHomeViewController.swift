@@ -31,11 +31,10 @@ class paramedicHomeViewController: UIViewController {
         present(vc, animated: true, completion: nil)
     }
     
-    
     //MARK: - @IBActions
     @IBAction func viewRequestsPressed(_ sender: Any) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "viewRequests") as! requestsViewController
+        let vc = storyboard.instantiateViewController(withIdentifier: "requestsViewController") as! requestsViewController
         vc.loggedInCenterEmail = self.loggedinEmail
         print("home: \(String(describing: loggedinEmail))")
         print("home: \(String(describing: vc.loggedInCenterEmail))")
@@ -45,7 +44,6 @@ class paramedicHomeViewController: UIViewController {
     
     
     @IBAction func logoutPressed(_ sender: Any) {
-        
         do {
             try Auth.auth().signOut()
             let userDefault = UserDefaults.standard

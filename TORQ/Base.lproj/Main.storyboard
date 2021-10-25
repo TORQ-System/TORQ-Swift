@@ -782,7 +782,7 @@
         <!--Requests View Controller-->
         <scene sceneID="LD3-oS-VGf">
             <objects>
-                <viewController storyboardIdentifier="viewRequests" id="O4l-kf-Hco" customClass="requestsViewController" customModule="TORQ" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="requestsViewController" id="O4l-kf-Hco" customClass="requestsViewController" customModule="TORQ" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Puq-aQ-deg">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -859,7 +859,7 @@
                                                                 <attributedString key="attributedTitle">
                                                                     <fragment content="Location">
                                                                         <attributes>
-                                                                            <font key="NSFont" size="16" name=".SFNS-Regular"/>
+                                                                            <font key="NSFont" metaFont="system" size="16"/>
                                                                             <paragraphStyle key="NSParagraphStyle" alignment="right" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1" tighteningFactorForTruncation="0.0"/>
                                                                         </attributes>
                                                                     </fragment>
@@ -991,7 +991,7 @@
         <!--View Location View Controller-->
         <scene sceneID="edM-d4-yXT">
             <objects>
-                <viewController storyboardIdentifier="viewLocation" id="prp-jc-ZhY" customClass="viewLocationViewController" customModule="TORQ" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="viewLocationViewController" id="prp-jc-ZhY" customClass="viewLocationViewController" customModule="TORQ" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="J54-u5-J6I">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1035,10 +1035,10 @@
             </objects>
             <point key="canvasLocation" x="-2530" y="2103"/>
         </scene>
-        <!--View Request Report-->
+        <!--Request Report View Controller-->
         <scene sceneID="yjs-tO-hPY">
             <objects>
-                <viewController storyboardIdentifier="ViewRequest_Report" id="ahw-IM-Da1" customClass="ViewRequest_Report" customModule="TORQ" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="requestReportViewController" id="ahw-IM-Da1" customClass="requestReportViewController" customModule="TORQ" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ucO-yL-ZYg">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1244,12 +1244,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NQ4-ZC-dmi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1636.2318840579712" y="2102.6785714285716"/>
+            <point key="canvasLocation" x="-1788" y="2103"/>
         </scene>
-        <!--Hospita List-->
+        <!--Hospitals View Controller-->
         <scene sceneID="2zL-nq-Ley">
             <objects>
-                <viewController storyboardIdentifier="HospitaList" id="NCh-Qr-5NH" customClass="HospitaList" customModule="TORQ" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="hospitalsViewController" id="NCh-Qr-5NH" customClass="hospitalsViewController" customModule="TORQ" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="C9U-pk-HYZ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1338,11 +1338,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C7g-t9-Vpp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-759" y="2138"/>
+            <point key="canvasLocation" x="-4023" y="2832"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="73n-cz-wVN"/>
+        <segue reference="12O-KN-2cW"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Image" width="1485" height="2587"/>

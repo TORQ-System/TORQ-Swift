@@ -3,7 +3,7 @@ import FirebaseAuth
 
 class loginViewController: UIViewController {
     
-    //MARK:- @IBOutlets
+    //MARK: - @IBOutlets
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var password: UITextField!
     @IBOutlet weak var nextbutton: UIButton!
@@ -15,13 +15,11 @@ class loginViewController: UIViewController {
     //MARK: - Overriden Functions
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureKeyboardNotification()
 
     }
     
     
     //MARK: - Functions
-    
     func configureKeyboardNotification(){
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         self.view!.addGestureRecognizer(tap)

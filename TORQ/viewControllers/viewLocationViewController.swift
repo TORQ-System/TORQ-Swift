@@ -12,7 +12,6 @@ class viewLocationViewController: UIViewController {
     var locationManager = CLLocationManager()
     
     //MARK: - Overriden Functions
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setView()
