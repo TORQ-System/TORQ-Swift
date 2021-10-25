@@ -42,16 +42,12 @@ class AccidentsViewController: UIViewController {
                     let rotation = obj.childSnapshot(forPath: "rotation").value as! String
                     let status = obj.childSnapshot(forPath: "status").value as! String
                     let request = Request(user_id: userID, sensor_id: sensorID, request_id: requestID, dateTime: timeStamp, longitude: longitude, latitude: latitude, vib: vib, rotation: rotation, status: status)
-//                    print(request)
                     self.accidentRequests.append(request)
                 }
-                //here have the data
                 print("printing after for: \(self.accidentRequests)")
                 self.showMyLocation()
             }
-//            print("printing out of ref: \(requ)")
         }
-//        print("printing out of thread: \(requ)")
     }
     
     
@@ -61,7 +57,7 @@ class AccidentsViewController: UIViewController {
             let pin = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(r.getLatitude())!, longitude: CLLocationDegrees(r.getLongitude())!))
             let annotation = MKPointAnnotation()
             annotation.coordinate = pin.coordinate
-            annotation.title = r.getUserID()
+            annotation.title = "Accident"
             mapView.addAnnotation(annotation)
         }
     }
@@ -96,12 +92,10 @@ extension AccidentsViewController: CLLocationManagerDelegate{
             locationManager.startUpdatingLocation()
         case .denied:
             print("denied")
-//             showALert(message: "Location access is needed to get your current location")
         case .notDetermined:
             print("notDetermined")
         case .restricted:
             print("restricted")
-//            showALert(message: "Location access is needed to get your current location")
         default:
             print("unknown")
         }
@@ -110,12 +104,8 @@ extension AccidentsViewController: CLLocationManagerDelegate{
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let longitude = locations.last?.coordinate.longitude
         let latitude = locations.last?.coordinate.latitude
-//        let time = locations.last?.timestamp
         self.longitude = longitude!.magnitude
         self.latitude = latitude!.magnitude
-//        ref.child("Sensor").child("S\(userID!)/longitude").setValue((String(describing: longitude!)))
-//        ref.child("Sensor").child("S\(userID!)/latitude").setValue((String(describing: latitude!)))
-//        ref.child("Sensor").child("S\(userID!)/time").setValue((String(describing: time!)))
     }
     
 }
