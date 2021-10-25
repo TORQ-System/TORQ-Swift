@@ -1,15 +1,13 @@
-//
-//  AccidentsViewController.swift
-//  TORQ
-//
-//  Created by Noura Alsulayfih on 25/10/2021.
-//
-
 import UIKit
 import MapKit
+import Firebase
 
 class AccidentsViewController: UIViewController {
 
+    //MARK: - Varibales
+    var ref = Database.database().reference()
+    var accidentRequests: [Request]?
+    
     
     //MARK: - @IBOutlets
     @IBOutlet weak var mapView: MKMapView!
@@ -21,6 +19,10 @@ class AccidentsViewController: UIViewController {
     }
     
     //MARK: - Functions
+    private func retreiveAccidents(){
+        
+        
+    }
     
     //MARK: - @IBActions
 }

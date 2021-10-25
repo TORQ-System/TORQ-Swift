@@ -24,7 +24,7 @@ class userHomeViewController: UIViewController {
     let services = ["Medical Information","Emergency Contact","View Accidents History"]
 
     
-
+    // MARK: - Overriden Functions
     override func viewDidLoad() {
         super.viewDidLoad()
         configureLocationManager()
@@ -80,7 +80,7 @@ class userHomeViewController: UIViewController {
     }
     
     
-    //MARK: - 
+    //MARK: - @IBActions
     @IBAction func logoutPressed(_ sender: Any) {
         do {
             try Auth.auth().signOut()
@@ -92,8 +92,8 @@ class userHomeViewController: UIViewController {
         }
     }
     
-    
     @IBAction func menuPressed(_ sender: Any) {
+        
     }
     
     
@@ -102,27 +102,22 @@ class userHomeViewController: UIViewController {
 
 
 
+//MARK: - CLLocationManagerDelegate Extensions
 
-//MARK: - Extensions
 extension userHomeViewController: CLLocationManagerDelegate{
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        
         let status = CLLocationManager.authorizationStatus()
         switch status {
-        
         case .authorizedAlways:
             print("authorizedAlways")
             locationManager.startUpdatingLocation()
-            
         case .authorizedWhenInUse:
             print("authorizedWhenInUse")
             locationManager.startUpdatingLocation()
-            
         case .denied:
             print("denied")
              showALert(message: "Location access is needed to get your current location")
-
         case .notDetermined:
             print("notDetermined")
         case .restricted:
@@ -131,16 +126,12 @@ extension userHomeViewController: CLLocationManagerDelegate{
         default:
             print("unknown")
         }
-        
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let longitude = locations.last?.coordinate.longitude
         let latitude = locations.last?.coordinate.latitude
         let time = locations.last?.timestamp
-//        print("longitude: \(String(describing: longitude!))")
-//        print("latitude: \(String(describing: latitude!))")
-//        print("time: \(String(describing: time!))")
         ref.child("Sensor").child("S\(userID!)/longitude").setValue((String(describing: longitude!)))
         ref.child("Sensor").child("S\(userID!)/latitude").setValue((String(describing: latitude!)))
         ref.child("Sensor").child("S\(userID!)/time").setValue((String(describing: time!)))
@@ -148,9 +139,14 @@ extension userHomeViewController: CLLocationManagerDelegate{
     
 }
 
+//MARK: - UICollectionViewDelegate Extensions
+
 extension userHomeViewController: UICollectionViewDelegate{
     
 }
+
+
+//MARK: - UICollectionViewDataSource Extensions
 
 extension userHomeViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
