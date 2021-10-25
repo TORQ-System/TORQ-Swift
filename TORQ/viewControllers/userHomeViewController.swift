@@ -20,6 +20,7 @@ class userHomeViewController: UIViewController {
     var userID: String?
     let locationManager = CLLocationManager()
     let ref = Database.database().reference()
+    let services = ["Medical Information","Emergency Contact","View Accidents History"]
 
     
 
