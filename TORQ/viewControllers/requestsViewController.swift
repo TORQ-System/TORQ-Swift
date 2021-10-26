@@ -30,39 +30,62 @@ class requestsViewController: UIViewController {
         configureContainerView()
         refrechcon.addTarget(self, action: #selector(getdata), for: .valueChanged)
         requestsColletionView.addSubview(refrechcon)
+        requestsColletionView.refreshControl = refrechcon
     }
     
     @objc func getdata(){
         refrechcon.endRefreshing()
-        getRequests()
+       // getRequests()
         requestsColletionView.reloadData()
+        
         
     }
     
     //MARK: - Functions
     
-    //    func getRequests(){
-    //        //set an observer to get the requests
-    //        ref.child("Request").queryOrdered(byChild: "time_stamp").observe(.childAdded) { snapshot in
-    //            let object = snapshot.value as! [String: Any]
-    //            let request = Request(user_id: object["user_id"] as! String, sensor_id: object["sensor_id"] as! String, request_id: object["request_id"] as! String, dateTime: object["time_stamp"] as! String, longitude: object["longitude"] as! String, latitude: object["latitude"] as! String, vib: object["vib"] as! String, rotation: object["rotation"] as! String, status: object["status"] as! String)
-    //            self.requests.append(request)
-    //            self.nearest(longitude: request.getLongitude(), latitude: request.getLatitude(), request: request)
-    //        }
-    //    }
-    
+        
     func getRequests(){
         //set an observer to get the requests
-        ref.child("Request").queryOrdered(byChild: "time_stamp").observe(.childAdded) { snapshot in
-            let object = snapshot.value as! [String: Any]
-            
-            if object["status"] as! String == "0"{
-                
-                let request = Request(user_id: object["user_id"] as! String, sensor_id: object["sensor_id"] as! String, request_id: object["request_id"] as! String, dateTime: object["time_stamp"] as! String, longitude: object["longitude"] as! String, latitude: object["latitude"] as! String, vib: object["vib"] as! String, rotation: object["rotation"] as! String, status: object["status"] as! String)
-                self.requests.append(request)
-                self.nearest(longitude: request.getLongitude(), latitude: request.getLatitude(), request: request)}
-        }
-    }
+//        ref.child("Request").queryOrdered(byChild: "time_stamp").observe(.value) { snapshot in
+//            let object = snapshot.value as! [String: Any]
+//
+//            if object["status"] as! String == "0"{
+//
+//                let request = Request(user_id: object["user_id"] as! String, sensor_id: object["sensor_id"] as! String, request_id: object["request_id"] as! String, dateTime: object["time_stamp"] as! String, longitude: object["longitude"] as! String, latitude: object["latitude"] as! String, vib: object["vib"] as! String, rotation: object["rotation"] as! String, status: object["status"] as! String)
+//                self.requests.append(request)
+//                self.nearest(longitude: request.getLongitude(), latitude: request.getLatitude(), request: request)}
+//        }
+        
+//
+        
+        ref.child("Request").queryOrdered(byChild: "time_stamp").observe(.value) { snapshot in
+                   for contact in snapshot.children{
+                       let obj = contact as! DataSnapshot
+                      // let relation = obj.childSnapshot(forPath: "relation").value as! String
+                      // let contactId = obj.childSnapshot(forPath: "contactID").value as! Int
+                       let user_id = obj.childSnapshot(forPath: "user_id").value as! String
+                       let sensor_id = obj.childSnapshot(forPath: "sensor_id").value as! String
+                       let request_id = obj.childSnapshot(forPath: "request_id").value as! String
+                       let time_stamp = obj.childSnapshot(forPath: "time_stamp").value as! String
+                       let lonitude = obj.childSnapshot(forPath: "longitude").value as! String
+                       let latitude = obj.childSnapshot(forPath: "latitude").value as! String
+                       let vib = obj.childSnapshot(forPath: "vib").value as! String
+                       let rotation = obj.childSnapshot(forPath: "rotation").value as! String
+                       let status = obj.childSnapshot(forPath: "status").value as! String
+                       //create a EC object
+                     
+                       let request = Request(user_id:user_id, sensor_id: sensor_id, request_id: request_id, dateTime: time_stamp, longitude: lonitude, latitude:latitude , vib: vib, rotation:rotation , status: status )
+                       
+                       if ( request.getStatus() != "1" ) {
+                           self.requests.append(request)
+                           self.nearest(longitude: request.getLongitude(), latitude: request.getLatitude(), request: request)
+                       }
+                        
+                       
+                   }}}
+                 
+              
+    
     
     func configureContainerView(){
         containerView.layer.cornerRadius = 70
@@ -82,10 +105,17 @@ class requestsViewController: UIViewController {
     }
     
     func nearest(longitude: String, latitude:String, request: Request){
+
         let nearest = SRCACenters.getNearest(longitude: Double(longitude)!, latitude: Double(latitude)!)
         //        print("vieww: \(loggedInCenter!["name"] as! String)")
         if nearest["name"] as! String == loggedInCenter!["name"] as! String{
-            
+//           var i = 0
+//            for item in myRequests {
+//                if item.request_id == request.request_id {
+//                 myRequests.remove(at:i )
+//                }
+//                i = i+1
+//            }
             myRequests.append(request)
             self.requestsColletionView.reloadData()
             

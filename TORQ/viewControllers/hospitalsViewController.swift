@@ -117,6 +117,7 @@ class hospitalsViewController: UIViewController ,UITableViewDelegate ,UITableVie
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableList.cellForRow(at: indexPath)?.accessoryType = .checkmark
         selhealth = hospitallist[indexPath.row]
+       // tableList.ima
         numb = indexPath.row
         print(hospitallist[indexPath.row] )
     }
