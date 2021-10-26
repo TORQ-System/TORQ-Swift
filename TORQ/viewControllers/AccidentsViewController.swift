@@ -93,11 +93,7 @@ extension AccidentsViewController: MKMapViewDelegate{
             pin?.annotation = annotation
         }
         
-        pin?.image = UIImage(systemName: "car")
-//        pin?.tintColor = UIColor(red: 0.83921569, green: 0.33333333, blue: 0.42352941, alpha: 1)
-//        let direct = UIButton()
-//        direct.tintColor = UIColor(red: 0.83921569, green: 0.33333333, blue: 0.42352941, alpha: 1)
-//        direct.setTitle("Go", for: .normal)
+        pin?.image = UIImage(named: "pin")
         pin?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         return pin
     }
