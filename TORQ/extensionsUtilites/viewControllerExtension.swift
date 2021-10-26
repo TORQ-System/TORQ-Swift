@@ -19,10 +19,10 @@ extension UIViewController {
     func registerToNotifications(userID: String) {
         
         let ref = Database.database().reference()
-        let searchQueue = DispatchQueue.init(label: "searchQueue")
+        let sendRequestQueue = DispatchQueue.init(label: "sendRequestQueue")
         
         //different dispatch queue for sender and reciver?
-        searchQueue.sync {
+        sendRequestQueue.sync {
             ref.child("Request").observe(.value) { snapshot in
                 for request in snapshot.children{
                     let obj = request as! DataSnapshot
@@ -40,7 +40,7 @@ extension UIViewController {
                     
                     if (userRequest.getUserID()) == userID && (userRequest.getStatus() == "0"){
                         var center = UNUserNotificationCenter.current()
-                        center = UNUserNotificationCenter.current() //?
+                        center = UNUserNotificationCenter.current()
                         //Assign contents
                         let content = UNMutableNotificationContent()
                         content.title = "Are you okay?"
@@ -90,8 +90,6 @@ extension UIViewController {
                                 }
                             }
                         }
-
-                        
                     }
                 }
             }
@@ -105,8 +103,6 @@ extension UIViewController {
         let updateQueue = DispatchQueue.init(label: "updateQueue")
         
        searchQueue.sync {
-        
-        
         ref.child("EmergencyContact").observe(.value) { snapshot in
             for contact in snapshot.children{
                 let obj = contact as! DataSnapshot
@@ -235,7 +231,7 @@ extension UIViewController: UNUserNotificationCenterDelegate{
                 break
             case "REQUEST_ACTION":
                 print("user wants help")
-                registerToNotificationss(userID: userID)
+                //registerToNotificationss(userID: userID)
                 break
             default:
                 print("No reply")

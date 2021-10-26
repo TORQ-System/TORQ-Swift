@@ -22,20 +22,35 @@ class userHomeViewController: UIViewController {
     let locationManager = CLLocationManager()
     let ref = Database.database().reference()
     let services = ["Medical Information","Emergency Contact","View Accidents History"]
+    let center = UNUserNotificationCenter.current()
 
     
     // MARK: - Overriden Functions
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        configureNotification()
         registerToNotifications(userID: userID!)
-        
         configureLocationManager()
         configureLayout()
 
     }
     
     //MARK: - Functions
+     func configureNotification(){
+         self.center.delegate = self
+
+        center.getNotificationSettings { setting in
+            guard setting.authorizationStatus == .authorized else {
+                self.center.requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+                    guard success else{
+                        print("The user has not authorized")
+                        return
+                    }
+                }
+                return
+            }
+        }
+    }
     
     private func configureLayout(){
         topView.layer.cornerRadius = 50
@@ -143,9 +158,10 @@ extension userHomeViewController: CLLocationManagerDelegate{
 }
 
 //MARK: - UICollectionViewDelegate Extensions
-
 extension userHomeViewController: UICollectionViewDelegate{
 }
+
+
 
 
 //MARK: - UICollectionViewDataSource Extensions
@@ -178,3 +194,4 @@ extension userHomeViewController: UICollectionViewDataSource{
         return cell
     }
 }
+
