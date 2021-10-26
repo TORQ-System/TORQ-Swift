@@ -58,6 +58,7 @@ class AccidentsViewController: UIViewController {
             let annotation = MKPointAnnotation()
             annotation.coordinate = pin.coordinate
             annotation.title = "Accident"
+            annotation.subtitle = "if you're near them help!"
             mapView.addAnnotation(annotation)
         }
     }
@@ -75,6 +76,27 @@ class AccidentsViewController: UIViewController {
 
    //MARK: - Map View Delegate Extension
 extension AccidentsViewController: MKMapViewDelegate{
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        
+    }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard !(annotation is MKUserLocation)else{
+            return nil
+        }
+        var pin = mapView.dequeueReusableAnnotationView(withIdentifier: "accidentView")
+        if pin == nil {
+            pin = MKAnnotationView(annotation: annotation, reuseIdentifier: "accidentView")
+            pin?.canShowCallout = true
+        }else{
+            pin?.annotation = annotation
+        }
+        
+        pin?.image = UIImage(systemName: "car.2")
+        pin?.tintColor = UIColor(red: 0.83921569, green: 0.33333333, blue: 0.42352941, alpha: 1)
+        return pin
+    }
     
 }
 
