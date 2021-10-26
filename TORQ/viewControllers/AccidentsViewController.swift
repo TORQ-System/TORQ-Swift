@@ -77,10 +77,6 @@ class AccidentsViewController: UIViewController {
    //MARK: - Map View Delegate Extension
 extension AccidentsViewController: MKMapViewDelegate{
     
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        
-    }
-    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard !(annotation is MKUserLocation)else{
             return nil
