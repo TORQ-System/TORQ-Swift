@@ -27,7 +27,7 @@ class onboardingScreen3ViewController: UIViewController {
         joinusButton.layer.cornerRadius = 20
         loginButton.layer.cornerRadius = 20
         loginButton.layer.borderColor = UIColor.white.cgColor
-        loginButton.layer.borderWidth = 2
+        loginButton.layer.borderWidth = 0.5
     }
     
     private func configureLevelLayer(){
