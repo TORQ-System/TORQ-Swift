@@ -90,24 +90,7 @@ extension UIViewController {
                                 }
                             }
                         }
-                        // ref.child("Request").child("Req\(userRequest.getRequestID())").updateChildValues(["status":"2"])
-                        
-                        /*
-                         
-                         center = UNUserNotificationCenter.current()
-                         center.requestAuthorization(options: [.alert,.sound, .badge, .carPlay]) { grantedPermisssion, error in
-                         guard error == nil else{
-                         print(error!.localizedDescription)
-                         return
-                         }
-                         
-                         
-                         print("has premission been granted: ", grantedPermisssion)
-                         */
-                        
-                        
-                        
-                        
+
                         
                     }
                 }
@@ -237,24 +220,24 @@ extension UIViewController: UNUserNotificationCenterDelegate{
      * 3- user needs immediet help: send the request (keep it) and inform the emergency contacts
      * 4- user does not interact: the request will be sent -not sure what to do-
      */
+    
     public func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         let updateQueue = DispatchQueue.init(label: "updateQueue")
-        _ = response.notification.request.content.userInfo["userID"] //Could be helpful for the emergency contacts
+        let userID = response.notification.request.content.userInfo["userID"] as! String
         let requestID = response.notification.request.content.userInfo["requestID"]
         let ref = Database.database().reference()
         
         updateQueue.sync {
             switch response.actionIdentifier{
-            case "OKAY_ACTION": //Delete the node
+            case "OKAY_ACTION":
                 print("user is okay \(String(describing: requestID))")
-                ref.child("Request").child("Req\(requestID!)").removeValue()
+                ref.child("Request").child("Req\(requestID!)").updateChildValues(["status":"2"])
                 break
             case "REQUEST_ACTION":
                 print("user wants help")
-                //Nouras' logic goes here -> inform the emergency contacts
+                registerToNotificationss(userID: userID)
                 break
             default:
-                //??
                 print("No reply")
             }
             completionHandler()
