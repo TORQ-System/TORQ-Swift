@@ -38,7 +38,6 @@ class userHomeViewController: UIViewController {
     //MARK: - Functions
      func configureNotification(){
          self.center.delegate = self
-
         center.getNotificationSettings { setting in
             guard setting.authorizationStatus == .authorized else {
                 self.center.requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
