@@ -858,6 +858,21 @@
             </objects>
             <point key="canvasLocation" x="-4023" y="2103"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="rEI-Dx-7el">
+            <objects>
+                <viewController id="Xyr-zL-DqY" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="shJ-IH-Y3F">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="cEE-Y6-0t7"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wUa-6A-hTO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-4023" y="2790"/>
+        </scene>
         <!--Requests View Controller-->
         <scene sceneID="LD3-oS-VGf">
             <objects>
@@ -1125,7 +1140,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="500" id="Gxf-bn-sdr"/>
                                 </constraints>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="FhM-fu-OrZ">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="26" minimumInteritemSpacing="15" id="FhM-fu-OrZ">
                                     <size key="itemSize" width="140" height="140"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
