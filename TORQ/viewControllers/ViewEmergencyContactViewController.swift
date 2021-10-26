@@ -68,28 +68,14 @@ extension ViewEmergencyContactViewController: UICollectionViewDataSource{
     
     // tell the collection view how many cells to make
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return eContacts.count
+        return eContacts.count + 1
     }
-    
-    // make a cell for each cell index path
-//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        // get a reference to our storyboard cell
-//        let add = collectionView.dequeueReusableCell(withReuseIdentifier: "add", for: indexPath as IndexPath)
-//        add.layer.cornerRadius = 10
-//
-//        return add
-//
-//    }
         
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         // get a reference to our storyboard cell
-        if ( indexPath.row == 0 ) {
-            let add = collectionView.dequeueReusableCell(withReuseIdentifier: "add", for: indexPath as IndexPath)
-            add.layer.cornerRadius = 10
-            
-            return add
-        }
         
+        while ( indexPath.row < eContacts.count ){
+            
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath as IndexPath) as! ECCollectionViewCell
         
         cell.layer.cornerRadius = 10
@@ -104,8 +90,14 @@ extension ViewEmergencyContactViewController: UICollectionViewDataSource{
         cell.relation.text = "\(eContacts[indexPath.row].getRelation())"
         
         return cell
-    }
-
+        }
+        
+            let add = collectionView.dequeueReusableCell(withReuseIdentifier: "add", for: indexPath as IndexPath)
+            add.layer.cornerRadius = 10
+            
+            return add
+    
+}
 }
 
 extension ViewEmergencyContactViewController: UICollectionViewDelegateFlowLayout{
