@@ -88,7 +88,7 @@ extension AccidentsViewController: MKMapViewDelegate{
         }else{
             pin?.annotation = annotation
         }
-        let img = UIImageView(image: UIImage(systemName: "mappin"))
+        let img = UIImageView(image: UIImage(named: "pin"))
         img.tintColor = .blue
         pin?.image = img.image
         pin?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
