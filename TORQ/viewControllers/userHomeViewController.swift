@@ -28,7 +28,8 @@ class userHomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        registerToNotifications(userID: userID)
+        registerToNotifications(userID: userID!)
+        
         configureLocationManager()
         configureLayout()
 
