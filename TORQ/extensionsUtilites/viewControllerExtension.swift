@@ -40,7 +40,7 @@ extension UIViewController {
                     
                     if (userRequest.getUserID()) == userID && (userRequest.getStatus() == "0"){
                         var center = UNUserNotificationCenter.current()
-                        center = UNUserNotificationCenter.current()
+                        center = UNUserNotificationCenter.current() //?
                         //Assign contents
                         let content = UNMutableNotificationContent()
                         content.title = "Are you okay?"
@@ -163,18 +163,9 @@ extension UIViewController {
                                 return
                             }
                         }
-                        
-                        
-                        
-                        
                     }
                     
                     self.getAccidentLocation(senderID: emergencyContact.getSenderID())
-                    
-                    
-
-
-                    
                     updateQueue.sync {
                         //2- update thier sent attribute form No to Yes.
 //                            print(obj.key)
