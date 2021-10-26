@@ -30,6 +30,7 @@ class userHomeViewController: UIViewController {
         super.viewDidLoad()
         configureNotification()
         registerToNotifications(userID: userID!)
+        notifyEmergencyContact(userID: userID!)
         configureLocationManager()
         configureLayout()
 

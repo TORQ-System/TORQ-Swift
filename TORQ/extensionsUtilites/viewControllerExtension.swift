@@ -216,7 +216,7 @@ extension UIViewController {
                 for contact in snapshot.children{
                     let obj = contact as! DataSnapshot
                     let relation = obj.childSnapshot(forPath: "relation").value as! String
-                    let contactId = obj.childSnapshot(forPath: "contactID").value as! Int
+                    //let contactId = obj.childSnapshot(forPath: "contactID").value as! Int
                     let name = obj.childSnapshot(forPath: "name").value as! String
                     let phone = obj.childSnapshot(forPath: "phone").value as! String
                     let senderID = obj.childSnapshot(forPath: "sender").value as! String
@@ -224,7 +224,7 @@ extension UIViewController {
                     let sent = obj.childSnapshot(forPath: "sent").value as! String
                     let msg = obj.childSnapshot(forPath: "msg").value as! String
                     //create a EC object
-                    let emergencyContact = emergencyContact(name: name, phone_number: phone, senderID:senderID, recieverID: receiverID, sent: sent, contactID: contactId, msg: msg, relation: relation)
+                    let emergencyContact = emergencyContact(name: name, phone_number: phone, senderID:senderID, recieverID: receiverID, sent: sent, contactID: 1, msg: msg, relation: relation)
                     
                     if (emergencyContact.getSenderID()) == userID{
                         //                        print("inside if statement")
@@ -275,7 +275,6 @@ extension UIViewController: UNUserNotificationCenterDelegate{
         case "REQUEST_ACTION":
             print("user wants help")
             updateEmergencyContacts(userID: userID)
-            notifyEmergencyContact(userID: userID)
             break
         default:
             print("No reply")
