@@ -25,13 +25,46 @@ class loginViewController: UIViewController {
     //MARK: - Overriden Functions
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        configureKeyboardNotification()
         // setup default borders
         email.setBorder(color: "default", image: UIImage(named: "emailDefault")!)
         password.setBorder(color: "default", image: UIImage(named: "lockDefault")!)
     }
     
     //MARK: - Functions
+    func configureKeyboardNotification(){
+            let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+            self.view!.addGestureRecognizer(tap)
+            NotificationCenter.default.addObserver(self, selector: #selector(keyboardwillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        }
+        
+        @objc func hideKeyboard(){
+            self.view.endEditing(true)
+            
+        }
+        
+        @objc func keyboardwillShow(notification: NSNotification){
+            
+            if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue{
+                let keyboardHieght = keyboardFrame.cgRectValue.height
+                let bottomSpace = self.view.frame.height - (self.nextbutton.frame.origin.y + nextbutton.frame.height)
+                self.view.frame.origin.y -= keyboardHieght - bottomSpace
+                
+            }
+            
+        }
+        
+        @objc func keyboardWillHide(){
+            self.view.frame.origin.y = 0
+        }
+        
+        deinit {
+            NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+            NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        }
+    
+    
     func validateFields()->[String: String]{
         var errors = ["email":"", "password":""]
         
@@ -46,11 +79,13 @@ class loginViewController: UIViewController {
     
     func goToUserHome(){
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "userHomeViewController") as! userHomeViewController
-        vc.userEmail = email.text
-        vc.userID = userID
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true, completion: nil)
+        let tb = storyboard.instantiateViewController(identifier: "Home") as! UITabBarController
+        let vcs = tb.viewControllers!
+        let home = vcs[0] as! userHomeViewController
+        home.userEmail = email.text
+        home.userID = userID
+        home.modalPresentationStyle = .fullScreen
+        present(tb, animated: true, completion: nil)
     }
     
     func goToParamedicHome(){
