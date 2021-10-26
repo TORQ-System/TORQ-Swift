@@ -218,12 +218,10 @@ extension UIViewController: UNUserNotificationCenterDelegate{
      */
     
     public func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        let updateQueue = DispatchQueue.init(label: "updateQueue")
         let userID = response.notification.request.content.userInfo["userID"] as! String
         let requestID = response.notification.request.content.userInfo["requestID"]
         let ref = Database.database().reference()
         
-        updateQueue.sync {
             switch response.actionIdentifier{
             case "OKAY_ACTION":
                 print("user is okay \(String(describing: requestID))")
@@ -231,13 +229,13 @@ extension UIViewController: UNUserNotificationCenterDelegate{
                 break
             case "REQUEST_ACTION":
                 print("user wants help")
-                //registerToNotificationss(userID: userID)
+                registerToNotificationss(userID: userID)
                 break
             default:
                 print("No reply")
             }
             completionHandler()
-        }
+        
     }
     
     public func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
