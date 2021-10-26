@@ -27,6 +27,8 @@ class userHomeViewController: UIViewController {
     // MARK: - Overriden Functions
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        registerToNotifications(userID: userID)
         configureLocationManager()
         configureLayout()
 
