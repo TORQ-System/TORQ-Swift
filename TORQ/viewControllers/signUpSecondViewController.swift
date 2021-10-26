@@ -11,13 +11,16 @@ class signUpSecondViewController: UIViewController {
     @IBOutlet weak var nationalID: UITextField!
     @IBOutlet weak var phone: UITextField!
     @IBOutlet weak var nextButton: UIButton!
+    @IBOutlet weak var errorNationalID: UILabel!
+    @IBOutlet weak var errorPhone: UILabel!
+    @IBOutlet weak var errorDOB: UILabel!
     
     //MARK: - Variables
     var ref = Database.database().reference()
     let datePicker = UIDatePicker()
     var userID: String?
     var userFirstName: String!
-    var userLastName: String!
+//    var userLastName: String!
     var userEmail: String!
     var userPassword: String!
     var userDate: String?
@@ -30,6 +33,18 @@ class signUpSecondViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // hide the error message and add the border
+        errorNationalID.alpha = 0
+        errorPhone.alpha = 0
+        errorDOB.alpha = 0
+
+        // national ID border
+        nationalID.setBorder(color: "default", image: UIImage(named: "idDefault")!)
+        // date border
+        date.setBorder(color: "default", image: UIImage(named: "calendarDefault")!)
+        // phone border
+        phone.setBorder(color: "default", image: UIImage(named: "phoneDefault")!)
+     
         setupDatePickerView()
         configureKeyboard()
         
@@ -72,7 +87,12 @@ class signUpSecondViewController: UIViewController {
     }
     
     func validateFields() -> [String: String] {
-        var errors = ["nationalID":"", "phone":"","date":""]
+        var errors = ["Empty":"","nationalID":"", "phone":"","date":""]
+        
+        // CASE-0 : This case validates submitting form with empty fields
+        if nationalID.text == "" && phone.text == "" && date.text == "" {
+            errors["Empty"] = "Empty Fields"
+        }
         
         //CASE-1: This case validate if the user enters empty or nil or a nationalID that has chracters.each case with it sub-cases detailed messages explained below.
         if nationalID.text == nil || nationalID.text == ""{
@@ -85,7 +105,7 @@ class signUpSecondViewController: UIViewController {
         //CASE-2: date of birth
         // no validation is needed since the date picker has the minimum date as the deafult, thus we're preventing the error from the first place.
         if date.text == nil || date.text == "" {
-            errors["date"] = "date cannot be empty"
+            errors["date"] = "Date of Birth cannot be empty"
         }
                 
         //CASE-3: This case validate if the user enters empty or nil or a nationalID that has chracters.each case with it sub-cases detailed messages explained below.
@@ -93,7 +113,7 @@ class signUpSecondViewController: UIViewController {
             errors["phone"] = "Phone number cannot be empty"
         }
         else if !phone.text!.isValidPhone {
-            errors["phone"] = "Please enter a valid phone number"
+            errors["phone"] = "Invalid phone number"
         }
         
         //CASE-4: gender
@@ -107,7 +127,7 @@ class signUpSecondViewController: UIViewController {
         let formatter = DateFormatter()
         formatter.dateFormat = "MM/dd/yyyy"
         datePicker.maximumDate = Date("12-31-2012")
-        datePicker.minimumDate = Date("01-01-1950")
+        datePicker.minimumDate = Date("01-01-1930")
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(chooseDate))
@@ -118,7 +138,7 @@ class signUpSecondViewController: UIViewController {
         datePicker.datePickerMode = .date
         
     }
-    
+    // is not needed
     func showALert(message:String){
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: "Ok", style: .default)
@@ -145,7 +165,6 @@ class signUpSecondViewController: UIViewController {
         present(vc, animated: true, completion: nil)
     }
     
-    
     //MARK: - @IBActions
     @IBAction func back(_ sender: Any) {
         dismiss(animated: true, completion: nil)
@@ -154,26 +173,59 @@ class signUpSecondViewController: UIViewController {
     @IBAction func goToHomeScreen(_ sender: Any) {
         
         let errors = validateFields()
+        
+        // if fields are empty
+        
+        guard errors["Empty"] == "" else {
+            
+            // show error message
+            errorNationalID.text = "National ID cannot be empty"
+            errorNationalID.alpha = 1
+            
+            errorPhone.text = "Phone cannot be empty"
+            errorPhone.alpha = 1
+            
+            errorDOB.text = "Date of Birth cannot be empty"
+            errorDOB.alpha = 1
+            
+            // set borders
+            nationalID.setBorder(color: "error", image: UIImage(named: "idError")!)
+           
+            phone.setBorder(color: "error", image: UIImage(named: "phoneError")!)
+            
+            date.setBorder(color: "error", image: UIImage(named: "calendarError")!)
+            
+            return
+        }
+        
         // if national id has an error
         guard errors["nationalID"] == "" else {
             //handle the error
-            showALert(message: errors["nationalID"]!)
+            errorNationalID.text = errors["nationalID"]!
+            nationalID.setBorder(color: "error", image: UIImage(named: "idError")!)
+            errorNationalID.alpha = 1
             return
         }
-        
+        // if Date of Birth has an error
         guard errors["date"] == "" else {
             //handle the error
-            showALert(message: "Date cannot be empty")
+            errorDOB.text = errors["date"]!
+            date.setBorder(color: "error", image: UIImage(named: "calendarError")!)
+            errorDOB.alpha = 1
             return
         }
-        
         // if phone number has an error
         guard errors["phone"] == "" else {
             //handle the error
-            showALert(message: errors["phone"]!)
+            errorPhone.text = errors["phone"]!
+            phone.setBorder(color: "error", image: UIImage(named: "phoneError")!)
+            errorPhone.alpha = 1
             return
         }
-        
+        // if no error is detected hide the error view
+        errorNationalID.alpha = 0
+        errorPhone.alpha = 0
+        errorDOB.alpha = 0
        
         //2- caching the first sign up screen information
         let genderType = gender.selectedSegmentIndex
@@ -190,7 +242,7 @@ class signUpSecondViewController: UIViewController {
         
         let user: [String: Any] = [
             "firstName": userFirstName!,
-            "lastName": userLastName!,
+//            "lastName": userLastName!,
             "email": userEmail!,
             "password": userPassword!,
             "dateOfBirth": userDate!,
@@ -208,11 +260,11 @@ class signUpSecondViewController: UIViewController {
                 if let errCode = AuthErrorCode(rawValue: error!._code) {
                     switch errCode {
                     case .invalidEmail:
-                        self.showALert(message: "invalid email, please try again")
+                        self.showALert(message: "Invalid email, please try again")
                     case .emailAlreadyInUse:
-                        self.showALert(message: "this email is in use try with another one")
+                        self.showALert(message: "This email is in use try with another one")
                     default:
-                        self.showALert(message: "invalid credentials")
+                        self.showALert(message: "Invalid credentials")
                     }
                 }
                 return
@@ -227,16 +279,54 @@ class signUpSecondViewController: UIViewController {
                 self.ref.child("Sensor").child("S\(id!)/time").setValue("0")
             
                 //alert sheet to indicate success
-                let alert = UIAlertController(title: "You're all set up!", message: "Welcome to TORQ App, your safty is our concern!", preferredStyle: .actionSheet)
+                let alert = UIAlertController(title: "You're all set up!", message: "Welcome to TORQ App, your safety is our concern!", preferredStyle: .actionSheet)
                 let acceptAction = UIAlertAction(title: "Ok", style: .default) { (_) -> Void in
                     self.goToHomeScreen()
                 }
                 alert.addAction(acceptAction)
                 self.present(alert, animated: true, completion: nil)
+        }//Auth
+        
+    }//Go to home screen
+    
+    @IBAction func nationalIdEditingChanged(_ sender: UITextField) {
+        let errors = validateFields()
+                // change national ID border if national ID is not valid, and set error msg
+               if  errors["nationalID"] != "" {
+                   nationalID.setBorder(color: "error", image: UIImage(named: "idError")!)
+                   errorNationalID.text = errors["nationalID"]!
+                   errorNationalID.alpha = 1
+               }
+                else {
+                    nationalID.setBorder(color: "valid", image: UIImage(named: "idValid")!)
+                    errorNationalID.alpha = 0
+               }
+    }
+    
+    
+    
+    @IBAction func phoneEditingChanged(_ sender: UITextField) {
+        let errors = validateFields()
+                // change phone border if phone is not valid, and set error msg
+               if  errors["phone"] != "" {
+                   phone.setBorder(color: "error", image: UIImage(named: "phoneError")!)
+                   errorPhone.text = errors["phone"]!
+                   errorPhone.alpha = 1
+               }
+                else {
+                    phone.setBorder(color: "valid", image: UIImage(named: "phoneValid")!)
+                    errorPhone.alpha = 0
+               }
+    }
+    
+    @IBAction func dateOfBirthEditing(_ sender: Any) {
+        let errors = validateFields()
+        if  errors["date"] == "" {
+                date.setBorder(color: "valid", image: UIImage(named: "calendarValid")!)
+                errorDOB.alpha = 0
         }
         
     }
-    
 }
 
 //MARK: - Extensions
