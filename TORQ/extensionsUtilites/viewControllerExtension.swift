@@ -118,17 +118,17 @@ extension UIViewController {
                                 return
                             }
                             let content = UNMutableNotificationContent()
-                            content.categoryIdentifier = "ACTIONS"
+                            //content.categoryIdentifier = "ACTIONS"
                             content.title = "ALERT!"
                             content.body = msg
                             content.userInfo = ["userID":userID]
                             
                             //Create actions
-                            let showAction = UNNotificationAction(identifier: "SHOW_ACTION", title: "show me the location", options: UNNotificationActionOptions.init(rawValue: 0))
-                            
-                            let actionCategory = UNNotificationCategory(identifier: "ACTIONS", actions: [showAction], intentIdentifiers: [], hiddenPreviewsBodyPlaceholder: "", options: .customDismissAction) //it will get dismissed
-                            
-                            center.setNotificationCategories([actionCategory])
+//                            let showAction = UNNotificationAction(identifier: "SHOW_ACTION", title: "show me the location", options: UNNotificationActionOptions.init(rawValue: 0))
+//
+//                            let actionCategory = UNNotificationCategory(identifier: "ACTIONS", actions: [showAction], intentIdentifiers: [], hiddenPreviewsBodyPlaceholder: "", options: .customDismissAction) //it will get dismissed
+//
+//                            center.setNotificationCategories([actionCategory])
                             
                             
                             let request = UNNotificationRequest(identifier: UUID.init().uuidString, content: content, trigger: nil)
@@ -275,9 +275,9 @@ extension UIViewController: UNUserNotificationCenterDelegate{
         case "REQUEST_ACTION":
             updateEmergencyContacts(userID: userID)
             break
-        case "SHOW_ACTION":
-            getAccidentLocation(senderID: userID)
-            break
+//        case "SHOW_ACTION":
+//            getAccidentLocation(senderID: userID)
+//            break
         default:
             print("No reply")
         }
