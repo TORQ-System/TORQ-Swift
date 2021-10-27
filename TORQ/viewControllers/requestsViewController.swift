@@ -35,7 +35,7 @@ class requestsViewController: UIViewController {
     
     @objc func getdata(){
         refrechcon.endRefreshing()
-       // getRequests()
+       getRequests()
         requestsColletionView.reloadData()
         
         
@@ -56,8 +56,9 @@ class requestsViewController: UIViewController {
 //                self.nearest(longitude: request.getLongitude(), latitude: request.getLatitude(), request: request)}
 //        }
         
-//
-        
+
+        requests.removeAll()
+        myRequests.removeAll()
         ref.child("Request").queryOrdered(byChild: "time_stamp").observe(.value) { snapshot in
                    for contact in snapshot.children{
                        let obj = contact as! DataSnapshot
@@ -73,16 +74,18 @@ class requestsViewController: UIViewController {
                        let rotation = obj.childSnapshot(forPath: "rotation").value as! String
                        let status = obj.childSnapshot(forPath: "status").value as! String
                        //create a EC object
-                     
+
                        let request = Request(user_id:user_id, sensor_id: sensor_id, request_id: request_id, dateTime: time_stamp, longitude: lonitude, latitude:latitude , vib: vib, rotation:rotation , status: status )
-                       
-                       if ( request.getStatus() != "1" ) {
+
+                       if ( request.getStatus() == "0" ) {
                            self.requests.append(request)
                            self.nearest(longitude: request.getLongitude(), latitude: request.getLatitude(), request: request)
                        }
-                        
-                       
-                   }}}
+
+
+                   }}
+        
+    }
                  
               
     
@@ -109,15 +112,15 @@ class requestsViewController: UIViewController {
         let nearest = SRCACenters.getNearest(longitude: Double(longitude)!, latitude: Double(latitude)!)
         //        print("vieww: \(loggedInCenter!["name"] as! String)")
         if nearest["name"] as! String == loggedInCenter!["name"] as! String{
-//           var i = 0
-//            for item in myRequests {
-//                if item.request_id == request.request_id {
-//                 myRequests.remove(at:i )
-//                }
-//                i = i+1
-//            }
+           var i = 0
+            for item in myRequests {
+                if item.request_id == request.request_id {
+                 myRequests.remove(at:i )
+                }
+                i = i+1
+            }
             myRequests.append(request)
-            self.requestsColletionView.reloadData()
+           self.requestsColletionView.reloadData()
             
         }
     }
