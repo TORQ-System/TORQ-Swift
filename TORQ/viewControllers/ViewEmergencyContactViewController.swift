@@ -61,7 +61,28 @@ class ViewEmergencyContactViewController: UIViewController {
         print(self.eContacts)
         
     }
+    
+    @IBAction func backButton(_ sender: Any) {
+        
+        self.dismiss(animated: true, completion: nil)
+        
     }
+}
+
+extension ViewEmergencyContactViewController: UICollectionViewDelegate{
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if ( indexPath.row == eContacts.count ){
+            let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+//            let vc = storyboard.instantiateViewController(identifier: "add Emergency contact page identifier") as! AddEmergencyContactViewController
+//            vc.userID = userID
+//            vc.modalPresentationStyle = .fullScreen
+//            self.present(vc, animated: true, completion: nil)
+        }
+    }
+    
+}
+
     
 
 extension ViewEmergencyContactViewController: UICollectionViewDataSource{
@@ -108,6 +129,7 @@ extension ViewEmergencyContactViewController: UICollectionViewDelegateFlowLayout
 
     
 }
+
 
 
 
