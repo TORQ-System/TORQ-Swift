@@ -839,6 +839,35 @@
                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="E88-nT-mRI">
+                                <rect key="frame" x="112" y="776" width="190" height="70"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="glf-9J-Z88">
+                                        <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
+                                        <color key="backgroundColor" red="0.1012948528" green="0.14810189600000001" blue="0.3411944509" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="70" id="QgZ-4Q-esB"/>
+                                            <constraint firstAttribute="width" constant="70" id="gkg-tT-JpR"/>
+                                        </constraints>
+                                        <color key="tintColor" red="0.89851015810000001" green="0.9486290812" blue="0.97255355119999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <state key="normal" image="plus" catalog="system">
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LbJ-DR-plP">
+                                        <rect key="frame" x="120" y="0.0" width="70" height="70"/>
+                                        <color key="backgroundColor" red="0.1012948528" green="0.14810189600000001" blue="0.3411944509" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="70" id="ccU-is-hfb"/>
+                                            <constraint firstAttribute="width" constant="70" id="p5O-AC-2Zs"/>
+                                        </constraints>
+                                        <color key="tintColor" red="0.89851015810000001" green="0.9486290812" blue="0.97255355119999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <state key="normal" image="trash" catalog="system">
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Dd6-4A-Mvl"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -859,8 +888,10 @@
                             <constraint firstItem="E9u-UM-DpM" firstAttribute="top" secondItem="une-RP-Nbp" secondAttribute="bottom" constant="40" id="hi6-QW-b5G"/>
                             <constraint firstItem="E9u-UM-DpM" firstAttribute="leading" secondItem="Dd6-4A-Mvl" secondAttribute="leading" constant="30" id="i45-DL-UNx"/>
                             <constraint firstItem="Dd6-4A-Mvl" firstAttribute="trailing" secondItem="E9u-UM-DpM" secondAttribute="trailing" constant="30" id="j73-85-JbB"/>
+                            <constraint firstAttribute="bottom" secondItem="E88-nT-mRI" secondAttribute="bottom" constant="50" id="nDr-ap-YOh"/>
                             <constraint firstItem="wQO-1Z-bPS" firstAttribute="top" secondItem="iqs-pC-CGd" secondAttribute="bottom" constant="35" id="qE1-jz-wrb"/>
                             <constraint firstItem="Dd6-4A-Mvl" firstAttribute="trailing" secondItem="Cti-O2-zPc" secondAttribute="trailing" constant="30" id="s8U-Vq-Jzk"/>
+                            <constraint firstItem="E88-nT-mRI" firstAttribute="centerX" secondItem="EBF-np-geR" secondAttribute="centerX" id="xmf-4R-9U3"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -2004,8 +2035,10 @@
         <image name="onboarding2" width="1721" height="2765"/>
         <image name="onboarding3" width="1721" height="2664"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
+        <image name="plus" catalog="system" width="128" height="113"/>
         <image name="pulse" width="300" height="214"/>
         <image name="qr-code" width="1155" height="1155"/>
+        <image name="trash" catalog="system" width="121" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
