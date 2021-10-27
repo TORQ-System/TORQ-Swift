@@ -27,10 +27,9 @@ class viewMedicalReportViewController: UIViewController {
     var medicalReport: MedicalReport?
     let redUIColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
     let alertIcon = UIImage(named: "errorIcon")
-    let apperance = SCLAlertView.SCLAppearance(
-        contentViewCornerRadius: 15,
-        buttonCornerRadius: 7,
-        hideWhenBackgroundViewIsTapped: true)
+    let apperance = SCLAlertView.SCLAppearance(contentViewCornerRadius: 15,buttonCornerRadius: 7,hideWhenBackgroundViewIsTapped: true)
+    var front = true
+    
 
     
     
@@ -99,6 +98,17 @@ class viewMedicalReportViewController: UIViewController {
     
     
     //MARK: - @IBActions
+    
+    @IBAction func flipCard(_ sender: Any) {
+        if self.front {
+            <#code#>
+        }else{
+            
+        }
+    }
+    
+    
+    
     @IBAction func backToHome(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }

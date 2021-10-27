@@ -811,6 +811,13 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iqs-pC-CGd">
                                 <rect key="frame" x="30" y="242" width="354" height="280"/>
                                 <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qjc-4t-EIc">
+                                        <rect key="frame" x="0.0" y="0.0" width="354" height="280"/>
+                                        <state key="normal" title="Button"/>
+                                        <connections>
+                                            <action selector="flipCard:" destination="8as-oH-KCZ" eventType="touchUpInside" id="ZyN-fw-xMl"/>
+                                        </connections>
+                                    </button>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cardView" translatesAutoresizingMaskIntoConstraints="NO" id="8Fy-3Z-Ghn">
                                         <rect key="frame" x="0.0" y="0.0" width="354" height="280"/>
                                     </imageView>
@@ -903,8 +910,12 @@
                                     <constraint firstItem="ePh-Df-3Wq" firstAttribute="leading" secondItem="iqs-pC-CGd" secondAttribute="leading" constant="20" id="M32-h2-ddb"/>
                                     <constraint firstAttribute="trailing" secondItem="8Fy-3Z-Ghn" secondAttribute="trailing" id="MNs-dI-lcb"/>
                                     <constraint firstItem="ePh-Df-3Wq" firstAttribute="top" secondItem="iqs-pC-CGd" secondAttribute="top" constant="20" id="N00-uv-VZh"/>
+                                    <constraint firstItem="qjc-4t-EIc" firstAttribute="leading" secondItem="iqs-pC-CGd" secondAttribute="leading" id="S8n-II-jYW"/>
+                                    <constraint firstAttribute="trailing" secondItem="qjc-4t-EIc" secondAttribute="trailing" id="VZ0-ZQ-i7u"/>
                                     <constraint firstAttribute="bottom" secondItem="ePh-Df-3Wq" secondAttribute="bottom" constant="20" id="Yky-EQ-Sly"/>
                                     <constraint firstAttribute="trailing" secondItem="ePh-Df-3Wq" secondAttribute="trailing" constant="20" id="eA0-xU-YHx"/>
+                                    <constraint firstItem="qjc-4t-EIc" firstAttribute="top" secondItem="iqs-pC-CGd" secondAttribute="top" id="ePi-pa-YbW"/>
+                                    <constraint firstAttribute="bottom" secondItem="qjc-4t-EIc" secondAttribute="bottom" id="jHJ-3d-8en"/>
                                     <constraint firstItem="8Fy-3Z-Ghn" firstAttribute="leading" secondItem="iqs-pC-CGd" secondAttribute="leading" id="k3A-d2-HUc"/>
                                     <constraint firstAttribute="bottom" secondItem="8Fy-3Z-Ghn" secondAttribute="bottom" id="nyw-QW-S1x"/>
                                 </constraints>
