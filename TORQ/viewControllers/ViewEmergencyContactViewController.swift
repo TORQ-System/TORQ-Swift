@@ -15,6 +15,7 @@ class ViewEmergencyContactViewController: UIViewController {
     @IBOutlet weak var addECButton: UIButton!
     @IBOutlet weak var noContacts: UILabel!
     
+    @IBOutlet weak var noAdded: UILabel!
     
     //MARK: - Variables
     var ref = Database.database().reference()
@@ -98,9 +99,9 @@ extension ViewEmergencyContactViewController: UICollectionViewDataSource{
         // get a reference to our storyboard cell
         
         if ( eContacts.count == 0 ) {
-            noContacts.alpha = 1
+            noAdded.alpha = 1
         } else{
-            noContacts.alpha = 0
+            noAdded.alpha = 0
         }
         
         while ( indexPath.row < eContacts.count ){

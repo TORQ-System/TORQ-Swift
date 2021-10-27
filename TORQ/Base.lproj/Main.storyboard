@@ -1137,10 +1137,10 @@
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="xr1-QU-0uE">
-                                <rect key="frame" x="50" y="279" width="314" height="500"/>
+                                <rect key="frame" x="50" y="301" width="314" height="478"/>
                                 <color key="backgroundColor" red="0.96853429079999998" green="0.95294374230000001" blue="0.95294946430000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="500" id="Gxf-bn-sdr"/>
+                                    <constraint firstAttribute="height" constant="478" id="Gxf-bn-sdr"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="26" minimumInteritemSpacing="15" id="FhM-fu-OrZ">
                                     <size key="itemSize" width="140" height="140"/>
@@ -1148,13 +1148,6 @@
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
-                                <label key="backgroundView" opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You haven't added any contacts yet" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rzg-Wd-cIH">
-                                    <rect key="frame" x="0.0" y="0.0" width="314" height="500"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
-                                    <color key="textColor" red="0.1048104092" green="0.15278157589999999" blue="0.3451191783" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="e1r-IS-Vaf" customClass="ECCollectionViewCell" customModule="TORQ" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="140" height="140"/>
@@ -1250,24 +1243,33 @@
                                     <outlet property="delegate" destination="eZL-4K-sFa" id="QzT-CC-gKb"/>
                                 </connections>
                             </collectionView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[You haven't added any contacts yet]" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y8R-vj-uDw">
+                                <rect key="frame" x="68" y="260" width="279.5" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
+                                <color key="textColor" red="0.1048104092" green="0.15278157589999999" blue="0.3451191783" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="d0E-zD-1WC"/>
                         <color key="backgroundColor" red="0.96853429079999998" green="0.95294374230000001" blue="0.95294946430000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="xr1-QU-0uE" firstAttribute="leading" secondItem="d0E-zD-1WC" secondAttribute="leading" constant="50" id="1k3-6q-C0i"/>
-                            <constraint firstItem="xr1-QU-0uE" firstAttribute="top" secondItem="J9L-64-HPJ" secondAttribute="bottom" constant="60" id="H3T-1b-LBN"/>
+                            <constraint firstItem="xr1-QU-0uE" firstAttribute="top" secondItem="J9L-64-HPJ" secondAttribute="bottom" constant="82" id="H3T-1b-LBN"/>
                             <constraint firstItem="JQE-vb-Cy0" firstAttribute="top" secondItem="HbS-Rb-AUw" secondAttribute="top" constant="50" id="Hot-8H-Bdp"/>
+                            <constraint firstItem="y8R-vj-uDw" firstAttribute="leading" secondItem="d0E-zD-1WC" secondAttribute="leading" constant="68" id="LZK-ea-yFO"/>
+                            <constraint firstItem="d0E-zD-1WC" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="y8R-vj-uDw" secondAttribute="trailing" symbolic="YES" id="W94-JG-Rw3"/>
                             <constraint firstItem="J9L-64-HPJ" firstAttribute="centerX" secondItem="HbS-Rb-AUw" secondAttribute="centerX" id="XPa-Hu-Pw5"/>
                             <constraint firstItem="xr1-QU-0uE" firstAttribute="centerX" secondItem="HbS-Rb-AUw" secondAttribute="centerX" id="dXe-PV-FkW"/>
                             <constraint firstItem="J9L-64-HPJ" firstAttribute="top" secondItem="JQE-vb-Cy0" secondAttribute="bottom" constant="40" id="fLs-66-U1r"/>
                             <constraint firstItem="d0E-zD-1WC" firstAttribute="trailing" secondItem="xr1-QU-0uE" secondAttribute="trailing" constant="50" id="rDw-7Y-JJQ"/>
                             <constraint firstItem="d0E-zD-1WC" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="JQE-vb-Cy0" secondAttribute="trailing" symbolic="YES" id="yZH-WI-187"/>
+                            <constraint firstItem="xr1-QU-0uE" firstAttribute="top" secondItem="y8R-vj-uDw" secondAttribute="bottom" constant="20.5" id="yev-UA-OqC"/>
                             <constraint firstItem="JQE-vb-Cy0" firstAttribute="leading" secondItem="d0E-zD-1WC" secondAttribute="leading" constant="20" id="zaG-1q-w5Z"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="contacts" destination="xr1-QU-0uE" id="Pdf-Tt-4hC"/>
-                        <outlet property="noContacts" destination="rzg-Wd-cIH" id="c3P-Vg-CNN"/>
+                        <outlet property="noAdded" destination="y8R-vj-uDw" id="ewG-DA-byS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V4q-MZ-jTF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
