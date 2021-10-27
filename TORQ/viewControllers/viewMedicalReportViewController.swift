@@ -32,10 +32,14 @@ class viewMedicalReportViewController: UIViewController {
     
     //MARK: - Functions
     private func configureLayout(){
-        profileView.layer.cornerRadius = 60
+        profileView.layer.cornerRadius = 40
         profileView.layer.masksToBounds = true
-        cardView.layer.cornerRadius = 80
+        cardView.layer.cornerRadius = 30
         cardView.layer.masksToBounds = true
+        addMedicalReport.layer.cornerRadius = 35
+        addMedicalReport.layer.masksToBounds = true
+        deleteMedicalReport.layer.cornerRadius = 35
+        deleteMedicalReport.layer.masksToBounds = true
     }
     
     
