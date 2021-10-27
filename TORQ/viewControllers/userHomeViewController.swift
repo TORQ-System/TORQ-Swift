@@ -28,6 +28,7 @@ class userHomeViewController: UIViewController {
     // MARK: - Overriden Functions
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("view did load home\(userID!)")
         configureNotification()
         registerToNotifications(userID: userID!)
         notifyEmergencyContact(userID: userID!)

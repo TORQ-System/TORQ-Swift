@@ -22,6 +22,7 @@
 		BEC34A2127284A85001E99E5 /* viewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC34A2027284A85001E99E5 /* viewControllerExtension.swift */; };
 		BEC34A2327284BCB001E99E5 /* resetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC34A2227284BCB001E99E5 /* resetPasswordViewController.swift */; };
 		BEC34A252728710C001E99E5 /* emergencyContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC34A242728710C001E99E5 /* emergencyContact.swift */; };
+		BEC34A27272938DD001E99E5 /* showAccidentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC34A26272938DD001E99E5 /* showAccidentViewController.swift */; };
 		BEDC3C18272653610026948E /* servicesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDC3C172726535F0026948E /* servicesCollectionViewCell.swift */; };
 		BEDC3C1A272681AE0026948E /* tabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDC3C19272681AE0026948E /* tabBarController.swift */; };
 		BEDC3C1C272681F40026948E /* notificationCenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDC3C1B272681F40026948E /* notificationCenterViewController.swift */; };
@@ -86,6 +87,7 @@
 		BEC34A2027284A85001E99E5 /* viewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewControllerExtension.swift; sourceTree = "<group>"; };
 		BEC34A2227284BCB001E99E5 /* resetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = resetPasswordViewController.swift; sourceTree = "<group>"; };
 		BEC34A242728710C001E99E5 /* emergencyContact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = emergencyContact.swift; sourceTree = "<group>"; };
+		BEC34A26272938DD001E99E5 /* showAccidentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = showAccidentViewController.swift; sourceTree = "<group>"; };
 		BEDC3C172726535F0026948E /* servicesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = servicesCollectionViewCell.swift; sourceTree = "<group>"; };
 		BEDC3C19272681AE0026948E /* tabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tabBarController.swift; sourceTree = "<group>"; };
 		BEDC3C1B272681F40026948E /* notificationCenterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = notificationCenterViewController.swift; sourceTree = "<group>"; };
@@ -271,6 +273,7 @@
 				BEDC3C1D272682160026948E /* profileViewController.swift */,
 				BEDC3C1F272682510026948E /* AccidentsViewController.swift */,
 				BEC34A2227284BCB001E99E5 /* resetPasswordViewController.swift */,
+				BEC34A26272938DD001E99E5 /* showAccidentViewController.swift */,
 			);
 			path = viewControllers;
 			sourceTree = "<group>";
@@ -546,6 +549,7 @@
 				BEC34A2127284A85001E99E5 /* viewControllerExtension.swift in Sources */,
 				BEC34A1F27281B0D001E99E5 /* textFieldExtension.swift in Sources */,
 				BEF974DE2707146300325281 /* AppDelegate.swift in Sources */,
+				BEC34A27272938DD001E99E5 /* showAccidentViewController.swift in Sources */,
 				BEF974E02707146300325281 /* SceneDelegate.swift in Sources */,
 				BEF9753B270AE0D100325281 /* userHomeViewController.swift in Sources */,
 				BEDC3C1E272682160026948E /* profileViewController.swift in Sources */,
@@ -736,7 +740,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Alsul.TORQ;
+				PRODUCT_BUNDLE_IDENTIFIER = Alsufih.TORQ;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -756,7 +760,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Alsul.TORQ;
+				PRODUCT_BUNDLE_IDENTIFIER = Alsufih.TORQ;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -8,19 +8,13 @@
 import Foundation
 import UIKit
 import Firebase
+import UserNotifications
 
 extension UIViewController {
     
-    /* Steps:
-     * 1- observe the database for any addition/updates on the requests -> detect collisions
-     * 2- if a request has not been processed and belongs to the current user -> current user had an accident
-     * 3- notify them by sending a notification with actions and information
-     */
     func registerToNotifications(userID: String) {
-        
         let ref = Database.database().reference()
         let sendRequestQueue = DispatchQueue.init(label: "sendRequestQueue")
-        
         //different dispatch queue for sender and reciver?
         sendRequestQueue.sync {
             ref.child("Request").observe(.value) { snapshot in
@@ -97,11 +91,9 @@ extension UIViewController {
     }
     
     func notifyEmergencyContact(userID: String) {
-        
         let ref = Database.database().reference()
         let searchQueue = DispatchQueue.init(label: "searchQueue")
         let updateQueue = DispatchQueue.init(label: "updateQueue")
-        
         searchQueue.sync {
             ref.child("EmergencyContact").observe(.value) { snapshot in
                 for contact in snapshot.children{
@@ -116,11 +108,8 @@ extension UIViewController {
                     let msg = obj.childSnapshot(forPath: "msg").value as! String
                     //create a EC object
                     let emergencyContact = emergencyContact(name: name, phone_number: phone, senderID:senderID, recieverID: receiverID, sent: sent, contactID: 1, msg: msg, relation: relation)
-                    
                     if (emergencyContact.getReciverID()) == userID && (emergencyContact.getSent() == "Yes"){
                         //show me notification
-                        
-                        
                         var center = UNUserNotificationCenter.current()
                         center = UNUserNotificationCenter.current()
                         center.requestAuthorization(options: [.alert,.sound]) { grantedPermisssion, error in
@@ -128,14 +117,21 @@ extension UIViewController {
                                 print(error!.localizedDescription)
                                 return
                             }
-                            
                             let content = UNMutableNotificationContent()
+                            content.categoryIdentifier = "ACTIONS"
                             content.title = "ALERT!"
                             content.body = msg
+                            content.userInfo = ["userID":userID]
+                            
+                            //Create actions
+                            let showAction = UNNotificationAction(identifier: "SHOW_ACTION", title: "show me the location", options: UNNotificationActionOptions.init(rawValue: 0))
+                            
+                            let actionCategory = UNNotificationCategory(identifier: "ACTIONS", actions: [showAction], intentIdentifiers: [], hiddenPreviewsBodyPlaceholder: "", options: .customDismissAction) //it will get dismissed
+                            
+                            center.setNotificationCategories([actionCategory])
                             
                             
                             let request = UNNotificationRequest(identifier: UUID.init().uuidString, content: content, trigger: nil)
-                            
                             center.add(request) { error in
                                 guard error == nil else{
                                     print(error!.localizedDescription)
@@ -143,35 +139,29 @@ extension UIViewController {
                                 }
                             }
                         }
-                        
                         self.getAccidentLocation(senderID: emergencyContact.getSenderID())
                         updateQueue.sync {
                             //2- update thier sent attribute form No to Yes.
-                            //                            print(obj.key)
-                            
                             ref.child("EmergencyContact").child(obj.key).updateChildValues(["sent": "No"]) {(error, ref) in
                                 if let error = error {
                                     print("Data could not be saved: \(error.localizedDescription).")
                                 } else {
-                                    //                                print("Data updated successfully!")
+                                    //print("Data updated successfully!")
                                 }
                             }
                         }
                     }
-                    //                    print("printing the global array in : \(self.myContacts)")
+                    //print("printing the global array in : \(self.myContacts)")
                 }
             }
         }
     }
     
-    func getAccidentLocation (senderID: String) {
-        
+    func getAccidentLocation (senderID: String) -> [String: String] {
+        var location: [String: String] = [:]
         let ref = Database.database().reference()
-        let searchQueue = DispatchQueue.init(label: "searchQueue")
-        
-        searchQueue.sync {
-            
-            
+//        let searchQueue = DispatchQueue.init(label: "searchQueue")
+//        searchQueue.sync {
             ref.child("Request").observe(.value) { snapshot in
                 for request in snapshot.children{
                     let obj = request as! DataSnapshot
@@ -186,20 +176,19 @@ extension UIViewController {
                     let vib = obj.childSnapshot(forPath: "vib").value as! String
                     //create a request object
                     let request = Request(user_id: user_id, sensor_id: sensor_id, request_id: request_id, dateTime: time_stamp, longitude: longitude, latitude: latitude, vib: vib, rotation: rotation, status: status)
-                    
                     if (request.getUserID()) == senderID && (request.getStatus() == "0"){
                         //get the location
-                        let lat = request.getLatitude()
-                        let long = request.getLongitude()
-                        //                    print(long)
-                        //                    print(lat)
+                        let lon = request.getLatitude()
+                        let lat = request.getLongitude()
+                        location = ["longitude": lon ,"latitude": lat]
+                        print(lon)
+                        print(lat)
                     }
-                    
                 }
             }
-            
-            
-        }
+//        }
+        print(location)
+        return location
     }
     
     func updateEmergencyContacts(userID: String){
@@ -250,6 +239,15 @@ extension UIViewController {
             }
         }
     }
+    
+    
+    private func showMeLocation(location: [String: String]){
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyBoard.instantiateViewController(withIdentifier: "showAccidentViewController") as! showAccidentViewController
+        vc.location = location
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
+    }
 }
 
 
@@ -269,12 +267,14 @@ extension UIViewController: UNUserNotificationCenterDelegate{
         
         switch response.actionIdentifier{
         case "OKAY_ACTION":
-            print("user is okay \(String(describing: requestID))")
             ref.child("Request").child("Req\(requestID!)").updateChildValues(["status":"2"])
             break
         case "REQUEST_ACTION":
-            print("user wants help")
             updateEmergencyContacts(userID: userID)
+            break
+        case "SHOW_ACTION":
+            let location = getAccidentLocation(senderID: userID)
+            showMeLocation(location: location)
             break
         default:
             print("No reply")
