@@ -811,9 +811,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iqs-pC-CGd">
                                 <rect key="frame" x="30" y="242" width="354" height="280"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qjc-4t-EIc">
+                                    <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qjc-4t-EIc">
                                         <rect key="frame" x="0.0" y="0.0" width="354" height="280"/>
-                                        <state key="normal" title="Button"/>
                                         <connections>
                                             <action selector="flipCard:" destination="8as-oH-KCZ" eventType="touchUpInside" id="ZyN-fw-xMl"/>
                                         </connections>
@@ -1007,6 +1006,7 @@
                         <outlet property="deleteMedicalReport" destination="LbJ-DR-plP" id="BUn-co-Ewn"/>
                         <outlet property="disabilities" destination="vhD-p0-eZC" id="32j-lL-Rdg"/>
                         <outlet property="diseases" destination="XEW-te-suC" id="c9I-K0-tPv"/>
+                        <outlet property="flipbutton" destination="qjc-4t-EIc" id="QNw-M5-WIz"/>
                         <outlet property="medicalStackView" destination="ySj-zd-d74" id="IYg-wd-h5Q"/>
                         <outlet property="medication" destination="Zhe-yz-VXv" id="jAs-hQ-OHf"/>
                         <outlet property="notAvailable" destination="zpf-gR-TGa" id="ZHU-cT-m1m"/>

@@ -19,6 +19,7 @@ class viewMedicalReportViewController: UIViewController {
     @IBOutlet weak var allergies: UILabel!
     @IBOutlet weak var notAvailable: UILabel!
     @IBOutlet weak var medicalStackView: UIStackView!
+    @IBOutlet weak var flipbutton: UIButton!
     
     
     //MARK: - Variables
@@ -100,10 +101,17 @@ class viewMedicalReportViewController: UIViewController {
     //MARK: - @IBActions
     
     @IBAction func flipCard(_ sender: Any) {
+        let QR = UIImage(named: "qr-code")
         if self.front {
-            <#code#>
+            UIView.transition(with: cardView, duration: 0.3, options: .transitionFlipFromLeft, animations: nil, completion: nil)
+            self.scrollViewContainer.isHidden = true
+            self.flipbutton.setImage(QR, for: .normal)
+            front = false
         }else{
-            
+            UIView.transition(with: cardView, duration: 0.3, options: .transitionFlipFromRight, animations: nil, completion: nil)
+            self.scrollViewContainer.isHidden = false
+            self.flipbutton.setImage(nil, for: .normal)
+            front = true
         }
     }
     
