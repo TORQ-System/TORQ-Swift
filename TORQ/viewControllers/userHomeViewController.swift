@@ -168,6 +168,7 @@ extension userHomeViewController: UICollectionViewDelegate{
         switch indexPath.row {
         case 0:
             let viewVC = storyboard.instantiateViewController(identifier: "viewMedicalReportViewController") as! viewMedicalReportViewController
+            viewVC.modalPresentationStyle = .fullScreen
             viewVC.userID = userID
             vc = viewVC
             break

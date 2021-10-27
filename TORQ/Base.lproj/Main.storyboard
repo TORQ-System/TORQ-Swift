@@ -804,6 +804,9 @@
                                 <state key="normal" title="  back" image="arrow.backward" catalog="system">
                                     <color key="titleColor" red="0.83749955890000005" green="0.33231014009999998" blue="0.42352765799999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
+                                <connections>
+                                    <action selector="backToHome:" destination="8as-oH-KCZ" eventType="touchUpInside" id="cJo-Z7-QG9"/>
+                                </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iqs-pC-CGd">
                                 <rect key="frame" x="30" y="282" width="354" height="260"/>
@@ -853,6 +856,9 @@
                                         <state key="normal" image="plus" catalog="system">
                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                                         </state>
+                                        <connections>
+                                            <action selector="addMedicalReport:" destination="8as-oH-KCZ" eventType="touchUpInside" id="2pf-SQ-LhG"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LbJ-DR-plP">
                                         <rect key="frame" x="120" y="0.0" width="70" height="70"/>
@@ -865,6 +871,9 @@
                                         <state key="normal" image="trash" catalog="system">
                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                                         </state>
+                                        <connections>
+                                            <action selector="deleteMedicalReport:" destination="8as-oH-KCZ" eventType="touchUpInside" id="LLy-12-Vjy"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -894,6 +903,12 @@
                             <constraint firstItem="E88-nT-mRI" firstAttribute="centerX" secondItem="EBF-np-geR" secondAttribute="centerX" id="xmf-4R-9U3"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="addMedicalReport" destination="glf-9J-Z88" id="xtH-fI-5Ne"/>
+                        <outlet property="cardView" destination="iqs-pC-CGd" id="fqs-zh-dKy"/>
+                        <outlet property="deleteMedicalReport" destination="LbJ-DR-plP" id="BUn-co-Ewn"/>
+                        <outlet property="profileView" destination="l8E-SA-dHe" id="Olc-gv-Zfo"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="glU-cm-lQU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
