@@ -814,12 +814,89 @@
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cardView" translatesAutoresizingMaskIntoConstraints="NO" id="8Fy-3Z-Ghn">
                                         <rect key="frame" x="0.0" y="0.0" width="354" height="280"/>
                                     </imageView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ePh-Df-3Wq">
+                                        <rect key="frame" x="20" y="20" width="314" height="240"/>
+                                        <subviews>
+                                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CkV-v1-vnR">
+                                                <rect key="frame" x="0.0" y="0.0" width="314" height="240"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KfZ-fj-rrH" userLabel="contentView">
+                                                        <rect key="frame" x="0.0" y="0.0" width="314" height="325"/>
+                                                        <subviews>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="ySj-zd-d74">
+                                                                <rect key="frame" x="20" y="20" width="274" height="285"/>
+                                                                <subviews>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Blood Type: O+" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ufk-42-Uzg">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="274" height="41"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                        <color key="textColor" red="0.1012948528" green="0.14810189600000001" blue="0.3411944509" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="disabilities: Vision Impairement,Physical Disability" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vhD-p0-eZC">
+                                                                        <rect key="frame" x="0.0" y="61" width="274" height="41"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                        <color key="textColor" red="0.1012948528" green="0.14810189600000001" blue="0.3411944509" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="prescribed medication: Novolin" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zhe-yz-VXv">
+                                                                        <rect key="frame" x="0.0" y="122" width="274" height="41"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                        <color key="textColor" red="0.1012948528" green="0.14810189600000001" blue="0.3411944509" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="chronic disease: Diabetes,HyperTension" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XEW-te-suC">
+                                                                        <rect key="frame" x="0.0" y="183" width="274" height="41"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                        <color key="textColor" red="0.1012948528" green="0.14810189600000001" blue="0.3411944509" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="allergies: Peanut" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4ib-hn-JkK">
+                                                                        <rect key="frame" x="0.0" y="244" width="274" height="41"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                        <color key="textColor" red="0.1012948528" green="0.14810189600000001" blue="0.3411944509" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                </subviews>
+                                                            </stackView>
+                                                        </subviews>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                        <constraints>
+                                                            <constraint firstItem="ySj-zd-d74" firstAttribute="leading" secondItem="KfZ-fj-rrH" secondAttribute="leading" constant="20" id="2ag-hp-5gW"/>
+                                                            <constraint firstItem="ySj-zd-d74" firstAttribute="top" secondItem="KfZ-fj-rrH" secondAttribute="top" constant="20" id="KNx-xM-bVV"/>
+                                                            <constraint firstAttribute="trailing" secondItem="ySj-zd-d74" secondAttribute="trailing" constant="20" id="N5B-Vm-xFs"/>
+                                                            <constraint firstAttribute="bottom" secondItem="ySj-zd-d74" secondAttribute="bottom" constant="20" id="aDJ-iz-6vc"/>
+                                                        </constraints>
+                                                    </view>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="KfZ-fj-rrH" firstAttribute="bottom" secondItem="CkV-v1-vnR" secondAttribute="bottom" id="3wn-bg-T0r"/>
+                                                    <constraint firstItem="KfZ-fj-rrH" firstAttribute="width" secondItem="CkV-v1-vnR" secondAttribute="width" id="I5U-59-o69"/>
+                                                    <constraint firstItem="KfZ-fj-rrH" firstAttribute="top" secondItem="CkV-v1-vnR" secondAttribute="top" id="aTX-TD-qKa"/>
+                                                    <constraint firstItem="KfZ-fj-rrH" firstAttribute="trailing" secondItem="CkV-v1-vnR" secondAttribute="trailing" id="dZa-as-PMe"/>
+                                                    <constraint firstItem="KfZ-fj-rrH" firstAttribute="leading" secondItem="CkV-v1-vnR" secondAttribute="leading" id="umk-i1-GXg"/>
+                                                </constraints>
+                                                <viewLayoutGuide key="contentLayoutGuide" id="dEQ-Bt-PQC"/>
+                                                <viewLayoutGuide key="frameLayoutGuide" id="u8G-PS-7yN"/>
+                                            </scrollView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="CkV-v1-vnR" firstAttribute="leading" secondItem="ePh-Df-3Wq" secondAttribute="leading" id="bka-o9-P35"/>
+                                            <constraint firstAttribute="bottom" secondItem="CkV-v1-vnR" secondAttribute="bottom" id="owi-TL-1PS"/>
+                                            <constraint firstAttribute="trailing" secondItem="CkV-v1-vnR" secondAttribute="trailing" id="vlW-yz-Wl1"/>
+                                            <constraint firstItem="CkV-v1-vnR" firstAttribute="top" secondItem="ePh-Df-3Wq" secondAttribute="top" id="yLA-f6-drh"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="280" id="5CF-7o-qgu"/>
                                     <constraint firstItem="8Fy-3Z-Ghn" firstAttribute="top" secondItem="iqs-pC-CGd" secondAttribute="top" id="9nn-5H-3cn"/>
+                                    <constraint firstItem="ePh-Df-3Wq" firstAttribute="leading" secondItem="iqs-pC-CGd" secondAttribute="leading" constant="20" id="M32-h2-ddb"/>
                                     <constraint firstAttribute="trailing" secondItem="8Fy-3Z-Ghn" secondAttribute="trailing" id="MNs-dI-lcb"/>
+                                    <constraint firstItem="ePh-Df-3Wq" firstAttribute="top" secondItem="iqs-pC-CGd" secondAttribute="top" constant="20" id="N00-uv-VZh"/>
+                                    <constraint firstAttribute="bottom" secondItem="ePh-Df-3Wq" secondAttribute="bottom" constant="20" id="Yky-EQ-Sly"/>
+                                    <constraint firstAttribute="trailing" secondItem="ePh-Df-3Wq" secondAttribute="trailing" constant="20" id="eA0-xU-YHx"/>
                                     <constraint firstItem="8Fy-3Z-Ghn" firstAttribute="leading" secondItem="iqs-pC-CGd" secondAttribute="leading" id="k3A-d2-HUc"/>
                                     <constraint firstAttribute="bottom" secondItem="8Fy-3Z-Ghn" secondAttribute="bottom" id="nyw-QW-S1x"/>
                                 </constraints>
@@ -905,9 +982,16 @@
                     </view>
                     <connections>
                         <outlet property="addMedicalReport" destination="glf-9J-Z88" id="xtH-fI-5Ne"/>
+                        <outlet property="allergies" destination="4ib-hn-JkK" id="dYa-Yy-aAe"/>
+                        <outlet property="bloodType" destination="Ufk-42-Uzg" id="fkw-IF-0Dq"/>
                         <outlet property="cardView" destination="iqs-pC-CGd" id="fqs-zh-dKy"/>
                         <outlet property="deleteMedicalReport" destination="LbJ-DR-plP" id="BUn-co-Ewn"/>
+                        <outlet property="disabilities" destination="vhD-p0-eZC" id="32j-lL-Rdg"/>
+                        <outlet property="diseases" destination="XEW-te-suC" id="c9I-K0-tPv"/>
+                        <outlet property="medication" destination="Zhe-yz-VXv" id="jAs-hQ-OHf"/>
                         <outlet property="profileView" destination="l8E-SA-dHe" id="Olc-gv-Zfo"/>
+                        <outlet property="scrollView" destination="CkV-v1-vnR" id="CZV-72-mEN"/>
+                        <outlet property="scrollViewContainer" destination="ePh-Df-3Wq" id="0vv-43-wtm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="glU-cm-lQU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -2024,7 +2108,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="NiS-qS-IB8"/>
+        <segue reference="Aby-AQ-YIk"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrow.backward" catalog="system" width="128" height="98"/>

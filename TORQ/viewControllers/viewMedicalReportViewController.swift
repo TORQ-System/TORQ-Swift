@@ -1,10 +1,3 @@
-//
-//  viewMedicalReportViewController.swift
-//  TORQ
-//
-//  Created by Noura Alsulayfih on 27/10/2021.
-//
-
 import UIKit
 
 class viewMedicalReportViewController: UIViewController {
@@ -15,6 +8,13 @@ class viewMedicalReportViewController: UIViewController {
     @IBOutlet weak var cardView: UIView!
     @IBOutlet weak var addMedicalReport: UIButton!
     @IBOutlet weak var deleteMedicalReport: UIButton!
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var scrollViewContainer: UIView!
+    @IBOutlet weak var bloodType: UILabel!
+    @IBOutlet weak var disabilities: UILabel!
+    @IBOutlet weak var medication: UILabel!
+    @IBOutlet weak var diseases: UILabel!
+    @IBOutlet weak var allergies: UILabel!
     
     
     //MARK: - Variables
@@ -22,24 +22,37 @@ class viewMedicalReportViewController: UIViewController {
     
     
     //MARK: - Overriden Functions
-
     override func viewDidLoad() {
         super.viewDidLoad()
         configureLayout()
-
     }
     
     
     //MARK: - Functions
     private func configureLayout(){
+        // 1- profile View corner radius
         profileView.layer.cornerRadius = 40
         profileView.layer.masksToBounds = true
+        // 2- card View corner radius
         cardView.layer.cornerRadius = 30
         cardView.layer.masksToBounds = true
+        // 3- scroll View corner radius
+        scrollView.layer.cornerRadius = 30
+        scrollView.layer.masksToBounds = true
+        // 4- scroll View container corner radius
+        scrollViewContainer.layer.cornerRadius = 30
+        scrollViewContainer.layer.masksToBounds = true
+        // 5- buttons View corner radius
         addMedicalReport.layer.cornerRadius = 35
         addMedicalReport.layer.masksToBounds = true
         deleteMedicalReport.layer.cornerRadius = 35
         deleteMedicalReport.layer.masksToBounds = true
+    }
+    
+    private func retrieveMedicalReport(){
+        
+        
+        
     }
     
     
