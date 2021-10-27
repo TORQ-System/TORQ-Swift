@@ -157,11 +157,12 @@ extension UIViewController {
         }
     }
     
-    func getAccidentLocation (senderID: String) -> [String: String] {
+    func getAccidentLocation (senderID: String) -> Void{
         var location: [String: String] = [:]
         let ref = Database.database().reference()
-//        let searchQueue = DispatchQueue.init(label: "searchQueue")
-//        searchQueue.sync {
+        let searchQueue = DispatchQueue.init(label: "searchQueue")
+        let retrunQueue = DispatchQueue.init(label: "returnQueue")
+        searchQueue.sync {
             ref.child("Request").observe(.value) { snapshot in
                 for request in snapshot.children{
                     let obj = request as! DataSnapshot
@@ -178,17 +179,19 @@ extension UIViewController {
                     let request = Request(user_id: user_id, sensor_id: sensor_id, request_id: request_id, dateTime: time_stamp, longitude: longitude, latitude: latitude, vib: vib, rotation: rotation, status: status)
                     if (request.getUserID()) == senderID && (request.getStatus() == "0"){
                         //get the location
-                        let lon = request.getLatitude()
-                        let lat = request.getLongitude()
+                        let lat = request.getLatitude()
+                        let lon = request.getLongitude()
                         location = ["longitude": lon ,"latitude": lat]
                         print(lon)
                         print(lat)
+                        retrunQueue.sync {
+                            print("from return queue\(location)")
+                            self.showMeLocation(location: location)
+                        }
                     }
                 }
             }
-//        }
-        print(location)
-        return location
+        }
     }
     
     func updateEmergencyContacts(userID: String){
@@ -244,8 +247,8 @@ extension UIViewController {
     private func showMeLocation(location: [String: String]){
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyBoard.instantiateViewController(withIdentifier: "showAccidentViewController") as! showAccidentViewController
-        vc.location = location
         vc.modalPresentationStyle = .fullScreen
+        vc.location = location
         self.present(vc, animated: true, completion: nil)
     }
 }
@@ -273,8 +276,7 @@ extension UIViewController: UNUserNotificationCenterDelegate{
             updateEmergencyContacts(userID: userID)
             break
         case "SHOW_ACTION":
-            let location = getAccidentLocation(senderID: userID)
-            showMeLocation(location: location)
+            getAccidentLocation(senderID: userID)
             break
         default:
             print("No reply")

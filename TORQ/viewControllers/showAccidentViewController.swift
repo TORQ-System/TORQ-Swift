@@ -22,13 +22,14 @@ class showAccidentViewController: UIViewController {
     
     func LocationRegion(){
         let longitude = Double(location!["longitude"]!)
+        print("map view\(String(describing: longitude!))")
         let latitude = Double(location!["latitude"]!)
+        print("map view\(String(describing: latitude!))")
         let pin = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!))
         let annotation = MKPointAnnotation()
         annotation.coordinate = pin.coordinate
-        annotation.title = "Accident Location"
+        annotation.title = "Accident Location: \(String(describing: longitude!)) \(String(describing: latitude!))"
         mapView.addAnnotation(annotation)
-        
     }
     
     @IBAction func backToHomeView(_ sender: Any) {
@@ -42,3 +43,27 @@ class showAccidentViewController: UIViewController {
     }
     
 }
+
+//extension showAccidentViewController: MKMapViewDelegate{
+//
+//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+//        guard !(annotation is MKUserLocation)else{
+//            return nil
+//        }
+//        var pin = mapView.dequeueReusableAnnotationView(withIdentifier: "accidentView")
+//        if pin == nil {
+//            pin = MKAnnotationView(annotation: annotation, reuseIdentifier: "accidentView")
+//            pin?.canShowCallout = true
+//        }else{
+//            pin?.annotation = annotation
+//        }
+//        let img = UIImageView(image: UIImage(named: "pin"))
+//        img.tintColor = .blue
+//        pin?.image = img.image
+//        pin?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+//        return pin
+//    }
+//    
+//
+//
+//}
