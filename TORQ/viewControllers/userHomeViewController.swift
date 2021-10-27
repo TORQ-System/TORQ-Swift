@@ -160,6 +160,29 @@ extension userHomeViewController: CLLocationManagerDelegate{
 
 //MARK: - UICollectionViewDelegate Extensions
 extension userHomeViewController: UICollectionViewDelegate{
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        var vc = UIViewController()
+        
+        switch indexPath.row {
+        case 0:
+            let viewVC = storyboard.instantiateViewController(identifier: "viewMedicalReportViewController") as! viewMedicalReportViewController
+            viewVC.userID = userID
+            vc = viewVC
+            break
+        case 1:
+            break
+        case 2:
+            break
+        case 3:
+            break
+        default:
+            print("unKnown")
+        }
+        
+        self.present(vc, animated: true, completion: nil)
+    }
 }
 
 

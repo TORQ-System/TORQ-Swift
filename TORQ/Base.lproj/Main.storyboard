@@ -748,10 +748,10 @@
             </objects>
             <point key="canvasLocation" x="-3272" y="2087"/>
         </scene>
-        <!--View Controller-->
+        <!--View Medical Report View Controller-->
         <scene sceneID="wEq-FK-kDU">
             <objects>
-                <viewController id="8as-oH-KCZ" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="viewMedicalReportViewController" id="8as-oH-KCZ" customClass="viewMedicalReportViewController" customModule="TORQ" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="EBF-np-geR">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -780,7 +780,7 @@
                                         </constraints>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Ma6-NC-E2y">
-                                        <rect key="frame" x="145" y="35" width="209" height="50"/>
+                                        <rect key="frame" x="145" y="37" width="209" height="46.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Noura AlSulayfih" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SD4-Gy-5xR">
                                                 <rect key="frame" x="0.0" y="0.0" width="157.5" height="24"/>
@@ -789,8 +789,8 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Medical Report Card" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cXd-bQ-2yf">
-                                                <rect key="frame" x="0.0" y="32" width="141" height="18"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <rect key="frame" x="0.0" y="32" width="116" height="14.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
