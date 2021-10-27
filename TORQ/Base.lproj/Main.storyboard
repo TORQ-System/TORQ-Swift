@@ -823,6 +823,12 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KfZ-fj-rrH" userLabel="contentView">
                                                         <rect key="frame" x="0.0" y="0.0" width="314" height="325"/>
                                                         <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[ No Medical Report! ]" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zpf-gR-TGa">
+                                                                <rect key="frame" x="55" y="150.5" width="204" height="24"/>
+                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                                <color key="textColor" red="0.1012948528" green="0.14810189600000001" blue="0.3411944509" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="ySj-zd-d74">
                                                                 <rect key="frame" x="20" y="20" width="274" height="285"/>
                                                                 <subviews>
@@ -861,10 +867,12 @@
                                                         </subviews>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
+                                                            <constraint firstItem="zpf-gR-TGa" firstAttribute="centerX" secondItem="KfZ-fj-rrH" secondAttribute="centerX" id="1jB-Wp-rb1"/>
                                                             <constraint firstItem="ySj-zd-d74" firstAttribute="leading" secondItem="KfZ-fj-rrH" secondAttribute="leading" constant="20" id="2ag-hp-5gW"/>
                                                             <constraint firstItem="ySj-zd-d74" firstAttribute="top" secondItem="KfZ-fj-rrH" secondAttribute="top" constant="20" id="KNx-xM-bVV"/>
                                                             <constraint firstAttribute="trailing" secondItem="ySj-zd-d74" secondAttribute="trailing" constant="20" id="N5B-Vm-xFs"/>
                                                             <constraint firstAttribute="bottom" secondItem="ySj-zd-d74" secondAttribute="bottom" constant="20" id="aDJ-iz-6vc"/>
+                                                            <constraint firstItem="zpf-gR-TGa" firstAttribute="centerY" secondItem="KfZ-fj-rrH" secondAttribute="centerY" id="o8x-g9-jcS"/>
                                                         </constraints>
                                                     </view>
                                                 </subviews>
@@ -988,7 +996,9 @@
                         <outlet property="deleteMedicalReport" destination="LbJ-DR-plP" id="BUn-co-Ewn"/>
                         <outlet property="disabilities" destination="vhD-p0-eZC" id="32j-lL-Rdg"/>
                         <outlet property="diseases" destination="XEW-te-suC" id="c9I-K0-tPv"/>
+                        <outlet property="medicalStackView" destination="ySj-zd-d74" id="IYg-wd-h5Q"/>
                         <outlet property="medication" destination="Zhe-yz-VXv" id="jAs-hQ-OHf"/>
+                        <outlet property="notAvailable" destination="zpf-gR-TGa" id="ZHU-cT-m1m"/>
                         <outlet property="profileView" destination="l8E-SA-dHe" id="Olc-gv-Zfo"/>
                         <outlet property="scrollView" destination="CkV-v1-vnR" id="CZV-72-mEN"/>
                         <outlet property="scrollViewContainer" destination="ePh-Df-3Wq" id="0vv-43-wtm"/>
