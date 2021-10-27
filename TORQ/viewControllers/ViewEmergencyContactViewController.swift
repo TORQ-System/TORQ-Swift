@@ -13,6 +13,8 @@ class ViewEmergencyContactViewController: UIViewController {
     //MARK: - @IBOutlets
     @IBOutlet weak var contacts: UICollectionView!
     @IBOutlet weak var addECButton: UIButton!
+    @IBOutlet weak var noContacts: UILabel!
+    
     
     //MARK: - Variables
     var ref = Database.database().reference()
@@ -94,6 +96,12 @@ extension ViewEmergencyContactViewController: UICollectionViewDataSource{
         
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         // get a reference to our storyboard cell
+        
+        if ( eContacts.count == 0 ) {
+            noContacts.alpha = 1
+        } else{
+            noContacts.alpha = 0
+        }
         
         while ( indexPath.row < eContacts.count ){
             
