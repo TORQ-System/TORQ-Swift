@@ -116,7 +116,7 @@ class viewMedicalReportViewController: UIViewController {
             self.ref.child("MedicalReport").queryOrdered(byChild:"user_id").observe(.childAdded, with: {(snapshot) in
                 if let dec = snapshot.value as? [String :Any]{
                     if (dec["user_id"] as! String == self.userID!){
-                        self.ref.child("medical_info").child(snapshot.key).removeValue()
+                        self.ref.child("MedicalReport").child(snapshot.key).removeValue()
                         self.dismiss(animated: true, completion: nil)
                     }
                 }
