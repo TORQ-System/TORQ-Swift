@@ -224,9 +224,6 @@ class addMedicalReportViewController: UIViewController, UIPickerViewDelegate, UI
         
         //check emptiness of fields
         
-//            if (selectedBloodtype == nil || selectedBloodtype == "") && (chronicDisease.text == nil || chronicDisease.text == "") && ( disability.text == nil || disability.text == "") && (allergy.text == nil || allergy.text == "") && (prescribedMedication.text == nil || prescribedMedication.text == "") {
-//                dismiss(animated: true, completion: nil)
-//            }
 
             //CASE: empty Blood Type
             if selectedBloodtype == nil || selectedBloodtype == "" || selectedBloodtype == "Please Select" {
@@ -244,9 +241,7 @@ class addMedicalReportViewController: UIViewController, UIPickerViewDelegate, UI
             else{
                 userChronicDisease = chronicDisease.text
             }
-//            else {
-//                userChronicDisease = chronicDisease.text!.components(separatedBy: ",")
-//        }
+
             // CASE: empty disability
             if disability.text == nil || disability.text == "" {
                 // not mandatory then set it to empty
@@ -272,21 +267,11 @@ class addMedicalReportViewController: UIViewController, UIPickerViewDelegate, UI
             else {
                 userPrescribedMedication = prescribedMedication.text
             }
-            // CASE: If all fields were empty then go back to HOME Screen or Medical report Screen without adding the report to the system DB
-//            guard (userBloodType != "-" && userChronicDisease != "-" && userDisability != "-" && userAllergy != "-" && userPrescribedMedication != "-") else {
-////                goToHomeScreen()
-//                return
-//            }
+ 
         
-        //2- caching information
-//        userBloodType = selectedBloodtype
-//        userChronicDisease = chronicDisease.text
-//        userDisability = disability.text
-//        userAllergy = allergy.text
-//        userPrescribedMedication = prescribedMedication.text
         
         //3- create user medical report info
-        let medical_info: [String: Any] = [
+        let MedicalReport: [String: Any] = [
             "user_id": usrID!,
             "blood_type": userBloodType!,
             "chronic_disease": userChronicDisease!,
@@ -296,7 +281,7 @@ class addMedicalReportViewController: UIViewController, UIPickerViewDelegate, UI
         ]
         
         //4- push info to database
-        self.ref.child("medical_info").childByAutoId().setValue(medical_info)
+        self.ref.child("MedicalReport").childByAutoId().setValue(MedicalReport)
         
         //5- alert of success
         let alert = UIAlertController(title: "Medical Report is Updated!", message: "you can delete it anytime from your medical report page", preferredStyle: .actionSheet)
