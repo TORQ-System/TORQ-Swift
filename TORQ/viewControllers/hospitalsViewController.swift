@@ -22,7 +22,7 @@ class hospitalsViewController: UIViewController ,UITableViewDelegate ,UITableVie
     var text:String = ""
     
     //MARK: - Constants
-    let hospitallist = ["Security Forces Hospital",
+    let hospitallist = ["none","Security Forces Hospital",
                         "King Salman Hospital",
                         "King Abdulaziz Hospital",
                         " Dallah Hospital",
@@ -109,8 +109,14 @@ class hospitalsViewController: UIViewController ,UITableViewDelegate ,UITableVie
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableList.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        if hospitallist[indexPath.row] == "None"{
         cell.textLabel?.text = hospitallist[indexPath.row]
         cell.selectionStyle = .none
+            cell.accessoryType = .checkmark}
+        else{
+            cell.textLabel?.text = hospitallist[indexPath.row]
+            cell.selectionStyle = .none
+        }
         return cell
     }
     
