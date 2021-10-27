@@ -39,7 +39,7 @@ class addEmergencyContactViewController: UIViewController, UIPickerViewDelegate,
     
     // picker view variables
     var relationships = [
-        "please select",
+        "Please Select",
         "Mother",
         "Father",
         "Brother",
@@ -61,9 +61,7 @@ class addEmergencyContactViewController: UIViewController, UIPickerViewDelegate,
         super.viewDidLoad()
        
         getUserName()
-//        for user in userInfo{
-//            print(user.fullName)
-//        }
+        
         
         // remove title from drop down button
         dropdownButton.setTitle("", for: .normal)
@@ -101,8 +99,9 @@ class addEmergencyContactViewController: UIViewController, UIPickerViewDelegate,
                                        phone: dictionary["phone"] as! String,
                                        gender: dictionary["gender"] as! String)
             self.userInfo.append(user)
-            print(user.fullName)
+            self.usrName=user.fullName
         })
+        print(usrName as Any)
     }
    
     // should go to emergency contacts screen
@@ -246,9 +245,9 @@ class addEmergencyContactViewController: UIViewController, UIPickerViewDelegate,
             errorMessage.alpha = 1
             return
         }
-        // if msg is empty
+        // if msg is empty, then set up TORQ Default msg
         if message.text == "" || message.text == nil {
-            message.text = "-- had a Car Accident, you are receiving this because -- has listed you as an emergency contact"
+            message.text = "\(usrName!) had a Car Accident, you are receiving this because \(usrName!) has listed you as an emergency contact"
         }
         
         
@@ -331,10 +330,12 @@ class addEmergencyContactViewController: UIViewController, UIPickerViewDelegate,
                    errorRelationship.text = errors["relationship"]!
                    errorRelationship.alpha = 1
                    relationshipImageView.image = UIImage(named: "relationshipError")
+                   relationshipButton.titleLabel?.font =  .systemFont(ofSize: 14)
                }
                 else {
                     errorRelationship.alpha = 0
                     relationshipImageView.image = UIImage(named: "relationshipValid")
+                    relationshipButton.titleLabel?.font =  .systemFont(ofSize: 14)
                }
     }
     
@@ -378,6 +379,7 @@ class addEmergencyContactViewController: UIViewController, UIPickerViewDelegate,
             self.selectedRelationship = name
             self.relationshipButton.setTitle(name, for: .normal)
             self.relationshipButton.setTitleColor(UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 ), for: .normal)
+            self.relationshipButton.titleLabel?.font =  .systemFont(ofSize: 14)
         }))
         self.present(alert, animated: true, completion: nil)
     }

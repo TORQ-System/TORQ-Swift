@@ -75,7 +75,15 @@ class userHomeViewController: UIViewController {
         present(vc, animated: true, completion: nil)
     }
     
-
+    @IBAction func addMedicalReportPressed(_ sender: Any) {
+        goToAddMedicalReportScreen()
+    }
+    func goToAddMedicalReportScreen(){
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "addMedicalReportViewController") as! addMedicalReportViewController
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true, completion: nil)
+    }
     
 }
 
