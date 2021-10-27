@@ -28,7 +28,7 @@ class hospitalsViewController: UIViewController ,UITableViewDelegate ,UITableVie
                         " Dallah Hospital",
                         " Green Crescent Hospital",
                         "King Faisal Specialist Hospital & Research Centre",
-                        " King Saud Medical City-Pediatric Hospital"]
+                        " King Saud Medical City-Pediatric Hospital","King Khalid Hospital","King Abduallah Hospital ","Prince Sultan Hospital"]
     
     //MARK: - Overriden Functions
     override func viewDidLoad() {
