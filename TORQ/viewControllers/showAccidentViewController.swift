@@ -11,26 +11,35 @@ import MapKit
 class showAccidentViewController: UIViewController {
     
     var location: [String: String]? = [:]
+    var longitude: Double? = 0
+    var latitude: Double? = 0
 
     @IBOutlet weak var mapView: MKMapView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         LocationRegion()
+        setView()
 
     }
     
     func LocationRegion(){
-        let longitude = Double(location!["longitude"]!)
+        longitude = Double(location!["longitude"]!)
         print("map view\(String(describing: longitude!))")
-        let latitude = Double(location!["latitude"]!)
+        latitude = Double(location!["latitude"]!)
         print("map view\(String(describing: latitude!))")
         let pin = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!))
         let annotation = MKPointAnnotation()
         annotation.coordinate = pin.coordinate
-        annotation.title = "Accident Location: \(String(describing: longitude!)) \(String(describing: latitude!))"
+        annotation.title = "Accident Location"
         mapView.addAnnotation(annotation)
     }
+    
+    func setView() {
+        let viewRegion = MKCoordinateRegion.init(center: .init(latitude: CLLocationDegrees(latitude!), longitude: CLLocationDegrees(longitude!)), latitudinalMeters: 800, longitudinalMeters: 800)
+        mapView.setRegion(viewRegion, animated: true)
+    }
+    
     
     @IBAction func backToHomeView(_ sender: Any) {
 //        let storyboard = UIStoryboard(name: "Main", bundle: nil)
