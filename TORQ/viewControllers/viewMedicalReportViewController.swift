@@ -20,10 +20,12 @@ class viewMedicalReportViewController: UIViewController {
     @IBOutlet weak var notAvailable: UILabel!
     @IBOutlet weak var medicalStackView: UIStackView!
     @IBOutlet weak var flipbutton: UIButton!
+    @IBOutlet weak var userName: UILabel!
     
     
     //MARK: - Variables
     var userID: String?
+    var user: User?
     var ref = Database.database().reference()
     var medicalReport: MedicalReport?
     let redUIColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
@@ -63,6 +65,8 @@ class viewMedicalReportViewController: UIViewController {
         deleteMedicalReport.layer.masksToBounds = true
         // 6- hide the not availbale MR lable
         notAvailable.alpha = 0
+        // 7- update the user Name
+        self.userName.text = user!.getFullName()
     }
     
     private func retrieveMedicalReport(){

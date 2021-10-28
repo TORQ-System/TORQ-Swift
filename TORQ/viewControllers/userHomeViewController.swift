@@ -30,7 +30,10 @@ class userHomeViewController: UIViewController {
     // MARK: - Overriden Functions
     override func viewDidLoad() {
         super.viewDidLoad()
+        let fetchQueue = DispatchQueue.init(label: "fetchQueue")
+        fetchQueue.sync {
         retreieveUser()
+        }
         configureNotification()
         registerToNotifications(userID: userID!)
         notifyEmergencyContact(userID: userID!)
@@ -40,8 +43,6 @@ class userHomeViewController: UIViewController {
     
     //MARK: - Functions
     private func retreieveUser(){
-        let searchQueue = DispatchQueue.init(label: "searchQueue")
-        searchQueue.sync {
             ref.child("User").observe(.value) { snapshot in
                 for user in snapshot.children{
                     let obj = user as! DataSnapshot
@@ -52,16 +53,12 @@ class userHomeViewController: UIViewController {
                     let nationalID = obj.childSnapshot(forPath: "nationalID").value as! String
                     let password = obj.childSnapshot(forPath: "password").value as! String
                     let phone = obj.childSnapshot(forPath:  "phone").value as! String
-                    if snapshot.key == self.userID {
+                    if obj.key == self.userID {
                         self.user = User(dateOfBirth: dateOfBirth,          email: email, fullName: fullName, gender:        gender, nationalID: nationalID, password:      password, phone: phone)
                             self.userFullName.text = fullName
                     }
                 }
-                print("printing User:\(String(describing: self.user))")
             }
-            print("printing User out:\(String(describing: self.user))")
-        }
-        print("printing User out out:\(String(describing: self.user))")
     }
     
     
@@ -197,6 +194,7 @@ extension userHomeViewController: UICollectionViewDelegate{
             let viewVC = storyboard.instantiateViewController(identifier: "viewMedicalReportViewController") as! viewMedicalReportViewController
             viewVC.modalPresentationStyle = .fullScreen
             viewVC.userID = userID
+            viewVC.user = user
             vc = viewVC
             break
         case 1:
