@@ -14,6 +14,7 @@ class userHomeViewController: UIViewController {
     @IBOutlet weak var medicalReportContainer: UIView!
     @IBOutlet weak var profileBorader: UIView!
     @IBOutlet weak var servicesCollectionView: UICollectionView!
+    @IBOutlet weak var userFullName: UILabel!
     
 
     //MARK: - Variables
@@ -23,21 +24,47 @@ class userHomeViewController: UIViewController {
     let ref = Database.database().reference()
     let services = ["Medical Information","Emergency Contact","View Accidents History"]
     let center = UNUserNotificationCenter.current()
+    var user: User? = nil
 
     
     // MARK: - Overriden Functions
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("view did load home\(userID!)")
+        retreieveUser()
         configureNotification()
         registerToNotifications(userID: userID!)
         notifyEmergencyContact(userID: userID!)
         configureLocationManager()
         configureLayout()
-
     }
     
     //MARK: - Functions
+    private func retreieveUser(){
+        let searchQueue = DispatchQueue.init(label: "searchQueue")
+        searchQueue.sync {
+            ref.child("User").observe(.value) { snapshot in
+                for user in snapshot.children{
+                    let obj = user as! DataSnapshot
+                    let dateOfBirth = obj.childSnapshot(forPath: "dateOfBirth").value as! String
+                    let email = obj.childSnapshot(forPath: "email").value as! String
+                    let fullName = obj.childSnapshot(forPath: "fullName").value as! String
+                    let gender = obj.childSnapshot(forPath: "gender").value as! String
+                    let nationalID = obj.childSnapshot(forPath: "nationalID").value as! String
+                    let password = obj.childSnapshot(forPath: "password").value as! String
+                    let phone = obj.childSnapshot(forPath:  "phone").value as! String
+                    if snapshot.key == self.userID {
+                        self.user = User(dateOfBirth: dateOfBirth,          email: email, fullName: fullName, gender:        gender, nationalID: nationalID, password:      password, phone: phone)
+                            self.userFullName.text = fullName
+                    }
+                }
+                print("printing User:\(String(describing: self.user))")
+            }
+            print("printing User out:\(String(describing: self.user))")
+        }
+        print("printing User out out:\(String(describing: self.user))")
+    }
+    
+    
      func configureNotification(){
          self.center.delegate = self
         center.getNotificationSettings { setting in
