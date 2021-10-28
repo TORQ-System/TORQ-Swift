@@ -21,6 +21,7 @@ class viewMedicalReportViewController: UIViewController {
     @IBOutlet weak var medicalStackView: UIStackView!
     @IBOutlet weak var flipbutton: UIButton!
     @IBOutlet weak var userName: UILabel!
+    @IBOutlet weak var subHeading: UILabel!
     
     
     //MARK: - Variables
@@ -67,6 +68,8 @@ class viewMedicalReportViewController: UIViewController {
         notAvailable.alpha = 0
         // 7- update the user Name
         self.userName.text = user!.getFullName()
+        // 8- update sub-heading label
+        self.subHeading.text = "This is a generated Medical Report of \(self.user!.getFullName()) by TORQ"
     }
     
     private func retrieveMedicalReport(){
@@ -96,6 +99,7 @@ class viewMedicalReportViewController: UIViewController {
                 // The user have no Medical Report
                 self.medicalStackView.isHidden = true
                 self.notAvailable.alpha = 1
+                self.deleteMedicalReport.isEnabled = false
             }
             print("printing Report: \(String(describing: self.medicalReport))")
         }
