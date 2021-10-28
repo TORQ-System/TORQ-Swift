@@ -177,7 +177,7 @@ class requestReportViewController: UIViewController {
     @IBAction func prosessing(_ sender: Any) {
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(identifier: "hospitalsViewController") as! hospitalsViewController
-        vc.UID1 = String(UID)
+        vc.userMedicalReportID = String(UID)
         self.present(vc, animated: true, completion: nil)
     }
     
