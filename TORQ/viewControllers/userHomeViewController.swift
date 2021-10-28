@@ -174,10 +174,19 @@ extension userHomeViewController: CLLocationManagerDelegate{
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let longitude = locations.last?.coordinate.longitude
         let latitude = locations.last?.coordinate.latitude
-        let time = locations.last?.timestamp
+        let date = Date()
+        let calendar = Calendar.current
+        let hour = calendar.component(.hour, from: date)
+        let minutes = calendar.component(.minute, from: date)
+        let seconds = calendar.component(.second, from: date)
+        let day = calendar.component(.day, from: date)
+        let month = calendar.component(.month, from: date)
+        let year = calendar.component(.year, from: date)
         ref.child("Sensor").child("S\(userID!)/longitude").setValue((String(describing: longitude!)))
         ref.child("Sensor").child("S\(userID!)/latitude").setValue((String(describing: latitude!)))
-        ref.child("Sensor").child("S\(userID!)/time").setValue((String(describing: time!)))
+        ref.child("Sensor").child("S\(userID!)/time").setValue("\(hour):\(minutes):\(seconds)")
+        ref.child("Sensor").child("S\(userID!)/date").setValue("\(year):\(month):\(day)")
+
     }
     
 }
