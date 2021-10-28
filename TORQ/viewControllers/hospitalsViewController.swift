@@ -20,6 +20,7 @@ class hospitalsViewController: UIViewController ,UITableViewDelegate ,UITableVie
     var numb = -1
     var UID1 : String!
     var text:String = ""
+    var rowDefaultSelected: Int = 0
     
     //MARK: - Constants
     let hospitallist = ["none","Security Forces Hospital",
@@ -31,6 +32,14 @@ class hospitalsViewController: UIViewController ,UITableViewDelegate ,UITableVie
                         " King Saud Medical City-Pediatric Hospital","King Khalid Hospital","King Abduallah Hospital ","Prince Sultan Hospital"]
     
     //MARK: - Overriden Functions
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let indexPath = IndexPath(row: 0, section: 0)
+        tableList.selectRow(at: indexPath, animated: true, scrollPosition: .none)
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableList.dataSource = self
@@ -38,16 +47,7 @@ class hospitalsViewController: UIViewController ,UITableViewDelegate ,UITableVie
         // Do any additional setup after loading the view.
     }
     
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
+
     
     //MARK: - @IBAction
     @IBAction func cancel_butt(_ sender: Any) {
@@ -109,14 +109,13 @@ class hospitalsViewController: UIViewController ,UITableViewDelegate ,UITableVie
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableList.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        if hospitallist[indexPath.row] == "None"{
+        
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = UIColor(red: 201/255, green: 69/255, blue: 87/255, alpha: 0.1)
+        cell.selectedBackgroundView = backgroundView
+
         cell.textLabel?.text = hospitallist[indexPath.row]
-        cell.selectionStyle = .none
-            cell.accessoryType = .checkmark}
-        else{
-            cell.textLabel?.text = hospitallist[indexPath.row]
-            cell.selectionStyle = .none
-        }
+        cell.textLabel?.highlightedTextColor = UIColor(red: 201/255, green: 69/255, blue: 87/255, alpha: 1)
         return cell
     }
     

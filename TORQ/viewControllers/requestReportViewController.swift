@@ -93,12 +93,8 @@ class requestReportViewController: UIViewController {
         ref.child("User").child(UID!).observe(.value, with: {(snapshot) in
             if let dec = snapshot.value as? [String :Any]
             {
-                let Fname1 = dec["firstName"] as! String
-                let lname1 = dec["lastName"] as! String
-                print("hi\(Fname1)")
-                self.name_report.text = Fname1+" "+lname1
-                self.namerequest.text = "\(Fname1)'s Request"
-                
+                let fullName = dec["fullName"] as! String
+                self.namerequest.text = "\(fullName)'s Request"
             }
             
         })
