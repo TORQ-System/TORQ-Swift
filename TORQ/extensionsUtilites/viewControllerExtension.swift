@@ -55,10 +55,14 @@ extension UIViewController {
                         let uuid = UUID().uuidString
                         let request = UNNotificationRequest(identifier: uuid, content: content, trigger: nil)
                         
-                        //Update the database if user does not respond
                         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(60)) {
                             print("code after 60 seconds")
                             self.lateUpdateEmergencyContacts(userID: userID)
+                        }
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(90)) {
+                            print("code after 90 seconds")
+                            self.resetSentMessage(userID: userID)
                         }
                         
                         // register to the notification center
@@ -114,7 +118,7 @@ extension UIViewController {
                     //create a EC object
                     let emergencyContact = emergencyContact(name: name, phone_number: phone, senderID:senderID, recieverID: receiverID, sent: sent, contactID: 1, msg: msg, relation: relation)
                     
-                    if (emergencyContact.getReciverID()) == userID && ((emergencyContact.getSent() == "Late") || (emergencyContact.getSent() == "Immediate")){
+                    if (emergencyContact.getReciverID() == userID) && ((emergencyContact.getSent() == "Late") || (emergencyContact.getSent() == "Immediate")){
                         //show me notification
                         var center = UNUserNotificationCenter.current()
                         center = UNUserNotificationCenter.current()
@@ -126,7 +130,7 @@ extension UIViewController {
                             
                             let content = UNMutableNotificationContent()
                             //content.categoryIdentifier = "ACTIONS"
-                            content.title = "ALERT!"
+                            content.title = "Hello, \(name)"
                             content.body = msg
                             content.userInfo = ["userID":userID]
                             let request = UNNotificationRequest(identifier: UUID.init().uuidString, content: content, trigger: nil)
@@ -141,12 +145,12 @@ extension UIViewController {
                         self.getAccidentLocation(senderID: emergencyContact.getSenderID())
                         
                     }
-                    
                 }
             }
         }
     }
     
+    //Update the emergency contact sent to 'Immediate' if (No, send request) is selected
     func updateEmergencyContacts(userID: String){
         let searchQueue = DispatchQueue.init(label: "searchQueue")
         let updateQueue = DispatchQueue.init(label: "updateQueue")
@@ -157,7 +161,6 @@ extension UIViewController {
                 for contact in snapshot.children{
                     let obj = contact as! DataSnapshot
                     let relation = obj.childSnapshot(forPath: "relation").value as! String
-                    //let contactId = obj.childSnapshot(forPath: "contactID").value as! Int
                     let name = obj.childSnapshot(forPath: "name").value as! String
                     let phone = obj.childSnapshot(forPath: "phone").value as! String
                     let senderID = obj.childSnapshot(forPath: "sender").value as! String
@@ -165,10 +168,9 @@ extension UIViewController {
                     let sent = obj.childSnapshot(forPath: "sent").value as! String
                     let msg = obj.childSnapshot(forPath: "msg").value as! String
                     
-                    //create a EC object
                     let emergencyContact = emergencyContact(name: name, phone_number: phone, senderID:senderID, recieverID: receiverID, sent: sent, contactID: 1, msg: msg, relation: relation)
                     
-                    if (emergencyContact.getSenderID()) == userID  {
+                    if emergencyContact.getSenderID() == userID  {
                         updateQueue.sync {
                             ref.child("EmergencyContact").child(obj.key).updateChildValues(["sent": "Immediate"]) {(error, ref) in
                                 if let error = error {
@@ -182,10 +184,10 @@ extension UIViewController {
         }
     }
     
+    //Upadte the emergency contact sent to 'Late' if no response in 60 seconds
     func lateUpdateEmergencyContacts(userID: String){
         let searchAfterQueue = DispatchQueue.init(label: "searchAfterQueue")
         let updateAfterQueue = DispatchQueue.init(label: "updateAfterQueue")
-        let updateQueue = DispatchQueue.init(label: "updateQueue")
         let ref = Database.database().reference()
         
         searchAfterQueue.sync {
@@ -204,21 +206,12 @@ extension UIViewController {
                     let emergencyContact = emergencyContact(name: name, phone_number: phone, senderID:senderID, recieverID: receiverID, sent: sent, contactID: 1, msg: msg, relation: relation)
                     
                     //We need to make sure that it does not update 'Canceled' or immedietly sent emergency contacts
-                    if (emergencyContact.getSenderID()) == userID && emergencyContact.getSent() != "Immediate" && emergencyContact.getSent() != "Cancel"  {
+                    if (emergencyContact.getSenderID()) == userID && emergencyContact.getSent() == "No" {
                         updateAfterQueue.sync {
                             ref.child("EmergencyContact").child(obj.key).updateChildValues(["sent": "Late"]) {(error, ref) in
                                 if let error = error {
                                     print("Data could not be saved: \(error.localizedDescription).")
                                 }
-                            }
-                        }
-                    }
-                    updateQueue.sync {
-                        ref.child("EmergencyContact").child(obj.key).updateChildValues(["sent": "No"]) {(error, ref) in
-                            if let error = error {
-                                print("Data could not be saved: \(error.localizedDescription).")
-                            } else {
-                                //print("Data updated successfully!")
                             }
                         }
                     }
@@ -309,9 +302,42 @@ extension UIViewController {
         self.present(vc, animated: true, completion: nil)
     }
     
+    
+    func resetSentMessage(userID: String){
+        let searchSentQueue = DispatchQueue.init(label: "searchSentQueue")
+        let updateSentQueue = DispatchQueue.init(label: "updateSentQueue")
+        let ref = Database.database().reference()
+        
+        searchSentQueue.sync {
+            ref.child("EmergencyContact").observeSingleEvent(of: .value) { snapshot in
+                for contact in snapshot.children{
+                    let obj = contact as! DataSnapshot
+                    let relation = obj.childSnapshot(forPath: "relation").value as! String
+                    let name = obj.childSnapshot(forPath: "name").value as! String
+                    let phone = obj.childSnapshot(forPath: "phone").value as! String
+                    let senderID = obj.childSnapshot(forPath: "sender").value as! String
+                    let receiverID = obj.childSnapshot(forPath: "reciever").value as! String
+                    let sent = obj.childSnapshot(forPath: "sent").value as! String
+                    let msg = obj.childSnapshot(forPath: "msg").value as! String
+                    
+                    let emergencyContact = emergencyContact(name: name, phone_number: phone, senderID:senderID, recieverID: receiverID, sent: sent, contactID: 1, msg: msg, relation: relation)
+                    
+                    
+                    if (emergencyContact.getSenderID()) == userID && emergencyContact.getSent() != "No" {
+                        updateSentQueue.sync {
+                            ref.child("EmergencyContact").child(obj.key).updateChildValues(["sent": "No"]) {(error, ref) in
+                                if let error = error {
+                                    print("Data could not be saved: \(error.localizedDescription).")
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+        }
+    }
 }
-
-
 extension UIViewController: UNUserNotificationCenterDelegate{
     
     public func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
@@ -325,6 +351,7 @@ extension UIViewController: UNUserNotificationCenterDelegate{
             cancelUpdateEmergencyContacts(userID: userID)
             break
         case "REQUEST_ACTION":
+            print("send immediate request")
             updateEmergencyContacts(userID: userID) // only called after immediate actions
             break
         default:
@@ -338,4 +365,5 @@ extension UIViewController: UNUserNotificationCenterDelegate{
     }
     
 }
+
 
