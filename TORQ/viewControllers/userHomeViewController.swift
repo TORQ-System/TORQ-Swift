@@ -186,7 +186,6 @@ extension userHomeViewController: CLLocationManagerDelegate{
         ref.child("Sensor").child("S\(userID!)/latitude").setValue((String(describing: latitude!)))
         ref.child("Sensor").child("S\(userID!)/time").setValue("\(hour):\(minutes):\(seconds)")
         ref.child("Sensor").child("S\(userID!)/date").setValue("\(year):\(month):\(day)")
-
     }
     
 }
