@@ -36,6 +36,7 @@ class addEmergencyContactViewController: UIViewController, UIPickerViewDelegate,
     var selectedRelationship: String?
     var relationship: String?
     var recieverID : String?
+    var phoneNumExists : String?
     
     // picker view variables
     var relationships = [
@@ -112,7 +113,7 @@ class addEmergencyContactViewController: UIViewController, UIPickerViewDelegate,
     // validate form entries
     func validateFields() -> [String: String] {
        
-        var errors = ["Empty":"","fullName":"", "phone":"","relationship":"","msg":"","phoneDNE":""]
+        var errors = ["Empty":"","fullName":"", "phone":"","relationship":"","msg":"","phoneDNE":"","phoneExists":""]
         
         // CASE: empty fields
         if emergencyContactFullName.text == "" && emergencyContactPhoneNumber.text == "" && selectedRow == 0 {
@@ -145,23 +146,52 @@ class addEmergencyContactViewController: UIViewController, UIPickerViewDelegate,
         if message.text!.count >= 80 {
             errors["msg"] = "message is too long, try to shorten it"
         }
+        // check if EmergencyContact node has children in the DB
+        ref.child("EmergencyContact").queryOrdered(byChild: "phone").queryEqual(toValue: emergencyContactPhoneNumber.text).observeSingleEvent(of: .value, with: { snapshot in
+            guard let dictionary = snapshot.value as? [String:Any] else {
+            errors["phoneExists"] = "Phone number have been already added"
+            return
+                }
+            dictionary.forEach({ (key , value) in
+             self.phoneNumExists = key
+             print("Key \(key), value \(value)")
+            })
+        })
         
         // check of emergency contact number exists in user table in the database and retrieve its info
-        ref.child("User").queryOrdered(byChild: "phone").queryEqual(toValue: emergencyContactPhoneNumber.text).observeSingleEvent(of: .value , with: { snapshot in
+        ref.child("EmergencyContact").queryOrdered(byChild: "sender").queryEqual(toValue: usrID).observeSingleEvent(of: .value , with: { snapshot in
 
             guard let dictionary = snapshot.value as? [String:Any] else {
                 errors["phone"] = "The phone number must be registered in TORQ"
                 return
                     }
             dictionary.forEach({ (key , value) in
-                 self.recieverID = key
+//                 self.recieverID = key
                  print("Key \(key), value \(value)")
             })
         })
+        // check if emergency contact has been added previously
+        if recieverID != "" || recieverID != nil {
+            ref.child("EmergencyContact").queryOrdered(byChild: "phone").queryEqual(toValue: emergencyContactPhoneNumber.text).observeSingleEvent(of: .value, with: { snapshot in
+                
+                guard let dictionary = snapshot.value as? [String:Any] else {
+                    errors["phoneExists"] = "Phone number have been already added"
+                    return
+                        }
+                    dictionary.forEach({ (key , value) in
+                     self.phoneNumExists = key
+                     print("Key \(key), value \(value)")
+                })
+            })
+        }
+        // check emergency contact
+        
         if recieverID == "" || recieverID == nil {
             errors["phoneDNE"] = "The phone number must be registered in TORQ"
         }
-       
+        if phoneNumExists != "" || phoneNumExists != nil {
+            errors["phoneExists"] = "Phone number have been already added"
+        }
         
         return errors
     }
@@ -227,9 +257,14 @@ class addEmergencyContactViewController: UIViewController, UIPickerViewDelegate,
             return
         }
         guard errors["phoneDNE"] == "" else {
-        //handle the error
-        showALert(message: errors["phoneDNE"]!)
-        return
+            //handle the error
+            showALert(message: errors["phoneDNE"]!)
+            return
+        }
+        guard errors["phoneExists"] == "" else {
+            //handle the error
+            showALert(message: errors["phoneExists"]!)
+            return
         }
         // relationship error
         guard errors["relationship"] == "" else {
