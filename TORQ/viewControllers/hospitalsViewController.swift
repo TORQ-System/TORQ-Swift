@@ -33,7 +33,6 @@ class hospitalsViewController: UIViewController ,UITableViewDelegate ,UITableVie
                         "King Abduallah Hospital",
                         "Prince Sultan Hospital"]
 
-
     
     //MARK: - Overriden Functions
     override func viewWillAppear(_ animated: Bool) {
@@ -126,8 +125,6 @@ class hospitalsViewController: UIViewController ,UITableViewDelegate ,UITableVie
                                 presentingView?.dismiss(animated: true)
                             }}))
                         self.present(alert, animated: true, completion: nil)
-                        
-                        
                     }
                 }
             })

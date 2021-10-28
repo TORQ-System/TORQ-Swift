@@ -23,10 +23,10 @@ class requestReportViewController: UIViewController {
     @IBOutlet weak var algeer: UILabel!
     @IBOutlet weak var medation0: UILabel!
     @IBOutlet weak var algeer0: UILabel!
-    
     @IBOutlet weak var prosseing0: UIButton!
+    
     //MARK: - Variables
-    var UID : String!
+    var userMedicalReportID : String!
     var long : Double!
     var lang : Double!
     var time : String!
@@ -42,18 +42,12 @@ class requestReportViewController: UIViewController {
         ref.child("Request").queryOrdered(byChild:"user_id").observe(.childAdded, with: {(snapshot) in
             if let dec = snapshot.value as? [String :Any]
             {
-                
-                if (dec["user_id"] as! String == self.UID!){
+                if (dec["user_id"] as! String == self.userMedicalReportID!){
                     if (dec["status"] as! String == "1"){
                         self.prosseing0.isHidden = true
-                    
-                    
                 }
-              
                 }
-                
             }
-            
         })
     }
     
@@ -90,25 +84,25 @@ class requestReportViewController: UIViewController {
         //               })
         
         
-        ref.child("User").child(UID!).observe(.value, with: {(snapshot) in
+        ref.child("User").child(userMedicalReportID!).observe(.value, with: {(snapshot) in
             if let dec = snapshot.value as? [String :Any]
             {
                 let fullName = dec["fullName"] as! String
-                self.namerequest.text = "\(fullName)'s Request"
+                let firstName = fullName.components(separatedBy: " ").first
+                self.namerequest.text = "\(firstName ?? " " )'s Request"
             }
             
         })
         
-        ref.child("medical_info").queryOrdered(byChild:"user_id").observe(.childAdded, with: {(snapshot) in
+        ref.child("MedicalReport").queryOrdered(byChild:"user_id").observe(.childAdded, with: {(snapshot) in
             if let dec = snapshot.value as? [String :Any]
             {
-                
-                if (dec["user_id"] as! String == self.UID!){
+                if (dec["user_id"] as! String == self.userMedicalReportID!){
                     
-                    let try1 = dec["Blood"] as! String
+                    let try1 = dec["blood_type"] as! String
                     let try2 = dec["allergies"] as! String
                     let try3 = dec["chronic_disease"] as! String
-                    let try4 = dec["prescribes_medication"] as! String
+                    let try4 = dec["prescribed_medication"] as! String
                     
                     
                     //  let lname = dec["lastName"] as! String
@@ -127,8 +121,6 @@ class requestReportViewController: UIViewController {
             }
             
         })
-        //print(UID)
-        //  DOB.text="WHY\(UID)"
         readDatabase()
         
     }
@@ -177,7 +169,7 @@ class requestReportViewController: UIViewController {
     @IBAction func prosessing(_ sender: Any) {
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(identifier: "hospitalsViewController") as! hospitalsViewController
-        vc.userMedicalReportID = String(UID)
+        vc.userMedicalReportID = String(userMedicalReportID)
         self.present(vc, animated: true, completion: nil)
     }
     

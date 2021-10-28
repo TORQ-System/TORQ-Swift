@@ -148,7 +148,7 @@ class requestsViewController: UIViewController {
         vc.lang = Double(myRequests[sender.tag].getLatitude())!
         vc.long = Double(myRequests[sender.tag].getLongitude())!
         vc.time = myRequests[sender.tag].getDateTime()
-        vc.UID=String(myRequests[sender.tag].getUserID())
+        vc.userMedicalReportID = String(myRequests[sender.tag].getUserID())
         
         //        ref.child("User/\(myRequests[sender.tag].getUserID())/firstName").observeSingleEvent(of: .value, with: { snapshot in  guard let value1 = snapshot.value as? String else {return}
         //            print(value1)
