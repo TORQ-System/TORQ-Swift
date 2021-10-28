@@ -28,7 +28,6 @@ class hospitalsViewController: UIViewController ,UITableViewDelegate ,UITableVie
                         "King Abdulaziz Hospital",
                         "Dallah Hospital",
                         "Green Crescent Hospital",
-                        "King Saud Medical City-Pediatric Hospital",
                         "King Khalid Hospital",
                         "King Abduallah Hospital",
                         "Prince Sultan Hospital"]
@@ -55,7 +54,7 @@ class hospitalsViewController: UIViewController ,UITableViewDelegate ,UITableVie
     func configureView(){
         listUIView.layer.cornerRadius = 20
         listUIView.layer.shadowColor = UIColor.black.cgColor
-        listUIView.layer.shadowOpacity = 0.5
+        listUIView.layer.shadowOpacity = 0.65
         listUIView.layer.shadowOffset = CGSize(width: 5, height: 5)
         listUIView.layer.shadowRadius = 25
         listUIView.layer.shouldRasterize = true
