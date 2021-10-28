@@ -70,6 +70,21 @@ class ViewEmergencyContactViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
         
     }
+    @objc func deletefunc(sender:UIButton){
+        print("tr")
+        let phone = "\(self.eContacts[sender.tag].getPhoneNumber())"
+        print(phone)
+
+        self.ref.child("EmergencyContact").queryOrdered(byChild: "phone").observe(.childAdded, with: {(snapchot) in
+            if let dec = snapchot.value as? [String:Any]{
+                if (dec["phone"] as! String == phone){
+                   self.ref.child("EmergencyContact").child(snapchot.key).removeValue()
+                    self.contacts.reloadData()
+                    print(snapchot.key)
+                }
+            }
+        
+        })}
 }
 
 extension ViewEmergencyContactViewController: UICollectionViewDelegate{
@@ -105,9 +120,7 @@ extension ViewEmergencyContactViewController: UICollectionViewDataSource{
         }
         
         while ( indexPath.row < eContacts.count ){
-            
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath as IndexPath) as! ECCollectionViewCell
-        
         cell.layer.cornerRadius = 10
         cell.layer.masksToBounds = false
         cell.layer.shadowColor = UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1).cgColor
@@ -115,10 +128,15 @@ extension ViewEmergencyContactViewController: UICollectionViewDataSource{
         cell.layer.shadowRadius = 70
         cell.layer.shadowOffset = CGSize(width: 5, height: 5)
         cell.layer.borderColor = CGColor(red: 0, green: 0, blue: 0, alpha: 1)
+        cell.namrLabel.text = "Name:"
         cell.name.text = "\(eContacts[indexPath.row].getName())"
+        cell.phoneLabel.text = "Phone number:"
         cell.phone.text = "\(eContacts[indexPath.row].getPhoneNumber())"
+        cell.relationLabel.text = "Relation:"
         cell.relation.text = "\(eContacts[indexPath.row].getRelation())"
-        
+            
+            cell.deleteECButton.tag = indexPath.row
+            cell.deleteECButton.addTarget(self, action: #selector(deletefunc), for: .touchUpInside)
         return cell
         }
         
@@ -133,7 +151,7 @@ extension ViewEmergencyContactViewController: UICollectionViewDataSource{
 extension ViewEmergencyContactViewController: UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 145, height: 145)
+        return CGSize(width: 158, height: 158)
     }
 
     
