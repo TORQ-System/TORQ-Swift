@@ -60,8 +60,8 @@ extension UIViewController {
                             self.lateUpdateEmergencyContacts(userID: userID)
                         }
                         
-                        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(90)) {
-                            print("code after 90 seconds")
+                        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(65)) {
+                            print("code after 65 seconds")
                             self.resetSentMessage(userID: userID)
                         }
                         
