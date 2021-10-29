@@ -2,6 +2,7 @@ import UIKit
 import Firebase
 import FirebaseAuth
 import FirebaseDatabase
+import SCLAlertView
 
 class signUpSecondViewController: UIViewController {
     
@@ -14,37 +15,54 @@ class signUpSecondViewController: UIViewController {
     @IBOutlet weak var errorNationalID: UILabel!
     @IBOutlet weak var errorPhone: UILabel!
     @IBOutlet weak var errorDOB: UILabel!
+    @IBOutlet weak var progressBar: UIProgressView!
     
     //MARK: - Variables
     var ref = Database.database().reference()
     let datePicker = UIDatePicker()
     var userID: String?
     var userFirstName: String!
-//    var userLastName: String!
     var userEmail: String!
     var userPassword: String!
     var userDate: String?
     var userGender: String?
     var userNationalID: String?
     var userPhone: String?
+    var completedFields: Float = 0.625
+    var correctField: [String:Bool] = ["nationalID":false, "phone": false, "date":false]
     
+    //MARK: - Constants
+    let redUIColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
+    let blueUIColor = UIColor( red: 49/255, green: 90/255, blue:149/255, alpha: 1.0 )
+    let alertErrorIcon = UIImage(named: "errorIcon")
+    let alertSuccessIcon = UIImage(named: "successIcon")
+    let apperanceWithoutClose = SCLAlertView.SCLAppearance(
+        showCloseButton: false,
+        contentViewCornerRadius: 15,
+        buttonCornerRadius: 7)
+    let apperance = SCLAlertView.SCLAppearance(
+        contentViewCornerRadius: 15,
+        buttonCornerRadius: 7,
+        hideWhenBackgroundViewIsTapped: true)
     
     //MARK: - Overriden Functions
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        progressBar.setProgress(completedFields, animated: true)
+        
         // hide the error message and add the border
         errorNationalID.alpha = 0
         errorPhone.alpha = 0
         errorDOB.alpha = 0
-
+        
         // national ID border
         nationalID.setBorder(color: "default", image: UIImage(named: "idDefault")!)
         // date border
         date.setBorder(color: "default", image: UIImage(named: "calendarDefault")!)
         // phone border
         phone.setBorder(color: "default", image: UIImage(named: "phoneDefault")!)
-     
+        
         setupDatePickerView()
         configureKeyboard()
         
@@ -52,14 +70,14 @@ class signUpSecondViewController: UIViewController {
     
     //MARK: - Functions
     func configureKeyboard() {
-       let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-       self.view!.addGestureRecognizer(tap)
-       
-       
-       NotificationCenter.default.addObserver(self, selector: #selector(keyboardwillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-       
-       NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-   }
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        self.view!.addGestureRecognizer(tap)
+        
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardwillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
     
     @objc func hideKeyboard(){
         self.view.endEditing(true)
@@ -107,7 +125,7 @@ class signUpSecondViewController: UIViewController {
         if date.text == nil || date.text == "" {
             errors["date"] = "Date of Birth cannot be empty"
         }
-                
+        
         //CASE-3: This case validate if the user enters empty or nil or a nationalID that has chracters.each case with it sub-cases detailed messages explained below.
         if phone.text == nil || phone.text == "" {
             errors["phone"] = "Phone number cannot be empty"
@@ -138,14 +156,6 @@ class signUpSecondViewController: UIViewController {
         datePicker.datePickerMode = .date
         
     }
-    // is not needed
-    func showALert(message:String){
-        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-        let action = UIAlertAction(title: "Ok", style: .default)
-        alert.addAction(action)
-        present(alert, animated: true, completion: nil)
-        
-    }
     
     @objc func chooseDate(){
         let formatter = DateFormatter()
@@ -158,11 +168,13 @@ class signUpSecondViewController: UIViewController {
     
     func goToHomeScreen() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "userHomeViewController") as! userHomeViewController
-        vc.userEmail = userEmail
-        vc.userID = userID
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true, completion: nil)
+        let tb = storyboard.instantiateViewController(identifier: "Home") as! UITabBarController
+        let vcs = tb.viewControllers!
+        let home = vcs[0] as! userHomeViewController
+        home.userEmail = userEmail
+        home.userID = userID
+        home.modalPresentationStyle = .fullScreen
+        present(tb, animated: true, completion: nil)
     }
     
     //MARK: - @IBActions
@@ -175,6 +187,9 @@ class signUpSecondViewController: UIViewController {
         let errors = validateFields()
         
         // if fields are empty
+        if errors["Empty"] != "" || errors["nationalID"] != "" || errors["date"] != "" || errors["phone"] != "" {
+            SCLAlertView(appearance: self.apperance).showCustom("Invalid Credentials", subTitle: "Please make sure you entered all fields correctly", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+        }
         
         guard errors["Empty"] == "" else {
             
@@ -190,7 +205,7 @@ class signUpSecondViewController: UIViewController {
             
             // set borders
             nationalID.setBorder(color: "error", image: UIImage(named: "idError")!)
-           
+            
             phone.setBorder(color: "error", image: UIImage(named: "phoneError")!)
             
             date.setBorder(color: "error", image: UIImage(named: "calendarError")!)
@@ -222,11 +237,14 @@ class signUpSecondViewController: UIViewController {
             errorPhone.alpha = 1
             return
         }
+        
+        progressBar.setProgress(1, animated: true)
+        
         // if no error is detected hide the error view
         errorNationalID.alpha = 0
         errorPhone.alpha = 0
         errorDOB.alpha = 0
-       
+        
         //2- caching the first sign up screen information
         let genderType = gender.selectedSegmentIndex
         if genderType == 0 {
@@ -241,8 +259,7 @@ class signUpSecondViewController: UIViewController {
         //3- create user info
         
         let user: [String: Any] = [
-            "firstName": userFirstName!,
-//            "lastName": userLastName!,
+            "fullName": userFirstName!,
             "email": userEmail!,
             "password": userPassword!,
             "dateOfBirth": userDate!,
@@ -256,74 +273,109 @@ class signUpSecondViewController: UIViewController {
         Auth.auth().createUser(withEmail: userEmail, password: userPassword) { Result, error in
             // need to specify the error with message
             guard error == nil else{
-                
                 if let errCode = AuthErrorCode(rawValue: error!._code) {
                     switch errCode {
-                    case .invalidEmail:
-                        self.showALert(message: "Invalid email, please try again")
                     case .emailAlreadyInUse:
-                        self.showALert(message: "This email is in use try with another one")
+                        SCLAlertView(appearance: self.apperance).showCustom("Email in Use", subTitle: "The email you entered is already in use, login instead", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
                     default:
-                        self.showALert(message: "Invalid credentials")
+                        SCLAlertView(appearance: self.apperance).showCustom("Oh no!", subTitle: "An error occured, try again later", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
                     }
                 }
                 return
             }
             
-                // go to user home screen
-                self.userID = Result!.user.uid
-                let id = self.userID
-                self.ref.child("User").child(id!).setValue(user)
-                self.ref.child("Sensor").child("S\(id!)/longitude").setValue("0")
-                self.ref.child("Sensor").child("S\(id!)/latitude").setValue("0")
-                self.ref.child("Sensor").child("S\(id!)/time").setValue("0")
+            // go to user home screen
+            self.userID = Result!.user.uid
+            let id = self.userID
+            self.ref.child("User").child(id!).setValue(user)
+            self.ref.child("Sensor").child("S\(id!)/longitude").setValue("0")
+            self.ref.child("Sensor").child("S\(id!)/latitude").setValue("0")
+            self.ref.child("Sensor").child("S\(id!)/time").setValue("0")
             
-                //alert sheet to indicate success
-                let alert = UIAlertController(title: "You're all set up!", message: "Welcome to TORQ App, your safety is our concern!", preferredStyle: .actionSheet)
-                let acceptAction = UIAlertAction(title: "Ok", style: .default) { (_) -> Void in
-                    self.goToHomeScreen()
-                }
-                alert.addAction(acceptAction)
-                self.present(alert, animated: true, completion: nil)
-        }//Auth
+            let alertView = SCLAlertView(appearance: self.apperanceWithoutClose)
+            alertView.addButton("Let's go", backgroundColor: self.blueUIColor){
+                self.goToHomeScreen()
+            }
+            
+            alertView.showCustom("You're all set up!", subTitle: "Welcome to TORQ App, your safety is our concern.", color: self.blueUIColor, icon: self.alertSuccessIcon!, animationStyle: SCLAnimationStyle.topToBottom)
+            
+        }
         
-    }//Go to home screen
+    }
     
     @IBAction func nationalIdEditingChanged(_ sender: UITextField) {
         let errors = validateFields()
-                // change national ID border if national ID is not valid, and set error msg
-               if  errors["nationalID"] != "" {
-                   nationalID.setBorder(color: "error", image: UIImage(named: "idError")!)
-                   errorNationalID.text = errors["nationalID"]!
-                   errorNationalID.alpha = 1
-               }
-                else {
-                    nationalID.setBorder(color: "valid", image: UIImage(named: "idValid")!)
-                    errorNationalID.alpha = 0
-               }
+        
+        if errors["nationalID"] == "" && !correctField["nationalID"]!{
+            completedFields+=0.125
+            correctField["nationalID"]! = true
+        }
+        
+        if errors["nationalID"] != "" && correctField["nationalID"]!{
+            completedFields-=0.125
+            correctField["nationalID"]! = false
+        }
+        
+        progressBar.setProgress(completedFields, animated: true)
+        
+        // change national ID border if national ID is not valid, and set error msg
+        if  errors["nationalID"] != "" {
+            nationalID.setBorder(color: "error", image: UIImage(named: "idError")!)
+            errorNationalID.text = errors["nationalID"]!
+            errorNationalID.alpha = 1
+        }
+        else {
+            nationalID.setBorder(color: "valid", image: UIImage(named: "idValid")!)
+            errorNationalID.alpha = 0
+        }
     }
     
     
     
     @IBAction func phoneEditingChanged(_ sender: UITextField) {
         let errors = validateFields()
-                // change phone border if phone is not valid, and set error msg
-               if  errors["phone"] != "" {
-                   phone.setBorder(color: "error", image: UIImage(named: "phoneError")!)
-                   errorPhone.text = errors["phone"]!
-                   errorPhone.alpha = 1
-               }
-                else {
-                    phone.setBorder(color: "valid", image: UIImage(named: "phoneValid")!)
-                    errorPhone.alpha = 0
-               }
+        
+        if errors["phone"] == "" && !correctField["phone"]!{
+            completedFields+=0.125
+            correctField["phone"]! = true
+        }
+        
+        if errors["phone"] != "" && correctField["date"]!{
+            completedFields-=0.125
+            correctField["phone"]! = false
+        }
+        
+        progressBar.setProgress(completedFields, animated: true)
+        
+        // change phone border if phone is not valid, and set error msg
+        if  errors["phone"] != "" {
+            phone.setBorder(color: "error", image: UIImage(named: "phoneError")!)
+            errorPhone.text = errors["phone"]!
+            errorPhone.alpha = 1
+        }
+        else {
+            phone.setBorder(color: "valid", image: UIImage(named: "phoneValid")!)
+            errorPhone.alpha = 0
+        }
     }
     
     @IBAction func dateOfBirthEditing(_ sender: Any) {
         let errors = validateFields()
+        if errors["date"] == "" && !correctField["date"]!{
+            completedFields+=0.125
+            correctField["date"]! = true
+        }
+        
+        if errors["date"] != "" && correctField["date"]!{
+            completedFields-=0.125
+            correctField["date"]! = false
+        }
+        
+        progressBar.setProgress(completedFields, animated: true)
+        
         if  errors["date"] == "" {
-                date.setBorder(color: "valid", image: UIImage(named: "calendarValid")!)
-                errorDOB.alpha = 0
+            date.setBorder(color: "valid", image: UIImage(named: "calendarValid")!)
+            errorDOB.alpha = 0
         }
         
     }
