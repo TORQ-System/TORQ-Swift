@@ -31,7 +31,7 @@ class loginViewController: UIViewController {
         email.setBorder(color: "default", image: UIImage(named: "emailDefault")!)
         password.setBorder(color: "default", image: UIImage(named: "lockDefault")!)
         //set up the corner radius of login button
-        loginButton.layer.cornerRadius = 20
+        loginButton.layer.cornerRadius = 12
     }
     
     //MARK: - Functions
