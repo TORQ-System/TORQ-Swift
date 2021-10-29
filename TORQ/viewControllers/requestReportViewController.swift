@@ -38,17 +38,8 @@ class requestReportViewController: UIViewController {
         super.viewDidLoad()
         contetnt()
         configureView()
-       
     }
-    func configureView(){
-        scroolview.layer.cornerRadius = 20
-        scroolview.layer.shadowColor = UIColor.black.cgColor
-        scroolview.layer.shadowOpacity = 0.5
-        scroolview.layer.shadowOffset = CGSize(width: 5, height: 5)
-        scroolview.layer.shadowRadius = 25
-        scroolview.layer.shouldRasterize = true
-        scroolview.layer.rasterizationScale = UIScreen.main.scale
-    }
+    
     override func viewDidAppear(_ animated: Bool) {
         ref.child("Request").queryOrdered(byChild:"user_id").observe(.childAdded, with: {(snapshot) in
             if let dec = snapshot.value as? [String :Any]
@@ -62,8 +53,21 @@ class requestReportViewController: UIViewController {
         })
     }
     
+
+    
+
+    
     
     //MARK: - Functions
+    func configureView(){
+        scroolview.layer.cornerRadius = 20
+        scroolview.layer.shadowColor = UIColor.black.cgColor
+        scroolview.layer.shadowOpacity = 1
+        scroolview.layer.shadowOffset = CGSize(width: 0, height: 5)
+        scroolview.layer.shadowRadius = 10
+        scroolview.layer.shouldRasterize = true
+    }
+    
     func contetnt(){
         //location
         location_report.addTarget(self, action: #selector(findloc(sender: )), for: .touchUpInside)
