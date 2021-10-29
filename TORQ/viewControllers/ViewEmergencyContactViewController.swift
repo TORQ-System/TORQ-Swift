@@ -149,7 +149,7 @@ extension ViewEmergencyContactViewController: UICollectionViewDataSource{
 extension ViewEmergencyContactViewController: UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 160, height: 160)
+        return CGSize(width: 165, height: 165)
     }
 
     
