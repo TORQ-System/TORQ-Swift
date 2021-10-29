@@ -14,6 +14,7 @@ class signUpFirstViewController: UIViewController {
     @IBOutlet weak var errorFullName: UILabel!
     @IBOutlet weak var fullName: UITextField!
     @IBOutlet weak var progressBar: UIProgressView!
+    @IBOutlet weak var stackView: UIStackView!
     
     //MARK: - Variables
     var userFullName: String?
@@ -77,7 +78,7 @@ class signUpFirstViewController: UIViewController {
         
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue{
             let keyboardHieght = keyboardFrame.cgRectValue.height
-            let bottomSpace = self.view.frame.height - (self.nextbutton.frame.origin.y + nextbutton.frame.height)
+            let bottomSpace = self.view.frame.height - (self.stackView.frame.origin.y + stackView.frame.height)
             self.view.frame.origin.y -= keyboardHieght - bottomSpace
             
         }
@@ -355,7 +356,13 @@ class signUpFirstViewController: UIViewController {
             errorPassword.alpha = 0
         }
     }
-    
+}
+
+extension signUpFirstViewController: UITextFieldDelegate{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
 }
 
 
