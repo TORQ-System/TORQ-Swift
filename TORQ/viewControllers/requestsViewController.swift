@@ -151,10 +151,18 @@ extension requestsViewController: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         //        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         //        let vc = storyboard.instantiateViewController(identifier: "viewLocation") as! viewLocationViewController
-        //        vc.latitude = Double(myRequests[indexPath.row].getLatitude())!
+          //    vc.latitude = Double(myRequests[indexPath.row].getLatitude())!
         //        vc.longitude = Double(myRequests[indexPath.row].getLongitude())!
         //        vc.modalPresentationStyle = .fullScreen
         //        self.present(vc, animated: true, completion: nil)
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(identifier: "requestReportViewController") as! requestReportViewController
+        vc.lang = Double(myRequests[indexPath.row].getLatitude())!
+        vc.long = Double(myRequests[indexPath.row].getLongitude())!
+        vc.time = myRequests[indexPath.row].getDateTime()
+        vc.userMedicalReportID = String(myRequests[indexPath.row].getUserID())
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
     }
     
 }
@@ -177,9 +185,17 @@ extension requestsViewController: UICollectionViewDataSource{
         cell.layer.borderColor = UIColor.red.cgColor
         cell.layer.masksToBounds = true
         cell.layer.shadowColor = UIColor.gray.cgColor
-        cell.layer.shadowOffset = CGSize(width: 0, height: 0)
+        //cell.layer.shadowOffset = CGSize(width: 0, height: 0)
         cell.layer.shadowRadius = 4
         cell.layer.shadowOpacity = 0.9
+        cell.layer.cornerRadius = 15.0
+               cell.layer.masksToBounds = true
+               cell.layer.borderWidth = 0.0
+               
+               cell.backgroundView?.layer.shadowColor = UIColor.black.cgColor
+               cell.backgroundView?.layer.shadowRadius = 5
+               cell.backgroundView?.layer.shadowOpacity = 1
+               cell.backgroundView?.layer.shadowOffset = CGSize(width: 0, height: 0)
 
 
 //

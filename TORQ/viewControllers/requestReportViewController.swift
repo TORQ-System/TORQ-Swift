@@ -24,6 +24,8 @@ class requestReportViewController: UIViewController {
     @IBOutlet weak var medation0: UILabel!
     @IBOutlet weak var algeer0: UILabel!
     @IBOutlet weak var prosseing0: UIButton!
+    @IBOutlet weak var scroolview: UIScrollView!
+    @IBOutlet weak var Gender: UILabel!
     
     //MARK: - Variables
     var userMedicalReportID : String!
@@ -36,7 +38,17 @@ class requestReportViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         contetnt()
+        configureView()
        
+    }
+    func configureView(){
+        scroolview.layer.cornerRadius = 10
+        scroolview.layer.shadowColor = UIColor.black.cgColor
+        scroolview.layer.shadowOpacity = 0.7
+        scroolview.layer.shadowOffset = CGSize(width: 5, height: 5)
+        scroolview.layer.shadowRadius = 25
+        scroolview.layer.shouldRasterize = true
+        scroolview.layer.rasterizationScale = UIScreen.main.scale
     }
     override func viewDidAppear(_ animated: Bool) {
         ref.child("Request").queryOrdered(byChild:"user_id").observe(.childAdded, with: {(snapshot) in
@@ -88,21 +100,42 @@ class requestReportViewController: UIViewController {
             if let dec = snapshot.value as? [String :Any]
             {
                 let fullName = dec["fullName"] as! String
-                let firstName = fullName.components(separatedBy: " ").first
-                self.namerequest.text = "\(firstName ?? " " )'s Request"
+                let Gender1 = dec["gender"] as! String
+                let NID = dec["nationalID"] as! String
+
+
+             //   let firstName = fullName.components(separatedBy: " ").first
+                self.namerequest.text = "\(fullName)"
+                self.name_report.text = "\(NID)"
+                self.Gender.text = "\(Gender1)"
+
             }
             
         })
         
         ref.child("MedicalReport").queryOrdered(byChild:"user_id").observe(.childAdded, with: {(snapshot) in
+            var try1 = "Not set"
+       var try2 = "Not set"
+       var  try3 = "Not set"
+        var try4 = "Not set"
+            
+            
             if let dec = snapshot.value as? [String :Any]
             {
                 if (dec["user_id"] as! String == self.userMedicalReportID!){
+                    if dec["blood_type"] as! String != "-"{
+                       try1 = dec["blood_type"] as! String}
                     
-                    let try1 = dec["blood_type"] as! String
-                    let try2 = dec["allergies"] as! String
-                    let try3 = dec["chronic_disease"] as! String
-                    let try4 = dec["prescribed_medication"] as! String
+                    if dec["allergies"] as! String != "-"{
+                        try2 = dec["allergies"] as! String }
+                    
+                    
+                    if dec["chronic_disease"] as! String != "-"{
+                        try3 = dec["chronic_disease"] as! String }
+                    
+                    if dec["prescribed_medication"] as! String != "-"{
+                        try4 = dec["prescribed_medication"] as! String}
+                    
                     
                     
                     //  let lname = dec["lastName"] as! String
