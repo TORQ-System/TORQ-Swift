@@ -15,6 +15,7 @@ class userHomeViewController: UIViewController {
     @IBOutlet weak var profileBorader: UIView!
     @IBOutlet weak var servicesCollectionView: UICollectionView!
     @IBOutlet weak var userFullName: UILabel!
+    @IBOutlet weak var medicalQR: UIImageView!
     
 
     //MARK: - Variables
@@ -30,9 +31,11 @@ class userHomeViewController: UIViewController {
     // MARK: - Overriden Functions
     override func viewDidLoad() {
         super.viewDidLoad()
+
         let fetchQueue = DispatchQueue.init(label: "fetchQueue")
         fetchQueue.sync {
-        retreieveUser()
+            retreieveUser()
+            retrieveSensorInfo()
         }
         configureNotification()
         registerToNotifications(userID: userID!)
@@ -42,6 +45,54 @@ class userHomeViewController: UIViewController {
     }
     
     //MARK: - Functions
+    private func medicalQRCode(){
+        let dic = ["First Name: ":"Noura","Last Name":"Alsulayfih"]
+        do {
+            let jsonData = try JSONEncoder().encode(dic)
+            if let filter = CIFilter(name: "CIQRCodeGenerator") {
+                filter.setValue(jsonData, forKey: "inputMessage")
+                let transfrom = CGAffineTransform(scaleX: 10, y: 10)
+                
+                if let output = filter.outputImage?.transformed(by: transfrom){
+                    medicalQR.image = UIImage(ciImage: output)
+                }else{
+                    print("output is nil")
+
+                }
+            }else{
+                print("filter is nil")
+            }
+        } catch  {
+            print(error.localizedDescription)
+        }
+    }
+    
+    
+    private func retrieveSensorInfo(){
+        ref.child("Sensor").observe(.value) { snapshot in
+            for user in snapshot.children{
+                let obj = user as! DataSnapshot
+                let vib = obj.childSnapshot(forPath: "Vib").value as! String
+                let x = obj.childSnapshot(forPath: "X").value as! String
+                let y = obj.childSnapshot(forPath: "Y").value as! String
+                let z = obj.childSnapshot(forPath: "Z").value as! String
+                let date = obj.childSnapshot(forPath: "date").value as! String
+                let latitude = obj.childSnapshot(forPath: "latitude").value as! String
+                let longitude = obj.childSnapshot(forPath: "longitude").value as! String
+                let time = obj.childSnapshot(forPath:  "time").value as! String
+                let sensorID = obj.key
+                print("S\(String(describing: self.userID))")
+                if sensorID == "S\(String(describing: self.userID))" {
+                    
+                    
+                }
+                
+            }
+        }
+    }
+    
+    
+    
     private func retreieveUser(){
             ref.child("User").observe(.value) { snapshot in
                 for user in snapshot.children{
