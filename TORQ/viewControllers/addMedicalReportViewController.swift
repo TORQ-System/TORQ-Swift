@@ -105,6 +105,14 @@ class addMedicalReportViewController: UIViewController {
     @IBAction func back(_ sender:Any){
         dismiss(animated: true, completion: nil)
     }
+    func showALert(message:String){
+        //show alert based on the message that is being paased as parameter
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: "Ok", style: .default)
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+        
+    }
     // validate form entries
     func validateFields() -> [String: String] {
        
@@ -193,6 +201,7 @@ class addMedicalReportViewController: UIViewController {
             return
         }
         guard errors["Empty"] == "" else {
+            showALert(message: "Please make sure you entered all fields correctly")
             return
         }
         // if Chronic Disease has an error
@@ -243,7 +252,7 @@ class addMedicalReportViewController: UIViewController {
         
 
             //CASE: empty Blood Type
-            if selectedBloodtype == nil || selectedBloodtype == "" || selectedBloodtype == "Please Select" {
+            if bloodTypeTextField.text == nil || bloodTypeTextField.text == ""  {
                 // not mandatory then set it to empty
                 userBloodType = "-"
             }
@@ -391,39 +400,7 @@ class addMedicalReportViewController: UIViewController {
                }
     
     }
-    // picker view for blood type
-//    @IBAction func popUpPicker(_ sender: Any) {
-//        let vc = UIViewController()
-//        vc.preferredContentSize = CGSize(width: screenWidth, height: screenHeight)
-//        let pickerView = UIPickerView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight))
-//        pickerView.dataSource = self
-//        pickerView.delegate = self
-//
-//        pickerView.selectRow(selectedRow, inComponent: 0, animated: false)
-//
-//        vc.view.addSubview(pickerView)
-//        pickerView.centerXAnchor.constraint(equalTo: vc.view.centerXAnchor).isActive = true
-//        pickerView.centerYAnchor.constraint(equalTo: vc.view.centerYAnchor).isActive = true
-//
-//        let alert = UIAlertController(title: "Select Blood Type", message: "", preferredStyle: .actionSheet)
-//
-//        alert.popoverPresentationController?.sourceView = bloodTypeButton
-//        alert.popoverPresentationController?.sourceRect = bloodTypeButton.bounds
-//        alert.setValue(vc, forKey: "contentViewController")
-//        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (UIAlertAction) in }))
-//        alert.addAction(UIAlertAction(title: "Select", style: .default, handler: {
-//        (UIAlertAction) in
-//            self.selectedRow = pickerView.selectedRow(inComponent: 0)
-//            let selected = Array(self.blood_types)[self.selectedRow]
-//            let name = selected
-//            self.selectedBloodtype = name
-//            self.bloodTypeButton.setTitle(name, for: .normal)
-//            self.bloodTypeButton.setTitleColor(UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 ), for: .normal)
-//            self.bloodTypeButton.titleLabel?.font =  .systemFont(ofSize: 14)
-//        }))
-//        self.present(alert, animated: true, completion: nil)
-//    }
-//
+    
 }
 //MARK: - Extensions
 extension addMedicalReportViewController : UIPickerViewDelegate,UIPickerViewDataSource {

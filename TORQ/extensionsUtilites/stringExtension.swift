@@ -29,15 +29,13 @@ extension String {
     var isValidSequence: Bool{
         // Validate sequence
         // ^[a-zA-Z]+(,[a-zA-Z]+)*$
-        let regxName = "^[a-zA-Z]+(\\s?[a-zA-Z]?)+(,[a-zA-Z]+\\s?[a-zA-Z]+)*$"
+        let regxName = "^[a-zA-Z]+(\\s?[a-zA-Z]?)+(,[a-zA-Z ]+\\s?[ a-zA-Z]+)*$"
         let nameTest = NSPredicate(format: "SELF MATCHES %@", regxName)
         return nameTest.evaluate(with: self)
     }
     var isValidPassword: Bool {
        // validate the password format:
-        let regxForPassword = "^(?=.*[a-z])(?=.*[0-9])(?=.*[A-Z]).{8,}$"
-        let passwordText = NSPredicate(format:"SELF MATCHES %@", regxForPassword)
-        return passwordText.evaluate(with: self)
+        return self.count >= 6
     }
     
     var isValidDomain: Bool {

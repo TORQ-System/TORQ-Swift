@@ -118,7 +118,7 @@ class addEmergencyContactViewController: UIViewController {
             self.userInfo.append(user)
             self.usrName=user.fullName
         })
-        print(usrName as Any)
+//        print(usrName as Any)
     }
    
     // should go to emergency contacts screen
@@ -168,7 +168,7 @@ class addEmergencyContactViewController: UIViewController {
             guard let dictionary = snapshot.value as? [String:Any] else { return }
             dictionary.forEach({ (key , value) in
                  self.recieverID = key
-                 print("Key \(key), value \(value)")
+//                 print("Key \(key), value \(value)")
             })
         })
         if recieverID == "" || recieverID == nil {
@@ -192,66 +192,18 @@ class addEmergencyContactViewController: UIViewController {
                             
                             if (emergencyContact.getSenderID()) == self.usrID && (emergencyContact.getPhoneNumber() == self.emergencyContactPhoneNumber.text){
                                 self.phoneNumExists = emergencyContact.getPhoneNumber()
-                                print(emergencyContact.getPhoneNumber())
-                                print(emergencyContact.getSenderID())
-                            }
-                            else {
-                                self.phoneNumExists = ""
+//                                print(emergencyContact.getPhoneNumber())
+//                                print(emergencyContact.getSenderID())
+                                errors["phoneExists"] = "Phone number have been already added"
                             }
                            
                         }
             }
-        if phoneNumExists != nil || phoneNumExists != "" {
+        if phoneNumExists != nil {
             errors["phoneExists"] = "Phone number have been already added"
-//            print("\(phoneNumExists)")
         }
         return errors
     }
-//    func checkPhone()-> Bool{
-//        var flag = false
-//        ref.child("EmergencyContact").queryOrdered(byChild: "phone").queryEqual(toValue: emergencyContactPhoneNumber.text).observeSingleEvent(of: .value, with: { snapshot in
-////                        guard let dictionary = snapshot.value as? [String:Any] else { return }
-//                        for contact in snapshot.children{
-//                            let obj = contact as! DataSnapshot
-//                            let relation = obj.childSnapshot(forPath: "relation").value as! String
-//                            let contactId = 0
-//                            let name = obj.childSnapshot(forPath: "name").value as! String
-//                            let phone = obj.childSnapshot(forPath: "phone").value as! String
-//                            let senderID = obj.childSnapshot(forPath: "sender").value as! String
-//                            let receiverID = obj.childSnapshot(forPath: "reciever").value as! String
-//                            let sent = obj.childSnapshot(forPath: "sent").value as! String
-//                            let msg = obj.childSnapshot(forPath: "msg").value as! String
-//                            //create a EC object
-//                            let emergencyContact = emergencyContact(name: name, phone_number: phone, senderID:senderID, recieverID: receiverID, sent: sent, contactID: contactId, msg: msg, relation: relation)
-//
-//                            if (emergencyContact.getReciverID()) == self.usrID && (emergencyContact.getPhoneNumber() == self.emergencyContactPhoneNumber.text){
-//                                flag = true
-//                            }
-//                            print(emergencyContact.getPhoneNumber())
-//                            print(emergencyContact.getReciverID())
-//                            self.phoneNumExists = emergencyContact.getPhoneNumber()
-//                        }
-//          let emergContact = emergencyContact(name: dictionary["name"] as! String,
-//                                              phone_number: dictionary["phone"] as! String,
-//                                            senderID: dictionary["sender"] as! String,
-//                                             recieverID: dictionary["reciever"] as! String,
-//                                            sent: dictionary["sent"] as! String,
-//                                               contactID: 0 ,
-//                                              msg: dictionary["msg"] as! String,
-//                                              relation: dictionary["relation"] as! String)
-//           self.eContact.append(emergContact)
-//           self.phoneNumExists = emergContact.phone_number
-//        print(emergContact.senderID)
-//       print(emergContact.phone_number)
-//
-//                // This means that the phone number has been already addded
-//                if self.phoneNumExists != nil || self.phoneNumExists != ""  {
-//                    flag = true
-//                }
-//            })
-//
-//        return flag
-//    }
     
     
     func goToHomeScreen() {
@@ -297,6 +249,9 @@ class addEmergencyContactViewController: UIViewController {
             
             relationTextField.setBorder(color: "error", image: UIImage(named: "relationshipError")!)
             
+            // show alert
+            showALert(message: "Please make sure you entered all fields correctly")
+            
             return
         }
         
@@ -316,11 +271,13 @@ class addEmergencyContactViewController: UIViewController {
             errorPhoneNumber.alpha = 1
             return
         }
+        // phone number is not registered in TORQ
         guard errors["phoneDNE"] == "" else {
             //handle the error
             showALert(message: errors["phoneDNE"]!)
             return
         }
+        // Phone has been added before
         guard errors["phoneExists"] == "" else {
             //handle the error
             showALert(message: errors["phoneExists"]!)
@@ -370,6 +327,7 @@ class addEmergencyContactViewController: UIViewController {
             "sent": "No",
             "reciever": recieverID!,
         ]
+        
         
         
         //4- push info to database
