@@ -128,11 +128,9 @@ extension ViewEmergencyContactViewController: UICollectionViewDataSource{
         cell.layer.shadowRadius = 70
         cell.layer.shadowOffset = CGSize(width: 5, height: 5)
         cell.layer.borderColor = CGColor(red: 0, green: 0, blue: 0, alpha: 1)
-        cell.namrLabel.text = "Name:"
         cell.name.text = "\(eContacts[indexPath.row].getName())"
-        cell.phoneLabel.text = "Phone number:"
+        cell.name.numberOfLines = 2
         cell.phone.text = "\(eContacts[indexPath.row].getPhoneNumber())"
-        cell.relationLabel.text = "Relation:"
         cell.relation.text = "\(eContacts[indexPath.row].getRelation())"
             
             cell.deleteECButton.tag = indexPath.row
@@ -151,7 +149,7 @@ extension ViewEmergencyContactViewController: UICollectionViewDataSource{
 extension ViewEmergencyContactViewController: UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 158, height: 158)
+        return CGSize(width: 165, height: 165)
     }
 
     
