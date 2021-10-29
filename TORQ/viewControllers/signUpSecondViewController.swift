@@ -17,6 +17,8 @@ class signUpSecondViewController: UIViewController {
     @IBOutlet weak var errorDOB: UILabel!
     @IBOutlet weak var progressBar: UIProgressView!
     @IBOutlet weak var textFiledsStackView: UIStackView!
+    @IBOutlet weak var percentageLabel: UILabel!
+    
     
     //MARK: - Variables
     var ref = Database.database().reference()
@@ -30,6 +32,7 @@ class signUpSecondViewController: UIViewController {
     var userNationalID: String?
     var userPhone: String?
     var completedFields: Float = 0.625
+    var numberOfCompleted: Int = 5
     var correctField: [String:Bool] = ["nationalID":false, "phone": false, "date":false]
     
     //MARK: - Constants
@@ -50,6 +53,7 @@ class signUpSecondViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        percentageLabel.text = "\(calculatePercentage())%"
         progressBar.setProgress(completedFields, animated: true)
         
         // hide the error message and add the border
@@ -70,6 +74,11 @@ class signUpSecondViewController: UIViewController {
     }
     
     //MARK: - Functions
+    func calculatePercentage() -> Int{
+        let percentage = Int((Float(numberOfCompleted)/8.0) * 100)
+        return percentage
+    }
+    
     func configureKeyboard() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         self.view!.addGestureRecognizer(tap)
@@ -318,15 +327,18 @@ class signUpSecondViewController: UIViewController {
         
         if errors["nationalID"] == "" && !correctField["nationalID"]!{
             completedFields+=0.125
+            numberOfCompleted+=1
             correctField["nationalID"]! = true
         }
         
         if errors["nationalID"] != "" && correctField["nationalID"]!{
             completedFields-=0.125
+            numberOfCompleted-=1
             correctField["nationalID"]! = false
         }
         
         progressBar.setProgress(completedFields, animated: true)
+        percentageLabel.text = "\(calculatePercentage())%"
         
         // change national ID border if national ID is not valid, and set error msg
         if  errors["nationalID"] != "" {
@@ -347,15 +359,18 @@ class signUpSecondViewController: UIViewController {
         
         if errors["phone"] == "" && !correctField["phone"]!{
             completedFields+=0.125
+            numberOfCompleted+=1
             correctField["phone"]! = true
         }
         
         if errors["phone"] != "" && correctField["date"]!{
             completedFields-=0.125
+            numberOfCompleted-=1
             correctField["phone"]! = false
         }
         
         progressBar.setProgress(completedFields, animated: true)
+        percentageLabel.text = "\(calculatePercentage())%"
         
         // change phone border if phone is not valid, and set error msg
         if  errors["phone"] != "" {
@@ -373,15 +388,18 @@ class signUpSecondViewController: UIViewController {
         let errors = validateFields()
         if errors["date"] == "" && !correctField["date"]!{
             completedFields+=0.125
+            numberOfCompleted+=1
             correctField["date"]! = true
         }
         
         if errors["date"] != "" && correctField["date"]!{
             completedFields-=0.125
+            numberOfCompleted-=1
             correctField["date"]! = false
         }
         
         progressBar.setProgress(completedFields, animated: true)
+        percentageLabel.text = "\(calculatePercentage())%"
         
         if  errors["date"] == "" {
             date.setBorder(color: "valid", image: UIImage(named: "calendarValid")!)

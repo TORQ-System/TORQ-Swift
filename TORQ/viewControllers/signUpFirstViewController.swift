@@ -15,12 +15,14 @@ class signUpFirstViewController: UIViewController {
     @IBOutlet weak var fullName: UITextField!
     @IBOutlet weak var progressBar: UIProgressView!
     @IBOutlet weak var textFieldsStackView: UIStackView!
+    @IBOutlet weak var percentageLabel: UILabel!
     
     //MARK: - Variables
     var userFullName: String?
     var userEmail: String?
     var userPassword: String?
     var completedFields: Float = 0.0
+    var numberOfCompleted: Int = 0
     var correctField: [String:Bool] = ["fullName":false, "email": false, "password":false, "confirmPass": false]
     
     //MARK: - Constants
@@ -36,7 +38,8 @@ class signUpFirstViewController: UIViewController {
         super.viewDidLoad()
         
         progressBar.setProgress(0, animated: true)
-        
+        percentageLabel.text = "\(calculatePercentage())%"
+
         // hide the error message and add the border
         errorFullName.alpha = 0
         errorConfirmPassword.alpha = 0
@@ -59,6 +62,11 @@ class signUpFirstViewController: UIViewController {
     }
     
     //MARK: - Functions
+    func calculatePercentage() -> Int{
+        let percentage = Int((Float(numberOfCompleted)/8.0) * 100)
+        return percentage
+    }
+    
     func configureKeyboard(){
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         self.view!.addGestureRecognizer(tap)
@@ -162,7 +170,7 @@ class signUpFirstViewController: UIViewController {
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let loginVC = storyboard.instantiateViewController(identifier: "loginViewController") as! loginViewController
         loginVC.modalPresentationStyle = .fullScreen
-        self.present(loginVC, animated: true, completion: nil) 
+        self.present(loginVC, animated: true, completion: nil)
     }
     
     
@@ -233,6 +241,7 @@ class signUpFirstViewController: UIViewController {
             return
         }
         progressBar.setProgress(0.5, animated: true)
+        percentageLabel.text = "\(calculatePercentage())%"
         
         // if no error is detected hide the error view
         errorFullName.alpha = 0
@@ -256,15 +265,20 @@ class signUpFirstViewController: UIViewController {
         
         if errors["fullName"] == "" && !correctField["fullName"]!{
             completedFields+=0.125
+            numberOfCompleted+=1
             correctField["fullName"]! = true
         }
         
         if errors["fullName"] != "" && correctField["fullName"]!{
             completedFields-=0.125
+            numberOfCompleted-=1
             correctField["fullName"]! = false
         }
         
+        
         progressBar.setProgress(completedFields, animated: true)
+        percentageLabel.text = "\(calculatePercentage())%"
+        
         // change full Name border if  name invalid, and set error msg
         if  errors["fullName"] != "" {
             // first name invalid
@@ -285,15 +299,18 @@ class signUpFirstViewController: UIViewController {
         
         if errors["confirmPass"] == "" && !correctField["confirmPass"]!{
             completedFields+=0.125
+            numberOfCompleted+=1
             correctField["confirmPass"]! = true
         }
         
         if errors["confirmPass"] != "" && correctField["confirmPass"]!{
             completedFields-=0.125
+            numberOfCompleted-=1
             correctField["confirmPass"]! = false
         }
         
         progressBar.setProgress(completedFields, animated: true)
+        percentageLabel.text = "\(calculatePercentage())%"
         
         // change last name border if confirm Password is invalid, and set error msg
         if  errors["confirmPass"] != "" {
@@ -314,15 +331,18 @@ class signUpFirstViewController: UIViewController {
         
         if errors["email"] == "" && !correctField["email"]!{
             completedFields+=0.125
+            numberOfCompleted+=1
             correctField["email"]! = true
         }
         
         if errors["email"] != "" && correctField["email"]!{
             completedFields-=0.125
+            numberOfCompleted-=1
             correctField["email"]! = false
         }
         
         progressBar.setProgress(completedFields, animated: true)
+        percentageLabel.text = "\(calculatePercentage())%"
         
         // change email  border if email invalid, and set error msg
         if  errors["email"] != "" {
@@ -342,16 +362,19 @@ class signUpFirstViewController: UIViewController {
         
         if errors["password"] == "" && !correctField["password"]!{
             completedFields+=0.125
+            numberOfCompleted+=1
             correctField["password"]! = true
         }
         
         if errors["password"] != "" && correctField["password"]!{
             completedFields-=0.125
+            numberOfCompleted-=1
             correctField["password"]! = false
         }
         
         progressBar.setProgress(completedFields, animated: true)
-        
+        percentageLabel.text = "\(calculatePercentage())%"
+
         if password.text == nil || password.text == "" || errors["password"] != "" {
             // password is invalid
             password.setBorder(color: "error", image: UIImage(named: "lockError")!)
@@ -372,6 +395,3 @@ extension signUpFirstViewController: UITextFieldDelegate{
         return true;
     }
 }
-
-
-

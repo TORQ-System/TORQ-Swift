@@ -1646,24 +1646,6 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="kfk-cs-xSZ">
-                                <rect key="frame" x="311.5" y="687" width="72.5" height="22"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oS8-GL-LoD">
-                                        <rect key="frame" x="0.0" y="0.0" width="72.5" height="22"/>
-                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
-                                        <color key="tintColor" red="0.83334642650000001" green="0.1910049915" blue="0.30587419869999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                        <state key="normal" title="Next  ">
-                                            <color key="titleColor" red="0.82551914449999997" green="0.19107875229999999" blue="0.30195242169999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                            <imageReference key="image" image="arrow.right" catalog="system" symbolScale="large"/>
-                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="semibold"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="goToSecondScreen:" destination="nbh-61-vrP" eventType="touchUpInside" id="8bQ-h5-OX6"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                            </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="vRd-En-L3E">
                                 <rect key="frame" x="30" y="309" width="354" height="318"/>
                                 <subviews>
@@ -1790,11 +1772,28 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TFX-0W-wG5">
-                                <rect key="frame" x="273" y="243" width="42" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="kfk-cs-xSZ">
+                                <rect key="frame" x="311.5" y="687" width="72.5" height="22"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oS8-GL-LoD">
+                                        <rect key="frame" x="0.0" y="0.0" width="72.5" height="22"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                        <color key="tintColor" red="0.83334642650000001" green="0.1910049915" blue="0.30587419869999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <state key="normal" title="Next  ">
+                                            <color key="titleColor" red="0.82551914449999997" green="0.19107875229999999" blue="0.30195242169999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <imageReference key="image" image="arrow.right" catalog="system" symbolScale="large"/>
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="semibold"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="goToSecondScreen:" destination="nbh-61-vrP" eventType="touchUpInside" id="8bQ-h5-OX6"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="50%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gZa-Qb-NsL">
+                                <rect key="frame" x="192" y="262.5" width="30" height="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -1806,10 +1805,12 @@
                             <constraint firstItem="h4a-m2-QxY" firstAttribute="top" secondItem="eda-hn-oR7" secondAttribute="bottom" constant="30" id="CGf-Cp-ML1"/>
                             <constraint firstItem="ZXK-xH-aqS" firstAttribute="bottom" secondItem="Eur-PN-GnG" secondAttribute="bottom" constant="40" id="Fao-Wv-W4s"/>
                             <constraint firstItem="kfk-cs-xSZ" firstAttribute="top" secondItem="vRd-En-L3E" secondAttribute="bottom" constant="60" id="Fzr-1z-RB9"/>
+                            <constraint firstItem="gZa-Qb-NsL" firstAttribute="centerX" secondItem="JJC-FM-1El" secondAttribute="centerX" id="HIx-5E-sSp"/>
                             <constraint firstItem="eda-hn-oR7" firstAttribute="centerX" secondItem="JJC-FM-1El" secondAttribute="centerX" id="Hug-eQ-1ak"/>
                             <constraint firstItem="vRd-En-L3E" firstAttribute="centerY" secondItem="JJC-FM-1El" secondAttribute="centerY" constant="20" id="K2r-uT-bRV"/>
                             <constraint firstItem="eda-hn-oR7" firstAttribute="top" secondItem="ZXK-xH-aqS" secondAttribute="top" constant="70" id="Q1j-bJ-KDY"/>
                             <constraint firstItem="ZXK-xH-aqS" firstAttribute="trailing" secondItem="kfk-cs-xSZ" secondAttribute="trailing" constant="30" id="QYl-hq-jBj"/>
+                            <constraint firstItem="gZa-Qb-NsL" firstAttribute="top" secondItem="h4a-m2-QxY" secondAttribute="bottom" constant="5" id="eO2-x6-42q"/>
                             <constraint firstItem="ZXK-xH-aqS" firstAttribute="trailing" secondItem="vRd-En-L3E" secondAttribute="trailing" constant="30" id="fRC-Fi-f9s"/>
                             <constraint firstItem="Eur-PN-GnG" firstAttribute="centerX" secondItem="JJC-FM-1El" secondAttribute="centerX" id="xYr-er-mLS"/>
                         </constraints>
@@ -1824,6 +1825,7 @@
                         <outlet property="fullName" destination="ZVj-Hi-LrQ" id="NDl-aR-ldf"/>
                         <outlet property="nextbutton" destination="oS8-GL-LoD" id="0Hg-QI-WDw"/>
                         <outlet property="password" destination="fNr-vQ-6a0" id="X1q-rX-aaw"/>
+                        <outlet property="percentageLabel" destination="gZa-Qb-NsL" id="Zhq-gt-4Zh"/>
                         <outlet property="progressBar" destination="h4a-m2-QxY" id="Xr6-22-E77"/>
                         <outlet property="textFieldsStackView" destination="vRd-En-L3E" id="n8i-aK-ooi"/>
                     </connections>
@@ -2026,6 +2028,12 @@
                                 <color key="progressTintColor" red="0.77647058820000003" green="0.25490196079999999" blue="0.32156862749999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <color key="trackTintColor" red="0.85257495260000005" green="0.85904539749999997" blue="0.87845673219999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </progressView>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="50%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lkw-d0-m3u">
+                                <rect key="frame" x="192" y="252.5" width="30" height="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="EcC-VW-9eS"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2033,11 +2041,13 @@
                             <constraint firstItem="27X-sY-ylR" firstAttribute="centerX" secondItem="LJB-WW-e2O" secondAttribute="centerX" id="1Fe-gq-0Fc"/>
                             <constraint firstItem="kgV-3V-FV3" firstAttribute="leading" secondItem="EcC-VW-9eS" secondAttribute="leading" constant="30" id="3LM-69-iF1"/>
                             <constraint firstItem="neB-Ev-T76" firstAttribute="leading" secondItem="EcC-VW-9eS" secondAttribute="leading" constant="30" id="6GX-8F-igX"/>
+                            <constraint firstItem="lkw-d0-m3u" firstAttribute="top" secondItem="27X-sY-ylR" secondAttribute="bottom" constant="5" id="AYm-Or-KnK"/>
                             <constraint firstItem="3UH-o0-jud" firstAttribute="top" secondItem="neB-Ev-T76" secondAttribute="bottom" constant="60" id="DRu-ZZ-qiX"/>
                             <constraint firstItem="neB-Ev-T76" firstAttribute="centerX" secondItem="LJB-WW-e2O" secondAttribute="centerX" id="GMQ-Ey-FZq"/>
                             <constraint firstItem="McA-Di-q8f" firstAttribute="centerX" secondItem="LJB-WW-e2O" secondAttribute="centerX" id="P0U-Vt-7bG"/>
                             <constraint firstItem="EcC-VW-9eS" firstAttribute="trailing" secondItem="neB-Ev-T76" secondAttribute="trailing" constant="30" id="XmT-PQ-a2M"/>
                             <constraint firstItem="EcC-VW-9eS" firstAttribute="bottom" secondItem="McA-Di-q8f" secondAttribute="bottom" constant="40" id="bd3-tE-TTb"/>
+                            <constraint firstItem="lkw-d0-m3u" firstAttribute="centerX" secondItem="LJB-WW-e2O" secondAttribute="centerX" id="cB3-HS-sJ5"/>
                             <constraint firstItem="kgV-3V-FV3" firstAttribute="top" secondItem="LJB-WW-e2O" secondAttribute="top" constant="50" id="cIp-1p-dPN"/>
                             <constraint firstItem="neB-Ev-T76" firstAttribute="centerY" secondItem="LJB-WW-e2O" secondAttribute="centerY" constant="20" id="edN-Pq-ocF"/>
                             <constraint firstItem="mXh-A2-SU3" firstAttribute="top" secondItem="LJB-WW-e2O" secondAttribute="topMargin" constant="70" id="jHa-mf-WF0"/>
@@ -2054,6 +2064,7 @@
                         <outlet property="gender" destination="Vyw-qi-XEf" id="krD-fH-nlY"/>
                         <outlet property="nationalID" destination="Rhj-o2-B1J" id="KMD-s6-5Sn"/>
                         <outlet property="nextButton" destination="mrS-CC-hjV" id="Rbt-O9-AZq"/>
+                        <outlet property="percentageLabel" destination="lkw-d0-m3u" id="rRI-i8-bh6"/>
                         <outlet property="phone" destination="wJx-1I-N74" id="rB1-ck-FeZ"/>
                         <outlet property="progressBar" destination="27X-sY-ylR" id="Vu5-gK-XiX"/>
                         <outlet property="textFiledsStackView" destination="neB-Ev-T76" id="7we-Ee-JW2"/>
