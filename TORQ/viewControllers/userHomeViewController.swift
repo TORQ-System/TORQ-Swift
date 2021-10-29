@@ -20,6 +20,7 @@ class userHomeViewController: UIViewController {
     @IBOutlet weak var vib: UILabel!
     @IBOutlet weak var coordinate: UILabel!
     @IBOutlet weak var temprature: UILabel!
+    @IBOutlet weak var lastLoggedIn: UILabel!
     
 
     //MARK: - Variables
@@ -107,13 +108,6 @@ class userHomeViewController: UIViewController {
                 DispatchQueue.main.async {
                     let celsiusTemp = (temp as! Double) - 273.15
                     let t = Measurement(value: celsiusTemp , unit: UnitTemperature.celsius)
-//                    if true {
-//
-//                    }else if{
-//
-//                    }else{
-//
-//                    }
                     self.temprature.text = "\(t)"
                     print("temp: \(celsiusTemp)")
                 }
@@ -139,8 +133,25 @@ class userHomeViewController: UIViewController {
 //                print("S\(String(describing: self.userID!))")
                 if sensorID == "S\(String(describing: self.userID!))" {
                     self.vib.text = vib
-                    self.rotation.text = y
-                    self.coordinate.text = longitude
+                    if y == "1023" {
+                        self.rotation.text = "Yes"
+
+                    }else{
+                        self.rotation.text = "No"
+
+                    }
+                    let lat = Double(latitude)!
+                    let divisor = pow(10.0, Double(6))
+                    let latt = round(lat * divisor) / divisor //rounded latitude
+                    
+                    let lon = Double(longitude)!
+                    let divisorr = pow(10.0, Double(6))
+                    let lonn = round(lon * divisorr) / divisorr //rounded longitude
+                    
+                    
+                    self.coordinate.text = "\(lonn), \(latt)"
+                    let newDate = date.replacingOccurrences(of: ":", with: "/")
+                    self.lastLoggedIn.text = "Last Logged in: \(newDate)"
                     self.sensor = Sensor(vib: vib, x: x, y: y, z: z, date: date, latitude: latitude, longitude: latitude, time: time)
                 }else{
                     print("no sensor")
