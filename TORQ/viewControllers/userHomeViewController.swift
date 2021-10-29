@@ -16,6 +16,9 @@ class userHomeViewController: UIViewController {
     @IBOutlet weak var servicesCollectionView: UICollectionView!
     @IBOutlet weak var userFullName: UILabel!
     @IBOutlet weak var medicalQR: UIImageView!
+    @IBOutlet weak var rotation: UILabel!
+    @IBOutlet weak var vib: UILabel!
+    @IBOutlet weak var coordinate: UILabel!
     
 
     //MARK: - Variables
@@ -70,21 +73,24 @@ class userHomeViewController: UIViewController {
     
     private func retrieveSensorInfo(){
         ref.child("Sensor").observe(.value) { snapshot in
-            for user in snapshot.children{
-                let obj = user as! DataSnapshot
+            for sensor in snapshot.children{
+                let obj = sensor as! DataSnapshot
                 let vib = obj.childSnapshot(forPath: "Vib").value as! String
-                let x = obj.childSnapshot(forPath: "X").value as! String
+//                let x = obj.childSnapshot(forPath: "X").value as! String
                 let y = obj.childSnapshot(forPath: "Y").value as! String
-                let z = obj.childSnapshot(forPath: "Z").value as! String
-                let date = obj.childSnapshot(forPath: "date").value as! String
-                let latitude = obj.childSnapshot(forPath: "latitude").value as! String
+//                let z = obj.childSnapshot(forPath: "Z").value as! String
+//                let date = obj.childSnapshot(forPath: "date").value as! String
+//                let latitude = obj.childSnapshot(forPath: "latitude").value as! String
                 let longitude = obj.childSnapshot(forPath: "longitude").value as! String
-                let time = obj.childSnapshot(forPath:  "time").value as! String
+//                let time = obj.childSnapshot(forPath:  "time").value as! String
                 let sensorID = obj.key
-                print("S\(String(describing: self.userID))")
-                if sensorID == "S\(String(describing: self.userID))" {
-                    
-                    
+                print("S\(String(describing: self.userID!))")
+                if sensorID == "S\(String(describing: self.userID!))" {
+                    self.vib.text = vib
+                    self.rotation.text = y
+                    self.coordinate.text = longitude
+                }else{
+                    print("no sensor")
                 }
                 
             }

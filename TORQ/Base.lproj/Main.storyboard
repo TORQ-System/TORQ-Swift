@@ -544,7 +544,7 @@
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Inclination: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yl5-co-KD5">
                                                                 <rect key="frame" x="0.0" y="0.0" width="179.5" height="20"/>
-                                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
+                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
@@ -561,7 +561,7 @@
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vib:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fq4-7n-lw4">
                                                                 <rect key="frame" x="0.0" y="0.0" width="224.5" height="19.5"/>
-                                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
+                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
@@ -578,7 +578,7 @@
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coordinates: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rDz-Fn-aQM">
                                                                 <rect key="frame" x="0.0" y="0.0" width="169.5" height="20"/>
-                                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
+                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
@@ -697,15 +697,18 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Home" image="house.fill" catalog="system" id="gah-Yc-IZH"/>
                     <connections>
+                        <outlet property="coordinate" destination="rDz-Fn-aQM" id="ERw-o5-qef"/>
                         <outlet property="imageContainer" destination="rub-MO-qAI" id="Ujc-bX-xcA"/>
                         <outlet property="medicalQR" destination="kJz-SO-Wgr" id="MjN-BH-NeL"/>
                         <outlet property="medicalReportContainer" destination="c54-iO-MPy" id="GKc-6w-jFy"/>
                         <outlet property="profileBorader" destination="Nzi-Wc-UDN" id="qBv-8C-A4z"/>
                         <outlet property="profileContainer" destination="i5o-Ub-XG2" id="C9c-61-uF3"/>
                         <outlet property="profileImage" destination="qRK-pQ-bUO" id="s1z-z3-R2V"/>
+                        <outlet property="rotation" destination="eJi-RA-EuB" id="74e-Nm-n3Z"/>
                         <outlet property="servicesCollectionView" destination="Jp8-Y1-erz" id="c3R-1C-9xD"/>
                         <outlet property="topView" destination="icU-TH-MmX" id="mHK-9S-oZh"/>
                         <outlet property="userFullName" destination="NC2-aa-A8h" id="tRB-Zd-jAO"/>
+                        <outlet property="vib" destination="5FH-JG-Ned" id="5aC-VV-2hi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PLz-kw-jPN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
