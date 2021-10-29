@@ -102,3 +102,10 @@ class resetPasswordViewController: UIViewController {
         }
     }
 }
+
+extension resetPasswordViewController: UITextFieldDelegate{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true;
+    }
+}
