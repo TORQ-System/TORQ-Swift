@@ -9,6 +9,7 @@ class loginViewController: UIViewController {
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var password: UITextField!
     @IBOutlet weak var nextbutton: UIButton!
+    @IBOutlet weak var loginButton: UIButton!
     
     //MARK: - Vraibales
     var userID: String?
@@ -29,6 +30,8 @@ class loginViewController: UIViewController {
         // setup default borders
         email.setBorder(color: "default", image: UIImage(named: "emailDefault")!)
         password.setBorder(color: "default", image: UIImage(named: "lockDefault")!)
+        //set up the corner radius of login button
+        loginButton.layer.cornerRadius = 20
     }
     
     //MARK: - Functions
