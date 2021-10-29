@@ -12,7 +12,6 @@ class requestReportViewController: UIViewController {
     
     //MARK: - @IBOutlet
     @IBOutlet weak var data_timeRE: UILabel!
-    @IBOutlet weak var Rport_loc: UILabel!
     @IBOutlet weak var name_report: UILabel!
     @IBOutlet weak var DOB: UILabel!
     @IBOutlet weak var location_report: UIButton!
@@ -42,9 +41,9 @@ class requestReportViewController: UIViewController {
        
     }
     func configureView(){
-        scroolview.layer.cornerRadius = 10
+        scroolview.layer.cornerRadius = 20
         scroolview.layer.shadowColor = UIColor.black.cgColor
-        scroolview.layer.shadowOpacity = 0.7
+        scroolview.layer.shadowOpacity = 0.5
         scroolview.layer.shadowOffset = CGSize(width: 5, height: 5)
         scroolview.layer.shadowRadius = 25
         scroolview.layer.shouldRasterize = true
@@ -154,34 +153,8 @@ class requestReportViewController: UIViewController {
             }
             
         })
-        readDatabase()
-        
     }
-    
-    func readDatabase()
-    
-    {
-        
-        //        var userName :String!
-        //        ref.child("User/\(UID)/firstName").observeSingleEvent(of: .value, with: { snapshot in  guard let value1 = snapshot.value as? String else {return}
-        //            print(value1)
-        //          userName = String(value1)
-        //                })
-        //       DOB.text = "\(userName)"
-        
-        
-        //        Database.database().reference().child("User").queryOrdered(byChild: "email")equalTo(2) { snapshot in
-        //
-        //            let object = snapshot.value as! [String: Any]
-        //    }
-        //        ref.child("User").queryOrdered(byChild: "time_stamp").observe(.childAdded) { snapshot in
-        //            let object = snapshot.value as! [String: Any]
-        //            let request = Request(user_id: object["user_id"] as! String, sensor_id: object["sensor_id"] as! String, request_id: object["request_id"] as! String, dateTime: object["time_stamp"] as! String, longitude: object["longitude"] as! String, latitude: object["latitude"] as! String, vib: object["vib"] as! String, rotation: object["rotation"] as! String, status: object["status"] as! String)
-        
-        
-        
-    }
-    
+
     @objc
     func findloc(sender:UIButton){
         print("try")

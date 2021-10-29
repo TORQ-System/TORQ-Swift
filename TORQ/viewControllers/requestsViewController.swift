@@ -25,16 +25,12 @@ class requestsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         //UI setup
         configureContainerView()
         configureCenter()
-
-        getRequests()
-
         
-        //        refrechcon.addTarget(self, action: #selector(getdata), for: .valueChanged)
-        //        requestsColletionView.addSubview(refrechcon)
-        //        requestsColletionView.refreshControl = refrechcon
+        getRequests()
     }
     
     
@@ -151,7 +147,7 @@ extension requestsViewController: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         //        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         //        let vc = storyboard.instantiateViewController(identifier: "viewLocation") as! viewLocationViewController
-          //    vc.latitude = Double(myRequests[indexPath.row].getLatitude())!
+        //    vc.latitude = Double(myRequests[indexPath.row].getLatitude())!
         //        vc.longitude = Double(myRequests[indexPath.row].getLongitude())!
         //        vc.modalPresentationStyle = .fullScreen
         //        self.present(vc, animated: true, completion: nil)
@@ -179,37 +175,39 @@ extension requestsViewController: UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "requestCell", for: indexPath) as! requestCollectionViewCell
-    
-        cell.layer.cornerRadius = 20
-        cell.layer.borderWidth = 1.0
-        cell.layer.borderColor = UIColor.red.cgColor
-        cell.layer.masksToBounds = true
-        cell.layer.shadowColor = UIColor.gray.cgColor
-        //cell.layer.shadowOffset = CGSize(width: 0, height: 0)
-        cell.layer.shadowRadius = 4
-        cell.layer.shadowOpacity = 0.9
-        cell.layer.cornerRadius = 15.0
-               cell.layer.masksToBounds = true
-               cell.layer.borderWidth = 0.0
-               
-               cell.backgroundView?.layer.shadowColor = UIColor.black.cgColor
-               cell.backgroundView?.layer.shadowRadius = 5
-               cell.backgroundView?.layer.shadowOpacity = 1
-               cell.backgroundView?.layer.shadowOffset = CGSize(width: 0, height: 0)
-
-
-//
         
-//        layer.shadowColor = UIColor.lightGray.cgColor
-//        layer.shadowOffset = CGSize(width: 0, height: 2.0)
-//        layer.shadowRadius = 6.0
-//        layer.shadowOpacity = 1.0
-//        layer.masksToBounds = false
-//        layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: contentView.layer.cornerRadius).cgPath
-//        layer.backgroundColor = UIColor.clear.cgColor
-
-
-              
+        cell.shadowDecorate()
+        
+//                cell.layer.cornerRadius = 20
+//                cell.layer.borderWidth = 1.0
+//                cell.layer.borderColor = UIColor.red.cgColor
+//                cell.layer.masksToBounds = true
+        //        cell.layer.shadowColor = UIColor.gray.cgColor
+        //        //cell.layer.shadowOffset = CGSize(width: 0, height: 0)
+        //        cell.layer.shadowRadius = 4
+        //        cell.layer.shadowOpacity = 0.9
+        //        cell.layer.cornerRadius = 15.0
+        //               cell.layer.masksToBounds = true
+        //               cell.layer.borderWidth = 0.0
+        //
+        //               cell.backgroundView?.layer.shadowColor = UIColor.black.cgColor
+        //               cell.backgroundView?.layer.shadowRadius = 5
+        //               cell.backgroundView?.layer.shadowOpacity = 1
+        //               cell.backgroundView?.layer.shadowOffset = CGSize(width: 0, height: 0)
+        
+        
+        //
+        
+        //        layer.shadowColor = UIColor.lightGray.cgColor
+        //        layer.shadowOffset = CGSize(width: 0, height: 2.0)
+        //        layer.shadowRadius = 6.0
+        //        layer.shadowOpacity = 1.0
+        //        layer.masksToBounds = false
+        //        layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: contentView.layer.cornerRadius).cgPath
+        //        layer.backgroundColor = UIColor.clear.cgColor
+        
+        
+        
         cell.name.text = "Accident #\(indexPath.row)"
         
         let date1 = "\(myRequests[indexPath.row].getDateTime())"
@@ -239,7 +237,7 @@ extension requestsViewController: UICollectionViewDataSource{
 
 extension requestsViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: 60)
+        return CGSize(width: collectionView.frame.width/1.1, height: 60)
     }
 }
 
@@ -248,3 +246,19 @@ extension StringProtocol {
     var firstCapitalized: String { return prefix(1).capitalized + dropFirst() }
 }
 
+extension UICollectionViewCell {
+    func shadowDecorate() {
+        let radius: CGFloat = 20
+        contentView.layer.cornerRadius = radius
+        contentView.layer.borderColor = UIColor.clear.cgColor
+        contentView.layer.masksToBounds = true
+        
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = CGSize(width: 1.0, height: 2.0)
+        layer.shadowRadius = 10.0
+        layer.shadowOpacity = 0.25
+        layer.masksToBounds = false
+        layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: radius).cgPath
+        layer.cornerRadius = radius
+    }
+}
