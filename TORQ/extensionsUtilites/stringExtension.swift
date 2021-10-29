@@ -3,7 +3,7 @@ import Foundation
 extension String {
    var isValidEmail: Bool {
       // validate the email format:
-      let regxForEmail = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+      let regxForEmail = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z ]{2,64}"
       let emailTest = NSPredicate(format:"SELF MATCHES %@", regxForEmail)
       return emailTest.evaluate(with: self)
    }
@@ -16,7 +16,7 @@ extension String {
    }
     var isValidName: Bool{
         // Validate Name
-        let regxName = "^[a-zA-Z]+$"
+        let regxName = "^[a-zA-Z]+[ ]+[a-zA-Z]+$"
         let nameTest = NSPredicate(format: "SELF MATCHES %@", regxName)
         return nameTest.evaluate(with: self)
     }

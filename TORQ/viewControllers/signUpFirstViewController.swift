@@ -14,7 +14,7 @@ class signUpFirstViewController: UIViewController {
     @IBOutlet weak var errorFullName: UILabel!
     @IBOutlet weak var fullName: UITextField!
     @IBOutlet weak var progressBar: UIProgressView!
-    @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var textFieldsStackView: UIStackView!
     
     //MARK: - Variables
     var userFullName: String?
@@ -78,7 +78,7 @@ class signUpFirstViewController: UIViewController {
         
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue{
             let keyboardHieght = keyboardFrame.cgRectValue.height
-            let bottomSpace = self.view.frame.height - (self.stackView.frame.origin.y + stackView.frame.height)
+            let bottomSpace = self.view.frame.height - (self.textFieldsStackView.frame.origin.y + textFieldsStackView.frame.height)
             self.view.frame.origin.y -= keyboardHieght - bottomSpace
             
         }
@@ -152,14 +152,21 @@ class signUpFirstViewController: UIViewController {
         let vc = storyboard.instantiateViewController(withIdentifier: "signUpSecondViewController") as! signUpSecondViewController
         vc.modalPresentationStyle = .fullScreen
         vc.userFirstName = userFullName
-        //        vc.userLastName = userLastName
         vc.userEmail = userEmail
         vc.userPassword = userPassword
         present(vc, animated: true, completion: nil)
     }
     
     //MARK: - @IBActions
-    // next button
+    @IBAction func goToLogin(_ sender: Any) {
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let loginVC = storyboard.instantiateViewController(identifier: "loginViewController") as! loginViewController
+        loginVC.modalPresentationStyle = .fullScreen
+        self.present(loginVC, animated: true, completion: nil) 
+    }
+    
+    
+    
     @IBAction func goToSecondScreen(_ sender: Any) {
         
         //1- validation of the fields
@@ -356,12 +363,13 @@ class signUpFirstViewController: UIViewController {
             errorPassword.alpha = 0
         }
     }
+    
 }
 
 extension signUpFirstViewController: UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.view.endEditing(true)
-        return false
+        textField.resignFirstResponder()
+        return true;
     }
 }
 

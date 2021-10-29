@@ -16,6 +16,7 @@ class signUpSecondViewController: UIViewController {
     @IBOutlet weak var errorPhone: UILabel!
     @IBOutlet weak var errorDOB: UILabel!
     @IBOutlet weak var progressBar: UIProgressView!
+    @IBOutlet weak var textFiledsStackView: UIStackView!
     
     //MARK: - Variables
     var ref = Database.database().reference()
@@ -88,7 +89,7 @@ class signUpSecondViewController: UIViewController {
         
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue{
             let keyboardHieght = keyboardFrame.cgRectValue.height
-            let bottomSpace = self.view.frame.height - (self.nextButton.frame.origin.y + nextButton.frame.height)
+            let bottomSpace = self.view.frame.height - (self.textFiledsStackView.frame.origin.y + textFiledsStackView.frame.height)
             self.view.frame.origin.y -= keyboardHieght - bottomSpace
             
         }
@@ -178,6 +179,15 @@ class signUpSecondViewController: UIViewController {
     }
     
     //MARK: - @IBActions
+    
+    @IBAction func goToLogin(_ sender: Any) {
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let loginVC = storyboard.instantiateViewController(identifier: "loginViewController") as! loginViewController
+        loginVC.modalPresentationStyle = .fullScreen
+        self.present(loginVC, animated: true, completion: nil)
+    }
+    
+    
     @IBAction func back(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
@@ -385,5 +395,10 @@ class signUpSecondViewController: UIViewController {
 extension signUpSecondViewController: UITextFieldDelegate{
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         return range.location < 10
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true;
     }
 }
