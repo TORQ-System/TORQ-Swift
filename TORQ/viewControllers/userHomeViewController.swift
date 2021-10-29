@@ -19,6 +19,7 @@ class userHomeViewController: UIViewController {
     @IBOutlet weak var rotation: UILabel!
     @IBOutlet weak var vib: UILabel!
     @IBOutlet weak var coordinate: UILabel!
+    @IBOutlet weak var temprature: UILabel!
     
 
     //MARK: - Variables
@@ -29,6 +30,8 @@ class userHomeViewController: UIViewController {
     let services = ["Medical Information","Emergency Contact","View Accidents History"]
     let center = UNUserNotificationCenter.current()
     var user: User? = nil
+    var location: [String: String] = ["lon":"","lat":""]
+    var sensor: Sensor?
 
     
     // MARK: - Overriden Functions
@@ -39,6 +42,8 @@ class userHomeViewController: UIViewController {
         fetchQueue.sync {
             retreieveUser()
             retrieveSensorInfo()
+            getTemprature()
+
         }
         configureNotification()
         registerToNotifications(userID: userID!)
@@ -71,24 +76,72 @@ class userHomeViewController: UIViewController {
     }
     
     
+    
+    private func getTemprature(){
+        let url = URL(string: "https://samples.openweathermap.org/data/2.5/weather?id=108410&appid=8604f94e4b02f8cc4277f8cdd151721d")!
+        URLSession.shared.dataTask(with: url, completionHandler: {(data, response, error) in
+            if let error = error {
+                print("error")
+                print(error.localizedDescription)
+                return
+            }
+
+            guard let httpResponse = response as? HTTPURLResponse,
+                (200...299).contains(httpResponse.statusCode) else {
+                    print("Error with the response, unexpected status code: \(String(describing: response))")
+                    return
+            }
+
+            guard let data = data else {
+                print("data")
+                print(error!.localizedDescription)
+                return
+            }
+
+            guard let dictionaryObj = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
+                print("dictionaryObj")
+                print(error!.localizedDescription)
+                return
+            }
+            if let main = dictionaryObj["main"] as? [String: Any], let temp = main["temp"] {
+                DispatchQueue.main.async {
+                    let celsiusTemp = (temp as! Double) - 273.15
+                    let t = Measurement(value: celsiusTemp , unit: UnitTemperature.celsius)
+//                    if true {
+//
+//                    }else if{
+//
+//                    }else{
+//
+//                    }
+                    self.temprature.text = "\(t)"
+                    print("temp: \(celsiusTemp)")
+                }
+            }
+            print("end")
+        }).resume()
+    }
+    
+    
     private func retrieveSensorInfo(){
         ref.child("Sensor").observe(.value) { snapshot in
             for sensor in snapshot.children{
                 let obj = sensor as! DataSnapshot
                 let vib = obj.childSnapshot(forPath: "Vib").value as! String
-//                let x = obj.childSnapshot(forPath: "X").value as! String
+                let x = obj.childSnapshot(forPath: "X").value as! String
                 let y = obj.childSnapshot(forPath: "Y").value as! String
-//                let z = obj.childSnapshot(forPath: "Z").value as! String
-//                let date = obj.childSnapshot(forPath: "date").value as! String
-//                let latitude = obj.childSnapshot(forPath: "latitude").value as! String
+                let z = obj.childSnapshot(forPath: "Z").value as! String
+                let date = obj.childSnapshot(forPath: "date").value as! String
+                let latitude = obj.childSnapshot(forPath: "latitude").value as! String
                 let longitude = obj.childSnapshot(forPath: "longitude").value as! String
-//                let time = obj.childSnapshot(forPath:  "time").value as! String
+                let time = obj.childSnapshot(forPath:  "time").value as! String
                 let sensorID = obj.key
-                print("S\(String(describing: self.userID!))")
+//                print("S\(String(describing: self.userID!))")
                 if sensorID == "S\(String(describing: self.userID!))" {
                     self.vib.text = vib
                     self.rotation.text = y
                     self.coordinate.text = longitude
+                    self.sensor = Sensor(vib: vib, x: x, y: y, z: z, date: date, latitude: latitude, longitude: latitude, time: time)
                 }else{
                     print("no sensor")
                 }
