@@ -10,13 +10,12 @@ import Firebase
 import FirebaseAuth
 import FirebaseDatabase
 
-class addMedicalReportViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class addMedicalReportViewController: UIViewController {
     
     //MARK: - @IBOutlets
        
-        @IBOutlet weak var bloodTypeButton: UIButton!
-        @IBOutlet weak var dropdownButton: UIButton!
         // MARK: - Text Fields
+        @IBOutlet weak var bloodTypeTextField: UITextField!
         @IBOutlet weak var chronicDisease: UITextField!
         @IBOutlet weak var disability: UITextField!
         @IBOutlet weak var allergy: UITextField!
@@ -29,41 +28,36 @@ class addMedicalReportViewController: UIViewController, UIPickerViewDelegate, UI
         @IBOutlet weak var errorAllergy: UILabel!
         @IBOutlet weak var errorPrescribedMedication: UILabel!
     
+        //MARK: - Variables
+        var ref = Database.database().reference()
+        var usrID = Auth.auth().currentUser?.uid
+        var userBloodType : String?
+        var selectedBloodtype : String?
+        var userChronicDisease : String?
+        var userDisability : String?
+        var userAllergy : String?
+        var userPrescribedMedication : String?
     
-    
-    //MARK: - Variables
-    var ref = Database.database().reference()
-    var usrID = Auth.auth().currentUser?.uid
-    var userBloodType : String?
-    var selectedBloodtype : String?
-    var userChronicDisease : String?
-    var userDisability : String?
-    var userAllergy : String?
-    var userPrescribedMedication : String?
-    
-    // picker view variables
-    var blood_types = [
-        "Please Select",
-        "A+",
-        "A-",
-        "B+",
-        "B-",
-        "O+",
-        "O-",
-        "AB+",
-        "AB-",
-    ]
-    let screenWidth = UIScreen.main.bounds.width-10
-    let screenHeight = UIScreen.main.bounds.height/2
-    var selectedRow = 0
+        // picker view variables
+        var blood_types = [
+            "Please Select",
+            "A+",
+            "A-",
+            "B+",
+            "B-",
+            "O+",
+            "O-",
+            "AB+",
+            "AB-",
+        ]
+        let screenWidth = UIScreen.main.bounds.width-10
+        let screenHeight = UIScreen.main.bounds.height/2
+        var selectedRow = 0
+        var pickerView = UIPickerView()
     
     //MARK: - Overriden Functions
     override func viewDidLoad() {
         super.viewDidLoad()
-       
-        // remove title from drop down button and set blood type button
-        dropdownButton.setTitle("", for: .normal)
-        bloodTypeButton.titleLabel?.font =  .systemFont(ofSize: 14)
         
         //hide error labels
         errorBloodType.alpha = 0
@@ -73,11 +67,30 @@ class addMedicalReportViewController: UIViewController, UIPickerViewDelegate, UI
         errorPrescribedMedication.alpha = 0
         
         // set borders
+        bloodTypeTextField.setBorder(color: "default", image: UIImage(named: "bloodDefault")!)
         chronicDisease.setBorder(color: "default", image: UIImage(named: "bandageDefault")!)
         disability.setBorder(color: "default", image: UIImage(named: "disabilityDefault")!)
         allergy.setBorder(color: "default", image: UIImage(named: "heartDefault")!)
         prescribedMedication.setBorder(color: "default", image: UIImage(named: "pillDefault")!)
+        
+        // set up blood type picker view
+        setUpBloodTypePickerView()
 
+    }
+    func setUpBloodTypePickerView(){
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        let btnDone = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(closePicker))
+        toolbar.setItems([btnDone], animated: true)
+        
+        bloodTypeTextField.inputView = pickerView
+        bloodTypeTextField.inputAccessoryView = toolbar
+    }
+    @objc func closePicker(){
+        bloodTypeTextField.text = blood_types[selectedRow]
+        view.endEditing(true)
     }
     // should go to medical report screen not HOME
     func goToHomeScreen() {
@@ -100,7 +113,10 @@ class addMedicalReportViewController: UIViewController, UIPickerViewDelegate, UI
         if (selectedBloodtype == "" || selectedBloodtype == "Please Select" || selectedBloodtype == nil ) && chronicDisease.text == "" && disability.text == "" && allergy.text == "" && prescribedMedication.text == "" {
             errors["Empty"] = "Please fill one of the fields or return"
         }
-
+        // CASE: user selected "Please select option "
+        if bloodTypeTextField.text == "Please Select" {
+            errors["bloodtype"] = "Please select a valid blood type"
+        }
 //        // CASE: Chronic dieses contain numbers or any unvalid characters
 //        if !chronicDisease.text!.isValidWord {
 //            errors["chronicDisease"] = "Disease cannot contain numbers or special characters"
@@ -169,12 +185,13 @@ class addMedicalReportViewController: UIViewController, UIPickerViewDelegate, UI
         let errors = validateFields()
         
         // if blood type has an error
-//        guard errors["bloodtype"] == "" else {
-//            //handle the error
-//            errorBloodType.text = errors["bloodtype"]!
-//            errorBloodType.alpha = 1
-//            return
-//        }
+        guard errors["bloodtype"] == "" else {
+            //handle the error
+            errorBloodType.text = errors["bloodtype"]!
+            bloodTypeTextField.setBorder(color: "error", image: UIImage(named: "bloodError")!)
+            errorBloodType.alpha = 1
+            return
+        }
         guard errors["Empty"] == "" else {
             return
         }
@@ -222,7 +239,7 @@ class addMedicalReportViewController: UIViewController, UIPickerViewDelegate, UI
         errorAllergy.alpha = 0
         errorPrescribedMedication.alpha = 0
         
-        //check emptiness of fields
+        //check emptiness of fields and set variables
         
 
             //CASE: empty Blood Type
@@ -231,7 +248,7 @@ class addMedicalReportViewController: UIViewController, UIPickerViewDelegate, UI
                 userBloodType = "-"
             }
             else {
-                userBloodType = selectedBloodtype
+                userBloodType = bloodTypeTextField.text
             }
             //CASE: empty chronicDisease
             if chronicDisease.text == nil || chronicDisease.text == "" {
@@ -239,7 +256,7 @@ class addMedicalReportViewController: UIViewController, UIPickerViewDelegate, UI
                 userChronicDisease = "-"
             }
             else{
-                userChronicDisease = chronicDisease.text
+                userChronicDisease = chronicDisease.text!.trimWhiteSpace()
             }
 
             // CASE: empty disability
@@ -248,7 +265,7 @@ class addMedicalReportViewController: UIViewController, UIPickerViewDelegate, UI
                 userDisability = "-"
             }
             else {
-                userDisability = disability.text
+                userDisability = disability.text!.trimWhiteSpace()
             }
         
             // CASE: empty allergy
@@ -257,7 +274,7 @@ class addMedicalReportViewController: UIViewController, UIPickerViewDelegate, UI
                 userAllergy = "-"
             }
             else {
-                userAllergy = allergy.text
+                userAllergy = allergy.text!.trimWhiteSpace()
             }
             // CASE: empty prescribed Medication
             if prescribedMedication.text == nil || prescribedMedication.text == "" {
@@ -265,10 +282,9 @@ class addMedicalReportViewController: UIViewController, UIPickerViewDelegate, UI
                 userPrescribedMedication = "-"
             }
             else {
-                userPrescribedMedication = prescribedMedication.text
+                userPrescribedMedication = prescribedMedication.text!.trimWhiteSpace()
             }
  
-        
         
         //3- create user medical report info
         let MedicalReport: [String: Any] = [
@@ -292,17 +308,16 @@ class addMedicalReportViewController: UIViewController, UIPickerViewDelegate, UI
         self.present(alert, animated: true, completion: nil)
     }
     
-    // no need since there are no validation on the blood type
-    @IBAction func bloodTypeDidEnd(_ sender: UIButton) {
+    @IBAction func bloodTypeDidEnd(_ sender: UITextField) {
         let errors = validateFields()
                if  errors["bloodtype"] != "" {
+                   bloodTypeTextField.setBorder(color: "error", image: UIImage(named: "bloodError")!)
                    errorBloodType.text = errors["bloodtype"]!
                    errorBloodType.alpha = 1
-                   bloodTypeButton.titleLabel?.font =  .systemFont(ofSize: 14)
                }
                 else {
+                    bloodTypeTextField.setBorder(color: "valid", image: UIImage(named: "bloodValid")!)
                     errorBloodType.alpha = 0
-                    bloodTypeButton.titleLabel?.font =  .systemFont(ofSize: 14)
                }
     }
     
@@ -377,37 +392,42 @@ class addMedicalReportViewController: UIViewController, UIPickerViewDelegate, UI
     
     }
     // picker view for blood type
-    @IBAction func popUpPicker(_ sender: Any) {
-        let vc = UIViewController()
-        vc.preferredContentSize = CGSize(width: screenWidth, height: screenHeight)
-        let pickerView = UIPickerView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight))
-        pickerView.dataSource = self
-        pickerView.delegate = self
-        
-        pickerView.selectRow(selectedRow, inComponent: 0, animated: false)
-        
-        vc.view.addSubview(pickerView)
-        pickerView.centerXAnchor.constraint(equalTo: vc.view.centerXAnchor).isActive = true
-        pickerView.centerYAnchor.constraint(equalTo: vc.view.centerYAnchor).isActive = true
-        
-        let alert = UIAlertController(title: "Select Blood Type", message: "", preferredStyle: .actionSheet)
-       
-        alert.popoverPresentationController?.sourceView = bloodTypeButton
-        alert.popoverPresentationController?.sourceRect = bloodTypeButton.bounds
-        alert.setValue(vc, forKey: "contentViewController")
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (UIAlertAction) in }))
-        alert.addAction(UIAlertAction(title: "Select", style: .default, handler: {
-        (UIAlertAction) in
-            self.selectedRow = pickerView.selectedRow(inComponent: 0)
-            let selected = Array(self.blood_types)[self.selectedRow]
-            let name = selected
-            self.selectedBloodtype = name
-            self.bloodTypeButton.setTitle(name, for: .normal)
-            self.bloodTypeButton.setTitleColor(UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 ), for: .normal)
-            self.bloodTypeButton.titleLabel?.font =  .systemFont(ofSize: 14)
-        }))
-        self.present(alert, animated: true, completion: nil)
-    }
+//    @IBAction func popUpPicker(_ sender: Any) {
+//        let vc = UIViewController()
+//        vc.preferredContentSize = CGSize(width: screenWidth, height: screenHeight)
+//        let pickerView = UIPickerView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight))
+//        pickerView.dataSource = self
+//        pickerView.delegate = self
+//
+//        pickerView.selectRow(selectedRow, inComponent: 0, animated: false)
+//
+//        vc.view.addSubview(pickerView)
+//        pickerView.centerXAnchor.constraint(equalTo: vc.view.centerXAnchor).isActive = true
+//        pickerView.centerYAnchor.constraint(equalTo: vc.view.centerYAnchor).isActive = true
+//
+//        let alert = UIAlertController(title: "Select Blood Type", message: "", preferredStyle: .actionSheet)
+//
+//        alert.popoverPresentationController?.sourceView = bloodTypeButton
+//        alert.popoverPresentationController?.sourceRect = bloodTypeButton.bounds
+//        alert.setValue(vc, forKey: "contentViewController")
+//        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (UIAlertAction) in }))
+//        alert.addAction(UIAlertAction(title: "Select", style: .default, handler: {
+//        (UIAlertAction) in
+//            self.selectedRow = pickerView.selectedRow(inComponent: 0)
+//            let selected = Array(self.blood_types)[self.selectedRow]
+//            let name = selected
+//            self.selectedBloodtype = name
+//            self.bloodTypeButton.setTitle(name, for: .normal)
+//            self.bloodTypeButton.setTitleColor(UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 ), for: .normal)
+//            self.bloodTypeButton.titleLabel?.font =  .systemFont(ofSize: 14)
+//        }))
+//        self.present(alert, animated: true, completion: nil)
+//    }
+//
+}
+//MARK: - Extensions
+extension addMedicalReportViewController : UIPickerViewDelegate,UIPickerViewDataSource {
+    
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 30))
         label.text = Array(blood_types)[row]
@@ -421,8 +441,12 @@ class addMedicalReportViewController: UIViewController, UIPickerViewDelegate, UI
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         blood_types.count
     }
-    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-        return 60
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        selectedRow = row
+        bloodTypeTextField.text = blood_types[row]
     }
-    
+//    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+//        return 60
+//    }
 }
+
