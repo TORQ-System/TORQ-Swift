@@ -921,12 +921,22 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lMF-6p-1Hb">
+                                <rect key="frame" x="329" y="44" width="65" height="31"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="logout"/>
+                                <connections>
+                                    <action selector="logoutPressed:" destination="O4l-kf-Hco" eventType="touchUpInside" id="e6h-x5-Zh5"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="f1B-m5-stm"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="vQL-za-Ggr" firstAttribute="top" secondItem="f74-gZ-phg" secondAttribute="bottom" constant="44.5" id="5wL-7m-N7L"/>
                             <constraint firstItem="f1B-m5-stm" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="f74-gZ-phg" secondAttribute="trailing" symbolic="YES" id="7N0-cO-3NJ"/>
+                            <constraint firstItem="lMF-6p-1Hb" firstAttribute="top" secondItem="f1B-m5-stm" secondAttribute="top" id="C4d-Ew-MXv"/>
                             <constraint firstAttribute="bottom" secondItem="vQL-za-Ggr" secondAttribute="bottom" id="Ckh-J3-9bV"/>
                             <constraint firstItem="f1B-m5-stm" firstAttribute="trailing" secondItem="vQL-za-Ggr" secondAttribute="trailing" constant="23.5" id="Fw6-tp-9O5"/>
                             <constraint firstItem="f74-gZ-phg" firstAttribute="leading" secondItem="f1B-m5-stm" secondAttribute="leading" constant="20" id="JBz-Eb-E2I"/>
@@ -938,6 +948,7 @@
                             <constraint firstItem="f74-gZ-phg" firstAttribute="top" secondItem="f1B-m5-stm" secondAttribute="top" constant="115" id="mER-qq-tpW"/>
                             <constraint firstItem="bJf-FO-PBE" firstAttribute="leading" secondItem="Puq-aQ-deg" secondAttribute="leading" id="qRb-Rt-Z4n"/>
                             <constraint firstItem="vQL-za-Ggr" firstAttribute="leading" secondItem="f1B-m5-stm" secondAttribute="leading" constant="23.5" id="whd-Ar-BtG"/>
+                            <constraint firstItem="f1B-m5-stm" firstAttribute="trailing" secondItem="lMF-6p-1Hb" secondAttribute="trailing" constant="20" id="yC6-F7-YLB"/>
                         </constraints>
                     </view>
                     <connections>

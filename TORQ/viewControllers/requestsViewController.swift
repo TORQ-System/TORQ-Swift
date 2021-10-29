@@ -1,6 +1,8 @@
 import UIKit
 import FirebaseDatabase
 import SwiftUI
+import FirebaseAuth
+
 
 class requestsViewController: UIViewController {
     
@@ -102,6 +104,13 @@ class requestsViewController: UIViewController {
         return lon
     }
     
+    func goToLoginScreen(){
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "loginViewController") as! loginViewController
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true, completion: nil)
+    }
+    
     //MARK: - objc Functions
     @objc func getdata(){
         refrechcon.endRefreshing()
@@ -133,24 +142,27 @@ class requestsViewController: UIViewController {
         self.present(vc, animated: true, completion: nil)
         
     }
-    
     //MARK: - @IBActions
     @IBAction func backbutton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func logoutPressed(_ sender: Any) {
+        do {
+            try Auth.auth().signOut()
+            let userDefault = UserDefaults.standard
+            userDefault.setValue(false, forKey: "isUserSignedIn")
+            goToLoginScreen()
+        } catch let error {
+            print (error.localizedDescription)
+        }
+    }
 }
 
 //MARK: - Extension
 extension requestsViewController: UICollectionViewDelegate{
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-        //        let vc = storyboard.instantiateViewController(identifier: "viewLocation") as! viewLocationViewController
-        //    vc.latitude = Double(myRequests[indexPath.row].getLatitude())!
-        //        vc.longitude = Double(myRequests[indexPath.row].getLongitude())!
-        //        vc.modalPresentationStyle = .fullScreen
-        //        self.present(vc, animated: true, completion: nil)
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(identifier: "requestReportViewController") as! requestReportViewController
         vc.lang = Double(myRequests[indexPath.row].getLatitude())!
@@ -178,35 +190,6 @@ extension requestsViewController: UICollectionViewDataSource{
         
         cell.shadowDecorate()
         
-//                cell.layer.cornerRadius = 20
-//                cell.layer.borderWidth = 1.0
-//                cell.layer.borderColor = UIColor.red.cgColor
-//                cell.layer.masksToBounds = true
-        //        cell.layer.shadowColor = UIColor.gray.cgColor
-        //        //cell.layer.shadowOffset = CGSize(width: 0, height: 0)
-        //        cell.layer.shadowRadius = 4
-        //        cell.layer.shadowOpacity = 0.9
-        //        cell.layer.cornerRadius = 15.0
-        //               cell.layer.masksToBounds = true
-        //               cell.layer.borderWidth = 0.0
-        //
-        //               cell.backgroundView?.layer.shadowColor = UIColor.black.cgColor
-        //               cell.backgroundView?.layer.shadowRadius = 5
-        //               cell.backgroundView?.layer.shadowOpacity = 1
-        //               cell.backgroundView?.layer.shadowOffset = CGSize(width: 0, height: 0)
-        
-        
-        //
-        
-        //        layer.shadowColor = UIColor.lightGray.cgColor
-        //        layer.shadowOffset = CGSize(width: 0, height: 2.0)
-        //        layer.shadowRadius = 6.0
-        //        layer.shadowOpacity = 1.0
-        //        layer.masksToBounds = false
-        //        layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: contentView.layer.cornerRadius).cgPath
-        //        layer.backgroundColor = UIColor.clear.cgColor
-        
-        
         
         cell.name.text = "Accident #\(indexPath.row)"
         
@@ -231,9 +214,8 @@ extension requestsViewController: UICollectionViewDataSource{
         
         return cell
     }
-    
-    
 }
+
 
 extension requestsViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -262,3 +244,4 @@ extension UICollectionViewCell {
         layer.cornerRadius = radius
     }
 }
+
