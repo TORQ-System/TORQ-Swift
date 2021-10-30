@@ -34,6 +34,7 @@
 		BEDC3C1E272682160026948E /* profileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDC3C1D272682160026948E /* profileViewController.swift */; };
 		BEDC3C20272682510026948E /* AccidentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDC3C1F272682510026948E /* AccidentsViewController.swift */; };
 		BEE76D28272D2BEC001390D2 /* ViewEmergencyContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE76D27272D2BEC001390D2 /* ViewEmergencyContactViewController.swift */; };
+		BEE76D2A272D2C52001390D2 /* ECCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE76D29272D2C52001390D2 /* ECCollectionViewCell.swift */; };
 		BEF974DE2707146300325281 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF974DD2707146300325281 /* AppDelegate.swift */; };
 		BEF974E02707146300325281 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF974DF2707146300325281 /* SceneDelegate.swift */; };
 		BEF974E52707146300325281 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEF974E32707146300325281 /* Main.storyboard */; };
@@ -104,6 +105,7 @@
 		BEDC3C1D272682160026948E /* profileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = profileViewController.swift; sourceTree = "<group>"; };
 		BEDC3C1F272682510026948E /* AccidentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccidentsViewController.swift; sourceTree = "<group>"; };
 		BEE76D27272D2BEC001390D2 /* ViewEmergencyContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewEmergencyContactViewController.swift; sourceTree = "<group>"; };
+		BEE76D29272D2C52001390D2 /* ECCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECCollectionViewCell.swift; sourceTree = "<group>"; };
 		BEF974DA2707146300325281 /* TORQ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TORQ.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEF974DD2707146300325281 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BEF974DF2707146300325281 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 			children = (
 				BE34F69C270F30B70093C633 /* requestCollectionViewCell.swift */,
 				BEDC3C172726535F0026948E /* servicesCollectionViewCell.swift */,
+				BEE76D29272D2C52001390D2 /* ECCollectionViewCell.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -547,6 +550,7 @@
 				BE64405C272C6F2B0051662F /* Sensor.swift in Sources */,
 				BEF9751827076C0800325281 /* stringExtension.swift in Sources */,
 				BE34F6A4270F32260093C633 /* SRCACenters.swift in Sources */,
+				BEE76D2A272D2C52001390D2 /* ECCollectionViewCell.swift in Sources */,
 				BEC34A2327284BCB001E99E5 /* resetPasswordViewController.swift in Sources */,
 				BE9CDAE92729F66A00CDD4B4 /* User.swift in Sources */,
 				BE34F6A2270F31FB0093C633 /* Request.swift in Sources */,
