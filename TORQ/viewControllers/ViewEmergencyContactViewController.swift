@@ -15,8 +15,14 @@ class ViewEmergencyContactViewController: UIViewController {
     
     //MARK: - Overriden function
     override func viewDidLoad() {
+        self.eContacts = []
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        showEmergencyContacts(userID: userID!)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.eContacts = []
         showEmergencyContacts(userID: userID!)
     }
     
@@ -26,49 +32,64 @@ class ViewEmergencyContactViewController: UIViewController {
         let searchQueue = DispatchQueue.init(label: "searchQueue")
         
        searchQueue.sync {
-        ref.child("EmergencyContact").observe(.value) { snapshot in
-            for contact in snapshot.children{
-                let obj = contact as! DataSnapshot
-                let relation = obj.childSnapshot(forPath: "relation").value as! String
-               // let contactId = obj.childSnapshot(forPath: "contactID").value as! Int
-                let name = obj.childSnapshot(forPath: "name").value as! String
-                let phone = obj.childSnapshot(forPath: "phone").value as! String
-                let senderID = obj.childSnapshot(forPath: "sender").value as! String
-                let receiverID = obj.childSnapshot(forPath: "reciever").value as! String
-                let sent = obj.childSnapshot(forPath: "sent").value as! String
-                let msg = obj.childSnapshot(forPath: "msg").value as! String
-                //create a EC object
-                let emergencyContact = emergencyContact(name: name, phone_number: phone, senderID:senderID, recieverID: receiverID, sent: sent, contactID: 1, msg: msg, relation: relation)
-                
-                if ( emergencyContact.getSenderID() == userID ) {
-                    self.eContacts.append(emergencyContact)
-                    self.contacts.reloadData()
-                }
-             }
+        ref.child("EmergencyContact").observe(.childAdded) { snapshot in
+            
+            let obj = snapshot.value as! [String: Any]
+            let name = obj["name"] as! String
+            let relation = obj["relation"] as! String
+            let phone = obj["phone"] as! String
+            let senderID = obj["sender"] as! String
+            let receiverID = obj["reciever"] as! String
+            let msg = obj["msg"] as! String
+            let sent = obj["sent"] as! String
+            
+            let emergencyContact = emergencyContact(name: name, phone_number: phone, senderID:senderID, recieverID: receiverID, sent: sent, contactID: 1, msg: msg, relation: relation)
+            
+            if ( emergencyContact.getSenderID() == userID ) {
+                self.eContacts.append(emergencyContact)
+                self.contacts.reloadData()
+            }
           }
        }
         print(self.eContacts)
-        
     }
     
     @IBAction func backButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
-    @objc func deletefunc(sender:UIButton){
+    
+    @objc func deletefunc(senderr:UIButton){
         print("tr")
-        let phone = "\(self.eContacts[sender.tag].getPhoneNumber())"
+        let phone = "\(self.eContacts[senderr.tag].getPhoneNumber())"
         print(phone)
-
-        self.ref.child("EmergencyContact").queryOrdered(byChild: "phone").observe(.childAdded, with: {(snapchot) in
-            if let dec = snapchot.value as? [String:Any]{
-                if (dec["phone"] as! String == phone){
-                   self.ref.child("EmergencyContact").child(snapchot.key).removeValue()
-                    self.contacts.reloadData()
-                    print(snapchot.key)
-                }
-            }
-        
-        })}
+        print(senderr.tag)
+        self.ref.child("EmergencyContact").observeSingleEvent(of: .value, with: { snapshot in
+                    for EC in snapshot.children{
+                        let obj = EC as! DataSnapshot
+                        let msg = obj.childSnapshot(forPath: "msg").value as! String
+                        let phoneNum = obj.childSnapshot(forPath: "phone").value as! String
+                        let name = obj.childSnapshot(forPath: "name").value as! String
+                        let reciever = obj.childSnapshot(forPath: "reciever").value as! String
+                        let sender = obj.childSnapshot(forPath: "sender").value as! String
+                        let relation = obj.childSnapshot(forPath: "relation").value as! String
+                        let sent = obj.childSnapshot(forPath: "sent").value as! String
+                        
+                        print("print flag: \((sender == self.userID) && (phone == phoneNum)))")
+                        if (sender == self.userID) && (phone == phoneNum) {
+                            _ = emergencyContact(name: name, phone_number: phoneNum, senderID: sender, recieverID: reciever, sent: sent, contactID: 1, msg: msg, relation: relation)
+                            //delete it from the array.
+                            self.eContacts.remove(at:senderr.tag)
+//                            self.contacts.reloadData()
+                            self.ref.child("EmergencyContact").child(obj.key).removeValue()
+                            self.contacts.reloadData()
+//                            self.dismiss(animated: true, completion: nil)
+                        }
+//                        self.contacts.reloadData()
+                    }
+//            self.contacts.reloadData()
+        })
+//        contacts.reloadData()
+    }
 }
 
 extension ViewEmergencyContactViewController: UICollectionViewDelegate{
@@ -95,7 +116,6 @@ extension ViewEmergencyContactViewController: UICollectionViewDataSource{
         
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         // get a reference to our storyboard cell
-        
         if ( eContacts.count == 0 ) {
             noAdded.alpha = 1
         } else{
@@ -115,16 +135,13 @@ extension ViewEmergencyContactViewController: UICollectionViewDataSource{
         cell.name.numberOfLines = 2
         cell.phone.text = "\(eContacts[indexPath.row].getPhoneNumber())"
         cell.relation.text = "\(eContacts[indexPath.row].getRelation())"
-            
-            cell.deleteECButton.tag = indexPath.row
-            cell.deleteECButton.addTarget(self, action: #selector(deletefunc), for: .touchUpInside)
+        cell.deleteECButton.tag = indexPath.row
+        cell.deleteECButton.addTarget(self, action: #selector(deletefunc), for: .touchUpInside)
         return cell
         }
-        
-            let add = collectionView.dequeueReusableCell(withReuseIdentifier: "add", for: indexPath as IndexPath)
-            add.layer.cornerRadius = 10
-            
-            return add
+        let add = collectionView.dequeueReusableCell(withReuseIdentifier: "add", for: indexPath as IndexPath)
+        add.layer.cornerRadius = 10
+        return add
     
 }
 }
@@ -134,8 +151,6 @@ extension ViewEmergencyContactViewController: UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 160, height: 160)
     }
-
-    
 }
 
 

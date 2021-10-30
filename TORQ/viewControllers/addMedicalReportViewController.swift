@@ -137,7 +137,7 @@ class addMedicalReportViewController: UIViewController {
        
         var errors = ["Empty":"","bloodtype":"", "chronicDisease":"","disability":"","allergy":"","prescribedMedication":"","emptyCD":"","emptyDisability":"","emptyallergy":"","emptyPM":""]
         // CASE all fields were empty
-        if (selectedBloodtype == "" || selectedBloodtype == "Please Select" || selectedBloodtype == nil ) && chronicDisease.text == "" && disability.text == "" && allergy.text == "" && prescribedMedication.text == "" {
+        if (bloodTypeTextField.text == "" || bloodTypeTextField.text == "Please Select" || bloodTypeTextField.text == nil ) && chronicDisease.text == "" && disability.text == "" && allergy.text == "" && prescribedMedication.text == "" {
             errors["Empty"] = "Please fill one of the fields or return"
         }
         // CASE: user selected "Please select option "
