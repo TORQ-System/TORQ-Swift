@@ -75,6 +75,7 @@ class requestsViewController: UIViewController {
                 
                 let request = Request(user_id:user_id, sensor_id: sensor_id, request_id: request_id, dateTime: time_stamp, longitude: lonitude, latitude:latitude , vib: vib, rotation:rotation , status: status )
                 
+                //get active requests only
                 if ( request.getStatus() == "0" ) {
                     self.requests.append(request)
                     self.nearest(longitude: request.getLongitude(), latitude: request.getLatitude(), request: request)
@@ -132,14 +133,14 @@ class requestsViewController: UIViewController {
     @objc
     func viewbutten(sender:UIButton){
         print("view")
-//        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-//        let vc = storyboard.instantiateViewController(identifier: "requestReportViewController") as! requestReportViewController
-//        vc.lang = Double(myRequests[sender.tag].getLatitude())!
-//        vc.long = Double(myRequests[sender.tag].getLongitude())!
-//        vc.time = myRequests[sender.tag].getDateTime()
-//        vc.userMedicalReportID = String(myRequests[sender.tag].getUserID())
-//        vc.modalPresentationStyle = .fullScreen
-//        self.present(vc, animated: true, completion: nil)
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(identifier: "requestReportViewController") as! requestReportViewController
+        vc.lang = Double(myRequests[sender.tag].getLatitude())!
+        vc.long = Double(myRequests[sender.tag].getLongitude())!
+        vc.time = myRequests[sender.tag].getDateTime()
+        vc.userMedicalReportID = String(myRequests[sender.tag].getUserID())
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
     }
     //MARK: - @IBActions
     
@@ -159,14 +160,14 @@ class requestsViewController: UIViewController {
 extension requestsViewController: UICollectionViewDelegate{
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-//        let vc = storyboard.instantiateViewController(identifier: "requestReportViewController") as! requestReportViewController
-//        vc.lang = Double(myRequests[indexPath.row].getLatitude())!
-//        vc.long = Double(myRequests[indexPath.row].getLongitude())!
-//        vc.time = myRequests[indexPath.row].getDateTime()
-//        vc.userMedicalReportID = String(myRequests[indexPath.row].getUserID())
-//        vc.modalPresentationStyle = .fullScreen
-//        self.present(vc, animated: true, completion: nil)
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(identifier: "requestReportViewController") as! requestReportViewController
+        vc.lang = Double(myRequests[indexPath.row].getLatitude())!
+        vc.long = Double(myRequests[indexPath.row].getLongitude())!
+        vc.time = myRequests[indexPath.row].getDateTime()
+        vc.userMedicalReportID = String(myRequests[indexPath.row].getUserID())
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
     }
     
 }
@@ -189,21 +190,20 @@ extension requestsViewController: UICollectionViewDataSource{
         
         cell.name.text = "Accident #\(indexPath.row)"
         
-        let date1 = "\(myRequests[indexPath.row].getDateTime())"
-        let find = date1.firstIndex(of: "+") ?? date1.endIndex
-        let find2 = date1[..<find]
-        let start = find2.index(find2.startIndex, offsetBy: 0)
-        let end = find2.index(find2.startIndex, offsetBy: 10)
-        let range = start...end
+        // in case
+//        let date = "\(myRequests[indexPath.row].getDateTime())"
+//        let find = date1.firstIndex(of: "+") ?? date1.endIndex
+//        let find2 = date1[..<find]
+//        let start = find2.index(find2.startIndex, offsetBy: 0)
+//        let end = find2.index(find2.startIndex, offsetBy: 10)
+//        let range = start...end
+//        let date = String(find2[range])
+//        let start1 = find2.index(find2.startIndex, offsetBy: 10)
+//        let end1 = find2.index(find2.startIndex, offsetBy:18)
+//        let range1 = start1...end1
+//        let timeStamp = String(find2[range1])
         
-        let date = String(find2[range])
-        let start1 = find2.index(find2.startIndex, offsetBy: 10)
-        let end1 = find2.index(find2.startIndex, offsetBy:18)
-        let range1 = start1...end1
-        
-        let timeStamp = String(find2[range1])
-        
-        cell.dateTime.text = "\(date), \(timeStamp) "
+        cell.dateTime.text = myRequests[indexPath.row].getDateTime()
         
         cell.viewbutten.tag = indexPath.row
         cell.viewbutten.addTarget(self, action: #selector(viewbutten(sender: )), for: .touchUpInside)
@@ -230,7 +230,6 @@ extension UICollectionViewCell {
         contentView.layer.cornerRadius = radius
         contentView.layer.borderColor = UIColor.clear.cgColor
         contentView.layer.masksToBounds = true
-        
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: 1.0, height: 2.0)
         layer.shadowRadius = 10.0

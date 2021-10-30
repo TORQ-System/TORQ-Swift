@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		3DDC91A2940F7463283FBFE6 /* Pods_TORQ_TORQUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 404C9ACD593D6364A24EFF38 /* Pods_TORQ_TORQUITests.framework */; };
 		8FA67A0F52162B410B79BAF0 /* Pods_TORQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9EC7D60F5128DCF29B3517 /* Pods_TORQ.framework */; };
+		BE04B6D2272DA7B700EEE3EE /* requestReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE04B6D1272DA7B700EEE3EE /* requestReportViewController.swift */; };
+		BE04B6D4272DAA0600EEE3EE /* hospitalsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE04B6D3272DAA0600EEE3EE /* hospitalsViewController.swift */; };
 		BE34F69D270F30B70093C633 /* requestCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE34F69C270F30B70093C633 /* requestCollectionViewCell.swift */; };
 		BE34F69F270F31A00093C633 /* requestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE34F69E270F31A00093C633 /* requestsViewController.swift */; };
 		BE34F6A2270F31FB0093C633 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE34F6A1270F31FB0093C633 /* Request.swift */; };
@@ -81,6 +83,8 @@
 		404C9ACD593D6364A24EFF38 /* Pods_TORQ_TORQUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TORQ_TORQUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9850D36D8AB92301B2DFBE7D /* Pods-TORQ-TORQUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TORQ-TORQUITests.debug.xcconfig"; path = "Target Support Files/Pods-TORQ-TORQUITests/Pods-TORQ-TORQUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		9F0737DF72CCC79CA95FDC8D /* Pods-TORQ.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TORQ.debug.xcconfig"; path = "Target Support Files/Pods-TORQ/Pods-TORQ.debug.xcconfig"; sourceTree = "<group>"; };
+		BE04B6D1272DA7B700EEE3EE /* requestReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = requestReportViewController.swift; sourceTree = "<group>"; };
+		BE04B6D3272DAA0600EEE3EE /* hospitalsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = hospitalsViewController.swift; sourceTree = "<group>"; };
 		BE34F69C270F30B70093C633 /* requestCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = requestCollectionViewCell.swift; sourceTree = "<group>"; };
 		BE34F69E270F31A00093C633 /* requestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = requestsViewController.swift; sourceTree = "<group>"; };
 		BE34F6A1270F31FB0093C633 /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
@@ -295,6 +299,8 @@
 				BE64405D272CBD080051662F /* addMedicalReportViewController.swift */,
 				BEE76D27272D2BEC001390D2 /* ViewEmergencyContactViewController.swift */,
 				BEE76D2B272D3139001390D2 /* addEmergencyContactViewController.swift */,
+				BE04B6D1272DA7B700EEE3EE /* requestReportViewController.swift */,
+				BE04B6D3272DAA0600EEE3EE /* hospitalsViewController.swift */,
 			);
 			path = viewControllers;
 			sourceTree = "<group>";
@@ -558,6 +564,7 @@
 				BE9CDAE92729F66A00CDD4B4 /* User.swift in Sources */,
 				BE34F6A2270F31FB0093C633 /* Request.swift in Sources */,
 				BEDC3C18272653610026948E /* servicesCollectionViewCell.swift in Sources */,
+				BE04B6D2272DA7B700EEE3EE /* requestReportViewController.swift in Sources */,
 				BE64405E272CBD080051662F /* addMedicalReportViewController.swift in Sources */,
 				BEF9751B2707D63A00325281 /* dateExtension.swift in Sources */,
 				BEDC3C1C272681F40026948E /* notificationCenterViewController.swift in Sources */,
@@ -566,6 +573,7 @@
 				BE34F69D270F30B70093C633 /* requestCollectionViewCell.swift in Sources */,
 				BE34F6AF27118A9E0093C633 /* onboardingScreen3ViewController.swift in Sources */,
 				BEC34A252728710C001E99E5 /* emergencyContact.swift in Sources */,
+				BE04B6D4272DAA0600EEE3EE /* hospitalsViewController.swift in Sources */,
 				BEDC3C1A272681AE0026948E /* tabBarController.swift in Sources */,
 				BEDC3C20272682510026948E /* AccidentsViewController.swift in Sources */,
 				BEE76D28272D2BEC001390D2 /* ViewEmergencyContactViewController.swift in Sources */,
