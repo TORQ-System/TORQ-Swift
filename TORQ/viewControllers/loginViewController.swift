@@ -93,8 +93,8 @@ class loginViewController: UIViewController {
     
     func goToParamedicHome(){
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "paramedicHomeViewController") as! paramedicHomeViewController
-        vc.loggedinEmail = email.text
+        let vc = storyboard.instantiateViewController(withIdentifier: "requestsViewController") as! requestsViewController
+        vc.loggedInCenterEmail = email.text
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
         
