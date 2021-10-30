@@ -44,6 +44,16 @@ class viewMedicalReportViewController: UIViewController {
         retrieveMedicalReport()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        retrieveMedicalReport()
+    }
+        
     
     //MARK: - Functions
     private func configureLayout(){
@@ -72,6 +82,7 @@ class viewMedicalReportViewController: UIViewController {
         self.subHeading.text = "This is a generated Medical Report of \(self.user!.getFullName()) by TORQ"
     }
     
+    
     private func retrieveMedicalReport(){
         ref.child("MedicalReport").observe(.value) { snapshot in
             print(snapshot.value!)
@@ -93,6 +104,8 @@ class viewMedicalReportViewController: UIViewController {
                     self.diseases.text = "Chronic Disease: \(report.getDiseases())"
                     self.disabilities.text = "Disabilities: \(report.getDisabilities())"
                     self.medication.text = "Prescribed Medication: \(report.getMedications())"
+                    self.addMedicalReport.isEnabled = false
+                    
                 }
             }
             if self.medicalReport == nil {
@@ -100,6 +113,7 @@ class viewMedicalReportViewController: UIViewController {
                 self.medicalStackView.isHidden = true
                 self.notAvailable.alpha = 1
                 self.deleteMedicalReport.isEnabled = false
+                self.addMedicalReport.isEnabled = true
             }
             print("printing Report: \(String(describing: self.medicalReport))")
         }
@@ -130,10 +144,11 @@ class viewMedicalReportViewController: UIViewController {
     }
     
     @IBAction func addMedicalReport(_ sender: Any) {
-        //        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-        //        let addVC = storyboard.instantiateViewController(identifier: "addMedicalReportViewController") as! addMedicalReportViewController
-        //        addVC.userID = userID
-        //        self.present(addVC, animated: true, completion: nil)
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let addVC = storyboard.instantiateViewController(identifier: "addMedicalReportViewController") as! addMedicalReportViewController
+        addVC.modalPresentationStyle = .fullScreen
+        addVC.user = user
+        self.present(addVC, animated: true, completion: nil)
     }
     
     @IBAction func deleteMedicalReport(_ sender: Any) {
