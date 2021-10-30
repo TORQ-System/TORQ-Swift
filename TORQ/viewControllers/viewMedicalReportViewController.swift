@@ -45,12 +45,8 @@ class viewMedicalReportViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+        super.viewWillAppear(true)
+        configureLayout()
         retrieveMedicalReport()
     }
         
@@ -99,21 +95,27 @@ class viewMedicalReportViewController: UIViewController {
                 
                 if report.getUserID() == self.userID {
                     self.medicalReport = report
-                    self.bloodType.text = "Blood Type: \(report.getBloodType())"
-                    self.allergies.text = "Allergies: \(report.getAllergies())"
-                    self.diseases.text = "Chronic Disease: \(report.getDiseases())"
-                    self.disabilities.text = "Disabilities: \(report.getDisabilities())"
-                    self.medication.text = "Prescribed Medication: \(report.getMedications())"
-                    self.addMedicalReport.isEnabled = false
-                    
+                    DispatchQueue.main.async {
+                        self.bloodType.text = "Blood Type: \(report.getBloodType())"
+                        self.allergies.text = "Allergies: \(report.getAllergies())"
+                        self.diseases.text = "Chronic Disease: \(report.getDiseases())"
+                        self.disabilities.text = "Disabilities: \(report.getDisabilities())"
+                        self.medication.text = "Prescribed Medication: \(report.getMedications())"
+                        self.addMedicalReport.isEnabled = false
+                        self.deleteMedicalReport.isEnabled = true
+                        self.medicalStackView.isHidden = false
+                        self.notAvailable.alpha = 0
+                    }
                 }
             }
             if self.medicalReport == nil {
                 // The user have no Medical Report
-                self.medicalStackView.isHidden = true
-                self.notAvailable.alpha = 1
-                self.deleteMedicalReport.isEnabled = false
-                self.addMedicalReport.isEnabled = true
+                DispatchQueue.main.async {
+                    self.medicalStackView.isHidden = true
+                    self.notAvailable.alpha = 1
+                    self.deleteMedicalReport.isEnabled = false
+                    self.addMedicalReport.isEnabled = true
+                }
             }
             print("printing Report: \(String(describing: self.medicalReport))")
         }
@@ -146,26 +148,28 @@ class viewMedicalReportViewController: UIViewController {
     @IBAction func addMedicalReport(_ sender: Any) {
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let addVC = storyboard.instantiateViewController(identifier: "addMedicalReportViewController") as! addMedicalReportViewController
+        addVC.usrID = userID
         addVC.modalPresentationStyle = .fullScreen
-        addVC.user = user
         self.present(addVC, animated: true, completion: nil)
     }
     
     @IBAction func deleteMedicalReport(_ sender: Any) {
         let alertView = SCLAlertView(appearance: self.apperance)
         alertView.addButton("Delete", backgroundColor: self.redUIColor){
-            self.ref.child("MedicalReport").queryOrdered(byChild:"user_id").observe(.childAdded, with: {(snapshot) in
-                if let dec = snapshot.value as? [String :Any]{
-                    if (dec["user_id"] as! String == self.userID!){
-                        self.ref.child("MedicalReport").child(snapshot.key).removeValue()
+            self.ref.child("MedicalReport").observeSingleEvent(of: .value, with: { snapshot in
+                for MR in snapshot.children{
+                    let obj = MR as! DataSnapshot
+                    let user_id = obj.childSnapshot(forPath: "user_id").value as! String
+                    if user_id == self.userID {
+                        self.ref.child("MedicalReport").child(obj.key).removeValue()
                         self.dismiss(animated: true, completion: nil)
                     }
                 }
             })
         }
         alertView.showCustom("Are you sure?", subTitle: "We will delete your entire medical report", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Cancel", circleIconImage: UIImage(named: "warning"), animationStyle: SCLAnimationStyle.topToBottom)
+        print("end")
     }
-    
 }
 
 //MARK: - Extensions

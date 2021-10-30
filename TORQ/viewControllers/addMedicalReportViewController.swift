@@ -6,26 +6,29 @@ import FirebaseDatabase
 class addMedicalReportViewController: UIViewController {
     
     //MARK: - @IBOutlets
-    @IBOutlet weak var bloodTypeTextField: UITextField!
-    @IBOutlet weak var chronicDisease: UITextField!
-    @IBOutlet weak var disability: UITextField!
-    @IBOutlet weak var allergy: UITextField!
-    @IBOutlet weak var prescribedMedication: UITextField!
-    @IBOutlet weak var errorBloodType: UILabel!
-    @IBOutlet weak var errorChronicDisease: UILabel!
-    @IBOutlet weak var errorDisability: UILabel!
-    @IBOutlet weak var errorAllergy: UILabel!
-    @IBOutlet weak var errorPrescribedMedication: UILabel!
+        @IBOutlet weak var bloodTypeTextField: UITextField!
+        @IBOutlet weak var chronicDisease: UITextField!
+        @IBOutlet weak var disability: UITextField!
+        @IBOutlet weak var allergy: UITextField!
+        @IBOutlet weak var prescribedMedication: UITextField!
+        @IBOutlet weak var errorBloodType: UILabel!
+        @IBOutlet weak var errorChronicDisease: UILabel!
+        @IBOutlet weak var errorDisability: UILabel!
+        @IBOutlet weak var errorAllergy: UILabel!
+        @IBOutlet weak var errorPrescribedMedication: UILabel!
+        @IBOutlet weak var addButton: UIButton!
+        @IBOutlet weak var stackView: UIStackView!
     
         //MARK: - Variables
         var ref = Database.database().reference()
-        var usrID = Auth.auth().currentUser?.uid
+        var usrID: String?
         var userBloodType : String?
         var selectedBloodtype : String?
         var userChronicDisease : String?
         var userDisability : String?
         var userAllergy : String?
         var userPrescribedMedication : String?
+    
         // picker view variables
         var blood_types = [
             "Please Select",
@@ -42,7 +45,6 @@ class addMedicalReportViewController: UIViewController {
         let screenHeight = UIScreen.main.bounds.height/2
         var selectedRow = 0
         var pickerView = UIPickerView()
-    var user: User?
     
     //MARK: - Overriden Functions
     override func viewDidLoad() {
@@ -64,11 +66,40 @@ class addMedicalReportViewController: UIViewController {
         
         // set up blood type picker view
         setUpBloodTypePickerView()
-
+        configureKeyboard()
     }
     
+    //MARK: - Overriden Functions
     
-    //MARK: - Functions
+    func configureKeyboard(){
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        self.view!.addGestureRecognizer(tap)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardwillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc func hideKeyboard(){
+        self.view.endEditing(true)
+    }
+    
+    @objc func keyboardwillShow(notification: NSNotification){
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue{
+            let keyboardHieght = keyboardFrame.cgRectValue.height
+            let bottomSpace = self.view.frame.height - (self.addButton.frame.origin.y + addButton.frame.height + 20)
+            self.view.frame.origin.y -= keyboardHieght - bottomSpace
+            
+        }
+        
+    }
+    
+    @objc func keyboardWillHide(){
+        self.view.frame.origin.y = 0
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
     
     func setUpBloodTypePickerView(){
         pickerView.delegate = self
@@ -81,35 +112,26 @@ class addMedicalReportViewController: UIViewController {
         bloodTypeTextField.inputView = pickerView
         bloodTypeTextField.inputAccessoryView = toolbar
     }
-    
     @objc func closePicker(){
         bloodTypeTextField.text = blood_types[selectedRow]
         view.endEditing(true)
     }
-    
     // should go to medical report screen not HOME
     func goToHomeScreen() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "viewMedicalReportViewController") as! viewMedicalReportViewController
-        vc.userID = self.usrID
-        vc.user = user
-        vc.modalPresentationStyle = .fullScreen
-        vc.modalTransitionStyle = .flipHorizontal
-        present(vc, animated: true, completion: nil)
-//        let last = navigationController?.popViewController(animated: true) as! viewMedicalReportViewController
-//        let n = self.navigationController?.viewControllers.count ?? 0
-//        let last = self.navigationController?.viewControllers[1] as! viewMedicalReportViewController
-//        dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
-    
+    // should go to medical report screen not HOME
+    @IBAction func back(_ sender:Any){
+        dismiss(animated: true, completion: nil)
+    }
     func showALert(message:String){
         //show alert based on the message that is being paased as parameter
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: "Ok", style: .default)
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
+        
     }
-    
     // validate form entries
     func validateFields() -> [String: String] {
        
@@ -185,13 +207,6 @@ class addMedicalReportViewController: UIViewController {
        
         return errors
     }
-    
-    
-    // should go to medical report screen not HOME
-    @IBAction func back(_ sender:Any){
-        dismiss(animated: true, completion: nil)
-    }
-
     // go to medical report screen after success addition
     @IBAction func goToMedicalReportScreen(_ sender: Any) {
         let errors = validateFields()
@@ -352,7 +367,6 @@ class addMedicalReportViewController: UIViewController {
                }
     
     }
-    
     @IBAction func disabilityEditingChanged(_ sender: UITextField) {
         let errors = validateFields()
                 // change disability border if disability is invalid, and set error msg
@@ -371,7 +385,6 @@ class addMedicalReportViewController: UIViewController {
                }
    
     }
-    
     @IBAction func allergyEditingChanged(_ sender: UITextField) {
         let errors = validateFields()
                 // change allergy border if allergy is invalid, and set error msg
@@ -404,6 +417,7 @@ class addMedicalReportViewController: UIViewController {
                     prescribedMedication.setBorder(color: "valid", image: UIImage(named: "pillValid")!)
                     errorPrescribedMedication.alpha = 0
                }
+    
     }
     
 }
@@ -427,9 +441,6 @@ extension addMedicalReportViewController : UIPickerViewDelegate,UIPickerViewData
         selectedRow = row
         bloodTypeTextField.text = blood_types[row]
     }
-//    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-//        return 60
-//    }
 }
 
 extension addMedicalReportViewController: UITextFieldDelegate{
