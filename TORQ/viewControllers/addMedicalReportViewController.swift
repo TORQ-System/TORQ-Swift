@@ -2,49 +2,64 @@ import UIKit
 import Firebase
 import FirebaseAuth
 import FirebaseDatabase
+import SCLAlertView
 
 class addMedicalReportViewController: UIViewController {
     
     //MARK: - @IBOutlets
-        @IBOutlet weak var bloodTypeTextField: UITextField!
-        @IBOutlet weak var chronicDisease: UITextField!
-        @IBOutlet weak var disability: UITextField!
-        @IBOutlet weak var allergy: UITextField!
-        @IBOutlet weak var prescribedMedication: UITextField!
-        @IBOutlet weak var errorBloodType: UILabel!
-        @IBOutlet weak var errorChronicDisease: UILabel!
-        @IBOutlet weak var errorDisability: UILabel!
-        @IBOutlet weak var errorAllergy: UILabel!
-        @IBOutlet weak var errorPrescribedMedication: UILabel!
-        @IBOutlet weak var addButton: UIButton!
-        @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var bloodTypeTextField: UITextField!
+    @IBOutlet weak var chronicDisease: UITextField!
+    @IBOutlet weak var disability: UITextField!
+    @IBOutlet weak var allergy: UITextField!
+    @IBOutlet weak var prescribedMedication: UITextField!
+    @IBOutlet weak var errorBloodType: UILabel!
+    @IBOutlet weak var errorChronicDisease: UILabel!
+    @IBOutlet weak var errorDisability: UILabel!
+    @IBOutlet weak var errorAllergy: UILabel!
+    @IBOutlet weak var errorPrescribedMedication: UILabel!
+    @IBOutlet weak var addButton: UIButton!
+    @IBOutlet weak var stackView: UIStackView!
     
-        //MARK: - Variables
-        var ref = Database.database().reference()
-        var usrID: String?
-        var userBloodType : String?
-        var selectedBloodtype : String?
-        var userChronicDisease : String?
-        var userDisability : String?
-        var userAllergy : String?
-        var userPrescribedMedication : String?
+    //MARK: - Variables
+    var ref = Database.database().reference()
+    var usrID: String?
+    var userBloodType : String?
+    var selectedBloodtype : String?
+    var userChronicDisease : String?
+    var userDisability : String?
+    var userAllergy : String?
+    var userPrescribedMedication : String?
     
-        // picker view variables
-        var blood_types = [
-            "Please Select",
-            "A+",
-            "A-",
-            "B+",
-            "B-",
-            "O+",
-            "O-",
-            "AB+",
-            "AB-",
-        ]
-        let screenWidth = UIScreen.main.bounds.width-10
-        let screenHeight = UIScreen.main.bounds.height/2
-        var selectedRow = 0
-        var pickerView = UIPickerView()
+    //MARK: - Constants
+    let redUIColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
+    let blueUIColor = UIColor( red: 49/255, green: 90/255, blue:149/255, alpha: 1.0 )
+    let alertErrorIcon = UIImage(named: "errorIcon")
+    let alertSuccessIcon = UIImage(named: "successIcon")
+    let apperanceWithoutClose = SCLAlertView.SCLAppearance(
+        showCloseButton: false,
+        contentViewCornerRadius: 15,
+        buttonCornerRadius: 7)
+    let apperance = SCLAlertView.SCLAppearance(
+        contentViewCornerRadius: 15,
+        buttonCornerRadius: 7,
+        hideWhenBackgroundViewIsTapped: true)
+    
+    // picker view variables
+    var blood_types = [
+        "Please Select",
+        "A+",
+        "A-",
+        "B+",
+        "B-",
+        "O+",
+        "O-",
+        "AB+",
+        "AB-",
+    ]
+    let screenWidth = UIScreen.main.bounds.width-10
+    let screenHeight = UIScreen.main.bounds.height/2
+    var selectedRow = 0
+    var pickerView = UIPickerView()
     
     //MARK: - Overriden Functions
     override func viewDidLoad() {
@@ -124,17 +139,10 @@ class addMedicalReportViewController: UIViewController {
     @IBAction func back(_ sender:Any){
         dismiss(animated: true, completion: nil)
     }
-    func showALert(message:String){
-        //show alert based on the message that is being paased as parameter
-        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-        let action = UIAlertAction(title: "Ok", style: .default)
-        alert.addAction(action)
-        present(alert, animated: true, completion: nil)
-        
-    }
+    
     // validate form entries
     func validateFields() -> [String: String] {
-       
+        
         var errors = ["Empty":"","bloodtype":"", "chronicDisease":"","disability":"","allergy":"","prescribedMedication":"","emptyCD":"","emptyDisability":"","emptyallergy":"","emptyPM":""]
         // CASE all fields were empty
         if (bloodTypeTextField.text == "" || bloodTypeTextField.text == "Please Select" || bloodTypeTextField.text == nil ) && chronicDisease.text == "" && disability.text == "" && allergy.text == "" && prescribedMedication.text == "" {
@@ -144,10 +152,10 @@ class addMedicalReportViewController: UIViewController {
         if bloodTypeTextField.text == "Please Select" {
             errors["bloodtype"] = "Please select a valid blood type"
         }
-//        // CASE: Chronic dieses contain numbers or any unvalid characters
-//        if !chronicDisease.text!.isValidWord {
-//            errors["chronicDisease"] = "Disease cannot contain numbers or special characters"
-//        }
+        //        // CASE: Chronic dieses contain numbers or any unvalid characters
+        //        if !chronicDisease.text!.isValidWord {
+        //            errors["chronicDisease"] = "Disease cannot contain numbers or special characters"
+        //        }
         // since there are no chronic disease less than 2 characters
         if chronicDisease.text!.count == 1 {
             errors["chronicDisease"] = "Chronic Disease must be greater than two characters"
@@ -160,10 +168,10 @@ class addMedicalReportViewController: UIViewController {
             errors["emptyCD"] = "Empty Chronic Disease"
         }
         
-//        // CASE: Disability contain numbers or any unvalid characters
-//        if !disability.text!.isValidWord {
-//            errors["disability"] = "Disabilities cannot contain numbers"
-//        }
+        //        // CASE: Disability contain numbers or any unvalid characters
+        //        if !disability.text!.isValidWord {
+        //            errors["disability"] = "Disabilities cannot contain numbers"
+        //        }
         // since there are no Disability less than 2 characters
         if disability.text!.count == 1{
             errors["disability"] = "Disabilities must be greater than two characters"
@@ -175,10 +183,10 @@ class addMedicalReportViewController: UIViewController {
             errors["emptyDisability"] = "Empty Disability"
         }
         
-//        // CASE: Allergy contain numbers or any unvalid characters
-//        if !allergy.text!.isValidWord {
-//            errors["allergy"] = "Allergies cannot contain numbers"
-//        }
+        //        // CASE: Allergy contain numbers or any unvalid characters
+        //        if !allergy.text!.isValidWord {
+        //            errors["allergy"] = "Allergies cannot contain numbers"
+        //        }
         // since there are no allergies less than 2 characters
         if allergy.text!.count == 1{
             errors["allergy"] = "Allergies must be greater than two characters"
@@ -190,10 +198,10 @@ class addMedicalReportViewController: UIViewController {
             errors["emptyallergy"] = "Empty Allergy"
         }
         
-//        // CASE: prescribed Medication contain numbers or any unvalid characters
-//        if !prescribedMedication.text!.isValidWord {
-//            errors["prescribedMedication"] = "Prescribed medication cannot contain numbers"
-//        }
+        //        // CASE: prescribed Medication contain numbers or any unvalid characters
+        //        if !prescribedMedication.text!.isValidWord {
+        //            errors["prescribedMedication"] = "Prescribed medication cannot contain numbers"
+        //        }
         // since there are no prescribed Medications less than 2 characters
         if prescribedMedication.text!.count == 1{
             errors["prescribedMedication"] = "Medication must be greater than two characters"
@@ -204,7 +212,7 @@ class addMedicalReportViewController: UIViewController {
         else if prescribedMedication.text == nil || prescribedMedication.text == "" {
             errors["emptyPM"] = "Empty Prescribed Medication"
         }
-       
+        
         return errors
     }
     // go to medical report screen after success addition
@@ -220,7 +228,7 @@ class addMedicalReportViewController: UIViewController {
             return
         }
         guard errors["Empty"] == "" else {
-            showALert(message: "Please make sure you entered all fields correctly")
+            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "Please make sure you entered all fields correctly", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
             return
         }
         // if Chronic Disease has an error
@@ -269,50 +277,50 @@ class addMedicalReportViewController: UIViewController {
         
         //check emptiness of fields and set variables
         
-
-            //CASE: empty Blood Type
-            if bloodTypeTextField.text == nil || bloodTypeTextField.text == ""  {
-                // not mandatory then set it to empty
-                userBloodType = "-"
-            }
-            else {
-                userBloodType = bloodTypeTextField.text
-            }
-            //CASE: empty chronicDisease
-            if chronicDisease.text == nil || chronicDisease.text == "" {
-                // not mandatory then set it to empty
-                userChronicDisease = "-"
-            }
-            else{
-                userChronicDisease = chronicDisease.text!.trimWhiteSpace()
-            }
-
-            // CASE: empty disability
-            if disability.text == nil || disability.text == "" {
-                // not mandatory then set it to empty
-                userDisability = "-"
-            }
-            else {
-                userDisability = disability.text!.trimWhiteSpace()
-            }
         
-            // CASE: empty allergy
-            if allergy.text == nil || allergy.text == "" {
-                // not mandatory then set it to empty
-                userAllergy = "-"
-            }
-            else {
-                userAllergy = allergy.text!.trimWhiteSpace()
-            }
-            // CASE: empty prescribed Medication
-            if prescribedMedication.text == nil || prescribedMedication.text == "" {
-                // not mandatory then set it to empty
-                userPrescribedMedication = "-"
-            }
-            else {
-                userPrescribedMedication = prescribedMedication.text!.trimWhiteSpace()
-            }
- 
+        //CASE: empty Blood Type
+        if bloodTypeTextField.text == nil || bloodTypeTextField.text == ""  {
+            // not mandatory then set it to empty
+            userBloodType = "-"
+        }
+        else {
+            userBloodType = bloodTypeTextField.text
+        }
+        //CASE: empty chronicDisease
+        if chronicDisease.text == nil || chronicDisease.text == "" {
+            // not mandatory then set it to empty
+            userChronicDisease = "-"
+        }
+        else{
+            userChronicDisease = chronicDisease.text!.trimWhiteSpace()
+        }
+        
+        // CASE: empty disability
+        if disability.text == nil || disability.text == "" {
+            // not mandatory then set it to empty
+            userDisability = "-"
+        }
+        else {
+            userDisability = disability.text!.trimWhiteSpace()
+        }
+        
+        // CASE: empty allergy
+        if allergy.text == nil || allergy.text == "" {
+            // not mandatory then set it to empty
+            userAllergy = "-"
+        }
+        else {
+            userAllergy = allergy.text!.trimWhiteSpace()
+        }
+        // CASE: empty prescribed Medication
+        if prescribedMedication.text == nil || prescribedMedication.text == "" {
+            // not mandatory then set it to empty
+            userPrescribedMedication = "-"
+        }
+        else {
+            userPrescribedMedication = prescribedMedication.text!.trimWhiteSpace()
+        }
+        
         
         //3- create user medical report info
         let MedicalReport: [String: Any] = [
@@ -328,96 +336,96 @@ class addMedicalReportViewController: UIViewController {
         self.ref.child("MedicalReport").childByAutoId().setValue(MedicalReport)
         
         //5- alert of success
-        let alert = UIAlertController(title: "Medical Report is Updated!", message: "you can delete it anytime from your medical report page", preferredStyle: .actionSheet)
-        let acceptAction = UIAlertAction(title: "OK", style: .default) { (_) -> Void in
+        let alertView = SCLAlertView(appearance: self.apperanceWithoutClose)
+        
+        alertView.addButton("Got it!", backgroundColor: self.blueUIColor){
             self.goToHomeScreen()
         }
-        alert.addAction(acceptAction)
-        self.present(alert, animated: true, completion: nil)
+        alertView.showCustom("Medical Report is Updated!", subTitle: "You can delete it anytime from your medical report page.", color: self.blueUIColor, icon: self.alertSuccessIcon!, animationStyle: SCLAnimationStyle.topToBottom)
     }
     
     @IBAction func bloodTypeDidEnd(_ sender: UITextField) {
         let errors = validateFields()
-               if  errors["bloodtype"] != "" {
-                   bloodTypeTextField.setBorder(color: "error", image: UIImage(named: "bloodError")!)
-                   errorBloodType.text = errors["bloodtype"]!
-                   errorBloodType.alpha = 1
-               }
-                else {
-                    bloodTypeTextField.setBorder(color: "valid", image: UIImage(named: "bloodValid")!)
-                    errorBloodType.alpha = 0
-               }
+        if  errors["bloodtype"] != "" {
+            bloodTypeTextField.setBorder(color: "error", image: UIImage(named: "bloodError")!)
+            errorBloodType.text = errors["bloodtype"]!
+            errorBloodType.alpha = 1
+        }
+        else {
+            bloodTypeTextField.setBorder(color: "valid", image: UIImage(named: "bloodValid")!)
+            errorBloodType.alpha = 0
+        }
     }
     
     @IBAction func chronicDiseaseEditingChanged(_ sender: UITextField) {
         let errors = validateFields()
-                // change chronic Disease border if chronic Disease is invalid, and set error msg
-               if  errors["chronicDisease"] != "" {
-                   chronicDisease.setBorder(color: "error", image: UIImage(named: "bandageError")!)
-                   errorChronicDisease.text = errors["chronicDisease"]!
-                   errorChronicDisease.alpha = 1
-               }
-                else if errors["emptyCD"] != ""{
-                    chronicDisease.setBorder(color: "default", image: UIImage(named: "bandageDefault")!)
-                    errorChronicDisease.alpha = 0
-                }
-                else {
-                    chronicDisease.setBorder(color: "valid", image: UIImage(named: "bandageValid")!)
-                    errorChronicDisease.alpha = 0
-               }
-    
+        // change chronic Disease border if chronic Disease is invalid, and set error msg
+        if  errors["chronicDisease"] != "" {
+            chronicDisease.setBorder(color: "error", image: UIImage(named: "bandageError")!)
+            errorChronicDisease.text = errors["chronicDisease"]!
+            errorChronicDisease.alpha = 1
+        }
+        else if errors["emptyCD"] != ""{
+            chronicDisease.setBorder(color: "default", image: UIImage(named: "bandageDefault")!)
+            errorChronicDisease.alpha = 0
+        }
+        else {
+            chronicDisease.setBorder(color: "valid", image: UIImage(named: "bandageValid")!)
+            errorChronicDisease.alpha = 0
+        }
+        
     }
     @IBAction func disabilityEditingChanged(_ sender: UITextField) {
         let errors = validateFields()
-                // change disability border if disability is invalid, and set error msg
-               if  errors["disability"] != "" {
-                   disability.setBorder(color: "error", image: UIImage(named: "disabilityError")!)
-                   errorDisability.text = errors["disability"]!
-                   errorDisability.alpha = 1
-               }
-                else if errors["emptyDisability"] != "" {
-                   disability.setBorder(color: "default", image: UIImage(named: "disabilityDefault")!)
-                   errorDisability.alpha = 0
-               }
-                else {
-                    disability.setBorder(color: "valid", image: UIImage(named: "disabilityValid")!)
-                    errorDisability.alpha = 0
-               }
-   
+        // change disability border if disability is invalid, and set error msg
+        if  errors["disability"] != "" {
+            disability.setBorder(color: "error", image: UIImage(named: "disabilityError")!)
+            errorDisability.text = errors["disability"]!
+            errorDisability.alpha = 1
+        }
+        else if errors["emptyDisability"] != "" {
+            disability.setBorder(color: "default", image: UIImage(named: "disabilityDefault")!)
+            errorDisability.alpha = 0
+        }
+        else {
+            disability.setBorder(color: "valid", image: UIImage(named: "disabilityValid")!)
+            errorDisability.alpha = 0
+        }
+        
     }
     @IBAction func allergyEditingChanged(_ sender: UITextField) {
         let errors = validateFields()
-                // change allergy border if allergy is invalid, and set error msg
-               if  errors["allergy"] != "" {
-                   allergy.setBorder(color: "error", image: UIImage(named: "heartError")!)
-                   errorAllergy.text = errors["allergy"]!
-                   errorAllergy.alpha = 1
-               } else if errors["emptyallergy"] != "" {
-                   allergy.setBorder(color: "default", image: UIImage(named: "heartDefault")!)
-                   errorAllergy.alpha = 0
-               }
-                else {
-                    allergy.setBorder(color: "valid", image: UIImage(named: "heartValid")!)
-                    errorAllergy.alpha = 0
-               }
+        // change allergy border if allergy is invalid, and set error msg
+        if  errors["allergy"] != "" {
+            allergy.setBorder(color: "error", image: UIImage(named: "heartError")!)
+            errorAllergy.text = errors["allergy"]!
+            errorAllergy.alpha = 1
+        } else if errors["emptyallergy"] != "" {
+            allergy.setBorder(color: "default", image: UIImage(named: "heartDefault")!)
+            errorAllergy.alpha = 0
+        }
+        else {
+            allergy.setBorder(color: "valid", image: UIImage(named: "heartValid")!)
+            errorAllergy.alpha = 0
+        }
     }
     
     @IBAction func predcribedMedsEditingChanged(_ sender: UITextField) {
         let errors = validateFields()
-                // change prescribed Medication border if prescribed Medication invalid, and set error msg
-               if  errors["prescribedMedication"] != "" {
-                   prescribedMedication.setBorder(color: "error", image: UIImage(named: "pillError")!)
-                   errorPrescribedMedication.text = errors["prescribedMedication"]!
-                   errorPrescribedMedication.alpha = 1
-               } else if errors["emptyPM"] != ""{
-                   prescribedMedication.setBorder(color: "default", image: UIImage(named: "pillDefault")!)
-                   errorPrescribedMedication.alpha = 0
-               }
-                else {
-                    prescribedMedication.setBorder(color: "valid", image: UIImage(named: "pillValid")!)
-                    errorPrescribedMedication.alpha = 0
-               }
-    
+        // change prescribed Medication border if prescribed Medication invalid, and set error msg
+        if  errors["prescribedMedication"] != "" {
+            prescribedMedication.setBorder(color: "error", image: UIImage(named: "pillError")!)
+            errorPrescribedMedication.text = errors["prescribedMedication"]!
+            errorPrescribedMedication.alpha = 1
+        } else if errors["emptyPM"] != ""{
+            prescribedMedication.setBorder(color: "default", image: UIImage(named: "pillDefault")!)
+            errorPrescribedMedication.alpha = 0
+        }
+        else {
+            prescribedMedication.setBorder(color: "valid", image: UIImage(named: "pillValid")!)
+            errorPrescribedMedication.alpha = 0
+        }
+        
     }
     
 }

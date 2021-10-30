@@ -29,14 +29,16 @@ class viewMedicalReportViewController: UIViewController {
     var user: User?
     var ref = Database.database().reference()
     var medicalReport: MedicalReport?
-    let redUIColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
-    let alertIcon = UIImage(named: "errorIcon")
-    let apperance = SCLAlertView.SCLAppearance(contentViewCornerRadius: 15,buttonCornerRadius: 7,hideWhenBackgroundViewIsTapped: true)
     var front = true
     
-
-    
-    
+    //MARK: - Constants
+    let redUIColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
+    let alertIcon = UIImage(named: "errorIcon")
+    let apperance = SCLAlertView.SCLAppearance(
+        contentViewCornerRadius: 15,
+        buttonCornerRadius: 7,
+        hideWhenBackgroundViewIsTapped: true)
+ 
     //MARK: - Overriden Functions
     override func viewDidLoad() {
         super.viewDidLoad()

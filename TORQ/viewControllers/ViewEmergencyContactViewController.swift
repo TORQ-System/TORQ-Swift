@@ -1,5 +1,6 @@
 import UIKit
 import FirebaseDatabase
+import SCLAlertView
 
 class ViewEmergencyContactViewController: UIViewController {
     
@@ -12,6 +13,11 @@ class ViewEmergencyContactViewController: UIViewController {
     var userEmail: String?
     var userID: String?
     var eContacts: [emergencyContact] = []
+    
+    //MARK: - Constants
+    let redUIColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
+    let alertIcon = UIImage(named: "errorIcon")
+    let apperance = SCLAlertView.SCLAppearance(contentViewCornerRadius: 15,buttonCornerRadius: 7,hideWhenBackgroundViewIsTapped: true)
     
     //MARK: - Overriden function
     override func viewDidLoad() {
@@ -31,26 +37,26 @@ class ViewEmergencyContactViewController: UIViewController {
         let ref = Database.database().reference()
         let searchQueue = DispatchQueue.init(label: "searchQueue")
         
-       searchQueue.sync {
-        ref.child("EmergencyContact").observe(.childAdded) { snapshot in
-            
-            let obj = snapshot.value as! [String: Any]
-            let name = obj["name"] as! String
-            let relation = obj["relation"] as! String
-            let phone = obj["phone"] as! String
-            let senderID = obj["sender"] as! String
-            let receiverID = obj["reciever"] as! String
-            let msg = obj["msg"] as! String
-            let sent = obj["sent"] as! String
-            
-            let emergencyContact = emergencyContact(name: name, phone_number: phone, senderID:senderID, recieverID: receiverID, sent: sent, contactID: 1, msg: msg, relation: relation)
-            
-            if ( emergencyContact.getSenderID() == userID ) {
-                self.eContacts.append(emergencyContact)
-                self.contacts.reloadData()
+        searchQueue.sync {
+            ref.child("EmergencyContact").observe(.childAdded) { snapshot in
+                
+                let obj = snapshot.value as! [String: Any]
+                let name = obj["name"] as! String
+                let relation = obj["relation"] as! String
+                let phone = obj["phone"] as! String
+                let senderID = obj["sender"] as! String
+                let receiverID = obj["reciever"] as! String
+                let msg = obj["msg"] as! String
+                let sent = obj["sent"] as! String
+                
+                let emergencyContact = emergencyContact(name: name, phone_number: phone, senderID:senderID, recieverID: receiverID, sent: sent, contactID: 1, msg: msg, relation: relation)
+                
+                if ( emergencyContact.getSenderID() == userID ) {
+                    self.eContacts.append(emergencyContact)
+                    self.contacts.reloadData()
+                }
             }
-          }
-       }
+        }
         print(self.eContacts)
     }
     
@@ -59,36 +65,38 @@ class ViewEmergencyContactViewController: UIViewController {
     }
     
     @objc func deletefunc(senderr:UIButton){
-        print("tr")
         let phone = "\(self.eContacts[senderr.tag].getPhoneNumber())"
-        print(phone)
-        print(senderr.tag)
-        self.ref.child("EmergencyContact").observeSingleEvent(of: .value, with: { snapshot in
-                    for EC in snapshot.children{
-                        let obj = EC as! DataSnapshot
-                        let msg = obj.childSnapshot(forPath: "msg").value as! String
-                        let phoneNum = obj.childSnapshot(forPath: "phone").value as! String
-                        let name = obj.childSnapshot(forPath: "name").value as! String
-                        let reciever = obj.childSnapshot(forPath: "reciever").value as! String
-                        let sender = obj.childSnapshot(forPath: "sender").value as! String
-                        let relation = obj.childSnapshot(forPath: "relation").value as! String
-                        let sent = obj.childSnapshot(forPath: "sent").value as! String
-                        
-                        print("print flag: \((sender == self.userID) && (phone == phoneNum)))")
-                        if (sender == self.userID) && (phone == phoneNum) {
-                            _ = emergencyContact(name: name, phone_number: phoneNum, senderID: sender, recieverID: reciever, sent: sent, contactID: 1, msg: msg, relation: relation)
-                            //delete it from the array.
-                            self.eContacts.remove(at:senderr.tag)
-//                            self.contacts.reloadData()
-                            self.ref.child("EmergencyContact").child(obj.key).removeValue()
-                            self.contacts.reloadData()
-//                            self.dismiss(animated: true, completion: nil)
-                        }
-//                        self.contacts.reloadData()
+        
+        let alertView = SCLAlertView(appearance: self.apperance)
+        alertView.addButton("Delete", backgroundColor: self.redUIColor){
+            self.ref.child("EmergencyContact").observeSingleEvent(of: .value, with: { snapshot in
+                for EC in snapshot.children{
+                    let obj = EC as! DataSnapshot
+                    let msg = obj.childSnapshot(forPath: "msg").value as! String
+                    let phoneNum = obj.childSnapshot(forPath: "phone").value as! String
+                    let name = obj.childSnapshot(forPath: "name").value as! String
+                    let reciever = obj.childSnapshot(forPath: "reciever").value as! String
+                    let sender = obj.childSnapshot(forPath: "sender").value as! String
+                    let relation = obj.childSnapshot(forPath: "relation").value as! String
+                    let sent = obj.childSnapshot(forPath: "sent").value as! String
+                    
+                    print("print flag: \((sender == self.userID) && (phone == phoneNum)))")
+                    if (sender == self.userID) && (phone == phoneNum) {
+                        _ = emergencyContact(name: name, phone_number: phoneNum, senderID: sender, recieverID: reciever, sent: sent, contactID: 1, msg: msg, relation: relation)
+                        //delete it from the array.
+                        self.eContacts.remove(at:senderr.tag)
+                        //                            self.contacts.reloadData()
+                        self.ref.child("EmergencyContact").child(obj.key).removeValue()
+                        self.contacts.reloadData()
+                        //                            self.dismiss(animated: true, completion: nil)
                     }
-//            self.contacts.reloadData()
-        })
-//        contacts.reloadData()
+                    //                        self.contacts.reloadData()
+                }
+                //            self.contacts.reloadData()
+            })
+            //        contacts.reloadData()
+        }
+        alertView.showCustom("Are you sure?", subTitle: "We will delete your entire medical report", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Cancel", circleIconImage: UIImage(named: "warning"), animationStyle: SCLAnimationStyle.topToBottom)
     }
 }
 
@@ -105,7 +113,7 @@ extension ViewEmergencyContactViewController: UICollectionViewDelegate{
     
 }
 
-    
+
 
 extension ViewEmergencyContactViewController: UICollectionViewDataSource{
     
@@ -113,7 +121,7 @@ extension ViewEmergencyContactViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return eContacts.count + 1
     }
-        
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         // get a reference to our storyboard cell
         if ( eContacts.count == 0 ) {
@@ -123,27 +131,27 @@ extension ViewEmergencyContactViewController: UICollectionViewDataSource{
         }
         
         while ( indexPath.row < eContacts.count ){
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath as IndexPath) as! ECCollectionViewCell
-        cell.layer.cornerRadius = 10
-        cell.layer.masksToBounds = false
-        cell.layer.shadowColor = UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1).cgColor
-        cell.layer.shadowOpacity = 1
-        cell.layer.shadowRadius = 70
-        cell.layer.shadowOffset = CGSize(width: 5, height: 5)
-        cell.layer.borderColor = CGColor(red: 0, green: 0, blue: 0, alpha: 1)
-        cell.name.text = "\(eContacts[indexPath.row].getName())"
-        cell.name.numberOfLines = 2
-        cell.phone.text = "\(eContacts[indexPath.row].getPhoneNumber())"
-        cell.relation.text = "\(eContacts[indexPath.row].getRelation())"
-        cell.deleteECButton.tag = indexPath.row
-        cell.deleteECButton.addTarget(self, action: #selector(deletefunc), for: .touchUpInside)
-        return cell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath as IndexPath) as! ECCollectionViewCell
+            cell.layer.cornerRadius = 10
+            cell.layer.masksToBounds = false
+            cell.layer.shadowColor = UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1).cgColor
+            cell.layer.shadowOpacity = 1
+            cell.layer.shadowRadius = 70
+            cell.layer.shadowOffset = CGSize(width: 5, height: 5)
+            cell.layer.borderColor = CGColor(red: 0, green: 0, blue: 0, alpha: 1)
+            cell.name.text = "\(eContacts[indexPath.row].getName())"
+            cell.name.numberOfLines = 2
+            cell.phone.text = "\(eContacts[indexPath.row].getPhoneNumber())"
+            cell.relation.text = "\(eContacts[indexPath.row].getRelation())"
+            cell.deleteECButton.tag = indexPath.row
+            cell.deleteECButton.addTarget(self, action: #selector(deletefunc), for: .touchUpInside)
+            return cell
         }
         let add = collectionView.dequeueReusableCell(withReuseIdentifier: "add", for: indexPath as IndexPath)
         add.layer.cornerRadius = 10
         return add
-    
-}
+        
+    }
 }
 
 extension ViewEmergencyContactViewController: UICollectionViewDelegateFlowLayout{

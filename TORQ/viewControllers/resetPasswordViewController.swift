@@ -93,7 +93,7 @@ class resetPasswordViewController: UIViewController {
     @IBAction func resetPasswordPressed(_ sender: Any) {
         Auth.auth().sendPasswordReset(withEmail: email.text!) { error in
             guard error == nil else{
-                SCLAlertView(appearance: self.apperance).showCustom("Oops", subTitle: "Make sure you entered a valid email address or try again later", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", circleIconImage: UIImage(named: "warning"),animationStyle: SCLAnimationStyle.topToBottom)
+                SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "Make sure you entered a valid email address or try again later", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", circleIconImage: UIImage(named: "warning"),animationStyle: SCLAnimationStyle.topToBottom)
                 return
             }
         
