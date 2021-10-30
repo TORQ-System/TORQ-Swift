@@ -15,6 +15,7 @@ class addEmergencyContactViewController: UIViewController {
     @IBOutlet weak var errorRelationship: UILabel!
     @IBOutlet weak var errorMessage: UILabel!
     @IBOutlet weak var relationTextField: UITextField!
+    @IBOutlet weak var addButton: UIButton!
     
     //MARK: - Variables
     var ref = Database.database().reference()
@@ -29,8 +30,6 @@ class addEmergencyContactViewController: UIViewController {
     var relationship: String?
     var recieverID : String?
     var phoneNumExists : String?
-    @IBOutlet weak var addButton: UIButton!
-    
     // picker view variables
     var relationships = [
         "Please Select",
@@ -48,6 +47,7 @@ class addEmergencyContactViewController: UIViewController {
     let screenHeight = UIScreen.main.bounds.height/2
     var selectedRow = 0
     var pickerView = UIPickerView()
+    var phoneMatch : String?
     
 
     
@@ -139,6 +139,7 @@ class addEmergencyContactViewController: UIViewController {
             let user = User(dateOfBirth: dictionary["dateOfBirth"] as! String, email: dictionary["email"] as! String, fullName: dictionary["fullName"] as! String, gender: dictionary["phone"] as! String, nationalID: dictionary["nationalID"] as! String, password: dictionary["password"] as! String, phone: dictionary["phone"] as! String)
             self.userInfo = user
             self.usrName = user.fullName
+            self.phoneMatch = user.phone
         })
 //        print(usrName as Any)
     }
@@ -151,7 +152,7 @@ class addEmergencyContactViewController: UIViewController {
     // validate form entries
     func validateFields() -> [String: String] {
        
-        var errors = ["Empty":"","fullName":"", "phone":"","relationship":"","msg":"","phoneDNE":"","phoneExists":""]
+        var errors = ["Empty":"","fullName":"", "phone":"","relationship":"","msg":"","phoneDNE":"","phoneExists":"","phoneMatch":""]
         
         // CASE: empty fields
         if emergencyContactFullName.text == "" && emergencyContactPhoneNumber.text == "" && selectedRow == 0 {
@@ -183,6 +184,11 @@ class addEmergencyContactViewController: UIViewController {
         // CASE: msg greater than 80 characters
         if message.text!.count >= 80 {
             errors["msg"] = "message is too long, try to shorten it"
+        }
+        
+        // Emergency phone match current user phone
+        if phoneMatch == emergencyContactPhoneNumber.text {
+            errors["phoneMatch"] = "Emergency phone cannot be the same as yours"
         }
         
         // check of emergency contact number exists in user table in the database and retrieve its info
@@ -317,6 +323,12 @@ class addEmergencyContactViewController: UIViewController {
             errorMessage.text = errors["msg"]
             message.setBorder(color: "error", image: UIImage(named: "messageError")!)
             errorMessage.alpha = 1
+            return
+        }
+        // chack if phone number equals current user number
+        guard errors["phoneMatch"] == "" else {
+            //handle the error
+            showALert(message: errors["phoneMatch"]!)
             return
         }
         // if msg is empty, then set up TORQ Default msg
