@@ -310,7 +310,12 @@ class signUpSecondViewController: UIViewController {
             self.ref.child("Sensor").child("S\(id!)/longitude").setValue("0")
             self.ref.child("Sensor").child("S\(id!)/latitude").setValue("0")
             self.ref.child("Sensor").child("S\(id!)/time").setValue("0")
-            
+            self.ref.child("Sensor").child("S\(id!)/date").setValue("0")
+            self.ref.child("Sensor").child("S\(id!)/Vib").setValue("0")
+            self.ref.child("Sensor").child("S\(id!)/X").setValue("0")
+            self.ref.child("Sensor").child("S\(id!)/Y").setValue("0")
+            self.ref.child("Sensor").child("S\(id!)/Z").setValue("0")
+
             let alertView = SCLAlertView(appearance: self.apperanceWithoutClose)
             alertView.addButton("Let's go", backgroundColor: self.blueUIColor){
                 self.goToHomeScreen()
