@@ -8,14 +8,6 @@ extension String {
       return emailTest.evaluate(with: self)
    }
     
-    var isValidSequence: Bool{
-        // Validate sequence
-        // ^[a-zA-Z]+(,[a-zA-Z]+)*$
-        let regxName = "^[a-zA-Z]+(\\s?[a-zA-Z]?)+(,[a-zA-Z ]+\\s?[ a-zA-Z]+)*$"
-        let nameTest = NSPredicate(format: "SELF MATCHES %@", regxName)
-        return nameTest.evaluate(with: self)
-    }
-    
    var isValidPhone: Bool {
       // validate the phone format:
       let regxForPhone = "^(0|05|05[0-9]{1,9})$"
@@ -28,7 +20,19 @@ extension String {
         let nameTest = NSPredicate(format: "SELF MATCHES %@", regxName)
         return nameTest.evaluate(with: self)
     }
- 
+    var isValidWord: Bool{
+        // Validate word
+        let regxName = "^[a-zA-Z]*$"
+        let nameTest = NSPredicate(format: "SELF MATCHES %@", regxName)
+        return nameTest.evaluate(with: self)
+    }
+    var isValidSequence: Bool{
+        // Validate sequence
+        // ^[a-zA-Z]+(,[a-zA-Z]+)*$
+        let regxName = "^[a-zA-Z]+(\\s?[a-zA-Z]?)+(,[a-zA-Z ]+\\s?[ a-zA-Z]+)*$"
+        let nameTest = NSPredicate(format: "SELF MATCHES %@", regxName)
+        return nameTest.evaluate(with: self)
+    }
     var isValidPassword: Bool {
        // validate the password format:
         return self.count >= 6
@@ -61,6 +65,5 @@ extension String {
                 return self
             }
         }
-    
 }
 
