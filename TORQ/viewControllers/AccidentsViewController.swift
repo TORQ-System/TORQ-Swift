@@ -91,7 +91,7 @@ extension AccidentsViewController: MKMapViewDelegate{
         let img = UIImageView(image: UIImage(named: "pin"))
         img.tintColor = .blue
         pin?.image = img.image
-        pin?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+//        pin?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         return pin
     }
     

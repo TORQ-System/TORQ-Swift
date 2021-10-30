@@ -344,10 +344,11 @@ class addEmergencyContactViewController: UIViewController {
         errorMessage.alpha = 0
        
         //2- caching information
-        fullName = emergencyContactFullName.text
+        //2- caching information
+        fullName = emergencyContactFullName.text!.trimWhiteSpace()
         phoneNumber = emergencyContactPhoneNumber.text
         relationship = relationTextField.text
-        emergencyMessage = message.text
+        emergencyMessage = message.text!.trimWhiteSpace()
         
         //3- create user info
         

@@ -28,7 +28,7 @@ class userHomeViewController: UIViewController {
     var userID: String?
     let locationManager = CLLocationManager()
     let ref = Database.database().reference()
-    let services = ["Medical Information","Emergency Contact","View Accidents History"]
+    let services = ["Medical Information","Emergency Contact"]
     let center = UNUserNotificationCenter.current()
     var user: User? = nil
     var location: [String: String] = ["lon":"","lat":""]
@@ -132,7 +132,7 @@ class userHomeViewController: UIViewController {
                 let sensorID = obj.key
 //                print("S\(String(describing: self.userID!))")
                 if sensorID == "S\(String(describing: self.userID!))" {
-                    self.vib.text = vib
+                    self.vib.text = "\(vib) Hz"
                     if y == "1023" {
                         self.rotation.text = "Yes"
 
@@ -150,8 +150,7 @@ class userHomeViewController: UIViewController {
                     
                     
                     self.coordinate.text = "\(lonn), \(latt)"
-                    let newDate = date.replacingOccurrences(of: ":", with: "/")
-                    self.lastLoggedIn.text = "Last Logged in: \(newDate)"
+//                    let newDate = date.replacingOccurrences(of: ":", with: "/")
                     self.sensor = Sensor(vib: vib, x: x, y: y, z: z, date: date, latitude: latitude, longitude: latitude, time: time)
                 }else{
                     print("no sensor")
@@ -317,7 +316,6 @@ extension userHomeViewController: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         var vc = UIViewController()
-        
         switch indexPath.row {
         case 0:
             let viewVC = storyboard.instantiateViewController(identifier: "viewMedicalReportViewController") as! viewMedicalReportViewController
@@ -332,14 +330,9 @@ extension userHomeViewController: UICollectionViewDelegate{
             viewVC.userID = userID
             vc = viewVC
             break
-        case 2:
-            break
-        case 3:
-            break
         default:
             print("unKnown")
         }
-        
         self.present(vc, animated: true, completion: nil)
     }
 }
