@@ -96,11 +96,11 @@ class viewMedicalReportViewController: UIViewController {
                 if report.getUserID() == self.userID {
                     self.medicalReport = report
                     DispatchQueue.main.async {
-                        self.bloodType.text = "Blood Type: \(report.getBloodType())"
-                        self.allergies.text = "Allergies: \(report.getAllergies())"
-                        self.diseases.text = "Chronic Disease: \(report.getDiseases())"
-                        self.disabilities.text = "Disabilities: \(report.getDisabilities())"
-                        self.medication.text = "Prescribed Medication: \(report.getMedications())"
+                        self.bloodType.text = "\(report.getBloodType())"
+                        self.allergies.text = "\(report.getAllergies())"
+                        self.diseases.text = "\(report.getDiseases())"
+                        self.disabilities.text = "\(report.getDisabilities())"
+                        self.medication.text = "\(report.getMedications())"
                         self.addMedicalReport.isEnabled = false
                         self.deleteMedicalReport.isEnabled = true
                         self.medicalStackView.isHidden = false
@@ -125,21 +125,19 @@ class viewMedicalReportViewController: UIViewController {
     //MARK: - @IBActions
     
     @IBAction func flipCard(_ sender: Any) {
-        let QR = UIImage(named: "qr-code")
+//        let QR = UIImage(named: "qr-code")
         if self.front {
             UIView.transition(with: cardView, duration: 0.3, options: .transitionFlipFromLeft, animations: nil, completion: nil)
             self.scrollViewContainer.isHidden = true
-            self.flipbutton.setImage(QR, for: .normal)
+//            self.flipbutton.setImage(QR, for: .normal)
             front = false
         }else{
             UIView.transition(with: cardView, duration: 0.3, options: .transitionFlipFromRight, animations: nil, completion: nil)
             self.scrollViewContainer.isHidden = false
-            self.flipbutton.setImage(nil, for: .normal)
+//            self.flipbutton.setImage(nil, for: .normal)
             front = true
         }
-    }
-    
-    
+    }    
     
     @IBAction func backToHome(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
