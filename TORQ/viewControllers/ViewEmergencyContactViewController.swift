@@ -5,9 +5,6 @@ class ViewEmergencyContactViewController: UIViewController {
     
     //MARK: - @IBOutlets
     @IBOutlet weak var contacts: UICollectionView!
-    @IBOutlet weak var addECButton: UIButton!
-    @IBOutlet weak var noContacts: UILabel!
-    
     @IBOutlet weak var noAdded: UILabel!
     
     //MARK: - Variables
@@ -19,8 +16,8 @@ class ViewEmergencyContactViewController: UIViewController {
     //MARK: - Overriden function
     override func viewDidLoad() {
         super.viewDidLoad()
-        showEmergencyContacts(userID: userID!)
         // Do any additional setup after loading the view.
+        showEmergencyContacts(userID: userID!)
     }
     
     func showEmergencyContacts(userID: String) {
@@ -55,9 +52,7 @@ class ViewEmergencyContactViewController: UIViewController {
     }
     
     @IBAction func backButton(_ sender: Any) {
-        
         self.dismiss(animated: true, completion: nil)
-        
     }
     @objc func deletefunc(sender:UIButton){
         print("tr")
@@ -80,11 +75,10 @@ extension ViewEmergencyContactViewController: UICollectionViewDelegate{
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if ( indexPath.row == eContacts.count ){
-//            let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-//            let vc = storyboard.instantiateViewController(identifier: "add Emergency contact page identifier") as! AddEmergencyContactViewController
-//            vc.userID = userID
-//            vc.modalPresentationStyle = .fullScreen
-//            self.present(vc, animated: true, completion: nil)
+            let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(identifier: "addEmergencyContactViewController") as! addEmergencyContactViewController
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
         }
     }
     
