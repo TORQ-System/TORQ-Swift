@@ -29,6 +29,7 @@ class addEmergencyContactViewController: UIViewController {
     var relationship: String?
     var recieverID : String?
     var phoneNumExists : String?
+    var phoneMatch : String?
     @IBOutlet weak var addButton: UIButton!
     
     // picker view variables
@@ -139,6 +140,7 @@ class addEmergencyContactViewController: UIViewController {
             let user = User(dateOfBirth: dictionary["dateOfBirth"] as! String, email: dictionary["email"] as! String, fullName: dictionary["fullName"] as! String, gender: dictionary["phone"] as! String, nationalID: dictionary["nationalID"] as! String, password: dictionary["password"] as! String, phone: dictionary["phone"] as! String)
             self.userInfo = user
             self.usrName = user.fullName
+            self.phoneMatch = user.phone
         })
 //        print(usrName as Any)
     }
@@ -151,7 +153,7 @@ class addEmergencyContactViewController: UIViewController {
     // validate form entries
     func validateFields() -> [String: String] {
        
-        var errors = ["Empty":"","fullName":"", "phone":"","relationship":"","msg":"","phoneDNE":"","phoneExists":""]
+        var errors = ["Empty":"","fullName":"", "phone":"","relationship":"","msg":"","phoneDNE":"","phoneExists":"","phoneMatch":""]
         
         // CASE: empty fields
         if emergencyContactFullName.text == "" && emergencyContactPhoneNumber.text == "" && selectedRow == 0 {
@@ -224,6 +226,11 @@ class addEmergencyContactViewController: UIViewController {
         if phoneNumExists != nil {
             errors["phoneExists"] = "Phone number have been already added"
         }
+        // if phone number equals current user number
+        if phoneMatch == emergencyContactPhoneNumber.text {
+            errors["phoneMatch"] = "Emergency phone cannot be the same as yours"
+        }
+        
         return errors
     }
     
@@ -303,6 +310,12 @@ class addEmergencyContactViewController: UIViewController {
         guard errors["phoneExists"] == "" else {
             //handle the error
             showALert(message: errors["phoneExists"]!)
+            return
+        }
+        // phone equals current user phone
+        guard errors["phoneMatch"] == "" else {
+            //handle the error
+            showALert(message: errors["phoneMatch"]!)
             return
         }
         // relationship error
