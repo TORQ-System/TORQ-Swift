@@ -97,7 +97,6 @@ class loginViewController: UIViewController {
         vc.loggedInCenterEmail = email.text
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
-        
     }
     
     func goToResetPassword(){

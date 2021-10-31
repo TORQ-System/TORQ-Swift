@@ -189,20 +189,7 @@ extension requestsViewController: UICollectionViewDataSource{
         
         
         cell.name.text = "Accident #\(indexPath.row)"
-        
-        // in case
-//        let date = "\(myRequests[indexPath.row].getDateTime())"
-//        let find = date1.firstIndex(of: "+") ?? date1.endIndex
-//        let find2 = date1[..<find]
-//        let start = find2.index(find2.startIndex, offsetBy: 0)
-//        let end = find2.index(find2.startIndex, offsetBy: 10)
-//        let range = start...end
-//        let date = String(find2[range])
-//        let start1 = find2.index(find2.startIndex, offsetBy: 10)
-//        let end1 = find2.index(find2.startIndex, offsetBy:18)
-//        let range1 = start1...end1
-//        let timeStamp = String(find2[range1])
-        
+
         cell.dateTime.text = myRequests[indexPath.row].getDateTime()
         
         cell.viewbutten.tag = indexPath.row

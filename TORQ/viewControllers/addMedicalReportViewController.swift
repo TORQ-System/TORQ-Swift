@@ -219,6 +219,10 @@ class addMedicalReportViewController: UIViewController {
     @IBAction func goToMedicalReportScreen(_ sender: Any) {
         let errors = validateFields()
         
+        if errors["bloodtype"] != ""  || errors["chronicDisease"] != "" || errors["chronicDisease"] != "" || errors["disability"] != "" || errors["allergy"] != "" || errors["prescribedMedication"] != "" {
+            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "Please make sure you entered all fields correctly", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+        }
+        
         // if blood type has an error
         guard errors["bloodtype"] == "" else {
             //handle the error

@@ -96,7 +96,7 @@ class ViewEmergencyContactViewController: UIViewController {
             })
             //        contacts.reloadData()
         }
-        alertView.showCustom("Are you sure?", subTitle: "We will delete your entire medical report", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Cancel", circleIconImage: UIImage(named: "warning"), animationStyle: SCLAnimationStyle.topToBottom)
+        alertView.showCustom("Are you sure?", subTitle: "We will delete your your emergency contact.", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Cancel", animationStyle: SCLAnimationStyle.topToBottom)
     }
 }
 

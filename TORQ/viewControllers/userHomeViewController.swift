@@ -2,6 +2,7 @@ import UIKit
 import FirebaseAuth
 import FirebaseDatabase
 import CoreLocation
+import SCLAlertView
 
 class userHomeViewController: UIViewController {
     
@@ -33,6 +34,14 @@ class userHomeViewController: UIViewController {
     var user: User? = nil
     var location: [String: String] = ["lon":"","lat":""]
     var sensor: Sensor?
+    
+    //MARK: - Constants
+    let redUIColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
+    let alertIcon = UIImage(named: "errorIcon")
+    let apperance = SCLAlertView.SCLAppearance(
+        contentViewCornerRadius: 15,
+        buttonCornerRadius: 7,
+        hideWhenBackgroundViewIsTapped: true)
 
     
     // MARK: - Overriden Functions
