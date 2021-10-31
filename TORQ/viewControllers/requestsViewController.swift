@@ -11,6 +11,8 @@ class requestsViewController: UIViewController {
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var assignedRequests: UILabel!
     @IBOutlet weak var namecenter: UILabel!
+    @IBOutlet weak var backgroundView: UIView!
+    
     
     //MARK: - Variables
     var ref = Database.database().reference()
@@ -29,6 +31,9 @@ class requestsViewController: UIViewController {
         super.viewDidLoad()
         
         //UI setup
+//        setGradientBackground()
+        setGradient()
+        
         configureContainerView()
         configureCenter()
         
@@ -37,6 +42,18 @@ class requestsViewController: UIViewController {
     
     
     //MARK: - Functions
+    func setGradient() {
+        let gradient: CAGradientLayer = CAGradientLayer()
+        let blue =  UIColor(red: 26.0/255.0, green: 40.0/255.0, blue: 88.0/255.0, alpha: 1.0).cgColor
+        let lightblue =  UIColor(red: 49.0/255.0, green: 90.0/255.0, blue: 149.0/255.0, alpha: 1.0).cgColor
+        gradient.colors = [blue, lightblue]
+        gradient.locations = [0.0 , 1.0]
+        gradient.startPoint = CGPoint(x: 0.0, y: 1.0)
+        gradient.endPoint = CGPoint(x: 1.0, y: 1.0)
+        gradient.frame = backgroundView.layer.frame
+        backgroundView.layer.insertSublayer(gradient, at: 0)
+    }
+    
     func configureContainerView(){
         assignedRequests.alpha = 0
         containerView.layer.cornerRadius = 20
@@ -54,6 +71,18 @@ class requestsViewController: UIViewController {
         let centerName = loggedInCenterEmail[..<domainRange.lowerBound]
         loggedInCenter = SRCACenters.getSRCAInfo(name: String(centerName))
         namecenter.text="\(centerName.firstUppercased)'s Requests"
+    }
+    
+    func setGradientBackground() {
+        let colorTop =  UIColor(red: 255.0/255.0, green: 149.0/255.0, blue: 0.0/255.0, alpha: 1.0).cgColor
+        let colorBottom = UIColor(red: 255.0/255.0, green: 94.0/255.0, blue: 58.0/255.0, alpha: 1.0).cgColor
+                    
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [colorTop, colorBottom]
+        gradientLayer.locations = [0.0, 1.0]
+        gradientLayer.frame = self.view.bounds
+                
+        self.view.layer.insertSublayer(gradientLayer, at:0)
     }
     
     func getRequests(){

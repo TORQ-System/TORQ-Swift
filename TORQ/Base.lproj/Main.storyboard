@@ -2715,12 +2715,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gradientBlue" translatesAutoresizingMaskIntoConstraints="NO" id="2fK-aq-t1x">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uWN-Xd-AfE">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="300"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="300" id="WM6-WL-bLC"/>
+                                    <constraint firstAttribute="height" constant="300" id="yu9-qn-PPc"/>
                                 </constraints>
-                            </imageView>
+                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Almalqa's Requests" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kks-Qm-cZx">
                                 <rect key="frame" x="20" y="159" width="270.5" height="33.5"/>
                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="28"/>
@@ -2842,19 +2844,20 @@
                             <constraint firstItem="XWP-X0-VYl" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="WQM-hZ-c4v" secondAttribute="leading" symbolic="YES" id="2L1-DV-taD"/>
                             <constraint firstItem="Kks-Qm-cZx" firstAttribute="leading" secondItem="WQM-hZ-c4v" secondAttribute="leading" constant="20" id="6WV-SS-mtb"/>
                             <constraint firstItem="WQM-hZ-c4v" firstAttribute="trailing" secondItem="fqE-Gv-dhb" secondAttribute="trailing" constant="20" id="AC1-re-HLo"/>
-                            <constraint firstAttribute="trailing" secondItem="2fK-aq-t1x" secondAttribute="trailing" id="FFy-U6-BtO"/>
                             <constraint firstItem="XWP-X0-VYl" firstAttribute="top" secondItem="1mI-ai-HH6" secondAttribute="top" constant="50" id="Sxk-xO-OSk"/>
-                            <constraint firstItem="2fK-aq-t1x" firstAttribute="leading" secondItem="1mI-ai-HH6" secondAttribute="leading" id="TMc-qS-ZC4"/>
+                            <constraint firstItem="uWN-Xd-AfE" firstAttribute="top" secondItem="1mI-ai-HH6" secondAttribute="top" id="d7Z-kx-b03"/>
                             <constraint firstItem="WQM-hZ-c4v" firstAttribute="trailing" secondItem="XWP-X0-VYl" secondAttribute="trailing" constant="30" id="eg4-CG-X0n"/>
+                            <constraint firstItem="uWN-Xd-AfE" firstAttribute="leading" secondItem="1mI-ai-HH6" secondAttribute="leading" id="kup-OK-oZH"/>
                             <constraint firstAttribute="bottom" secondItem="fqE-Gv-dhb" secondAttribute="bottom" id="mUh-eD-26O"/>
-                            <constraint firstItem="2fK-aq-t1x" firstAttribute="top" secondItem="1mI-ai-HH6" secondAttribute="top" id="p2A-TY-7zd"/>
                             <constraint firstItem="fqE-Gv-dhb" firstAttribute="leading" secondItem="WQM-hZ-c4v" secondAttribute="leading" constant="20" id="qSc-CH-o0y"/>
                             <constraint firstItem="Kks-Qm-cZx" firstAttribute="top" secondItem="WQM-hZ-c4v" secondAttribute="top" constant="115" id="rUX-K6-cKy"/>
                             <constraint firstItem="WQM-hZ-c4v" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Kks-Qm-cZx" secondAttribute="trailing" symbolic="YES" id="si8-hh-XyV"/>
+                            <constraint firstItem="uWN-Xd-AfE" firstAttribute="centerX" secondItem="fqE-Gv-dhb" secondAttribute="centerX" id="ssa-M6-zn8"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="assignedRequests" destination="lMI-tz-bwo" id="Yqp-ls-9pG"/>
+                        <outlet property="backgroundView" destination="uWN-Xd-AfE" id="33S-Bb-spA"/>
                         <outlet property="containerView" destination="fqE-Gv-dhb" id="HO7-NZ-qRP"/>
                         <outlet property="namecenter" destination="Kks-Qm-cZx" id="8HT-wi-LOa"/>
                         <outlet property="requestsColletionView" destination="wcK-l7-YRN" id="5aF-QI-Clf"/>
@@ -2862,7 +2865,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7eh-aZ-R68" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3272" y="2768"/>
+            <point key="canvasLocation" x="-3272.4637681159425" y="2767.6339285714284"/>
         </scene>
         <!--Request Report View Controller-->
         <scene sceneID="wjf-Sk-Jb2">
@@ -3274,7 +3277,6 @@
         <image name="chevron.backward" catalog="system" width="96" height="128"/>
         <image name="chevron.left" catalog="system" width="96" height="128"/>
         <image name="chevron.right" catalog="system" width="96" height="128"/>
-        <image name="gradientBlue" width="1750" height="1246"/>
         <image name="header" width="1970" height="1114"/>
         <image name="house.fill" catalog="system" width="128" height="106"/>
         <image name="illustration1" width="1529" height="1021"/>
