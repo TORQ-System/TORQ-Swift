@@ -125,7 +125,7 @@ extension UIViewController {
                             
                             let content = UNMutableNotificationContent()
                             //content.categoryIdentifier = "ACTIONS"
-                            content.title = "ALERT!"
+                            content.title = "Hello, \(name)"
                             content.body = msg
                             content.userInfo = ["userID":userID]
                             let request = UNNotificationRequest(identifier: UUID.init().uuidString, content: content, trigger: nil)
