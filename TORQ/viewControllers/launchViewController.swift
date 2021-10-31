@@ -8,13 +8,23 @@
 import UIKit
 
 class launchViewController: UIViewController {
-
+    
+    
+    //MARK: - @IBOutlets
+    @IBOutlet weak var logoImage: UIImageView!
+    
+    
+    //MARK: - Overriden functions
     override func viewDidLoad() {
         super.viewDidLoad()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            self.goToLogin()
+        }
 
     }
 
-    @IBAction func goToLogin(_ sender: Any) {
+    //MARK: - Functions
+    func goToLogin() {
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(identifier: "onboardingScreen1") as! onboardingScreen1ViewController
         vc.modalTransitionStyle = .crossDissolve

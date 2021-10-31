@@ -1,5 +1,7 @@
 import UIKit
 import FirebaseAuth
+import SCLAlertView
+import SwiftUI
 
 class loginViewController: UIViewController {
     
@@ -7,138 +9,143 @@ class loginViewController: UIViewController {
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var password: UITextField!
     @IBOutlet weak var nextbutton: UIButton!
-    @IBOutlet weak var errorView: UIStackView!
-    @IBOutlet weak var errorMessageLabel: UILabel!
+    @IBOutlet weak var loginButton: UIButton!
     
     //MARK: - Vraibales
     var userID: String?
     var userEmail: String?
     
+    //MARK: - Constants
+    let redUIColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
+    let alertIcon = UIImage(named: "errorIcon")
+    let apperance = SCLAlertView.SCLAppearance(
+        contentViewCornerRadius: 15,
+        buttonCornerRadius: 7,
+        hideWhenBackgroundViewIsTapped: true)
+    
     //MARK: - Overriden Functions
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // hide the error message and add the border
-        errorView.isHidden = true
-        email.layer.cornerRadius = 8.0
-        email.layer.masksToBounds = true
-        email.layer.borderColor = UIColor( red: 54/255, green: 53/255, blue:87/255, alpha: 1.0 ).cgColor
-        email.layer.borderWidth = 2.0
-        
-        password.layer.cornerRadius = 8.0
-        password.layer.masksToBounds = true
-        password.layer.borderColor = UIColor( red: 54/255, green: 53/255, blue:87/255, alpha: 1.0 ).cgColor
-        password.layer.borderWidth = 2.0
-        
         configureKeyboardNotification()
-        
+        // setup default borders
+        email.setBorder(color: "default", image: UIImage(named: "emailDefault")!)
+        password.setBorder(color: "default", image: UIImage(named: "lockDefault")!)
+        //set up the corner radius of login button
+        loginButton.layer.cornerRadius = 12
     }
-    
     
     //MARK: - Functions
     func configureKeyboardNotification(){
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-        self.view!.addGestureRecognizer(tap)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardwillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    @objc func hideKeyboard(){
-        self.view.endEditing(true)
+            let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+            self.view!.addGestureRecognizer(tap)
+            NotificationCenter.default.addObserver(self, selector: #selector(keyboardwillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        }
         
-    }
-    
-    @objc func keyboardwillShow(notification: NSNotification){
-        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue{
-            let keyboardHieght = keyboardFrame.cgRectValue.height
-            let bottomSpace = self.view.frame.height - (self.nextbutton.frame.origin.y + nextbutton.frame.height)
-            self.view.frame.origin.y -= keyboardHieght - bottomSpace
+        @objc func hideKeyboard(){
+            self.view.endEditing(true)
             
         }
         
-    }
+        @objc func keyboardwillShow(notification: NSNotification){
+            
+            if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue{
+                let keyboardHieght = keyboardFrame.cgRectValue.height
+                let bottomSpace = self.view.frame.height - (self.nextbutton.frame.origin.y + nextbutton.frame.height)
+                self.view.frame.origin.y -= keyboardHieght - bottomSpace
+                
+            }
+            
+        }
+        
+        @objc func keyboardWillHide(){
+            self.view.frame.origin.y = 0
+        }
+        
+        deinit {
+            NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+            NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        }
     
-    @objc func keyboardWillHide(){
-        self.view.frame.origin.y = 0
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
     
     func validateFields()->[String: String]{
         var errors = ["email":"", "password":""]
         
-        // checking empty fields
-        if email.text == nil || email.text == "" || !email.text!.trimWhiteSpace().isValidEmail{
-            errors["email"] = "Incorrect email"
+        if email.text == nil || email.text == "" {
+            errors["email"] = "Fields cannot be empty"
+        } else if password.text == nil || password.text == "" {
+            errors["password"] = "Fields cannot be empty"
         }
-        
-        if password.text == nil || password.text == "" || !password.text!.isValidPassword {
-            errors["password"] = "Incorrect password"
-        }
-        
-        
         return errors
         
     }
     
     func goToUserHome(){
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "userHomeViewController") as! userHomeViewController
-        vc.userEmail = email.text
-        vc.userID = userID
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true, completion: nil)
+        let tb = storyboard.instantiateViewController(identifier: "Home") as! UITabBarController
+        let vcs = tb.viewControllers!
+        let home = vcs[0] as! userHomeViewController
+        home.userEmail = email.text
+        home.userID = userID
+        home.modalPresentationStyle = .fullScreen
+        present(tb, animated: true, completion: nil)
     }
     
     func goToParamedicHome(){
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "paramedicHomeViewController") as! paramedicHomeViewController
-        vc.loggedinEmail = email.text
-        print("login: \(String(describing: email.text))")
-        print("login: \(String(describing: vc.loggedinEmail))")
+        let vc = storyboard.instantiateViewController(withIdentifier: "requestsViewController") as! requestsViewController
+        vc.loggedInCenterEmail = email.text
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
-        
     }
     
-    
-    func showALert(message:String){
-        //show alert based on the message that is being paased as parameter
-        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-        let action = UIAlertAction(title: "Ok", style: .default)
-        alert.addAction(action)
-        present(alert, animated: true, completion: nil)
+    func goToResetPassword(){
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "resetPasswordViewController") as! resetPasswordViewController
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true, completion: nil)
     }
-    
-    
     
     //MARK: - @IBActions
+    @IBAction func emailEditingChanged(_ sender: UITextField) {
+        // validate the email
+        if sender.text == nil ||  sender.text == ""{
+            sender.setBorder(color: "error", image: UIImage(named: "emailError")!)
+        } else{
+            sender.setBorder(color: "valid", image:  UIImage(named: "emailValid")!)
+        }
+    }
+    
+    @IBAction func passwordEditingChanged(_ sender: UITextField) {
+        if sender.text == nil || sender.text == "" {
+            sender.setBorder(color: "error", image: UIImage(named: "lockError")!)
+        } else{
+            sender.setBorder(color: "valid", image:  UIImage(named: "lockValid")!)
+        }
+    }
+    
     @IBAction func loginpressed(_ sender: Any) {
-        
         let errors = validateFields()
         
         // if there are any errors show the error view
-        guard errors["email"] == "" && errors["password"] == "" else {
-            //showALert(message: errors["email"]!)
-            errorMessageLabel.text = "Invalid email or password"
-            errorView.isHidden = false
+        guard errors["email"] == ""  else {
+            SCLAlertView(appearance: self.apperance).showCustom("Invalid Credentials", subTitle: errors["email"]!, color: self.redUIColor, icon: alertIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+            
             return
         }
         
-        errorView.isHidden = true
+        guard errors["password"] == ""  else {
+            SCLAlertView(appearance: self.apperance).showCustom("Invalid Credentials", subTitle: errors["password"]!, color: self.redUIColor, icon: alertIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+            return
+        }
         
-        Auth.auth().signIn(withEmail: email.text!.trimWhiteSpace(), password: password.text!) { authResult, error in
+        Auth.auth().signIn(withEmail: email.text!.trimWhiteSpace(), password: password.text!) { [self] authResult, error in
             
             guard error == nil else{
                 //self.showALert(message: "Please ensure all fields are correct")
-                self.errorMessageLabel.text = "Invalid credentials"
-                self.errorView.isHidden = false
+                SCLAlertView(appearance: self.apperance).showCustom("Invalid Credentials", subTitle: "Incorrect email or password", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Got it!", circleIconImage: UIImage(named: "warning"), animationStyle: SCLAnimationStyle.topToBottom)
                 return
             }
-            
             // role authentication
             if(self.email.text!.isParamedicUser){
                 self.goToParamedicHome()
@@ -150,21 +157,24 @@ class loginViewController: UIViewController {
         }
     }
     
-    @IBAction func textFieldEditingChanged(_ sender: UITextField) {
-        if email.text == nil || email.text == "" || !email.text!.trimWhiteSpace().isValidEmail{
-            email.layer.borderColor = UIColor( red: 255/255, green: 94/255, blue:102/255, alpha: 1.0 ).cgColor
-        } else{
-            email.layer.borderColor = UIColor( red: 54/255, green: 53/255, blue:87/255, alpha: 1.0 ).cgColor
-        }
-        
-        if password.text == nil || password.text == "" || !password.text!.isValidPassword {
-            password.layer.borderColor = UIColor( red: 255/255, green: 94/255, blue:102/255, alpha: 1.0 ).cgColor
-        } else{
-            
-            password.layer.borderColor = UIColor( red: 54/255, green: 53/255, blue:87/255, alpha: 1.0 ).cgColor
-        }
-        
-        
+    @IBAction func forgotPasswordPressed(_ sender: Any) {
+        goToResetPassword()
+    }
+    
+    @IBAction func goToSignUp(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "signUpFirstViewController") as! signUpFirstViewController
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true, completion: nil)
+    }
+    
+    
+}
+
+extension loginViewController: UITextFieldDelegate{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true;
     }
 }
 

@@ -21,5 +21,6 @@ target 'TORQ' do
   pod 'Firebase/Core'
   pod 'Firebase/Firestore'
   pod 'Firebase/Auth'
+  pod 'SCLAlertView'
 
 end
