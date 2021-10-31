@@ -264,6 +264,10 @@ class addEmergencyContactViewController: UIViewController {
         
         let errors = validateFields()
         
+        if(errors["fullName"] != "" || errors["phone"] != "" || errors["relationship"] != "" || errors["msg"] != "") {
+            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "Make sure you entered all fields correctly" , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+        }
+        
         // if fields are empty
         guard errors["Empty"] == "" else {
             

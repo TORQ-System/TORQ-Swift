@@ -1,5 +1,6 @@
 import UIKit
 import FirebaseDatabase
+import SCLAlertView
 
 class hospitalsViewController: UIViewController ,UITableViewDelegate ,UITableViewDataSource, UIAlertViewDelegate{
     
@@ -26,7 +27,19 @@ class hospitalsViewController: UIViewController ,UITableViewDelegate ,UITableVie
                         "King Khalid Hospital",
                         "King Abduallah Hospital",
                         "Prince Sultan Hospital"]
-
+    let redUIColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
+    let blueUIColor = UIColor( red: 49/255, green: 90/255, blue:149/255, alpha: 1.0 )
+    let alertErrorIcon = UIImage(named: "errorIcon")
+    let alertSuccessIcon = UIImage(named: "successIcon")
+    let apperanceWithoutClose = SCLAlertView.SCLAppearance(
+        showCloseButton: false,
+        contentViewCornerRadius: 15,
+        buttonCornerRadius: 7)
+    let apperance = SCLAlertView.SCLAppearance(
+        contentViewCornerRadius: 15,
+        buttonCornerRadius: 7,
+        hideWhenBackgroundViewIsTapped: true)
+    
     
     //MARK: - Overriden Functions
     override func viewWillAppear(_ animated: Bool) {
@@ -103,8 +116,7 @@ class hospitalsViewController: UIViewController ,UITableViewDelegate ,UITableVie
     @IBAction func confirmPressed(_ sender: Any) {
         if selhealth == "None"{
             print(selhealth)
-            let alert = UIAlertController(title: "You must select", message: "Select or cancel", preferredStyle: UIAlertController.Style.alert)
-            self.present(alert, animated: true, completion: nil)
+            SCLAlertView(appearance: self.apperance).showCustom("Select a Hospital", subTitle: "You must select a hospital to process the request or cancel." , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
         }
         else {
             ref.child("Request").queryOrdered(byChild:"user_id").observe(.childAdded, with: {(snapshot) in
@@ -114,13 +126,15 @@ class hospitalsViewController: UIViewController ,UITableViewDelegate ,UITableVie
                         self.ref.child("Request").child(snapshotKey).updateChildValues(["status": "1"])
                         self.ref.child("processingRequest").childByAutoId().setValue(["healthcare":self.selhealth,"Rquest_id":dec["request_id"] as! String])
                         
-                        let alert = UIAlertController(title: "Confirmed", message: "The request has been send to the health care cenetr", preferredStyle: UIAlertController.Style.alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: { (action: UIAlertAction!) in
+                        let alertView = SCLAlertView(appearance: self.apperanceWithoutClose)
+                        
+                        alertView.addButton("Okay", backgroundColor: self.blueUIColor){
                             let presentingView = self.presentingViewController
                             self.dismiss(animated: false) {
                                 presentingView?.dismiss(animated: true)
-                            }}))
-                        self.present(alert, animated: true, completion: nil)
+                            }
+                        }
+                        alertView.showCustom("Confirmed!", subTitle: "The request has been send to the health care cenetr.", color: self.blueUIColor, icon: self.alertSuccessIcon!, animationStyle: SCLAnimationStyle.topToBottom)
                     }
                 }
             })
