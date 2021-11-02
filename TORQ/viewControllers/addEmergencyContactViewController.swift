@@ -382,7 +382,7 @@ class addEmergencyContactViewController: UIViewController {
         alertView.addButton("Got it!", backgroundColor: self.blueUIColor){
             self.dismiss(animated: true, completion: nil)
         }
-        alertView.showCustom("Emergency Contact Added!", subTitle: "You can delete it anytime from your emergeny contacts list.", color: self.blueUIColor, icon: self.alertSuccessIcon!, animationStyle: SCLAnimationStyle.topToBottom)
+        alertView.showCustom("Success!", subTitle: "Your emergency contact has been added successfully", color: self.blueUIColor, icon: self.alertSuccessIcon!, animationStyle: SCLAnimationStyle.topToBottom)
         
     }//Go to home screen
     

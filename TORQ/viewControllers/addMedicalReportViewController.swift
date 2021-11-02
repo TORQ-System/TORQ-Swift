@@ -349,7 +349,7 @@ class addMedicalReportViewController: UIViewController {
         alertView.addButton("Got it!", backgroundColor: self.blueUIColor){
             self.goToHomeScreen()
         }
-        alertView.showCustom("Medical Report is Updated!", subTitle: "You can delete it anytime from your medical report page.", color: self.blueUIColor, icon: self.alertSuccessIcon!, animationStyle: SCLAnimationStyle.topToBottom)
+        alertView.showCustom("Success!", subTitle: "Your medical report has been added successfully", color: self.blueUIColor, icon: self.alertSuccessIcon!, animationStyle: SCLAnimationStyle.topToBottom)
     }
     
     @IBAction func bloodTypeDidEnd(_ sender: UITextField) {
