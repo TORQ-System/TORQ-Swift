@@ -75,46 +75,50 @@ class addMedicalReportViewController: UIViewController {
         // set borders
         bloodTypeTextField.setBorder(color: "default", image: UIImage(named: "bloodDefault")!)
         chronicDisease.setBorder(color: "default", image: UIImage(named: "bandageDefault")!)
+        chronicDisease.clearsOnBeginEditing = false
         disability.setBorder(color: "default", image: UIImage(named: "disabilityDefault")!)
+        disability.clearsOnBeginEditing = false
         allergy.setBorder(color: "default", image: UIImage(named: "heartDefault")!)
+        allergy.clearsOnBeginEditing = false
         prescribedMedication.setBorder(color: "default", image: UIImage(named: "pillDefault")!)
+        prescribedMedication.clearsOnBeginEditing = false
         
         // set up blood type picker view
         setUpBloodTypePickerView()
-        configureKeyboard()
+//        configureKeyboard()
     }
     
     //MARK: - Overriden Functions
     
-    func configureKeyboard(){
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-        self.view!.addGestureRecognizer(tap)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardwillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    @objc func hideKeyboard(){
-        self.view.endEditing(true)
-    }
-    
-    @objc func keyboardwillShow(notification: NSNotification){
-        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue{
-            let keyboardHieght = keyboardFrame.cgRectValue.height
-            let bottomSpace = self.view.frame.height - (self.addButton.frame.origin.y + addButton.frame.height + 20)
-            self.view.frame.origin.y -= keyboardHieght - bottomSpace
-            
-        }
-        
-    }
-    
-    @objc func keyboardWillHide(){
-        self.view.frame.origin.y = 0
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
+//    func configureKeyboard(){
+//        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+//        self.view!.addGestureRecognizer(tap)
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardwillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+//    }
+//
+//    @objc func hideKeyboard(){
+//        self.view.endEditing(true)
+//    }
+//
+//    @objc func keyboardwillShow(notification: NSNotification){
+//        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue{
+//            let keyboardHieght = keyboardFrame.cgRectValue.height
+//            let bottomSpace = self.view.frame.height - (self.addButton.frame.origin.y + addButton.frame.height + 20)
+//            self.view.frame.origin.y -= keyboardHieght - bottomSpace
+//
+//        }
+//
+//    }
+//
+//    @objc func keyboardWillHide(){
+//        self.view.frame.origin.y = 0
+//    }
+//
+//    deinit {
+//        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+//        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+//    }
     
     func setUpBloodTypePickerView(){
         pickerView.delegate = self

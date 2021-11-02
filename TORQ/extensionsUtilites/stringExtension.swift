@@ -29,7 +29,7 @@ extension String {
     var isValidSequence: Bool{
         // Validate sequence
         // ^[a-zA-Z]+(,[a-zA-Z]+)*$
-        let regxName = "^[a-zA-Z]+(\\s?[a-zA-Z]?)+(,[a-zA-Z ]+\\s?[ a-zA-Z]+)*$"
+        let regxName = "^[a-zA-Z]+(\\s?[a-zA-Z]?)+(,[a-zA-Z]+\\s?[ a-zA-Z]+)*$"
         let nameTest = NSPredicate(format: "SELF MATCHES %@", regxName)
         return nameTest.evaluate(with: self)
     }

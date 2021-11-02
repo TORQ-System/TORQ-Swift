@@ -48,17 +48,19 @@ class signUpFirstViewController: UIViewController {
         
         // First name border
         fullName.setBorder(color: "default", image: UIImage(named: "personDefault")!)
+        fullName.clearsOnBeginEditing = false
         
         // Last name border
         confirmPassword.setBorder(color: "default", image: UIImage(named: "lockDefault")!)
         
         // email border
         email.setBorder(color: "default", image: UIImage(named: "emailDefault")!)
+        email.clearsOnBeginEditing = false
         
         // password border
         password.setBorder(color: "default", image: UIImage(named: "lockDefault")!)
         
-        configureKeyboard()
+//        configureKeyboard()
     }
     
     //MARK: - Functions
@@ -67,40 +69,40 @@ class signUpFirstViewController: UIViewController {
         return percentage
     }
     
-    func configureKeyboard(){
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-        self.view!.addGestureRecognizer(tap)
-        
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardwillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    @objc func hideKeyboard(){
-        self.view.endEditing(true)
-        
-    }
-    
-    @objc func keyboardwillShow(notification: NSNotification){
-        
-        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue{
-            let keyboardHieght = keyboardFrame.cgRectValue.height
-            let bottomSpace = self.view.frame.height - (self.textFieldsStackView.frame.origin.y + textFieldsStackView.frame.height)
-            self.view.frame.origin.y -= keyboardHieght - bottomSpace
-            
-        }
-        
-    }
-    
-    @objc func keyboardWillHide(){
-        self.view.frame.origin.y = 0
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
+//    func configureKeyboard(){
+//        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+//        self.view!.addGestureRecognizer(tap)
+//
+//
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardwillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+//
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+//    }
+//
+//    @objc func hideKeyboard(){
+//        self.view.endEditing(true)
+//
+//    }
+//
+//    @objc func keyboardwillShow(notification: NSNotification){
+//
+//        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue{
+//            let keyboardHieght = keyboardFrame.cgRectValue.height
+//            let bottomSpace = self.view.frame.height - (self.textFieldsStackView.frame.origin.y + textFieldsStackView.frame.height)
+//            self.view.frame.origin.y -= keyboardHieght - bottomSpace
+//
+//        }
+//
+//    }
+//
+//    @objc func keyboardWillHide(){
+//        self.view.frame.origin.y = 0
+//    }
+//
+//    deinit {
+//        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+//        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+//    }
     
     
     func validateFields() -> [String: String ]{
@@ -294,7 +296,7 @@ class signUpFirstViewController: UIViewController {
     }
     
     @IBAction func lastNameEditingChanged(_ sender: UITextField) {
-        confirmPassword.isSecureTextEntry = true
+//        confirmPassword.isSecureTextEntry = true
         let errors = validateFields()
         
         if errors["confirmPass"] == "" && !correctField["confirmPass"]!{

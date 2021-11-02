@@ -22,5 +22,6 @@ target 'TORQ' do
   pod 'Firebase/Firestore'
   pod 'Firebase/Auth'
   pod 'SCLAlertView'
+  pod 'IQKeyboardManagerSwift'
 
 end
