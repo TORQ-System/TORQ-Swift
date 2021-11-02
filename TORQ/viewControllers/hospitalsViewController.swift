@@ -121,7 +121,7 @@ class hospitalsViewController: UIViewController ,UITableViewDelegate ,UITableVie
         else {
             ref.child("Request").queryOrdered(byChild:"user_id").observe(.childAdded, with: {(snapshot) in
                 if let dec = snapshot.value as? [String :Any]{
-                    if (dec["user_id"] as! String == self.userMedicalReportID!){
+                    if (dec["user_id"] as! String == self.userMedicalReportID! && dec["status"]as! String == "0"){
                         let snapshotKey = snapshot.key
                         self.ref.child("Request").child(snapshotKey).updateChildValues(["status": "1"])
                         self.ref.child("processingRequest").childByAutoId().setValue(["healthcare":self.selhealth,"Rquest_id":dec["request_id"] as! String])

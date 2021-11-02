@@ -33,6 +33,19 @@ class requestReportViewController: UIViewController {
         configureView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        ref.child("Request").queryOrdered(byChild:"user_id").observe(.childAdded, with: {(snapshot) in
+            if let dec = snapshot.value as? [String :Any]{
+                if (dec["user_id"] as! String == self.userMedicalReportID! && dec["status"]as! String == "1"){self.prosseing0.alpha = 0
+                    
+                }
+            }
+        })
+            
+        
+                                                                     
+                                                                     }
+    
     
     //MARK: - Functions
     func configureView(){

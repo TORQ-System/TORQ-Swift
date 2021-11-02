@@ -13,6 +13,8 @@ class requestsViewController: UIViewController {
     @IBOutlet weak var namecenter: UILabel!
     @IBOutlet weak var backgroundView: UIView!
     
+    @IBOutlet weak var noprossing: UILabel!
+    @IBOutlet weak var segmentcontrol: UISegmentedControl!
     
     //MARK: - Variables
     var ref = Database.database().reference()
@@ -21,7 +23,8 @@ class requestsViewController: UIViewController {
     var loggedInCenter: [String: Any]?
     var myRequests: [Request] = []
     let refrechcon = UIRefreshControl()
-    
+    var prossed : [Request] = []
+    var switches = 0
     //MARK: - Overriden function
     override func viewWillAppear(_ animated: Bool) {
         getRequests()
@@ -53,6 +56,7 @@ class requestsViewController: UIViewController {
         gradient.frame = backgroundView.layer.frame
         backgroundView.layer.insertSublayer(gradient, at: 0)
     }
+   
     
     func configureContainerView(){
         assignedRequests.alpha = 0
@@ -88,6 +92,7 @@ class requestsViewController: UIViewController {
     func getRequests(){
         requests.removeAll()
         myRequests.removeAll()
+        prossed.removeAll()
         
         ref.child("Request").queryOrdered(byChild: "time_stamp").observe(.value) { snapshot in
             for contact in snapshot.children{
@@ -105,10 +110,12 @@ class requestsViewController: UIViewController {
                 let request = Request(user_id:user_id, sensor_id: sensor_id, request_id: request_id, dateTime: time_stamp, longitude: lonitude, latitude:latitude , vib: vib, rotation:rotation , status: status )
                 
                 //get active requests only
-                if ( request.getStatus() == "0" ) {
+              //  if ( request.getStatus() == "0" ) {
                     self.requests.append(request)
                     self.nearest(longitude: request.getLongitude(), latitude: request.getLatitude(), request: request)
-                }}}
+                //}
+                
+            }}
         
         requestsColletionView.reloadData()
     }
@@ -125,7 +132,17 @@ class requestsViewController: UIViewController {
                 }
                 i = i+1
             }
-            myRequests.append(request)
+            for item in prossed {
+                if item.request_id == request.request_id {
+                    prossed.remove(at:i )
+                }
+                i = i+1
+            }
+            if request.status == "0"{
+                myRequests.append(request)}
+            else if request.status == "1"{
+                prossed.append(request)
+            }
             self.requestsColletionView.reloadData()
         }
     }
@@ -183,6 +200,9 @@ class requestsViewController: UIViewController {
             print (error.localizedDescription)
         }
     }
+    @IBAction func segment(_ sender: Any) {
+        requestsColletionView.reloadData()
+    }
 }
 
 //MARK: - Extension
@@ -191,24 +211,52 @@ extension requestsViewController: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(identifier: "requestReportViewController") as! requestReportViewController
+        if switches==1{
         vc.lang = Double(myRequests[indexPath.row].getLatitude())!
         vc.long = Double(myRequests[indexPath.row].getLongitude())!
         vc.time = myRequests[indexPath.row].getDateTime()
         vc.userMedicalReportID = String(myRequests[indexPath.row].getUserID())
         vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: true, completion: nil)
+            self.present(vc, animated: true, completion: nil)}
+        if switches==2{
+        vc.lang = Double(prossed[indexPath.row].getLatitude())!
+        vc.long = Double(prossed[indexPath.row].getLongitude())!
+        vc.time = prossed[indexPath.row].getDateTime()
+        vc.userMedicalReportID = String(prossed[indexPath.row].getUserID())
+        vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)}
     }
     
 }
 
 extension requestsViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if myRequests.count == 0 {
-            assignedRequests.alpha = 1
-        }else{
+        
+        
+        
+        switch segmentcontrol.selectedSegmentIndex{
+        case 0:
+            noprossing.alpha = 0
+
+            if myRequests.count == 0 {
+                assignedRequests.alpha = 1
+            }else{
+                assignedRequests.alpha = 0
+            }
+            return myRequests.count
+        case 1:
             assignedRequests.alpha = 0
+
+            if prossed.count == 0 {
+                noprossing.alpha = 1
+            }else{
+                noprossing.alpha = 0
+            }
+            return prossed.count
+        default:
+            break
         }
-        return myRequests.count
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -216,14 +264,36 @@ extension requestsViewController: UICollectionViewDataSource{
         
         cell.shadowDecorate()
         
-        
-        cell.name.text = "Accident #\(indexPath.row)"
+        switch segmentcontrol.selectedSegmentIndex{
+        case 0:
+            switches = 1
+            print(switches)
+            cell.name.text = "Accident #\(indexPath.row)"
 
-        cell.dateTime.text = myRequests[indexPath.row].getDateTime()
-        
-        cell.viewbutten.tag = indexPath.row
-        cell.viewbutten.addTarget(self, action: #selector(viewbutten(sender: )), for: .touchUpInside)
-        
+            cell.dateTime.text = myRequests[indexPath.row].getDateTime()
+            
+            cell.viewbutten.tag = indexPath.row
+            cell.viewbutten.addTarget(self, action: #selector(viewbutten(sender: )), for: .touchUpInside)
+            
+        case 1:
+            switches = 2
+            print(switches)
+            cell.name.text = "Accident #\(indexPath.row)"
+
+            cell.dateTime.text = prossed[indexPath.row].getDateTime()
+            
+            cell.viewbutten.tag = indexPath.row
+            cell.viewbutten.addTarget(self, action: #selector(viewbutten(sender: )), for: .touchUpInside)
+        default:
+            break
+        }
+//        cell.name.text = "Accident #\(indexPath.row)"
+//
+//        cell.dateTime.text = myRequests[indexPath.row].getDateTime()
+//
+//        cell.viewbutten.tag = indexPath.row
+//        cell.viewbutten.addTarget(self, action: #selector(viewbutten(sender: )), for: .touchUpInside)
+//
         return cell
     }
 }
