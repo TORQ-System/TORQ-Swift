@@ -60,6 +60,8 @@ extension UIViewController {
                             self.lateUpdateEmergencyContacts(userID: userID)
                         }
                         
+                        
+                        
                         // register to the notification center
                         center.getNotificationSettings { setting in
                             if setting.authorizationStatus == .authorized{
@@ -68,6 +70,18 @@ extension UIViewController {
                                         print(error!.localizedDescription)
                                         return
                                     }
+
+                                    let date = Date()
+                                    let calendar = Calendar.current
+                                    let hour = calendar.component(.hour, from: date)
+                                    let minutes = calendar.component(.minute, from: date)
+                                    let seconds = calendar.component(.second, from: date)
+                                    let day = calendar.component(.day, from: date)
+                                    let month = calendar.component(.month, from: date)
+                                    let year = calendar.component(.year, from: date)
+                                    
+                                    ref.child("Notification").childByAutoId().setValue(["title":content.title, "subtitle":content.subtitle, "body":content.body, "date": "\(day)-\(month)-\(year)", "time": "\(hour):\(minutes):\(seconds)", "type": "wellbeing", "sender":userID, "receiver": userID])
+                                    
                                     NSLog("sent");
                                 }
                             } else {
@@ -81,6 +95,19 @@ extension UIViewController {
                                             print(error!.localizedDescription)
                                             return
                                         }
+                                        
+
+                                        let date = Date()
+                                        let calendar = Calendar.current
+                                        let hour = calendar.component(.hour, from: date)
+                                        let minutes = calendar.component(.minute, from: date)
+                                        let seconds = calendar.component(.second, from: date)
+                                        let day = calendar.component(.day, from: date)
+                                        let month = calendar.component(.month, from: date)
+                                        let year = calendar.component(.year, from: date)
+                                        
+                                        ref.child("Notification").childByAutoId().setValue(["title":content.title, "subtitle":content.subtitle, "body":content.body, "date": "\(day)-\(month)-\(year)", "time": "\(hour):\(minutes):\(seconds)", "type": "wellbeing", "sender":userID, "receiver": userID])
+                                        
                                         NSLog("sent");
                                     }
                                 }
@@ -134,6 +161,19 @@ extension UIViewController {
                                     print(error!.localizedDescription)
                                     return
                                 }
+                                
+                                let date = Date()
+                                let calendar = Calendar.current
+                                let hour = calendar.component(.hour, from: date)
+                                let minutes = calendar.component(.minute, from: date)
+                                let seconds = calendar.component(.second, from: date)
+                                let day = calendar.component(.day, from: date)
+                                let month = calendar.component(.month, from: date)
+                                let year = calendar.component(.year, from: date)
+                                
+                                ref.child("Notification").childByAutoId().setValue(["title":content.title, "subtitle": "none", "body":content.body, "date": "\(day)-\(month)-\(year)", "time": "\(hour):\(minutes):\(seconds)", "type": "emergency", "sender":senderID, "receiver": receiverID])
+                                
+                                
                             }
                         }
                         

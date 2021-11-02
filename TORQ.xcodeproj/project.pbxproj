@@ -53,6 +53,7 @@
 		BEF97539270AE07400325281 /* loginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF97538270AE07400325281 /* loginViewController.swift */; };
 		BEF9753B270AE0D100325281 /* userHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9753A270AE0D100325281 /* userHomeViewController.swift */; };
 		BEF9753D270AE0E500325281 /* paramedicHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9753C270AE0E500325281 /* paramedicHomeViewController.swift */; };
+		DABADB902731785600ACA44A /* notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABADB8F2731785600ACA44A /* notification.swift */; };
 		FC4BF75E181535F7BB4C96B1 /* Pods_TORQTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D35DF5D9259C289028E18D8 /* Pods_TORQTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -133,6 +134,7 @@
 		BEF97538270AE07400325281 /* loginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginViewController.swift; sourceTree = "<group>"; };
 		BEF9753A270AE0D100325281 /* userHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userHomeViewController.swift; sourceTree = "<group>"; };
 		BEF9753C270AE0E500325281 /* paramedicHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = paramedicHomeViewController.swift; sourceTree = "<group>"; };
+		DABADB8F2731785600ACA44A /* notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = notification.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -205,6 +207,7 @@
 				BE9CDAE62729D78200CDD4B4 /* MedicalReport.swift */,
 				BE9CDAE82729F66A00CDD4B4 /* User.swift */,
 				BE64405B272C6F2B0051662F /* Sensor.swift */,
+				DABADB8F2731785600ACA44A /* notification.swift */,
 			);
 			path = modules;
 			sourceTree = "<group>";
@@ -572,6 +575,7 @@
 				BE34F6AB27118A800093C633 /* onboardingScreen1ViewController.swift in Sources */,
 				BE34F69D270F30B70093C633 /* requestCollectionViewCell.swift in Sources */,
 				BE34F6AF27118A9E0093C633 /* onboardingScreen3ViewController.swift in Sources */,
+				DABADB902731785600ACA44A /* notification.swift in Sources */,
 				BEC34A252728710C001E99E5 /* emergencyContact.swift in Sources */,
 				BE04B6D4272DAA0600EEE3EE /* hospitalsViewController.swift in Sources */,
 				BEDC3C1A272681AE0026948E /* tabBarController.swift in Sources */,
@@ -770,13 +774,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Q839S77BZ7;
+				DEVELOPMENT_TEAM = 3XY36RL6YG;
 				INFOPLIST_FILE = TORQ/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = NAAS.TORQ;
+				PRODUCT_BUNDLE_IDENTIFIER = NS.TORQ;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -790,13 +794,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5P89X4DH5A;
+				DEVELOPMENT_TEAM = 3XY36RL6YG;
 				INFOPLIST_FILE = TORQ/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Alsufih.TORQ;
+				PRODUCT_BUNDLE_IDENTIFIER = NS.TORQ;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
