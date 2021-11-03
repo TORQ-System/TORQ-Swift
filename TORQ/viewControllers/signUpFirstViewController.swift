@@ -68,42 +68,7 @@ class signUpFirstViewController: UIViewController {
         let percentage = Int((Float(numberOfCompleted)/8.0) * 100)
         return percentage
     }
-    
-//    func configureKeyboard(){
-//        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-//        self.view!.addGestureRecognizer(tap)
-//
-//
-//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardwillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-//
-//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-//    }
-//
-//    @objc func hideKeyboard(){
-//        self.view.endEditing(true)
-//
-//    }
-//
-//    @objc func keyboardwillShow(notification: NSNotification){
-//
-//        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue{
-//            let keyboardHieght = keyboardFrame.cgRectValue.height
-//            let bottomSpace = self.view.frame.height - (self.textFieldsStackView.frame.origin.y + textFieldsStackView.frame.height)
-//            self.view.frame.origin.y -= keyboardHieght - bottomSpace
-//
-//        }
-//
-//    }
-//
-//    @objc func keyboardWillHide(){
-//        self.view.frame.origin.y = 0
-//    }
-//
-//    deinit {
-//        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-//        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-//    }
-    
+
     
     func validateFields() -> [String: String ]{
         var error: [String: String ] = ["Empty": "","fullName": "" ,"confirmPass": "" ,"email": "", "password":""]
