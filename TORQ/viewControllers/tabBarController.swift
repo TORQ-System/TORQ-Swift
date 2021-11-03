@@ -20,5 +20,6 @@ class tabBarController: UITabBarController {
         tabBar.layer.shadowRadius = 10
         tabBar.layer.masksToBounds =  false
         tabBar.tintColor = UIColor(red: 0.83921569, green: 0.33333333, blue: 0.42352941, alpha: 1)
+
     }
 }
