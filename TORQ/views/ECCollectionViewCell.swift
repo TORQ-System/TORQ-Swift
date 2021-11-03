@@ -10,11 +10,9 @@ import FirebaseDatabase
 
 class ECCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var namrLabel: UILabel!
     @IBOutlet weak var name: UILabel!
-    @IBOutlet weak var phoneLabel: UILabel!
     @IBOutlet weak var phone: UILabel!
-    @IBOutlet weak var relationLabel: UILabel!
     @IBOutlet weak var relation: UILabel!
     @IBOutlet weak var deleteECButton: UIButton!
+    @IBOutlet weak var editButton: UIButton!
 }
