@@ -85,9 +85,12 @@ class loginViewController: UIViewController {
         let tb = storyboard.instantiateViewController(identifier: "Home") as! UITabBarController
         let vcs = tb.viewControllers!
         let home = vcs[0] as! userHomeViewController
+        let notification = vcs[2] as! notificationCenterViewController
         home.userEmail = email.text
         home.userID = userID
         home.modalPresentationStyle = .fullScreen
+        notification.userID = userID
+        notification.modalPresentationStyle = .fullScreen
         present(tb, animated: true, completion: nil)
     }
     
