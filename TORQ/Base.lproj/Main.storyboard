@@ -788,39 +788,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="67" translatesAutoresizingMaskIntoConstraints="NO" id="MXJ-AO-8dT" userLabel="Top Bar">
-                                <rect key="frame" x="30" y="44" width="354" height="32"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HXi-Hw-Lkc">
-                                        <rect key="frame" x="0.0" y="0.0" width="86.5" height="32"/>
-                                        <color key="tintColor" red="0.83749955890000005" green="0.33231014009999998" blue="0.42352765799999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                        <state key="normal" title="  back" image="chevron.left" catalog="system">
-                                            <color key="titleColor" red="0.83749955890000005" green="0.33231014009999998" blue="0.42352765799999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="backButtonPressed:" destination="A4a-8b-mps" eventType="touchUpInside" id="aDf-Q4-iU1"/>
-                                            <action selector="backToHome:" destination="8as-oH-KCZ" eventType="touchUpInside" id="Gap-br-JIG"/>
-                                        </connections>
-                                    </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Edit Account" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vab-R6-In1">
-                                        <rect key="frame" x="153.5" y="0.0" width="96.5" height="32"/>
-                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
-                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BdE-BZ-lcz">
-                                        <rect key="frame" x="317" y="0.0" width="37" height="32"/>
-                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
-                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" title="Save">
-                                            <color key="titleColor" red="0.28627450980392155" green="0.6705882352941176" blue="0.87450980392156863" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="saveButtonPressed:" destination="A4a-8b-mps" eventType="touchUpInside" id="9Pf-rF-Fsc"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                            </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4sl-bk-dKm">
                                 <rect key="frame" x="0.0" y="176" width="414" height="720"/>
                                 <subviews>
@@ -1008,17 +975,50 @@
                                     <constraint firstItem="Jg1-YE-jqo" firstAttribute="top" secondItem="4sl-bk-dKm" secondAttribute="top" constant="50" id="mhd-44-Ye2"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HXi-Hw-Lkc">
+                                <rect key="frame" x="30" y="44" width="61.5" height="22"/>
+                                <color key="tintColor" red="0.83749955890000005" green="0.33231014009999998" blue="0.42352765799999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <state key="normal" title="  back" image="chevron.left" catalog="system">
+                                    <color key="titleColor" red="0.83749955890000005" green="0.33231014009999998" blue="0.42352765799999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </state>
+                                <connections>
+                                    <action selector="backButtonPressed:" destination="A4a-8b-mps" eventType="touchUpInside" id="aDf-Q4-iU1"/>
+                                    <action selector="backToHome:" destination="8as-oH-KCZ" eventType="touchUpInside" id="Gap-br-JIG"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Edit Account" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vab-R6-In1">
+                                <rect key="frame" x="159" y="44" width="96.5" height="19.5"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BdE-BZ-lcz">
+                                <rect key="frame" x="347" y="44" width="37" height="32"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Save">
+                                    <color key="titleColor" red="0.28627450980392155" green="0.6705882352941176" blue="0.87450980392156863" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </state>
+                                <connections>
+                                    <action selector="saveButtonPressed:" destination="A4a-8b-mps" eventType="touchUpInside" id="9Pf-rF-Fsc"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="tGJ-aS-xAk"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="tGJ-aS-xAk" firstAttribute="trailing" secondItem="BdE-BZ-lcz" secondAttribute="trailing" constant="30" id="8FD-1e-ocH"/>
+                            <constraint firstItem="Vab-R6-In1" firstAttribute="centerX" secondItem="heY-82-q3u" secondAttribute="centerX" id="CSe-by-nIM"/>
+                            <constraint firstItem="HXi-Hw-Lkc" firstAttribute="top" secondItem="tGJ-aS-xAk" secondAttribute="top" id="KNy-OB-Nal"/>
                             <constraint firstAttribute="bottom" secondItem="4sl-bk-dKm" secondAttribute="bottom" id="ORm-EZ-zf7"/>
-                            <constraint firstItem="MXJ-AO-8dT" firstAttribute="top" secondItem="tGJ-aS-xAk" secondAttribute="top" id="Sqf-0K-KYL"/>
-                            <constraint firstItem="tGJ-aS-xAk" firstAttribute="trailing" secondItem="MXJ-AO-8dT" secondAttribute="trailing" constant="30" id="UJJ-0e-1B5"/>
+                            <constraint firstItem="Vab-R6-In1" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="HXi-Hw-Lkc" secondAttribute="trailing" constant="8" symbolic="YES" id="QyS-nT-Yd8"/>
+                            <constraint firstItem="4sl-bk-dKm" firstAttribute="centerX" secondItem="Vab-R6-In1" secondAttribute="centerX" id="Yjg-in-TLL"/>
                             <constraint firstItem="4sl-bk-dKm" firstAttribute="leading" secondItem="heY-82-q3u" secondAttribute="leading" id="aSq-8z-h7N"/>
-                            <constraint firstItem="MXJ-AO-8dT" firstAttribute="leading" secondItem="tGJ-aS-xAk" secondAttribute="leading" constant="30" id="jwW-Y4-dBZ"/>
-                            <constraint firstItem="4sl-bk-dKm" firstAttribute="top" secondItem="MXJ-AO-8dT" secondAttribute="bottom" constant="100" id="qbt-nL-CR9"/>
-                            <constraint firstItem="4sl-bk-dKm" firstAttribute="centerX" secondItem="MXJ-AO-8dT" secondAttribute="centerX" id="yFW-rs-3It"/>
+                            <constraint firstItem="HXi-Hw-Lkc" firstAttribute="leading" secondItem="tGJ-aS-xAk" secondAttribute="leading" constant="30" id="cgD-W3-fBg"/>
+                            <constraint firstItem="4sl-bk-dKm" firstAttribute="top" secondItem="heY-82-q3u" secondAttribute="top" constant="176" id="cyY-Uv-VU9"/>
+                            <constraint firstItem="Vab-R6-In1" firstAttribute="top" secondItem="tGJ-aS-xAk" secondAttribute="top" id="jJK-Cy-xKB"/>
+                            <constraint firstItem="BdE-BZ-lcz" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Vab-R6-In1" secondAttribute="trailing" constant="8" symbolic="YES" id="sHr-8s-bKM"/>
+                            <constraint firstItem="BdE-BZ-lcz" firstAttribute="top" secondItem="tGJ-aS-xAk" secondAttribute="top" id="ylJ-bP-gcu"/>
                         </constraints>
                     </view>
                     <connections>
@@ -3631,8 +3631,8 @@
         <image name="person.2.fill" catalog="system" width="128" height="80"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="phone.fill" catalog="system" width="128" height="114"/>
-        <image name="plus" catalog="system" width="128" height="113"/>
         <image name="plus" width="117" height="112"/>
+        <image name="plus" catalog="system" width="128" height="113"/>
         <image name="pulse" width="300" height="214"/>
         <image name="rec" width="277" height="280"/>
         <image name="star" width="150" height="150"/>

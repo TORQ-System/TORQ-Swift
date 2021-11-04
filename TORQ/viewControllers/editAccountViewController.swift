@@ -219,17 +219,17 @@ class editAccountViewController: UIViewController {
             return
         }
         
-        ref.child("User").child(userID!).setValue(["fullName": updatedUser["fullName"], "phone": updatedUser["phoneNumber"], "gender": updatedUser["gender"], "dateOfBirth": updatedUser["birthDate"] ]){
+        ref.child("User").child(userID!).updateChildValues(["fullName": updatedUser["fullName"]!, "phone": updatedUser["phoneNumber"], "gender": updatedUser["gender"], "dateOfBirth": updatedUser["birthDate"] ]){
             (error : Error?, ref: DatabaseReference) in
-            if let error = errot{
-                SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "An error ocuured, please try again later", color: self.redUIColor, icon: alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+            if error != nil{
+                SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "An error ocuured, please try again later", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
             }
             else{
                 SCLAlertView(appearance: self.apperance).showCustom("Success!", subTitle: "We have updated your information", color: self.blueUIColor, icon: self.alertSuccessIcon!, closeButtonTitle: "Okay", animationStyle: SCLAnimationStyle.topToBottom)
+                self.fetchUserData()
             }
         }
-        
-        
+    
     }
     
     @IBAction func changePasswordPressed(_ sender: Any) {
