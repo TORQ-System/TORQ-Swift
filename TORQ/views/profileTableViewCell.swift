@@ -11,6 +11,7 @@ class profileTableViewCell: UITableViewCell {
     
     
     //MARK:- @IBOutlts
+    @IBOutlet weak var cellContainer: UIView!
     @IBOutlet weak var serviceImage: UIImageView!
     @IBOutlet weak var serviceLabel: UILabel!
     @IBOutlet weak var seriviceButton: UIButton!
@@ -28,12 +29,8 @@ class profileTableViewCell: UITableViewCell {
     }
     
     override func layoutSubviews() {
-        
-        // Set the width of the cell
-        self.bounds = CGRect(x: self.bounds.origin.x, y: self.bounds.origin.y, width: self.bounds.size.width - 40, height: self.bounds.size.height)
-        super.layoutSubviews()
-        contentView.layer.cornerRadius = 8
-        contentView.layer.masksToBounds = true
+        cellContainer.layer.cornerRadius = 8
+        cellContainer.layer.masksToBounds = true
     }
 
 }

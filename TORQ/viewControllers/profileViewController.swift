@@ -17,6 +17,7 @@ class profileViewController: UIViewController {
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var userEmail: UILabel!
     @IBOutlet weak var joinedLabel: UILabel!
+    @IBOutlet weak var tableView: UITableView!
     
     
     //MARK: - Variables
@@ -34,6 +35,7 @@ class profileViewController: UIViewController {
         fetchQueue.sync {
             retreieveUser()
         }
+        tableView.backgroundColor = .lightGray
         
         
         
