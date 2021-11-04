@@ -6,17 +6,123 @@
 //
 
 import UIKit
+import Firebase
 
 class AccidentHistoryViewController: UIViewController {
-
+    
+    //MARK: - @IBOutlets
+    @IBOutlet weak var accidents: UICollectionView!
+    
+    
+    //MARK: - Variables
+    var userID: String?
+    var ref = Database.database().reference()
+    var accidentsArray : [Request] = []
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        fetchAccidents(userID: userID!)
     }
     
+    //MARK: - Functions
+    func fetchAccidents(userID: String){
+        
+        let searchQueue = DispatchQueue.init(label: "searchQueue")
+        
+        searchQueue.sync {
+            
+            ref.child("Request").observe(.childAdded) { snapshot in
+                
+                let obj = snapshot.value as! [String: Any]
+                let user_id = obj["user_id"] as! String
+                let sensor_id = obj["sensor_id"] as! String
+                let request_id = obj["request_id"] as! String
+                let time_stamp = obj["time_stamp"] as! String
+                let rotation = obj["rotation"] as! String
+                let status = obj["status"] as! String
+                let vib = obj["vib"] as! String
+                let longitude = obj["longitude"] as! String
+                let latitude = obj["latitude"] as! String
+                
+                let request = Request(user_id:user_id, sensor_id: sensor_id, request_id: request_id, dateTime: time_stamp, longitude: longitude, latitude:latitude , vib: vib, rotation:rotation , status: status )
+                
+                if ( userID == request.getUserID() && ( request.getStatus() == "1" ||  request.getStatus() == "2" )  ) {
+                    self.accidentsArray.append(request)
+                    self.accidents.reloadData()
+                }
+                
+    }
+}
+}
+    
+    @IBAction func backButton(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+}
+    
+//MARK: - extinsions
 
-    /*
+    extension AccidentHistoryViewController: UICollectionViewDataSource{
+        
+        // tell the collection view how many cells to make
+        func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+            return accidentsArray.count
+        }
+        
+        func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+            // get a reference to our storyboard cell
+            if ( accidentsArray.count == 0 ) {
+                //noAdded.alpha = 1
+            } else{
+                //noAdded.alpha = 0
+            }
+            
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath as IndexPath) as! AccidentsCollectionViewCell
+            cell.layer.cornerRadius = 10
+            cell.layer.masksToBounds = false
+            cell.layer.shadowColor = UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1).cgColor
+            cell.layer.shadowOpacity = 1
+            cell.layer.shadowRadius = 70
+            cell.layer.shadowOffset = CGSize(width: 5, height: 5)
+            cell.layer.borderColor = CGColor(red: 0, green: 0, blue: 0, alpha: 1)
+            cell.accidentLabel.text = "Accident #\(indexPath.row)"
+            cell.vibrationLabel.text = "Vibration: "
+            cell.vibration.text = "\(accidentsArray[indexPath.row].getVib())"
+            cell.inclinationLabel.text = "Inclination: "
+            cell.inclination.text = "\(accidentsArray[indexPath.row].getRotation())"
+                if ( accidentsArray[indexPath.row].getStatus() == "1" ) {
+                    cell.status.text = "Processed"
+                }
+                else {
+                    cell.status.text = "Canceled"
+                }
+            var date: String
+            var alteredDate: String
+            date = accidentsArray[indexPath.row].getDateTime()
+            alteredDate = String((date.prefix(10)))
+            cell.date.text = alteredDate
+            
+            return cell
+            
+        }
+    }
+
+    extension AccidentHistoryViewController: UICollectionViewDelegateFlowLayout{
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 374, height: 160)
+    }
+}
+
+extension AccidentHistoryViewController: UICollectionViewDelegate{
+    
+    
+}
+
+
+
+   /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -26,4 +132,5 @@ class AccidentHistoryViewController: UIViewController {
     }
     */
 
-}
+
+ 
