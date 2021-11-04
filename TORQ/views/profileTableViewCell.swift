@@ -29,7 +29,7 @@ class profileTableViewCell: UITableViewCell {
     }
     
     override func layoutSubviews() {
-        cellContainer.layer.cornerRadius = 8
+        cellContainer.layer.cornerRadius = 20
         cellContainer.layer.masksToBounds = true
     }
 

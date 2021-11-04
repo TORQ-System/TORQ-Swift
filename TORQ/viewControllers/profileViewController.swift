@@ -35,7 +35,21 @@ class profileViewController: UIViewController {
         fetchQueue.sync {
             retreieveUser()
         }
-        tableView.backgroundColor = .lightGray
+        
+        strokeView.layer.cornerRadius = 85
+        strokeView.layer.masksToBounds = true
+        strokeView.backgroundColor = .clear
+        strokeView.layer.borderWidth = 1
+        strokeView.layer.borderColor = UIColor(red: 0.83921569, green: 0.33333333, blue: 0.42352941, alpha: 1).cgColor
+        
+        imageContainer.layer.cornerRadius = 75
+        imageContainer.layer.masksToBounds = true
+        
+        
+        tableView.layer.cornerRadius = 20
+        tableView.layer.masksToBounds = true
+        tableView.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMinYCorner]
+        
         
         
         
