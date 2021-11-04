@@ -9,7 +9,7 @@ import UIKit
 
 class servicesCollectionViewCell: UICollectionViewCell {
     
-    //MARK:- @IBAoutlets
+    //MARK: - @IBOutlets
     @IBOutlet weak var serviceImage: UIImageView!
     @IBOutlet weak var serviceLabel: UILabel!
     

@@ -13,7 +13,6 @@ import SCLAlertView
 
 class editAccountViewController: UIViewController {
     
-    
     //MARK: - @IBOutlets
     @IBOutlet weak var accountView: UIView!
     @IBOutlet weak var gender: UISegmentedControl!
@@ -21,6 +20,7 @@ class editAccountViewController: UIViewController {
     @IBOutlet weak var birthDate: UITextField!
     @IBOutlet weak var phoneNumber: UITextField!
     @IBOutlet weak var nationalID: UITextField!
+    @IBOutlet weak var settingsCollectionView: UICollectionView!
     
     //MARK: - Variables
     var ref = Database.database().reference()
@@ -34,6 +34,7 @@ class editAccountViewController: UIViewController {
     let alertSuccessIcon = UIImage(named: "successIcon")
     let apperanceWithoutClose = SCLAlertView.SCLAppearance( showCloseButton: false, contentViewCornerRadius: 15, buttonCornerRadius: 7)
     let apperance = SCLAlertView.SCLAppearance( contentViewCornerRadius: 15, buttonCornerRadius: 7, hideWhenBackgroundViewIsTapped: true)
+    let settings = ["Change Email","Change Password"]
     
     //MARK: - Overriden Functions
     override func viewDidLoad() {
@@ -52,7 +53,7 @@ class editAccountViewController: UIViewController {
     
     //MARK: - Functions
     func configureAccountView(){
-        accountView.layer.cornerRadius = 25
+        accountView.layer.cornerRadius = 50
         accountView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         accountView.layer.shadowColor = UIColor.black.cgColor
         accountView.layer.shadowOpacity = 0.25
@@ -88,7 +89,7 @@ class editAccountViewController: UIViewController {
         toolbar.sizeToFit()
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(chooseDate))
         toolbar.setItems([doneButton], animated: true)
-        doneButton.tintColor = UIColor(red: 0.974, green: 0.666, blue: 0.341, alpha: 1)
+        doneButton.tintColor = blueUIColor
         birthDate.inputView = datePicker
         birthDate.inputAccessoryView = toolbar
         datePicker.datePickerMode = .date
@@ -101,6 +102,7 @@ class editAccountViewController: UIViewController {
         formatter.dateStyle = .medium
         formatter.timeStyle = .none
         birthDate.text = formatter.string(from: datePicker.date)
+        birthDate.setBorder(color: "valid", image: UIImage(named: "calendarValid")!)
         self.view.endEditing(true)
     }
     
@@ -122,7 +124,7 @@ class editAccountViewController: UIViewController {
             self.user = User(dateOfBirth: birthDate, email: email, fullName: fullName, gender: gender, nationalID: nationalID, password:password, phone: phone)
             
             self.datePicker.date = formatter.date(from: birthDate)!
-
+            
             self.fullName.text = fullName
             self.gender.selectedSegmentIndex = self.selectGender(gender: gender)
             self.birthDate.text = birthDate
@@ -131,7 +133,6 @@ class editAccountViewController: UIViewController {
         })
         
     }
-    
     
     func selectGender(gender:String) -> Int{
         switch gender{
@@ -170,7 +171,6 @@ class editAccountViewController: UIViewController {
             errors["phoneNumber"] = "Phone number cannot be empty"
         }
         
-        
         return errors
     }
     
@@ -207,19 +207,25 @@ class editAccountViewController: UIViewController {
             return
         }
         
+        
+        fullName.setBorder(color: "valid", image: UIImage(named: "personValid")!)
+        nationalID.setBorder(color: "valid", image: UIImage(named: "idValid")!)
+        phoneNumber.setBorder(color: "valid", image: UIImage(named: "phoneValid")!)
+        birthDate.setBorder(color: "valid", image: UIImage(named: "calendarValid")!)
+        
         let updatedUser = ["birthDate": birthDate.text!,
                            "fullName": fullName.text!,
                            "gender": fetchGender(),
                            "nationalID": nationalID.text!,
                            "phoneNumber": phoneNumber.text!]
-
-    
+        
+        
         if(user?.getFullName() == updatedUser["fullName"] && user?.getDateOfBirth() == updatedUser["birthDate"] && user?.getGender() == updatedUser["gender"] && user?.getPhone() == updatedUser["phoneNumber"]){
             SCLAlertView(appearance: self.apperance).showCustom("Credentials Didn't Change", subTitle: "You have not updated your information yet!", color: self.redUIColor, icon: alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
             return
         }
         
-        ref.child("User").child(userID!).updateChildValues(["fullName": updatedUser["fullName"]!, "phone": updatedUser["phoneNumber"], "gender": updatedUser["gender"], "dateOfBirth": updatedUser["birthDate"] ]){
+        ref.child("User").child(userID!).updateChildValues(["fullName": updatedUser["fullName"]!, "phone": updatedUser["phoneNumber"]!, "gender": updatedUser["gender"]!, "dateOfBirth": updatedUser["birthDate"]! ]){
             (error : Error?, ref: DatabaseReference) in
             if error != nil{
                 SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "An error ocuured, please try again later", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
@@ -229,21 +235,7 @@ class editAccountViewController: UIViewController {
                 self.fetchUserData()
             }
         }
-    
-    }
-    
-    @IBAction func changePasswordPressed(_ sender: Any) {
-        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-        let loginVC = storyboard.instantiateViewController(identifier: "changePasswordViewController") as! changePasswordViewController
-        loginVC.modalPresentationStyle = .fullScreen
-        self.present(loginVC, animated: true, completion: nil)
-    }
-    
-    @IBAction func changeEmailPressed(_ sender: Any) {
-        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-        let loginVC = storyboard.instantiateViewController(identifier: "changeEmailViewController") as! changeEmailViewController
-        loginVC.modalPresentationStyle = .fullScreen
-        self.present(loginVC, animated: true, completion: nil)
+        
     }
     
     @IBAction func fullNameEditingChanged(_ sender: Any) {
@@ -256,14 +248,13 @@ class editAccountViewController: UIViewController {
         fullName.setBorder(color: "valid", image: UIImage(named: "personValid")!)
     }
     
-    @IBAction func phoneNumberEditingChanged(_ sender: Any) {
+    @IBAction func phoneNumberEditingChanged(_ sender: UITextField) {
         let errors = validateFields()
         
         guard errors["phoneNumber"] == "" else{
             phoneNumber.setBorder(color: "error", image: UIImage(named: "phoneError")!)
             return
         }
-        
         phoneNumber.setBorder(color: "valid", image: UIImage(named: "phoneValid")!)
     }
     
@@ -277,3 +268,77 @@ extension editAccountViewController: UITextFieldDelegate{
     }
 }
 
+extension editAccountViewController: UICollectionViewDelegate{
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        var vc = UIViewController()
+        
+        switch indexPath.row {
+        case 0:
+            let viewVC =  storyboard.instantiateViewController(identifier: "changeEmailViewController") as! changeEmailViewController
+            viewVC.modalPresentationStyle = .fullScreen
+            vc = viewVC
+            break
+        case 1:
+            let viewVC = storyboard.instantiateViewController(identifier: "changePasswordViewController") as! changePasswordViewController
+            viewVC.modalPresentationStyle = .fullScreen
+            vc = viewVC
+            break
+        default:
+            print("error")
+        }
+        
+        self.present(vc, animated: true, completion: nil)
+    }
+}
+
+extension editAccountViewController: UICollectionViewDataSource{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return settings.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "accountSettingsViewCell", for: indexPath) as! accountSettingCollectionViewCell
+        
+        cell.layer.cornerRadius = 20
+        cell.layer.masksToBounds = true
+        
+        cell.settingLabel.text = settings[indexPath.row]
+        switch indexPath.row {
+        case 0:
+            cell.settingImage.image = UIImage(systemName: "envelope.fill")
+        case 1:
+            cell.settingImage.image = UIImage(systemName: "lock.fill")
+        default:
+            print("unknown")
+        }
+        return cell
+    }
+}
+
+extension editAccountViewController: UICollectionViewDelegateFlowLayout{
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: 40)
+    }
+}
+private var __maxLengths = [UITextField: Int]()
+
+extension UITextField {
+    @IBInspectable var maxLength: Int {
+        get {
+            guard let l = __maxLengths[self] else {
+                return 150 // (global default-limit. or just, Int.max)
+            }
+            return l
+        }
+        set {
+            __maxLengths[self] = newValue
+            addTarget(self, action: #selector(fix), for: .editingChanged)
+        }
+    }
+    @objc func fix(textField: UITextField) {
+        if let t = textField.text {
+            textField.text = String(t.prefix(maxLength))
+        }
+    }
+}
