@@ -77,9 +77,7 @@ extension profileViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "profileCell") as! profileTableViewCell
         cell.serviceLabel.text = services[indexPath.row]
-        
-        
-        
+        cell.serviceImage.image = UIImage(systemName: servicesImages[indexPath.row])
         return cell
     }
     
