@@ -25,7 +25,7 @@ class profileViewController: UIViewController {
     let ref = Database.database().reference()
     var user: User?
     var services = ["Terms and conditions","Settings","Edit Account","Sensor Information","Change passowrd","Logout"]
-    var servicesImages = ["list.bullet.rectangle","list.bullet.rectangle","list.bullet.rectangle","list.bullet.rectangle","list.bullet.rectangle","list.bullet.rectangle"]
+    var servicesImages = ["terms and conditions","settings","edit account","sensor information","change password","logout"]
     
     
     //MARK: - Overriden Functions
@@ -94,7 +94,7 @@ extension profileViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "profileCell") as! profileTableViewCell
         cell.serviceLabel.text = services[indexPath.row]
-        cell.serviceImage.image = UIImage(systemName: servicesImages[indexPath.row])
+        cell.serviceImage.image = UIImage(named: servicesImages[indexPath.row])
         return cell
     }
     
