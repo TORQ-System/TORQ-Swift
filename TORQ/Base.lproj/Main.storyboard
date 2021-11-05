@@ -1409,6 +1409,13 @@
                                 <color key="textColor" white="0.5" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ioq-Xg-aLE">
+                                <rect key="frame" x="148" y="810" width="118" height="22"/>
+                                <color key="tintColor" red="0.59858280419999998" green="0.15238550310000001" blue="0.2196014225" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <state key="normal" title="See details  " image="chevron.right.circle" catalog="system">
+                                    <color key="titleColor" red="0.59858280419999998" green="0.15238550310000001" blue="0.2196014225" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </state>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="rDw-Zy-qre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -1423,13 +1430,16 @@
                             <constraint firstItem="rDw-Zy-qre" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="rg9-Jl-dxj" secondAttribute="trailing" symbolic="YES" id="R1S-8n-4o4"/>
                             <constraint firstItem="Q3B-1J-895" firstAttribute="top" secondItem="9Qv-aP-Tn5" secondAttribute="bottom" constant="40" id="UcE-2p-Xiw"/>
                             <constraint firstItem="9Qv-aP-Tn5" firstAttribute="centerX" secondItem="TET-e9-CE0" secondAttribute="centerX" id="VDg-Ls-fmO"/>
+                            <constraint firstItem="rDw-Zy-qre" firstAttribute="bottom" secondItem="Ioq-Xg-aLE" secondAttribute="bottom" constant="30" id="X1b-cp-4hf"/>
                             <constraint firstItem="wXa-1K-JOa" firstAttribute="centerX" secondItem="TET-e9-CE0" secondAttribute="centerX" id="skv-sJ-qzq"/>
+                            <constraint firstItem="Ioq-Xg-aLE" firstAttribute="centerX" secondItem="TET-e9-CE0" secondAttribute="centerX" id="vlb-A3-dAM"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="asteriskContainer" destination="9Qv-aP-Tn5" id="ueO-WR-Tjb"/>
                         <outlet property="firstView" destination="w3P-D1-Liq" id="4J1-bc-c4q"/>
                         <outlet property="secondView" destination="GRS-vx-Zgr" id="9L2-7E-szU"/>
+                        <outlet property="seeDetails" destination="Ioq-Xg-aLE" id="M9H-6p-kuU"/>
                         <outlet property="sosLabel" destination="ZkW-br-9H9" id="69Z-er-ydS"/>
                         <outlet property="sosView" destination="Vqs-yt-b0C" id="Fg1-AF-Vwl"/>
                         <outlet property="thirdView" destination="hPf-pd-h3g" id="Prc-DH-enx"/>
@@ -3426,6 +3436,7 @@
         <image name="chevron.backward" catalog="system" width="96" height="128"/>
         <image name="chevron.left" catalog="system" width="96" height="128"/>
         <image name="chevron.right" catalog="system" width="96" height="128"/>
+        <image name="chevron.right.circle" catalog="system" width="128" height="121"/>
         <image name="header" width="1970" height="1114"/>
         <image name="house.fill" catalog="system" width="128" height="106"/>
         <image name="illustration1" width="1529" height="1021"/>
@@ -3440,8 +3451,8 @@
         <image name="person.2.fill" catalog="system" width="128" height="80"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="phone.fill" catalog="system" width="128" height="114"/>
-        <image name="plus" width="117" height="112"/>
         <image name="plus" catalog="system" width="128" height="113"/>
+        <image name="plus" width="117" height="112"/>
         <image name="pulse" width="300" height="214"/>
         <image name="rec" width="277" height="280"/>
         <image name="star" width="150" height="150"/>

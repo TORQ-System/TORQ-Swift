@@ -19,11 +19,20 @@ class SOSRequestViewController: UIViewController {
     @IBOutlet weak var firstView: UIView!
     @IBOutlet weak var secondView: UIView!
     @IBOutlet weak var thirdView: UIView!
+    @IBOutlet weak var seeDetails: UIButton!
     
     
     
     //MARK: - Variables
-    var userID = Auth.auth().currentUser
+    var userID = Auth.auth().currentUser?.uid
+    var ref = Database.database().reference()
+    var secondsRemaining = 60
+    let redUIColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
+    let alertIcon = UIImage(named: "errorIcon")
+    let apperance = SCLAlertView.SCLAppearance(
+        contentViewCornerRadius: 15,
+        buttonCornerRadius: 7,
+        hideWhenBackgroundViewIsTapped: true)
     
     
 
@@ -57,8 +66,6 @@ class SOSRequestViewController: UIViewController {
         sosView.layer.addSublayer(gradientLayer)
         sosView.bringSubviewToFront(sosLabel)
 
-        
-
         //3- first Layer View
         firstView.layer.cornerRadius = firstView.layer.frame.height/2
         firstView.layer.masksToBounds = true
@@ -69,13 +76,42 @@ class SOSRequestViewController: UIViewController {
         secondView.layer.masksToBounds = true
         secondView.backgroundColor = UIColor(red: 0.768627451, green: 0.2235294118, blue: 0.3058823529, alpha: 0.2)
 
-        
         //5- third Layer View
         thirdView.layer.cornerRadius = thirdView.layer.frame.height/2
         thirdView.layer.masksToBounds = true
         thirdView.backgroundColor = UIColor(red: 0.768627451, green: 0.2235294118, blue: 0.3058823529, alpha: 0.1)
-
- 
+        
+        //6- see datails button
+        seeDetails.isEnabled = false
+        seeDetails.alpha = 0
+    }
+    
+    private func checkSOSRequests() -> Bool{
+        var flag = false
+        self.ref.child("MedicalReport").observeSingleEvent(of: .value, with: { snapshot in
+            for requests in snapshot.children{
+                let obj = requests as! DataSnapshot
+                let user_id = obj.childSnapshot(forPath: "user_id").value as! String
+                if user_id == self.userID {
+                    flag = true
+                }
+            }
+        })
+        return flag
+    }
+    
+    private func updateSOSLabel(){
+        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (Timer) in
+            if self.secondsRemaining > 0 {
+                self.secondsRemaining -= 1
+                self.sosLabel.text = "00:\(self.secondsRemaining)"
+            } else {
+                self.sosLabel.text = "SOS Sent!"
+                self.seeDetails.alpha = 1
+                self.seeDetails.isEnabled = true
+                Timer.invalidate()
+            }
+        }
     }
     
     
@@ -85,7 +121,18 @@ class SOSRequestViewController: UIViewController {
     }
     
     @IBAction func sosRequest(_ sender: Any) {
-        print("sos")
+        
+        // check if there is an active sos request for this user
+        if checkSOSRequests() {
+            self.sosLabel.text = "SOS Sent!"
+            self.seeDetails.alpha = 1
+            self.seeDetails.isEnabled = true
+            SCLAlertView(appearance: self.apperance).showCustom("Oh no!", subTitle: "you have an active request, please chat with your assigned paramedic or cancel your request", color: self.redUIColor, icon: alertIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+        }else{
+            let sosRequest = "djjd"
+            ref.child("SOSRequests").childByAutoId().setValue(sosRequest)
+            updateSOSLabel()
+        }
     }
     
     
