@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import SCLAlertView
 
 class profileViewController: UIViewController {
     
@@ -26,6 +27,12 @@ class profileViewController: UIViewController {
     var user: User?
     var services = ["Terms and conditions","Settings","Edit Account","Sensor Information","Change passowrd","Logout"]
     var servicesImages = ["terms and conditions","settings","edit account","sensor information","change password","logout"]
+    let redUIColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
+    let alertIcon = UIImage(named: "errorIcon")
+    let apperance = SCLAlertView.SCLAppearance(
+        contentViewCornerRadius: 15,
+        buttonCornerRadius: 7,
+        hideWhenBackgroundViewIsTapped: true)
     
     
     //MARK: - Overriden Functions
@@ -82,9 +89,20 @@ class profileViewController: UIViewController {
                 }
             }
     }
+    
+    func goToLoginScreen(){
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "loginViewController") as! loginViewController
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true, completion: nil)
+    }
+    
+    func showAlert(message: String){
+        SCLAlertView(appearance: self.apperance).showCustom("Error", subTitle: message, color: self.redUIColor, icon: alertIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+    }
 }
 
-//MARK: - Extension
+//MARK: - UITableViewDataSource Extension
 
 extension profileViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -97,6 +115,59 @@ extension profileViewController: UITableViewDataSource{
         cell.serviceImage.image = UIImage(named: servicesImages[indexPath.row])
         return cell
     }
+
+}
+
+
+//MARK: - UITableViewDataSource Extension
+
+extension profileViewController: UITableViewDelegate{
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+//        let vc = UIViewController()
+//        vc.presentationStyle = .fullScreen
+        switch indexPath.row {
+        case 0:
+            //terms and conditions
+            //let TermsVC = storyboard.instantiateViewController(identifier: "termsAndConditionsViewController") as! termsAndConditionsViewController
+            //vc = TermsVC
+            break
+        case 1:
+            //settings
+            //let settingsVC = storyboard.instantiateViewController(identifier: "settingsViewController") as! settingsViewController
+            //vc = settingsVC
+            break
+        case 2:
+            //edit Account
+            //let editVC = storyboard.instantiateViewController(identifier: "editAccountViewController") as! editAccountViewController
+            //vc = editVC
+            break
+        case 3:
+            //sensor Information
+            //let sensorVC = storyboard.instantiateViewController(identifier: "SensorViewController") as! SensorViewController
+            //vc = sensorVC
+            break
+        case 4:
+            //change password
+            //let changePassVC = storyboard.instantiateViewController(identifier: "changePasswordViewController") as! changePasswordViewController
+            //vc = changePassVC
+            break
+        case 5:
+            //logout
+            do {
+                try Auth.auth().signOut()
+                let userDefault = UserDefaults.standard
+                userDefault.setValue(false, forKey: "isUserSignedIn")
+                goToLoginScreen()
+            } catch let error {
+                self.showAlert(message: error.localizedDescription)
+            }
+            break
+        default:
+            print("unknown")
+        }
+//        self.present(vc, animated: true, completion: nil)
+    }
     
 }
