@@ -27,6 +27,8 @@ class SOSRequestViewController: UIViewController {
     var userID = Auth.auth().currentUser?.uid
     var ref = Database.database().reference()
     var secondsRemaining = 60
+    var longitude: String?
+    var latitude: String?
     let redUIColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
     let alertIcon = UIImage(named: "errorIcon")
     let apperance = SCLAlertView.SCLAppearance(
@@ -40,7 +42,6 @@ class SOSRequestViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         layoutSubviews()
-
     }
     
     //MARK: - Functions
@@ -88,30 +89,30 @@ class SOSRequestViewController: UIViewController {
     
     private func checkSOSRequests() -> Bool{
         var flag = false
-        self.ref.child("MedicalReport").observeSingleEvent(of: .value, with: { snapshot in
-            for requests in snapshot.children{
-                let obj = requests as! DataSnapshot
-                let user_id = obj.childSnapshot(forPath: "user_id").value as! String
-                if user_id == self.userID {
-                    flag = true
+        
+        let fetchQueue = DispatchQueue.init(label: "fetchQueue")
+        fetchQueue.sync {
+            self.ref.child("SOSRequests").observeSingleEvent(of: .value, with: { snapshot in
+                for requests in snapshot.children{
+                    let obj = requests as! DataSnapshot
+                    let user_id = obj.childSnapshot(forPath: "user_id").value as! String
+                    let status = obj.childSnapshot(forPath: "status").value as! String
+                    if user_id == self.userID && (status != "processed" || status != "cancelled") {
+                        flag = true
+                        
+                        SCLAlertView(appearance: self.apperance).showCustom("Oh no!", subTitle: "you have an active request, please chat with your assigned paramedic or cancel your request", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+                    }
                 }
-            }
-        })
+                print("\(flag) flag in for")
+            })
+        }
+        print("\(flag) flag out for")
         return flag
     }
     
-    private func updateSOSLabel(){
-        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (Timer) in
-            if self.secondsRemaining > 0 {
-                self.secondsRemaining -= 1
-                self.sosLabel.text = "00:\(self.secondsRemaining)"
-            } else {
-                self.sosLabel.text = "SOS Sent!"
-                self.seeDetails.alpha = 1
-                self.seeDetails.isEnabled = true
-                Timer.invalidate()
-            }
-        }
+    func nearest() -> String{
+        let nearest = SRCACenters.getNearest(longitude: Double(longitude!)!, latitude: Double(latitude!)!)
+        return nearest["name"] as! String
     }
     
     
@@ -123,15 +124,38 @@ class SOSRequestViewController: UIViewController {
     @IBAction func sosRequest(_ sender: Any) {
         
         // check if there is an active sos request for this user
-        if checkSOSRequests() {
+        var flag: Bool?
+        let fetchQueue = DispatchQueue.init(label: "fetchQueue")
+        fetchQueue.sync {
+            flag = checkSOSRequests()
+        }
+        if flag! {
             self.sosLabel.text = "SOS Sent!"
             self.seeDetails.alpha = 1
             self.seeDetails.isEnabled = true
-            SCLAlertView(appearance: self.apperance).showCustom("Oh no!", subTitle: "you have an active request, please chat with your assigned paramedic or cancel your request", color: self.redUIColor, icon: alertIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
         }else{
-            let sosRequest = "djjd"
-            ref.child("SOSRequests").childByAutoId().setValue(sosRequest)
-            updateSOSLabel()
+            
+            //1-  create SOS Request object
+            let sosRequest = SOSRequest(user_id: userID!, user_name: "user", status: "1", assignedCenter: nearest(), sent: "Yes", longitude: longitude!, latitude: latitude!)
+            
+            //2- write the child into the node in firebase
+            ref.child("SOSRequests").childByAutoId().setValue(["user_id":sosRequest.getUserID(),"user_name":sosRequest.getUserName(),"status":sosRequest.getStatus(),"assigned_center":sosRequest.getAssignedCenter(),"sent":sosRequest.getSent(),"longitude":sosRequest.getLongitude(),"latitude":sosRequest.getLatitude()])
+            
+            //3- update timer
+            Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (Timer) in
+                //TODO:- check if the user clicks on the button while the timer is fired
+                if self.secondsRemaining > 0 {
+                    self.secondsRemaining -= 1
+                    self.sosLabel.text = "00:\(self.secondsRemaining)"
+                } else {
+                    self.sosLabel.text = "SOS Sent!"
+                    self.seeDetails.alpha = 1
+                    self.seeDetails.isEnabled = true
+                    //show notification that the request is sent
+                    // direct the user to next page
+                    Timer.invalidate()
+                }
+            }
         }
     }
     
