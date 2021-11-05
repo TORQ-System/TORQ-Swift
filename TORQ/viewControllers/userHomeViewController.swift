@@ -29,7 +29,7 @@ class userHomeViewController: UIViewController {
     var userID: String?
     let locationManager = CLLocationManager()
     let ref = Database.database().reference()
-    let services = ["Medical Information","Emergency Contact"]
+    let services = ["Medical Information","Emergency Contact","View Accidents History","SOS Request"]
     let center = UNUserNotificationCenter.current()
     var user: User? = nil
     var location: [String: String] = ["lon":"","lat":""]
@@ -335,6 +335,12 @@ extension userHomeViewController: UICollectionViewDelegate{
             break
         case 1:
             let viewVC = storyboard.instantiateViewController(identifier: "ViewEmergencyContactViewController") as! ViewEmergencyContactViewController
+            viewVC.modalPresentationStyle = .fullScreen
+            viewVC.userID = userID
+            vc = viewVC
+            break
+        case 2:
+            let viewVC = storyboard.instantiateViewController(identifier: "SOSRequestViewController") as! SOSRequestViewController
             viewVC.modalPresentationStyle = .fullScreen
             viewVC.userID = userID
             vc = viewVC
