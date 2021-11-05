@@ -339,10 +339,9 @@ extension userHomeViewController: UICollectionViewDelegate{
             viewVC.userID = userID
             vc = viewVC
             break
-        case 2:
+        case 3:
             let viewVC = storyboard.instantiateViewController(identifier: "SOSRequestViewController") as! SOSRequestViewController
             viewVC.modalPresentationStyle = .fullScreen
-            viewVC.userID = userID
             vc = viewVC
             break
         default:

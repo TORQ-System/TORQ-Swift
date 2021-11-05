@@ -1299,24 +1299,27 @@
                                 <state key="normal" title=" back" image="chevron.backward" catalog="system">
                                     <color key="titleColor" red="0.94331914189999999" green="0.4181408882" blue="0.53333508969999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
+                                <connections>
+                                    <action selector="backButton:" destination="fHt-Kx-Jo1" eventType="touchUpInside" id="z9i-CW-dO3"/>
+                                </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Qv-aP-Tn5">
-                                <rect key="frame" x="157" y="79" width="100" height="100"/>
+                                <rect key="frame" x="167" y="79" width="80" height="80"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star" translatesAutoresizingMaskIntoConstraints="NO" id="nWI-DW-4Ks">
-                                        <rect key="frame" x="20" y="20" width="60" height="60"/>
+                                        <rect key="frame" x="25" y="25" width="30" height="30"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="nWI-DW-4Ks" firstAttribute="centerX" secondItem="9Qv-aP-Tn5" secondAttribute="centerX" id="1o0-6z-lfr"/>
-                                    <constraint firstAttribute="height" constant="100" id="84m-t4-YiB"/>
-                                    <constraint firstItem="nWI-DW-4Ks" firstAttribute="top" secondItem="9Qv-aP-Tn5" secondAttribute="top" constant="20" id="EH4-rz-eIh"/>
-                                    <constraint firstAttribute="width" constant="100" id="HeB-IK-hWI"/>
-                                    <constraint firstAttribute="trailing" secondItem="nWI-DW-4Ks" secondAttribute="trailing" constant="20" id="LyA-Ay-lZD"/>
-                                    <constraint firstAttribute="bottom" secondItem="nWI-DW-4Ks" secondAttribute="bottom" constant="20" id="Quu-4t-6UC"/>
+                                    <constraint firstAttribute="height" constant="80" id="84m-t4-YiB"/>
+                                    <constraint firstItem="nWI-DW-4Ks" firstAttribute="top" secondItem="9Qv-aP-Tn5" secondAttribute="top" constant="25" id="EH4-rz-eIh"/>
+                                    <constraint firstAttribute="width" constant="80" id="HeB-IK-hWI"/>
+                                    <constraint firstAttribute="trailing" secondItem="nWI-DW-4Ks" secondAttribute="trailing" constant="25" id="LyA-Ay-lZD"/>
+                                    <constraint firstAttribute="bottom" secondItem="nWI-DW-4Ks" secondAttribute="bottom" constant="25" id="Quu-4t-6UC"/>
                                     <constraint firstItem="nWI-DW-4Ks" firstAttribute="centerY" secondItem="9Qv-aP-Tn5" secondAttribute="centerY" id="VFm-9A-QcH"/>
-                                    <constraint firstItem="nWI-DW-4Ks" firstAttribute="leading" secondItem="9Qv-aP-Tn5" secondAttribute="leading" constant="20" id="ak8-85-odr"/>
+                                    <constraint firstItem="nWI-DW-4Ks" firstAttribute="leading" secondItem="9Qv-aP-Tn5" secondAttribute="leading" constant="25" id="ak8-85-odr"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hPf-pd-h3g">
@@ -1339,10 +1342,14 @@
                                                             </label>
                                                         </subviews>
                                                         <color key="backgroundColor" red="0.59858280419999998" green="0.15238550310000001" blue="0.2196014225" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                        <gestureRecognizers/>
                                                         <constraints>
                                                             <constraint firstItem="ZkW-br-9H9" firstAttribute="centerY" secondItem="Vqs-yt-b0C" secondAttribute="centerY" id="Rg8-U1-Fvm"/>
                                                             <constraint firstItem="ZkW-br-9H9" firstAttribute="centerX" secondItem="Vqs-yt-b0C" secondAttribute="centerX" id="drO-IP-A6j"/>
                                                         </constraints>
+                                                        <connections>
+                                                            <outletCollection property="gestureRecognizers" destination="yVN-Z3-sbO" appends="YES" id="Yqw-AC-6oF"/>
+                                                        </connections>
                                                     </view>
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -1374,7 +1381,7 @@
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Q3B-1J-895">
-                                <rect key="frame" x="40.5" y="219" width="333.5" height="110"/>
+                                <rect key="frame" x="40.5" y="199" width="333.5" height="110"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sending" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MQ7-98-sJG">
                                         <rect key="frame" x="99" y="0.0" width="135" height="42"/>
@@ -1419,8 +1426,21 @@
                             <constraint firstItem="wXa-1K-JOa" firstAttribute="centerX" secondItem="TET-e9-CE0" secondAttribute="centerX" id="skv-sJ-qzq"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="asteriskContainer" destination="9Qv-aP-Tn5" id="ueO-WR-Tjb"/>
+                        <outlet property="firstView" destination="w3P-D1-Liq" id="4J1-bc-c4q"/>
+                        <outlet property="secondView" destination="GRS-vx-Zgr" id="9L2-7E-szU"/>
+                        <outlet property="sosLabel" destination="ZkW-br-9H9" id="69Z-er-ydS"/>
+                        <outlet property="sosView" destination="Vqs-yt-b0C" id="Fg1-AF-Vwl"/>
+                        <outlet property="thirdView" destination="hPf-pd-h3g" id="Prc-DH-enx"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gpw-E2-tMW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="yVN-Z3-sbO">
+                    <connections>
+                        <action selector="sosRequest:" destination="fHt-Kx-Jo1" id="i2B-9J-vIF"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-291.304347826087" y="2767.6339285714284"/>
         </scene>
@@ -3420,8 +3440,8 @@
         <image name="person.2.fill" catalog="system" width="128" height="80"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="phone.fill" catalog="system" width="128" height="114"/>
-        <image name="plus" catalog="system" width="128" height="113"/>
         <image name="plus" width="117" height="112"/>
+        <image name="plus" catalog="system" width="128" height="113"/>
         <image name="pulse" width="300" height="214"/>
         <image name="rec" width="277" height="280"/>
         <image name="star" width="150" height="150"/>
