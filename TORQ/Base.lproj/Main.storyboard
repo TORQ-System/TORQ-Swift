@@ -1463,10 +1463,10 @@
             </objects>
             <point key="canvasLocation" x="-291.304347826087" y="2767.6339285714284"/>
         </scene>
-        <!--View Controller-->
+        <!--Sos Details View Controller-->
         <scene sceneID="4b9-uY-oyg">
             <objects>
-                <viewController id="aUD-Lg-JJJ" sceneMemberID="viewController">
+                <viewController id="aUD-Lg-JJJ" customClass="sosDetailsViewController" customModule="TORQ" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Mrh-kI-uYJ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1555,7 +1555,7 @@
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" image="customer Service"/>
                                         <connections>
-                                            <action selector="addMedicalReport:" destination="8as-oH-KCZ" eventType="touchUpInside" id="wQE-Dp-4go"/>
+                                            <action selector="goChat:" destination="aUD-Lg-JJJ" eventType="touchUpInside" id="Mfj-hD-s0p"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F1R-Zt-yvV">
@@ -1570,7 +1570,7 @@
                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                                         </state>
                                         <connections>
-                                            <action selector="addMedicalReport:" destination="8as-oH-KCZ" eventType="touchUpInside" id="bO7-Wy-eHM"/>
+                                            <action selector="cancelSOSrequest:" destination="aUD-Lg-JJJ" eventType="touchUpInside" id="Dpj-MZ-EMJ"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cOA-Tg-mmq">
@@ -1585,7 +1585,7 @@
                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                                         </state>
                                         <connections>
-                                            <action selector="addMedicalReport:" destination="8as-oH-KCZ" eventType="touchUpInside" id="1fY-Uv-CHr"/>
+                                            <action selector="seeLiveLocation:" destination="aUD-Lg-JJJ" eventType="touchUpInside" id="Ufz-fm-cBw"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -1604,6 +1604,11 @@
                             <constraint firstItem="hru-w3-IMl" firstAttribute="trailing" secondItem="ajn-QG-aPN" secondAttribute="trailing" id="ofa-dq-5Uk"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="cancel" destination="F1R-Zt-yvV" id="lW1-B5-4vD"/>
+                        <outlet property="customerService" destination="fsy-yM-Oz3" id="Pcu-al-AHH"/>
+                        <outlet property="liveLocation" destination="cOA-Tg-mmq" id="dbE-dR-OaD"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uEL-rL-Wg1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
