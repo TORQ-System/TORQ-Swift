@@ -27,7 +27,7 @@ class SOSRequestViewController: UIViewController {
     //MARK: - Variables
     var userID = Auth.auth().currentUser?.uid
     var ref = Database.database().reference()
-    var secondsRemaining = 60
+    var secondsRemaining = 15
     var longitude: String?
     var latitude: String?
     var flag:Bool?
@@ -119,20 +119,20 @@ class SOSRequestViewController: UIViewController {
                     if user_id == self.userID && (status != "processed" && status != "cancelled") {
                         self.flag = true
                         //update UI
-                        if ( (self.secondsRemaining == 0) || (self.secondsRemaining != 60) ) {
+                        if ( (self.secondsRemaining == 0) || (self.secondsRemaining != 15) ) {
                             self.SOS = sos
                             self.sosLabel.text = "SOS Sent!"
                             self.seeDetails.alpha = 1
                             self.seeDetails.isEnabled = true
                         }
-                        else if self.secondsRemaining == 60 && (status == "1") {
+                        else if self.secondsRemaining == 15 && (status == "1") {
                             self.SOS = sos
                             self.sosLabel.text = "SOS Sent!"
                             self.seeDetails.alpha = 1
                             self.seeDetails.isEnabled = true
-                        }else if ( (self.secondsRemaining == 60) && (status == "0") ){
+                        }else if ( (self.secondsRemaining == 15) && (status == "0") ){
                             self.SOS = sos
-                            self.sosLabel.text = "00:60"
+                            self.sosLabel.text = "00:15"
                             self.seeDetails.alpha = 0
                             self.seeDetails.isEnabled = false
                         }
@@ -183,7 +183,7 @@ class SOSRequestViewController: UIViewController {
     
     //MARK: - @IBActions
     @IBAction func backButton(_ sender: Any) {
-        if secondsRemaining > 0 && secondsRemaining != 60{
+        if secondsRemaining > 0 && secondsRemaining != 15{
             let alertView = SCLAlertView(appearance: self.apperance)
             alertView.addButton("Yes, I'm sure", backgroundColor: self.redUIColor){
                 // set flag to false
@@ -218,14 +218,14 @@ class SOSRequestViewController: UIViewController {
                 //2- write the child into the node in firebase
                 self.ref.child("SOSRequests").childByAutoId().setValue(["user_id":sosRequest.getUserID(),"user_name":sosRequest.getUserName(),"status":sosRequest.getStatus(),"assigned_center":sosRequest.getAssignedCenter(),"sent":sosRequest.getSent(),"longitude":sosRequest.getLongitude(),"latitude":sosRequest.getLatitude()])
                 
-                self.sosLabel.text = "00:60"
+                self.sosLabel.text = "00:15"
                 self.seeDetails.alpha = 0
                 self.seeDetails.isEnabled = false
                 
                 //3- update timer
                 Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (Timer) in
                     //TODO:- check if the user clicks on the button while the timer is fired
-                    if self.secondsRemaining > 0 || self.secondsRemaining == 60{
+                    if self.secondsRemaining > 0 || self.secondsRemaining == 15{
                         self.SOS = sosRequest
                         self.seeDetails.alpha = 0
                         self.seeDetails.isEnabled = false
