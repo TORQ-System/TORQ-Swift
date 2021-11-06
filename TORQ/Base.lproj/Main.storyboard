@@ -1341,7 +1341,7 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                         </subviews>
-                                                        <color key="backgroundColor" red="0.59858280419999998" green="0.15238550310000001" blue="0.2196014225" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <gestureRecognizers/>
                                                         <constraints>
                                                             <constraint firstItem="ZkW-br-9H9" firstAttribute="centerY" secondItem="Vqs-yt-b0C" secondAttribute="centerY" id="Rg8-U1-Fvm"/>
@@ -1361,7 +1361,7 @@
                                                 </constraints>
                                             </view>
                                         </subviews>
-                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="w3P-D1-Liq" secondAttribute="bottom" constant="20" id="2qb-Z8-be0"/>
                                             <constraint firstItem="w3P-D1-Liq" firstAttribute="top" secondItem="GRS-vx-Zgr" secondAttribute="top" constant="20" id="O0O-c8-mgu"/>
@@ -1370,7 +1370,7 @@
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="GRS-vx-Zgr" secondAttribute="trailing" constant="20" id="9fS-Bq-QVm"/>
                                     <constraint firstItem="GRS-vx-Zgr" firstAttribute="top" secondItem="hPf-pd-h3g" secondAttribute="top" constant="20" id="LLK-Pi-QXe"/>
@@ -1415,6 +1415,9 @@
                                 <state key="normal" title="See details  " image="chevron.right.circle" catalog="system">
                                     <color key="titleColor" red="0.59858280419999998" green="0.15238550310000001" blue="0.2196014225" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
+                                <connections>
+                                    <action selector="sosDetails:" destination="fHt-Kx-Jo1" eventType="touchUpInside" id="zAu-oZ-uvI"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="rDw-Zy-qre"/>

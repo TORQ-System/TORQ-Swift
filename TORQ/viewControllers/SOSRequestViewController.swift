@@ -244,4 +244,9 @@ class SOSRequestViewController: UIViewController {
     }
     
     
+    @IBAction func sosDetails(_ sender: Any) {
+        
+    }
+    
+    
 }
