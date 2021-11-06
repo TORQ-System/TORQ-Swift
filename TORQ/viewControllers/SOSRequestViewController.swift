@@ -44,22 +44,50 @@ class SOSRequestViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         layoutSubviews()
-        let fetchQueue = DispatchQueue.init(label: "fetchQueue")
-        fetchQueue.sync {
-            checkSOSRequests()
-        }
-        print("flag in view did load \(flag)")
-        if flag {
-            self.sosLabel.text = "SOS Sent!"
-            self.seeDetails.alpha = 1
-            self.seeDetails.isEnabled = true
-        }else{
-            //do nothing
-            self.sosLabel.text = "SOS"
-            self.seeDetails.alpha = 0
-            self.seeDetails.isEnabled = false
-        }
-        
+        checkSOSRequests()
+
+//        let fetchQueue = DispatchQueue.init(label: "fetchQueue")
+//        let flagQueue = DispatchQueue.init(label: "flagQueue")
+//
+//        fetchQueue.sync {
+//            checkSOSRequests()
+//            flagQueue.sync {
+//                print("flag in view did load \(flag)")
+//                if flag {
+//                    self.sosLabel.text = "SOS Sent!"
+//                    self.seeDetails.alpha = 1
+//                    self.seeDetails.isEnabled = true
+//                }else{
+//                    //do nothing
+//                    self.sosLabel.text = "SOS"
+//                    self.seeDetails.alpha = 0
+//                    self.seeDetails.isEnabled = false
+//                }
+//            }
+//        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        checkSOSRequests()
+//        let fetchQueue = DispatchQueue.init(label: "fetchQueue")
+//        let flagQueue = DispatchQueue.init(label: "flagQueue")
+//
+//        fetchQueue.sync {
+//            checkSOSRequests()
+//            flagQueue.sync {
+//                print("flag in view did load \(flag)")
+//                if flag {
+//                    self.sosLabel.text = "SOS Sent!"
+//                    self.seeDetails.alpha = 1
+//                    self.seeDetails.isEnabled = true
+//                }else{
+//                    //do nothing
+//                    self.sosLabel.text = "SOS"
+//                    self.seeDetails.alpha = 0
+//                    self.seeDetails.isEnabled = false
+//                }
+//            }
+//        }
     }
     
     //MARK: - Functions
@@ -106,17 +134,49 @@ class SOSRequestViewController: UIViewController {
     }
     
     private func checkSOSRequests(){
-            self.ref.child("SOSRequests").observeSingleEvent(of: .value, with: { snapshot in
+        let fetchQueue = DispatchQueue.init(label: "fetchQueue")
+        fetchQueue.sync {
+            self.ref.child("SOSRequests").observe(.value, with: { snapshot in
                 for requests in snapshot.children{
                     let obj = requests as! DataSnapshot
                     let user_id = obj.childSnapshot(forPath: "user_id").value as! String
                     let status = obj.childSnapshot(forPath: "status").value as! String
-                    if user_id == self.userID && (status != "processed" || status != "cancelled") {
+                    if user_id == self.userID && (status != "processed" && status != "cancelled") {
                         self.flag = true
+                        //update UI
+                        if (!(self.secondsRemaining > 0) || self.secondsRemaining == 60) {
+                            self.sosLabel.text = "SOS Sent!"
+                            self.seeDetails.alpha = 1
+                            self.seeDetails.isEnabled = true
+                        }
                         print("flag in checkSOSRequests \(self.flag)")
+                    }else{
+                        self.flag = false
+                        self.sosLabel.text = "SOS"
+                        self.seeDetails.alpha = 0
+                        self.seeDetails.isEnabled = false
                     }
                 }
             })
+            print("flag out checkSOSRequests \(self.flag)")
+        }
+    }
+    
+    private func updateSOSRequestsStatus(update: String){
+        let fetchQueue = DispatchQueue.init(label: "fetchQueue")
+        fetchQueue.sync {
+            self.ref.child("SOSRequests").observe(.value, with: { snapshot in
+                for requests in snapshot.children{
+                    let obj = requests as! DataSnapshot
+                    let user_id = obj.childSnapshot(forPath: "user_id").value as! String
+                    let status = obj.childSnapshot(forPath: "status").value as! String
+                    if user_id == self.userID && status == "1" {
+                        self.ref.child("SOSRequests").child(obj.key).updateChildValues(["status":update])
+                    }
+                }
+            })
+            print("flag out checkSOSRequests \(self.flag)")
+        }
     }
     
     func nearest() -> String{
@@ -127,7 +187,17 @@ class SOSRequestViewController: UIViewController {
     
     //MARK: - @IBActions
     @IBAction func backButton(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        if secondsRemaining>0 {
+            let alertView = SCLAlertView(appearance: self.apperance)
+            alertView.addButton("Are you sure ?", backgroundColor: self.redUIColor){
+                // set flag to false
+                self.flag = false
+                // update status to cancel
+                self.updateSOSRequestsStatus(update: "cancelled")
+                self.dismiss(animated: true, completion: nil)
+            }
+            alertView.showCustom("Warning", subTitle: "once you get out of this screen your SOS request will be canceled, please wait until the timer finished, so we send your request properly", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Ok, I'll wait", circleIconImage: UIImage(named: "warning"), animationStyle: SCLAnimationStyle.topToBottom)
+        }
     }
     
     @IBAction func sosRequest(_ sender: Any) {
