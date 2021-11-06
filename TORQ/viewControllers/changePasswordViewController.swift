@@ -6,7 +6,9 @@
 //
 
 import UIKit
+import Firebase
 import FirebaseAuth
+import FirebaseDatabase
 import SCLAlertView
 
 class changePasswordViewController: UIViewController{
@@ -14,21 +16,24 @@ class changePasswordViewController: UIViewController{
     //MARK: - @IBOutlets
     @IBOutlet weak var currentPassword: UITextField!
     @IBOutlet weak var newPassword: UITextField!
+    @IBOutlet weak var newPasswordError: UILabel!
     @IBOutlet weak var confirmPassword: UITextField!
+    @IBOutlet weak var confirmPasswordError: UILabel!
     @IBOutlet weak var updateButton: UIButton!
     @IBOutlet weak var passwordView: UIView!
     
     //MARK: - Variables
+    var ref = Database.database().reference()
     var email: String?
     var password: String?
     
     //MARK: - Constants
     let redUIColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
-    let alertIcon = UIImage(named: "errorIcon")
-    let apperance = SCLAlertView.SCLAppearance(
-        contentViewCornerRadius: 15,
-        buttonCornerRadius: 7,
-        hideWhenBackgroundViewIsTapped: true)
+    let blueUIColor = UIColor( red: 49/255, green: 90/255, blue:149/255, alpha: 1.0 )
+    let alertErrorIcon = UIImage(named: "errorIcon")
+    let alertSuccessIcon = UIImage(named: "successIcon")
+    let apperanceWithoutClose = SCLAlertView.SCLAppearance( showCloseButton: false, contentViewCornerRadius: 15, buttonCornerRadius: 7)
+    let apperance = SCLAlertView.SCLAppearance( contentViewCornerRadius: 15, buttonCornerRadius: 7, hideWhenBackgroundViewIsTapped: true)
     
     //MARK: - Overriden Functions
     override func viewDidLoad() {
@@ -36,6 +41,7 @@ class changePasswordViewController: UIViewController{
         
         configurePasswordView()
         configureInputs()
+        configureErrors()
     }
     
     //MARK: - Functions
@@ -57,30 +63,49 @@ class changePasswordViewController: UIViewController{
         updateButton.layer.cornerRadius = 12
     }
     
+    func configureErrors(){
+        newPasswordError.alpha = 0
+        confirmPasswordError.alpha = 0
+    }
+    
     func validateFields() -> [String: String ]{
         var errors: [String: String ] = ["current": "", "confirm": "", "new": ""]
         
         if currentPassword.text == nil || currentPassword.text == ""{
-            errors["current"] = "current password cannot be empty"
+            errors["current"] = "  "
         }
-        
         
         if newPassword.text == nil || newPassword.text == ""{
-            errors["new"] = "new password cannot be empty"
+            errors["new"] = "  "
+        } else if !newPassword.text!.isValidPassword{
+            errors["new"] = "password should be 6 characters or more"
         }
-        else if !newPassword.text!.isValidPassword{
-            errors["new"] = "new password should not be less than 6 characters"
-        }
-        
         
         if confirmPassword.text == nil || confirmPassword.text == ""{
-            errors["confirm"] = "confirm password cannot be empty"
+            errors["confirm"] = "  "
+        } else if confirmPassword.text != newPassword.text!{
+            errors["confirm"] = "passwords do not match"
         }
-        else if confirmPassword.text != newPassword.text!{
-            errors["confirm"] = "passwords does not match"
+        
+        if currentPassword.text == newPassword.text{
+            errors["new"] = "password should not match the current one"
         }
         
         return errors
+    }
+    
+    func updateUserPassword(){
+        let userID = Auth.auth().currentUser?.uid
+        
+        ref.child("User").child(userID!).updateChildValues(["password": newPassword.text!]){
+            (error, ref) in
+            guard error == nil else {
+                SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "An error ocuured, please try again later", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+                return
+            }
+        }
+        SCLAlertView(appearance: self.apperance).showCustom("Success!", subTitle: "We have updated your information", color: self.blueUIColor, icon: self.alertSuccessIcon!, closeButtonTitle: "Okay", animationStyle: SCLAnimationStyle.topToBottom)
+        
     }
     
     //MARK: - @IBActions
@@ -100,10 +125,13 @@ class changePasswordViewController: UIViewController{
         
         guard errors["new"] == "" else{
             newPassword.setBorder(color: "error", image: UIImage(named: "lockError")!)
+            newPasswordError.text = errors["new"]!
+            newPasswordError.alpha = 1
             return
         }
         
         newPassword.setBorder(color: "valid", image: UIImage(named: "lockValid")!)
+        newPasswordError.alpha = 0
     }
     
     @IBAction func confirmPasswordEditingChanged(_ sender: Any) {
@@ -111,10 +139,14 @@ class changePasswordViewController: UIViewController{
         
         guard errors["confirm"] == "" else{
             confirmPassword.setBorder(color: "error", image: UIImage(named: "lockError")!)
+            confirmPasswordError.text = errors["confirm"]!
+            confirmPasswordError.alpha = 1
             return
         }
         
         confirmPassword.setBorder(color: "valid", image: UIImage(named: "lockValid")!)
+        confirmPasswordError.alpha = 0
+        
     }
     
     @IBAction func updateButtonPressed(_ sender: Any) {
@@ -125,20 +157,25 @@ class changePasswordViewController: UIViewController{
         email = (Auth.auth().currentUser?.email)!
         password = currentPassword.text!
         
-        guard errors["current"] == "" && errors["new"] == "" && errors["confirm"] == "" else{
-            SCLAlertView(appearance: self.apperance).showCustom("Invalid Credentials", subTitle: "Please make sure you entered all fields correctly", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+        guard errors["current"] == "" && errors["new"] == "" && errors["confirm"] == "" else {
+            SCLAlertView(appearance: self.apperance).showCustom("Invalid Credentials", subTitle: "Please make sure you entered all fields correctly", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
             return
         }
         
         credential = EmailAuthProvider.credential(withEmail: email!, password: currentPassword.text!)
         
         user?.reauthenticate(with: credential, completion: { (result, error)  in
-            if error != nil {
-                SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "An error occured while authenticating your information", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+            if error != nil  {
+                SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "An error occured while authenticating your information", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
                 return
             } else{
                 user?.updatePassword(to: self.newPassword.text!, completion: { error in
-                    print("success!")
+                    if error != nil {
+                        SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "An error occured while updating your information", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+                        return
+                    } else{
+                        self.updateUserPassword()
+                    }
                 })
             }
         })

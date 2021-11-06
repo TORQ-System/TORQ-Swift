@@ -1619,8 +1619,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VZd-zA-M98" userLabel="Password View">
                                 <rect key="frame" x="0.0" y="329" width="414" height="567"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="55" translatesAutoresizingMaskIntoConstraints="NO" id="u6E-0J-Uia">
-                                        <rect key="frame" x="32" y="90" width="350" height="200"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="u6E-0J-Uia">
+                                        <rect key="frame" x="32" y="90" width="350" height="224"/>
                                         <subviews>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Current Password" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="xYv-j3-2o3">
                                                 <rect key="frame" x="0.0" y="0.0" width="350" height="40"/>
@@ -1642,8 +1642,8 @@
                                                     <outlet property="delegate" destination="7Gm-eU-IgH" id="Y6i-aq-rU8"/>
                                                 </connections>
                                             </textField>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="CJR-LT-pa4">
-                                                <rect key="frame" x="0.0" y="95" width="350" height="105"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="8lS-z7-UHe" userLabel="new password">
+                                                <rect key="frame" x="0.0" y="70" width="350" height="62"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="New Password" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="10X-4T-YXN">
                                                         <rect key="frame" x="0.0" y="0.0" width="350" height="40"/>
@@ -1666,8 +1666,20 @@
                                                             <outlet property="delegate" destination="7Gm-eU-IgH" id="RHv-NQ-KvK"/>
                                                         </connections>
                                                     </textField>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="error message" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rxa-VO-fFJ">
+                                                        <rect key="frame" x="0.0" y="45" width="350" height="17"/>
+                                                        <color key="tintColor" red="0.77647058820000003" green="0.25490196079999999" blue="0.32156862749999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                                                        <color key="textColor" red="0.77647058820000003" green="0.25490196079999999" blue="0.32156862749999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="UMx-LR-ph4" userLabel="confirm password">
+                                                <rect key="frame" x="0.0" y="162" width="350" height="62"/>
+                                                <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm New Password" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="9vj-5T-sNT">
-                                                        <rect key="frame" x="0.0" y="65" width="350" height="40"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="350" height="40"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
@@ -1686,12 +1698,19 @@
                                                             <outlet property="delegate" destination="7Gm-eU-IgH" id="zhr-c4-2iJ"/>
                                                         </connections>
                                                     </textField>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="error message" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QhA-P3-QOM">
+                                                        <rect key="frame" x="0.0" y="45" width="350" height="17"/>
+                                                        <color key="tintColor" red="0.77647058820000003" green="0.25490196079999999" blue="0.32156862749999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                                                        <color key="textColor" red="0.77647058820000003" green="0.25490196079999999" blue="0.32156862749999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
                                                 </subviews>
                                             </stackView>
                                         </subviews>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YYG-TD-PHL">
-                                        <rect key="frame" x="107" y="365" width="200" height="40"/>
+                                        <rect key="frame" x="107" y="389" width="200" height="40"/>
                                         <color key="backgroundColor" red="0.83749955890000005" green="0.33231014009999998" blue="0.42352765799999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="e4x-O9-rP3"/>
@@ -1735,8 +1754,10 @@
                     </view>
                     <connections>
                         <outlet property="confirmPassword" destination="9vj-5T-sNT" id="658-yR-g9R"/>
+                        <outlet property="confirmPasswordError" destination="QhA-P3-QOM" id="StJ-DB-Jej"/>
                         <outlet property="currentPassword" destination="xYv-j3-2o3" id="ofL-VL-E3W"/>
                         <outlet property="newPassword" destination="10X-4T-YXN" id="ECX-Tc-X7E"/>
+                        <outlet property="newPasswordError" destination="rxa-VO-fFJ" id="BfG-tE-qrw"/>
                         <outlet property="passwordView" destination="VZd-zA-M98" id="CU5-lm-tJS"/>
                         <outlet property="updateButton" destination="YYG-TD-PHL" id="DfO-bq-DDo"/>
                     </connections>
