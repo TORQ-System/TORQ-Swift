@@ -1,7 +1,7 @@
 import UIKit
 import FirebaseAuth
 import SCLAlertView
-import SwiftUI
+
 
 class loginViewController: UIViewController {
     
@@ -26,7 +26,6 @@ class loginViewController: UIViewController {
     //MARK: - Overriden Functions
     override func viewDidLoad() {
         super.viewDidLoad()
-//        configureKeyboardNotification()
         // setup default borders
         email.setBorder(color: "default", image: UIImage(named: "emailDefault")!)
         email.clearsOnBeginEditing = false
