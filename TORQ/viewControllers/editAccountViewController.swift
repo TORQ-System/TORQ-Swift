@@ -102,6 +102,7 @@ class editAccountViewController: UIViewController {
         formatter.dateStyle = .medium
         formatter.timeStyle = .none
         birthDate.text = formatter.string(from: datePicker.date)
+        print(birthDate.text!)
         birthDate.setBorder(color: "valid", image: UIImage(named: "calendarValid")!)
         self.view.endEditing(true)
     }
@@ -123,7 +124,7 @@ class editAccountViewController: UIViewController {
             
             self.user = User(dateOfBirth: birthDate, email: email, fullName: fullName, gender: gender, nationalID: nationalID, password:password, phone: phone)
             
-            self.datePicker.date = formatter.date(from: birthDate)!
+            self.datePicker.date = Date(birthDate)
             
             self.fullName.text = fullName
             self.gender.selectedSegmentIndex = self.selectGender(gender: gender)
