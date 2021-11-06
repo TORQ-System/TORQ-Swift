@@ -20,6 +20,7 @@ class SOSRequestViewController: UIViewController {
     @IBOutlet weak var secondView: UIView!
     @IBOutlet weak var thirdView: UIView!
     @IBOutlet weak var seeDetails: UIButton!
+    @IBOutlet var sendSOSrequest: UITapGestureRecognizer!
     
     
     
@@ -29,6 +30,7 @@ class SOSRequestViewController: UIViewController {
     var secondsRemaining = 60
     var longitude: String?
     var latitude: String?
+    var flag:Bool = false
     let redUIColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
     let alertIcon = UIImage(named: "errorIcon")
     let apperance = SCLAlertView.SCLAppearance(
@@ -42,6 +44,22 @@ class SOSRequestViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         layoutSubviews()
+        let fetchQueue = DispatchQueue.init(label: "fetchQueue")
+        fetchQueue.sync {
+            checkSOSRequests()
+        }
+        print("flag in view did load \(flag)")
+        if flag {
+            self.sosLabel.text = "SOS Sent!"
+            self.seeDetails.alpha = 1
+            self.seeDetails.isEnabled = true
+        }else{
+            //do nothing
+            self.sosLabel.text = "SOS"
+            self.seeDetails.alpha = 0
+            self.seeDetails.isEnabled = false
+        }
+        
     }
     
     //MARK: - Functions
@@ -87,27 +105,18 @@ class SOSRequestViewController: UIViewController {
         seeDetails.alpha = 0
     }
     
-    private func checkSOSRequests() -> Bool{
-        var flag = false
-        
-        let fetchQueue = DispatchQueue.init(label: "fetchQueue")
-        fetchQueue.sync {
+    private func checkSOSRequests(){
             self.ref.child("SOSRequests").observeSingleEvent(of: .value, with: { snapshot in
                 for requests in snapshot.children{
                     let obj = requests as! DataSnapshot
                     let user_id = obj.childSnapshot(forPath: "user_id").value as! String
                     let status = obj.childSnapshot(forPath: "status").value as! String
                     if user_id == self.userID && (status != "processed" || status != "cancelled") {
-                        flag = true
-                        
-                        SCLAlertView(appearance: self.apperance).showCustom("Oh no!", subTitle: "you have an active request, please chat with your assigned paramedic or cancel your request", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+                        self.flag = true
+                        print("flag in checkSOSRequests \(self.flag)")
                     }
                 }
-                print("\(flag) flag in for")
             })
-        }
-        print("\(flag) flag out for")
-        return flag
     }
     
     func nearest() -> String{
@@ -124,17 +133,13 @@ class SOSRequestViewController: UIViewController {
     @IBAction func sosRequest(_ sender: Any) {
         
         // check if there is an active sos request for this user
-        var flag: Bool?
         let fetchQueue = DispatchQueue.init(label: "fetchQueue")
         fetchQueue.sync {
-            flag = checkSOSRequests()
+            checkSOSRequests()
         }
-        if flag! {
-            self.sosLabel.text = "SOS Sent!"
-            self.seeDetails.alpha = 1
-            self.seeDetails.isEnabled = true
+        if flag {
+            SCLAlertView(appearance: self.apperance).showCustom("Oh no!", subTitle: "you have an active request, please chat with your assigned paramedic or cancel your request", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
         }else{
-            
             //1-  create SOS Request object
             let sosRequest = SOSRequest(user_id: userID!, user_name: "user", status: "1", assignedCenter: nearest(), sent: "Yes", longitude: longitude!, latitude: latitude!)
             
@@ -152,7 +157,9 @@ class SOSRequestViewController: UIViewController {
                     self.seeDetails.alpha = 1
                     self.seeDetails.isEnabled = true
                     //show notification that the request is sent
+                    
                     // direct the user to next page
+                    
                     Timer.invalidate()
                 }
             }
