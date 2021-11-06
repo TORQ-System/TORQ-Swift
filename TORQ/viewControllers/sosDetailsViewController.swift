@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Firebase
+import SCLAlertView
 
 class sosDetailsViewController: UIViewController {
     
@@ -20,6 +22,14 @@ class sosDetailsViewController: UIViewController {
     
     //MARK: - Variables
     var SOSRequest: SOSRequest?
+    var userID = Auth.auth().currentUser?.uid
+    var ref = Database.database().reference()
+    let redUIColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
+    let alertIcon = UIImage(named: "errorIcon")
+    let apperance = SCLAlertView.SCLAppearance(
+        contentViewCornerRadius: 15,
+        buttonCornerRadius: 7,
+        hideWhenBackgroundViewIsTapped: true)
     
     
     //MARK: - Overriden Functions
@@ -35,6 +45,7 @@ class sosDetailsViewController: UIViewController {
     private func setLayout(){
         //1- background view
         backgroundView.layer.cornerRadius = 50
+        backgroundView.layer.masksToBounds = true
         backgroundView.layer.maskedCorners = [.layerMinXMaxYCorner,.layerMaxXMaxYCorner]
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = backgroundView.frame
@@ -62,7 +73,23 @@ class sosDetailsViewController: UIViewController {
         liveLocation.imageEdgeInsets = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
         liveLocation.layer.cornerRadius = liveLocation.layer.frame.width/2
         liveLocation.layer.masksToBounds = true
-
+    }
+    
+    private func updateSOSRequestsStatus(update: String){
+        let fetchQueue = DispatchQueue.init(label: "fetchQueue")
+        fetchQueue.sync {
+            self.ref.child("SOSRequests").observeSingleEvent(of: .value, with: { snapshot in
+                for requests in snapshot.children{
+                    let obj = requests as! DataSnapshot
+                    let user_id = obj.childSnapshot(forPath: "user_id").value as! String
+                    let status = obj.childSnapshot(forPath: "status").value as! String
+                    if user_id == self.userID && status == "1" {
+                        self.ref.child("SOSRequests").child(obj.key).updateChildValues(["status":update])
+                    }
+                }
+            })
+            print("out of ref")
+        }
     }
     
     
@@ -72,7 +99,13 @@ class sosDetailsViewController: UIViewController {
     }
     
     @IBAction func cancelSOSrequest(_ sender: Any) {
-        
+        let alertView = SCLAlertView(appearance: self.apperance)
+        alertView.addButton("Yes, I'm sure", backgroundColor: self.redUIColor){
+            // update status to cancel
+            self.updateSOSRequestsStatus(update: "cancelled")
+            self.dismiss(animated: true, completion: nil)
+        }
+        alertView.showCustom("Warning", subTitle: "Once you confirm the cancellation your SOS Request will be canceled, Are you sure ?", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Cancel", circleIconImage: UIImage(named: "warning"), animationStyle: SCLAnimationStyle.topToBottom)
     }
     
     @IBAction func seeLiveLocation(_ sender: Any) {
