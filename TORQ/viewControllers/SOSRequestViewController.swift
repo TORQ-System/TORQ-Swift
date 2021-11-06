@@ -30,7 +30,7 @@ class SOSRequestViewController: UIViewController {
     var secondsRemaining = 60
     var longitude: String?
     var latitude: String?
-    var flag:Bool = false
+    var flag:Bool?
     var SOS: SOSRequest?
     let redUIColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
     let alertIcon = UIImage(named: "errorIcon")
@@ -119,13 +119,25 @@ class SOSRequestViewController: UIViewController {
                     if user_id == self.userID && (status != "processed" && status != "cancelled") {
                         self.flag = true
                         //update UI
-                        if ( (self.secondsRemaining == 0) || (self.secondsRemaining == 60) ) {
+                        if ( (self.secondsRemaining == 0) || (self.secondsRemaining != 60) ) {
                             self.SOS = sos
                             self.sosLabel.text = "SOS Sent!"
                             self.seeDetails.alpha = 1
                             self.seeDetails.isEnabled = true
                         }
-                        print("flag in checkSOSRequests \(self.flag)")
+                        else if self.secondsRemaining == 60 && (status == "1") {
+                            self.SOS = sos
+                            self.sosLabel.text = "SOS Sent!"
+                            self.seeDetails.alpha = 1
+                            self.seeDetails.isEnabled = true
+                        }else if ( (self.secondsRemaining == 60) && (status == "0") ){
+                            self.SOS = sos
+                            self.sosLabel.text = "00:60"
+                            self.seeDetails.alpha = 0
+                            self.seeDetails.isEnabled = false
+                        }
+                        
+                        print("flag in checkSOSRequests \(self.flag!)")
                     }else{
                         self.flag = false
                         self.sosLabel.text = "SOS"
@@ -134,7 +146,7 @@ class SOSRequestViewController: UIViewController {
                     }
                 }
             })
-            print("flag out checkSOSRequests \(self.flag)")
+            print("flag out checkSOSRequests")
         }
     }
     
@@ -146,12 +158,12 @@ class SOSRequestViewController: UIViewController {
                     let obj = requests as! DataSnapshot
                     let user_id = obj.childSnapshot(forPath: "user_id").value as! String
                     let status = obj.childSnapshot(forPath: "status").value as! String
-                    if user_id == self.userID && status == "1" {
+                    if user_id == self.userID && status == "0" {
                         self.ref.child("SOSRequests").child(obj.key).updateChildValues(["status":update])
                     }
                 }
             })
-            print("flag out checkSOSRequests \(self.flag)")
+            print("flag out checkSOSRequests \(self.flag!)")
         }
     }
     
@@ -160,12 +172,20 @@ class SOSRequestViewController: UIViewController {
         return nearest["name"] as! String
     }
     
+    private func goToDetails(){
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(identifier: "sosDetailsViewController") as! sosDetailsViewController
+        vc.SOSRequest = SOS
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
+    }
+    
     
     //MARK: - @IBActions
     @IBAction func backButton(_ sender: Any) {
-        if secondsRemaining>0 {
+        if secondsRemaining > 0 && secondsRemaining != 60{
             let alertView = SCLAlertView(appearance: self.apperance)
-            alertView.addButton("Yes, i'm sure", backgroundColor: self.redUIColor){
+            alertView.addButton("Yes, I'm sure", backgroundColor: self.redUIColor){
                 // set flag to false
                 self.flag = false
                 // update status to cancel
@@ -185,51 +205,60 @@ class SOSRequestViewController: UIViewController {
         fetchQueue.sync {
             checkSOSRequests()
         }
-        if flag {
+        if flag! {
             SCLAlertView(appearance: self.apperance).showCustom("Oh no!", subTitle: "you have an active request, please chat with your assigned paramedic or cancel your request", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
         }else{
             let alertView = SCLAlertView(appearance: self.apperance)
             alertView.addButton("Yes, I'm sure", backgroundColor: self.redUIColor){
+                print("seconds remaining: \(self.secondsRemaining)")
                 
                 //1-  create SOS Request object
-                let sosRequest = SOSRequest(user_id: self.userID!, user_name: "user", status: "1", assignedCenter: self.nearest(), sent: "Yes", longitude: self.longitude!, latitude: self.latitude!)
+                let sosRequest = SOSRequest(user_id: self.userID!, user_name: "user", status: "0", assignedCenter: self.nearest(), sent: "Yes", longitude: self.longitude!, latitude: self.latitude!)
                 
                 //2- write the child into the node in firebase
                 self.ref.child("SOSRequests").childByAutoId().setValue(["user_id":sosRequest.getUserID(),"user_name":sosRequest.getUserName(),"status":sosRequest.getStatus(),"assigned_center":sosRequest.getAssignedCenter(),"sent":sosRequest.getSent(),"longitude":sosRequest.getLongitude(),"latitude":sosRequest.getLatitude()])
                 
+                self.sosLabel.text = "00:60"
+                self.seeDetails.alpha = 0
+                self.seeDetails.isEnabled = false
+                
                 //3- update timer
                 Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (Timer) in
                     //TODO:- check if the user clicks on the button while the timer is fired
-                    if self.secondsRemaining > 0 {
+                    if self.secondsRemaining > 0 || self.secondsRemaining == 60{
                         self.SOS = sosRequest
                         self.seeDetails.alpha = 0
                         self.seeDetails.isEnabled = false
                         self.secondsRemaining -= 1
-                        self.sosLabel.text = "00:\(self.secondsRemaining)"
+                        if self.secondsRemaining < 10 {
+                            self.sosLabel.text = "00:0\(self.secondsRemaining)"
+                        }else{
+                            self.sosLabel.text = "00:\(self.secondsRemaining)"
+                        }
                     } else {
                         self.SOS = sosRequest
                         self.sosLabel.text = "SOS Sent!"
                         self.seeDetails.alpha = 1
                         self.seeDetails.isEnabled = true
+                        //upadte the status to 1
+                        self.updateSOSRequestsStatus(update: "1")
                         //show notification that the request is sent
                         // direct the user to next page
+                        self.goToDetails()
                         Timer.invalidate()
                     }
                 }
 
             }
             alertView.showCustom("Warning", subTitle: "Are you sure you need SOS Help?", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Cancel", circleIconImage: UIImage(named: "warning"), animationStyle: SCLAnimationStyle.topToBottom)
-
         }
     }
     
     
     @IBAction func sosDetails(_ sender: Any) {
-        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(identifier: "sosDetailsViewController") as! sosDetailsViewController
-        vc.SOSRequest = SOS
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: true, completion: nil)
+        //upadte the status to 1
+        self.updateSOSRequestsStatus(update: "1")
+        goToDetails()
     }
     
     
