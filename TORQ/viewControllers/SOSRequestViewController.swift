@@ -30,7 +30,7 @@ class SOSRequestViewController: UIViewController {
     var secondsRemaining = 15
     var longitude: String?
     var latitude: String?
-    var flag:Bool?
+    var flag:Bool = false
     var SOS: SOSRequest?
     let redUIColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
     let alertIcon = UIImage(named: "errorIcon")
@@ -137,7 +137,7 @@ class SOSRequestViewController: UIViewController {
                             self.seeDetails.isEnabled = false
                         }
                         
-                        print("flag in checkSOSRequests \(self.flag!)")
+                        print("flag in checkSOSRequests \(self.flag)")
                     }else{
                         self.flag = false
                         self.sosLabel.text = "SOS"
@@ -163,7 +163,7 @@ class SOSRequestViewController: UIViewController {
                     }
                 }
             })
-            print("flag out checkSOSRequests \(self.flag!)")
+            print("flag out checkSOSRequests \(self.flag)")
         }
     }
     
@@ -205,7 +205,7 @@ class SOSRequestViewController: UIViewController {
         fetchQueue.sync {
             checkSOSRequests()
         }
-        if flag! {
+        if flag {
             SCLAlertView(appearance: self.apperance).showCustom("Oh no!", subTitle: "you have an active request, please chat with your assigned paramedic or cancel your request", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
         }else{
             let alertView = SCLAlertView(appearance: self.apperance)
