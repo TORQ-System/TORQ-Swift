@@ -1466,7 +1466,7 @@
         <!--Sos Details View Controller-->
         <scene sceneID="4b9-uY-oyg">
             <objects>
-                <viewController id="aUD-Lg-JJJ" customClass="sosDetailsViewController" customModule="TORQ" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="sosDetailsViewController" id="aUD-Lg-JJJ" customClass="sosDetailsViewController" customModule="TORQ" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Mrh-kI-uYJ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1481,6 +1481,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
+                                            <action selector="backButton:" destination="aUD-Lg-JJJ" eventType="touchUpInside" id="dZV-e0-qwM"/>
                                             <action selector="backButton:" destination="fHt-Kx-Jo1" eventType="touchUpInside" id="rbD-dJ-1tv"/>
                                         </connections>
                                     </button>
@@ -1605,6 +1606,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="backgroundView" destination="hru-w3-IMl" id="D8Y-l2-it8"/>
                         <outlet property="cancel" destination="F1R-Zt-yvV" id="lW1-B5-4vD"/>
                         <outlet property="customerService" destination="fsy-yM-Oz3" id="Pcu-al-AHH"/>
                         <outlet property="liveLocation" destination="cOA-Tg-mmq" id="dbE-dR-OaD"/>
@@ -3614,8 +3616,8 @@
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="phone.fill" catalog="system" width="128" height="114"/>
         <image name="placeholder" width="120" height="120"/>
-        <image name="plus" width="117" height="112"/>
         <image name="plus" catalog="system" width="128" height="113"/>
+        <image name="plus" width="117" height="112"/>
         <image name="pulse" width="300" height="214"/>
         <image name="rec" width="277" height="280"/>
         <image name="star" width="150" height="150"/>

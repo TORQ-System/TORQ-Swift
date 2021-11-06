@@ -31,6 +31,7 @@ class SOSRequestViewController: UIViewController {
     var longitude: String?
     var latitude: String?
     var flag:Bool = false
+    var SOS: SOSRequest?
     let redUIColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
     let alertIcon = UIImage(named: "errorIcon")
     let apperance = SCLAlertView.SCLAppearance(
@@ -45,49 +46,10 @@ class SOSRequestViewController: UIViewController {
         super.viewDidLoad()
         layoutSubviews()
         checkSOSRequests()
-
-//        let fetchQueue = DispatchQueue.init(label: "fetchQueue")
-//        let flagQueue = DispatchQueue.init(label: "flagQueue")
-//
-//        fetchQueue.sync {
-//            checkSOSRequests()
-//            flagQueue.sync {
-//                print("flag in view did load \(flag)")
-//                if flag {
-//                    self.sosLabel.text = "SOS Sent!"
-//                    self.seeDetails.alpha = 1
-//                    self.seeDetails.isEnabled = true
-//                }else{
-//                    //do nothing
-//                    self.sosLabel.text = "SOS"
-//                    self.seeDetails.alpha = 0
-//                    self.seeDetails.isEnabled = false
-//                }
-//            }
-//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         checkSOSRequests()
-//        let fetchQueue = DispatchQueue.init(label: "fetchQueue")
-//        let flagQueue = DispatchQueue.init(label: "flagQueue")
-//
-//        fetchQueue.sync {
-//            checkSOSRequests()
-//            flagQueue.sync {
-//                print("flag in view did load \(flag)")
-//                if flag {
-//                    self.sosLabel.text = "SOS Sent!"
-//                    self.seeDetails.alpha = 1
-//                    self.seeDetails.isEnabled = true
-//                }else{
-//                    //do nothing
-//                    self.sosLabel.text = "SOS"
-//                    self.seeDetails.alpha = 0
-//                    self.seeDetails.isEnabled = false
-//                }
-//            }
-//        }
     }
     
     //MARK: - Functions
@@ -141,10 +103,20 @@ class SOSRequestViewController: UIViewController {
                     let obj = requests as! DataSnapshot
                     let user_id = obj.childSnapshot(forPath: "user_id").value as! String
                     let status = obj.childSnapshot(forPath: "status").value as! String
+                    let user_name = obj.childSnapshot(forPath: "user_name").value as! String
+                    let sent = obj.childSnapshot(forPath: "sent").value as! String
+                    let longitude = obj.childSnapshot(forPath: "longitude").value as! String
+                    let latitude = obj.childSnapshot(forPath: "latitude").value as! String
+                    let assigned_center = obj.childSnapshot(forPath: "assigned_center").value as! String
+                    
+                    let sos = SOSRequest(user_id: user_id, user_name: user_name, status: status, assignedCenter: assigned_center, sent: sent, longitude: longitude, latitude: latitude)
+                    
+
                     if user_id == self.userID && (status != "processed" && status != "cancelled") {
                         self.flag = true
                         //update UI
                         if (!(self.secondsRemaining > 0) || self.secondsRemaining == 60) {
+                            self.SOS = sos
                             self.sosLabel.text = "SOS Sent!"
                             self.seeDetails.alpha = 1
                             self.seeDetails.isEnabled = true
@@ -155,6 +127,7 @@ class SOSRequestViewController: UIViewController {
                         self.sosLabel.text = "SOS"
                         self.seeDetails.alpha = 0
                         self.seeDetails.isEnabled = false
+                        
                     }
                 }
             })
@@ -226,6 +199,7 @@ class SOSRequestViewController: UIViewController {
                         self.secondsRemaining -= 1
                         self.sosLabel.text = "00:\(self.secondsRemaining)"
                     } else {
+                        self.SOS = sosRequest
                         self.sosLabel.text = "SOS Sent!"
                         self.seeDetails.alpha = 1
                         self.seeDetails.isEnabled = true
@@ -245,7 +219,11 @@ class SOSRequestViewController: UIViewController {
     
     
     @IBAction func sosDetails(_ sender: Any) {
-        
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(identifier: "sosDetailsViewController") as! sosDetailsViewController
+        vc.SOSRequest = SOS
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
     }
     
     
