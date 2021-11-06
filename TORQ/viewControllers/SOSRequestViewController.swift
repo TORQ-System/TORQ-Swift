@@ -140,29 +140,36 @@ class SOSRequestViewController: UIViewController {
         if flag {
             SCLAlertView(appearance: self.apperance).showCustom("Oh no!", subTitle: "you have an active request, please chat with your assigned paramedic or cancel your request", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
         }else{
-            //1-  create SOS Request object
-            let sosRequest = SOSRequest(user_id: userID!, user_name: "user", status: "1", assignedCenter: nearest(), sent: "Yes", longitude: longitude!, latitude: latitude!)
-            
-            //2- write the child into the node in firebase
-            ref.child("SOSRequests").childByAutoId().setValue(["user_id":sosRequest.getUserID(),"user_name":sosRequest.getUserName(),"status":sosRequest.getStatus(),"assigned_center":sosRequest.getAssignedCenter(),"sent":sosRequest.getSent(),"longitude":sosRequest.getLongitude(),"latitude":sosRequest.getLatitude()])
-            
-            //3- update timer
-            Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (Timer) in
-                //TODO:- check if the user clicks on the button while the timer is fired
-                if self.secondsRemaining > 0 {
-                    self.secondsRemaining -= 1
-                    self.sosLabel.text = "00:\(self.secondsRemaining)"
-                } else {
-                    self.sosLabel.text = "SOS Sent!"
-                    self.seeDetails.alpha = 1
-                    self.seeDetails.isEnabled = true
-                    //show notification that the request is sent
-                    
-                    // direct the user to next page
-                    
-                    Timer.invalidate()
+            let alertView = SCLAlertView(appearance: self.apperance)
+            alertView.addButton("Are you sure ?", backgroundColor: self.redUIColor){
+                
+                //1-  create SOS Request object
+                let sosRequest = SOSRequest(user_id: self.userID!, user_name: "user", status: "1", assignedCenter: self.nearest(), sent: "Yes", longitude: self.longitude!, latitude: self.latitude!)
+                
+                //2- write the child into the node in firebase
+                self.ref.child("SOSRequests").childByAutoId().setValue(["user_id":sosRequest.getUserID(),"user_name":sosRequest.getUserName(),"status":sosRequest.getStatus(),"assigned_center":sosRequest.getAssignedCenter(),"sent":sosRequest.getSent(),"longitude":sosRequest.getLongitude(),"latitude":sosRequest.getLatitude()])
+                
+                //3- update timer
+                Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (Timer) in
+                    //TODO:- check if the user clicks on the button while the timer is fired
+                    if self.secondsRemaining > 0 {
+                        self.secondsRemaining -= 1
+                        self.sosLabel.text = "00:\(self.secondsRemaining)"
+                    } else {
+                        self.sosLabel.text = "SOS Sent!"
+                        self.seeDetails.alpha = 1
+                        self.seeDetails.isEnabled = true
+                        //show notification that the request is sent
+                        
+                        // direct the user to next page
+                        
+                        Timer.invalidate()
+                    }
                 }
+
             }
+            alertView.showCustom("Are you sure?", subTitle: "We will delete your entire medical report", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Cancel", circleIconImage: UIImage(named: "warning"), animationStyle: SCLAnimationStyle.topToBottom)
+
         }
     }
     
