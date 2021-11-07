@@ -24,39 +24,53 @@ class requestReportViewController: UIViewController {
     var long : Double!
     var lang : Double!
     var time : String!
+    var Requestid : String!
+    var statusid : String!
     var ref = Database.database().reference()
     
     // MARK: - Overriden Functions
     override func viewDidLoad() {
         super.viewDidLoad()
         contetnt()
+        if (statusid == "1"){
+            
+           print("try")
+                self.prosseing0.alpha = 0
+            
+        }
         configureView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        ref.child("Request").queryOrdered(byChild:"user_id").observe(.childAdded, with: {(snapshot) in
-            if let dec = snapshot.value as? [String :Any]{
-                if (dec["user_id"] as! String == self.userMedicalReportID! && dec["status"]as! String == "1"){self.prosseing0.alpha = 0
-                    
-                }
-            }
-        })
+//        ref.child("Request").queryOrdered(byChild:"user_id").observe(.childAdded, with: {(snapshot) in
+//            if let dec = snapshot.value as? [String :Any]{
+//                if ((dec["request_id"]) as? String == self.Requestid) {
+//                    {
+//                        self.prosseing0.alpha = 0}
+//
+//                }
+//            }
+//        })
+        print(statusid as Any)
+        if (statusid == "1"){
+           
+                self.prosseing0.alpha = 0
             
-        
+        }
                                                                      
                                                                      }
     
     
     //MARK: - Functions
     func configureView(){
-        scroolview.layer.cornerRadius = 20
-        scroolview.layer.shadowColor = UIColor.black.cgColor
-        scroolview.layer.shadowOpacity = 1
-        scroolview.layer.shadowOffset = CGSize(width: 0, height: 5)
-        scroolview.layer.shadowRadius = 10
-        scroolview.layer.shouldRasterize = true
-        prosseing0.layer.cornerRadius = 15
-        prosseing0.layer.masksToBounds = true
+      scroolview.layer.cornerRadius = 20
+//        scroolview.layer.shadowColor = UIColor.black.cgColor
+//        scroolview.layer.shadowOpacity = 1
+//        scroolview.layer.shadowOffset = CGSize(width: 0, height: 5)
+//        scroolview.layer.shadowRadius = 10
+//        scroolview.layer.shouldRasterize = true
+              prosseing0.layer.cornerRadius = 15
+//        prosseing0.layer.masksToBounds = true
         location_report.backgroundColor = .white
         location_report.layer.cornerRadius = 25
     }
@@ -173,6 +187,7 @@ class requestReportViewController: UIViewController {
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(identifier: "hospitalsViewController") as! hospitalsViewController
         vc.userMedicalReportID = String(userMedicalReportID)
+        vc.RequestID = String(Requestid)
         self.present(vc, animated: true, completion: nil)
     }
     

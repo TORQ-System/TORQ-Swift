@@ -92,10 +92,12 @@ class requestsViewController: UIViewController {
     func getRequests(){
         requests.removeAll()
         myRequests.removeAll()
-        prossed.removeAll()
+       prossed.removeAll()
         
         ref.child("Request").queryOrdered(byChild: "time_stamp").observe(.value) { snapshot in
             for contact in snapshot.children{
+                print("enter")
+
                 let obj = contact as! DataSnapshot
                 let user_id = obj.childSnapshot(forPath: "user_id").value as! String
                 let sensor_id = obj.childSnapshot(forPath: "sensor_id").value as! String
@@ -108,15 +110,20 @@ class requestsViewController: UIViewController {
                 let status = obj.childSnapshot(forPath: "status").value as! String
                 
                 let request = Request(user_id:user_id, sensor_id: sensor_id, request_id: request_id, dateTime: time_stamp, longitude: lonitude, latitude:latitude , vib: vib, rotation:rotation , status: status )
-                
+                print(request)
+
                 //get active requests only
               //  if ( request.getStatus() == "0" ) {
                     self.requests.append(request)
+                print("try to add\(self.requests)")
                     self.nearest(longitude: request.getLongitude(), latitude: request.getLatitude(), request: request)
                 //}
                 
             }}
-        
+        print(requests)
+
+        print(myRequests)
+        print(prossed)
         requestsColletionView.reloadData()
     }
     
@@ -124,8 +131,10 @@ class requestsViewController: UIViewController {
     func nearest(longitude: String, latitude:String, request: Request){
         
         let nearest = SRCACenters.getNearest(longitude: Double(longitude)!, latitude: Double(latitude)!)
+        print(nearest)
         if nearest["name"] as! String == loggedInCenter!["name"] as! String{
             var i = 0
+            var t = 0
             for item in myRequests {
                 if item.request_id == request.request_id {
                     myRequests.remove(at:i )
@@ -134,16 +143,24 @@ class requestsViewController: UIViewController {
             }
             for item in prossed {
                 if item.request_id == request.request_id {
-                    prossed.remove(at:i )
+                    prossed.remove(at:t )
                 }
-                i = i+1
+                t = t+1
             }
             if request.status == "0"{
-                myRequests.append(request)}
+                myRequests.append(request)
+                print(request)
+
+            }
             else if request.status == "1"{
                 prossed.append(request)
+                print(request)
+
             }
             self.requestsColletionView.reloadData()
+          
+
+
         }
     }
     
@@ -216,6 +233,8 @@ extension requestsViewController: UICollectionViewDelegate{
         vc.long = Double(myRequests[indexPath.row].getLongitude())!
         vc.time = myRequests[indexPath.row].getDateTime()
         vc.userMedicalReportID = String(myRequests[indexPath.row].getUserID())
+            vc.Requestid = String(myRequests[indexPath.row].getRequestID())
+            vc.statusid = String(myRequests[indexPath.row].getStatus())
         vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)}
         if switches==2{
@@ -223,6 +242,7 @@ extension requestsViewController: UICollectionViewDelegate{
         vc.long = Double(prossed[indexPath.row].getLongitude())!
         vc.time = prossed[indexPath.row].getDateTime()
         vc.userMedicalReportID = String(prossed[indexPath.row].getUserID())
+            vc.statusid = String(prossed[indexPath.row].getStatus())
         vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)}
     }
