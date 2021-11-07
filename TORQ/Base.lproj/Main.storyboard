@@ -1315,7 +1315,7 @@
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="xU1-7K-wsH">
-                                <rect key="frame" x="20" y="170" width="374" height="573"/>
+                                <rect key="frame" x="20" y="170" width="374" height="726"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" red="0.90971142049999998" green="0.89412051439999995" blue="0.89412540200000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="dJt-ff-6nS">
@@ -1431,6 +1431,10 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="xos-MD-Vb9" id="Aqy-eF-P27"/>
+                                    <outlet property="delegate" destination="xos-MD-Vb9" id="KSk-X3-qD3"/>
+                                </connections>
                             </collectionView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Accidents History" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8GL-oM-lGl">
                                 <rect key="frame" x="20" y="107" width="250" height="36"/>
@@ -1446,7 +1450,7 @@
                             <constraint firstItem="xU1-7K-wsH" firstAttribute="top" secondItem="8GL-oM-lGl" secondAttribute="bottom" constant="27" id="5FV-lH-dsV"/>
                             <constraint firstItem="8GL-oM-lGl" firstAttribute="top" secondItem="DsX-Sa-Ygs" secondAttribute="bottom" constant="34.5" id="L3o-WK-OeB"/>
                             <constraint firstItem="8GL-oM-lGl" firstAttribute="top" secondItem="Uqi-xd-zdQ" secondAttribute="top" constant="107" id="aGE-t1-ohO"/>
-                            <constraint firstItem="kFT-5r-B7e" firstAttribute="bottom" secondItem="xU1-7K-wsH" secondAttribute="bottom" constant="119" id="aUP-cy-sQv"/>
+                            <constraint firstAttribute="bottom" secondItem="xU1-7K-wsH" secondAttribute="bottom" id="aUP-cy-sQv"/>
                             <constraint firstItem="kFT-5r-B7e" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="DsX-Sa-Ygs" secondAttribute="trailing" symbolic="YES" id="nzH-1Q-FZI"/>
                             <constraint firstItem="8GL-oM-lGl" firstAttribute="leading" secondItem="DsX-Sa-Ygs" secondAttribute="leading" constant="-10" id="o3r-lb-Zht"/>
                             <constraint firstItem="8GL-oM-lGl" firstAttribute="leading" secondItem="kFT-5r-B7e" secondAttribute="leading" constant="20" id="qXd-Db-n4l"/>
@@ -3460,8 +3464,8 @@
         <image name="person.2.fill" catalog="system" width="128" height="80"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="phone.fill" catalog="system" width="128" height="114"/>
-        <image name="plus" catalog="system" width="128" height="113"/>
         <image name="plus" width="117" height="112"/>
+        <image name="plus" catalog="system" width="128" height="113"/>
         <image name="pulse" width="300" height="214"/>
         <image name="rec" width="277" height="280"/>
         <image name="star" width="150" height="150"/>
