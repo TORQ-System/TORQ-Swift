@@ -10,6 +10,7 @@
 		3DDC91A2940F7463283FBFE6 /* Pods_TORQ_TORQUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 404C9ACD593D6364A24EFF38 /* Pods_TORQ_TORQUITests.framework */; };
 		8FA67A0F52162B410B79BAF0 /* Pods_TORQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9EC7D60F5128DCF29B3517 /* Pods_TORQ.framework */; };
 		A306B1292733A388007A218F /* editEmergencyContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A306B1282733A388007A218F /* editEmergencyContactViewController.swift */; };
+		A306B12B2735D248007A218F /* editMedicalReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A306B12A2735D248007A218F /* editMedicalReportViewController.swift */; };
 		BE04B6D2272DA7B700EEE3EE /* requestReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE04B6D1272DA7B700EEE3EE /* requestReportViewController.swift */; };
 		BE04B6D4272DAA0600EEE3EE /* hospitalsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE04B6D3272DAA0600EEE3EE /* hospitalsViewController.swift */; };
 		BE34F69D270F30B70093C633 /* requestCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE34F69C270F30B70093C633 /* requestCollectionViewCell.swift */; };
@@ -85,6 +86,7 @@
 		9850D36D8AB92301B2DFBE7D /* Pods-TORQ-TORQUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TORQ-TORQUITests.debug.xcconfig"; path = "Target Support Files/Pods-TORQ-TORQUITests/Pods-TORQ-TORQUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		9F0737DF72CCC79CA95FDC8D /* Pods-TORQ.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TORQ.debug.xcconfig"; path = "Target Support Files/Pods-TORQ/Pods-TORQ.debug.xcconfig"; sourceTree = "<group>"; };
 		A306B1282733A388007A218F /* editEmergencyContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editEmergencyContactViewController.swift; sourceTree = "<group>"; };
+		A306B12A2735D248007A218F /* editMedicalReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editMedicalReportViewController.swift; sourceTree = "<group>"; };
 		BE04B6D1272DA7B700EEE3EE /* requestReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = requestReportViewController.swift; sourceTree = "<group>"; };
 		BE04B6D3272DAA0600EEE3EE /* hospitalsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = hospitalsViewController.swift; sourceTree = "<group>"; };
 		BE34F69C270F30B70093C633 /* requestCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = requestCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -304,6 +306,7 @@
 				BE04B6D1272DA7B700EEE3EE /* requestReportViewController.swift */,
 				BE04B6D3272DAA0600EEE3EE /* hospitalsViewController.swift */,
 				A306B1282733A388007A218F /* editEmergencyContactViewController.swift */,
+				A306B12A2735D248007A218F /* editMedicalReportViewController.swift */,
 			);
 			path = viewControllers;
 			sourceTree = "<group>";
@@ -558,6 +561,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A306B12B2735D248007A218F /* editMedicalReportViewController.swift in Sources */,
 				BE34F6AD27118A8F0093C633 /* onboardingScreen2ViewController.swift in Sources */,
 				BE64405C272C6F2B0051662F /* Sensor.swift in Sources */,
 				BEF9751827076C0800325281 /* stringExtension.swift in Sources */,

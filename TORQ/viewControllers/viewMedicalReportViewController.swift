@@ -10,6 +10,7 @@ class viewMedicalReportViewController: UIViewController {
     @IBOutlet weak var cardView: UIView!
     @IBOutlet weak var addMedicalReport: UIButton!
     @IBOutlet weak var deleteMedicalReport: UIButton!
+    @IBOutlet weak var editMedicalReport: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var scrollViewContainer: UIView!
     @IBOutlet weak var bloodType: UILabel!
@@ -72,6 +73,8 @@ class viewMedicalReportViewController: UIViewController {
         addMedicalReport.layer.masksToBounds = true
         deleteMedicalReport.layer.cornerRadius = 35
         deleteMedicalReport.layer.masksToBounds = true
+        editMedicalReport.layer.cornerRadius = 35
+        editMedicalReport.layer.masksToBounds = true
         // 6- hide the not availbale MR lable
         notAvailable.alpha = 0
         // 7- update the user Name
@@ -105,6 +108,7 @@ class viewMedicalReportViewController: UIViewController {
                         self.medication.text = "\(report.getMedications())"
                         self.addMedicalReport.isEnabled = false
                         self.deleteMedicalReport.isEnabled = true
+                        self.editMedicalReport.isEnabled = true
                         self.medicalStackView.isHidden = false
                         self.notAvailable.alpha = 0
                     }
@@ -116,6 +120,7 @@ class viewMedicalReportViewController: UIViewController {
                     self.medicalStackView.isHidden = true
                     self.notAvailable.alpha = 1
                     self.deleteMedicalReport.isEnabled = false
+                    self.editMedicalReport.isEnabled = false
                     self.addMedicalReport.isEnabled = true
                 }
             }
@@ -170,6 +175,14 @@ class viewMedicalReportViewController: UIViewController {
         alertView.showCustom("Are you sure?", subTitle: "We will delete your entire medical report", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Cancel", circleIconImage: UIImage(named: "warning"), animationStyle: SCLAnimationStyle.topToBottom)
         print("end")
     }
+    
+    @IBAction func editMedicalReport(_ sender: Any) {
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(identifier: "editMedicalReportViewController") as! editMedicalReportViewController
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
+    }
+    
 }
 
 //MARK: - Extensions

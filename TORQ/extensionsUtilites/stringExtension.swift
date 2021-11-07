@@ -26,10 +26,12 @@ extension String {
         let nameTest = NSPredicate(format: "SELF MATCHES %@", regxName)
         return nameTest.evaluate(with: self)
     }
+    // ^[a-zA-Z]+( [a-zA-Z]+)?(, [a-zA-Z]+)?( [a-zA-Z]+)?$
     var isValidSequence: Bool{
         // Validate sequence
         // ^[a-zA-Z]+(,[a-zA-Z]+)*$
-        let regxName = "^[a-zA-Z]+(\\s?[a-zA-Z]?)+(,[a-zA-Z]+\\s?[ a-zA-Z]+)*$"
+        let regxName = "^[a-zA-Z]+(\\s?[a-zA-Z]+)?\\s?(\\s?,\\s?[a-zA-Z]+\\s?[a-zA-Z]+)*$"
+        //^[a-zA-Z]+(\\s?[a-zA-Z]+)?\\s?(,\\s?[a-zA-Z]+\\s?[a-zA-Z]+)*$
         let nameTest = NSPredicate(format: "SELF MATCHES %@", regxName)
         return nameTest.evaluate(with: self)
     }
