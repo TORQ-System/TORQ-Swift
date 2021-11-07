@@ -42,15 +42,7 @@ class requestReportViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-//        ref.child("Request").queryOrdered(byChild:"user_id").observe(.childAdded, with: {(snapshot) in
-//            if let dec = snapshot.value as? [String :Any]{
-//                if ((dec["request_id"]) as? String == self.Requestid) {
-//                    {
-//                        self.prosseing0.alpha = 0}
-//
-//                }
-//            }
-//        })
+
         print(statusid as Any)
         if (statusid == "1"){
            
@@ -78,32 +70,9 @@ class requestReportViewController: UIViewController {
     func contetnt(){
         //location
         location_report.addTarget(self, action: #selector(findloc(sender: )), for: .touchUpInside)
-        // time format
-//        let find = time.firstIndex(of: "+") ?? time.endIndex
-//        let find2 = time[..<find]
-//        let start = find2.index(find2.startIndex, offsetBy: 0)
-//        let end = find2.index(find2.startIndex, offsetBy: 10)
-//        let range = start...end
-//
-//        let newString = String(find2[range])
-//        let start1 = find2.index(find2.startIndex, offsetBy: 10)
-//        let end1 = find2.index(find2.startIndex, offsetBy:18)
-//        let range1 = start1...end1
-//        let newString1 = String(find2[range1])
+
         data_timeRE.text = time
-        ///
-        //        ref.child("User").child(UID!).observe(.value, with: {(snapshot) in
-        //                   if let dec = snapshot.value as? [String :Any]
-        //                   {
-        //                    let Fname = dec["firstName"] as! String
-        //                       let lname = dec["lastName"] as! String
-        //                       print("hi\(Fname)")
-        //                       self.name_report.text = Fname+" "+lname
-        //                       self.namerequest.text = "\(Fname)'s Request"
-        //
-        //                   }
-        //
-        //               })
+    
         
         
         ref.child("User").child(userMedicalReportID!).observe(.value, with: {(snapshot) in

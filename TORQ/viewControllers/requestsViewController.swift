@@ -307,13 +307,8 @@ extension requestsViewController: UICollectionViewDataSource{
         default:
             break
         }
-//        cell.name.text = "Accident #\(indexPath.row)"
-//
-//        cell.dateTime.text = myRequests[indexPath.row].getDateTime()
-//
-//        cell.viewbutten.tag = indexPath.row
-//        cell.viewbutten.addTarget(self, action: #selector(viewbutten(sender: )), for: .touchUpInside)
-//
+
+
         return cell
     }
 }
