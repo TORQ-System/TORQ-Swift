@@ -40,19 +40,19 @@ class signUpSecondViewController: UIViewController {
     let blueUIColor = UIColor( red: 49/255, green: 90/255, blue:149/255, alpha: 1.0 )
     let alertErrorIcon = UIImage(named: "errorIcon")
     let alertSuccessIcon = UIImage(named: "successIcon")
-    let apperanceWithoutClose = SCLAlertView.SCLAppearance(
-        showCloseButton: false,
-        contentViewCornerRadius: 15,
-        buttonCornerRadius: 7)
-    let apperance = SCLAlertView.SCLAppearance(
-        contentViewCornerRadius: 15,
-        buttonCornerRadius: 7,
-        hideWhenBackgroundViewIsTapped: true)
+    let apperanceWithoutClose = SCLAlertView.SCLAppearance(showCloseButton: false, contentViewCornerRadius: 15, buttonCornerRadius: 7)
+    let apperance = SCLAlertView.SCLAppearance(contentViewCornerRadius: 15, buttonCornerRadius: 7, hideWhenBackgroundViewIsTapped: true)
+    let formatter = DateFormatter()
     
     //MARK: - Overriden Functions
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Setup the formatter
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
+        formatter.dateFormat = "MMM d, yyyy" //Universal format
+
         percentageLabel.text = "\(calculatePercentage())%"
         progressBar.setProgress(completedFields, animated: true)
         
@@ -118,10 +118,10 @@ class signUpSecondViewController: UIViewController {
     
     func setupDatePickerView(){
         datePicker.preferredDatePickerStyle = .wheels
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MM/dd/yyyy"
+        
         datePicker.maximumDate = Date("12-31-2012")
         datePicker.minimumDate = Date("01-01-1930")
+        
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(chooseDate))
@@ -134,10 +134,6 @@ class signUpSecondViewController: UIViewController {
     }
     
     @objc func chooseDate(){
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MM/dd/yyyy"
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .none
         date.text = formatter.string(from: datePicker.date)
         self.view.endEditing(true)
     }

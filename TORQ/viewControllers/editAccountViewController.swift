@@ -35,10 +35,17 @@ class editAccountViewController: UIViewController {
     let apperanceWithoutClose = SCLAlertView.SCLAppearance( showCloseButton: false, contentViewCornerRadius: 15, buttonCornerRadius: 7)
     let apperance = SCLAlertView.SCLAppearance( contentViewCornerRadius: 15, buttonCornerRadius: 7, hideWhenBackgroundViewIsTapped: true)
     let settings = ["Change Email","Change Password"]
+    let formatter = DateFormatter()
+  
     
     //MARK: - Overriden Functions
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //Setup the formatter
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
+        formatter.dateFormat = "MMM d, yyyy" //Universal format
         
         //Setup user data
         fetchUserData()
@@ -48,6 +55,7 @@ class editAccountViewController: UIViewController {
         configureInputs()
         configureSegmentControl()
         configureDatePickerView()
+        
         
     }
     
@@ -80,37 +88,34 @@ class editAccountViewController: UIViewController {
     }
     
     func configureDatePickerView(){
-        datePicker.preferredDatePickerStyle = .wheels
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MM/dd/yyyy"
-        datePicker.maximumDate = Date("12-31-2012")
-        datePicker.minimumDate = Date("01-01-1930")
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
+        
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(chooseDate))
-        toolbar.setItems([doneButton], animated: true)
         doneButton.tintColor = blueUIColor
+        toolbar.setItems([doneButton], animated: true)
+
+
         birthDate.inputView = datePicker
         birthDate.inputAccessoryView = toolbar
+        
+        datePicker.preferredDatePickerStyle = .wheels
         datePicker.datePickerMode = .date
+
+        datePicker.maximumDate = Date("12-31-2012")
+        datePicker.minimumDate = Date("01-01-1930")
         
     }
     
     @objc func chooseDate(){
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MM/dd/yyyy"
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .none
         birthDate.text = formatter.string(from: datePicker.date)
-        print(birthDate.text!)
         birthDate.setBorder(color: "valid", image: UIImage(named: "calendarValid")!)
+        
         self.view.endEditing(true)
     }
     
     func fetchUserData(){
         let userID = Auth.auth().currentUser?.uid
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MM/dd/yyyy"
         
         ref.child("User").child(userID!).observeSingleEvent(of: .value, with: { snapshot in
             let value = snapshot.value as? NSDictionary
