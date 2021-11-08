@@ -65,7 +65,7 @@ class editAccountViewController: UIViewController {
     
     func configureInputs(){
         fullName.setBorder(color: "valid", image: UIImage(named: "personValid")!)
-        nationalID.setBorder(color: "valid", image: UIImage(named: "idValid")!)
+        nationalID.setBorder(color: "default", image: UIImage(named: "idDefault")!)
         phoneNumber.setBorder(color: "valid", image: UIImage(named: "phoneValid")!)
         birthDate.setBorder(color: "valid", image: UIImage(named: "calendarValid")!)
         
@@ -210,7 +210,7 @@ class editAccountViewController: UIViewController {
         
         
         fullName.setBorder(color: "valid", image: UIImage(named: "personValid")!)
-        nationalID.setBorder(color: "valid", image: UIImage(named: "idValid")!)
+        nationalID.setBorder(color: "default", image: UIImage(named: "idDefault")!)
         phoneNumber.setBorder(color: "valid", image: UIImage(named: "phoneValid")!)
         birthDate.setBorder(color: "valid", image: UIImage(named: "calendarValid")!)
         
