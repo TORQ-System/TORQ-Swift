@@ -86,11 +86,11 @@ class AccidentHistoryViewController: UIViewController {
             cell.layer.shadowRadius = 90
             cell.layer.shadowOffset = CGSize(width: 9, height: 9)
             cell.layer.borderColor = CGColor(red: 0, green: 0, blue: 0, alpha: 1)
-            
+            cell.map.layer.cornerRadius = 10
             cell.accidentLabel.text = "Accident #\(indexPath.row + 1)"
-            cell.vibrationLabel.text = "Vibration: "
+            cell.vibrationLabel.text = "Vibration detected: "
             cell.vibration.text = "\(accidentsArray[indexPath.row].getVib())"
-            cell.inclinationLabel.text = "Inclination: "
+            cell.inclinationLabel.text = "Inclination detected: "
             cell.inclination.text = "\(accidentsArray[indexPath.row].getRotation())"
                 if ( accidentsArray[indexPath.row].getStatus() == "1" ) {
                     cell.status.text = "Processed"
