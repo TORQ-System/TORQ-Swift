@@ -17,6 +17,7 @@ class editAccountViewController: UIViewController {
     @IBOutlet weak var accountView: UIView!
     @IBOutlet weak var gender: UISegmentedControl!
     @IBOutlet weak var fullName: UITextField!
+    @IBOutlet weak var email: UITextField!
     @IBOutlet weak var birthDate: UITextField!
     @IBOutlet weak var phoneNumber: UITextField!
     @IBOutlet weak var nationalID: UITextField!
@@ -36,7 +37,7 @@ class editAccountViewController: UIViewController {
     let apperance = SCLAlertView.SCLAppearance( contentViewCornerRadius: 15, buttonCornerRadius: 7, hideWhenBackgroundViewIsTapped: true)
     let settings = ["Change Email","Change Password"]
     let formatter = DateFormatter()
-  
+    
     
     //MARK: - Overriden Functions
     override func viewDidLoad() {
@@ -73,11 +74,13 @@ class editAccountViewController: UIViewController {
     
     func configureInputs(){
         fullName.setBorder(color: "valid", image: UIImage(named: "personValid")!)
+        email.setBorder(color: "valid", image: UIImage(named: "emailValid")!)
         nationalID.setBorder(color: "default", image: UIImage(named: "idDefault")!)
         phoneNumber.setBorder(color: "valid", image: UIImage(named: "phoneValid")!)
         birthDate.setBorder(color: "valid", image: UIImage(named: "calendarValid")!)
         
         fullName.clearsOnBeginEditing = false
+        email.clearsOnBeginEditing = false
         phoneNumber.clearsOnBeginEditing = false
         nationalID.isUserInteractionEnabled = false
         
@@ -94,14 +97,14 @@ class editAccountViewController: UIViewController {
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(chooseDate))
         doneButton.tintColor = blueUIColor
         toolbar.setItems([doneButton], animated: true)
-
-
+        
+        
         birthDate.inputView = datePicker
         birthDate.inputAccessoryView = toolbar
         
         datePicker.preferredDatePickerStyle = .wheels
         datePicker.datePickerMode = .date
-
+        
         datePicker.maximumDate = Date("12-31-2012")
         datePicker.minimumDate = Date("01-01-1930")
         
@@ -130,8 +133,8 @@ class editAccountViewController: UIViewController {
             self.user = User(dateOfBirth: birthDate, email: email, fullName: fullName, gender: gender, nationalID: nationalID, password:password, phone: phone)
             
             self.datePicker.date = Date(birthDate)
-            
             self.fullName.text = fullName
+            self.email.text = email
             self.gender.selectedSegmentIndex = self.selectGender(gender: gender)
             self.birthDate.text = birthDate
             self.nationalID.text = nationalID
@@ -159,10 +162,14 @@ class editAccountViewController: UIViewController {
     }
     
     func validateFields() -> [String: String]{
-        var errors = ["fullName": "", "nationalID": "", "phoneNumber": "", "birthDate": ""]
+        var errors = ["fullName": "", "nationalID": "", "phoneNumber": "", "birthDate": "", "email": ""]
         
         if fullName.text == nil || fullName.text == "" || !fullName.text!.isValidName || fullName.text!.count <= 2{
             errors["fullName"] = "Error in full name"
+        }
+        
+        if email.text == nil || email.text == "" || !email.text!.isValidEmail{
+            errors["email"] = "Error in email"
         }
         
         if nationalID.text == nil || nationalID.text == "" || !nationalID.text!.isValidNationalID{
@@ -189,7 +196,7 @@ class editAccountViewController: UIViewController {
         let errors = validateFields()
         let userID = Auth.auth().currentUser?.uid
         
-        if errors["nationalID"] != "" || errors["fullName"] != "" || errors["phoneNumber"] != "" || errors["birthDate"] != "" {
+        if errors["nationalID"] != "" || errors["fullName"] != "" || errors["phoneNumber"] != "" || errors["birthDate"] != "" ||  errors["email"] != ""{
             SCLAlertView(appearance: self.apperance).showCustom("Invalid Credentials", subTitle: "Please make sure you entered all fields correctly", color: self.redUIColor, icon: alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
         }
         
@@ -203,6 +210,11 @@ class editAccountViewController: UIViewController {
             return
         }
         
+        guard errors["email"] == "" else{
+            email.setBorder(color: "error", image: UIImage(named: "emailError")!)
+            return
+        }
+        
         guard errors["phoneNumber"] == "" else{
             phoneNumber.setBorder(color: "error", image: UIImage(named: "phoneError")!)
             return
@@ -213,25 +225,29 @@ class editAccountViewController: UIViewController {
             return
         }
         
-        
         fullName.setBorder(color: "valid", image: UIImage(named: "personValid")!)
         nationalID.setBorder(color: "default", image: UIImage(named: "idDefault")!)
         phoneNumber.setBorder(color: "valid", image: UIImage(named: "phoneValid")!)
         birthDate.setBorder(color: "valid", image: UIImage(named: "calendarValid")!)
-        
+        email.setBorder(color: "valid", image: UIImage(named: "emailValid")!)
+
         let updatedUser = ["birthDate": birthDate.text!,
                            "fullName": fullName.text!,
+                           "email": email.text!,
                            "gender": fetchGender(),
                            "nationalID": nationalID.text!,
                            "phoneNumber": phoneNumber.text!]
         
-        
-        if(user?.getFullName() == updatedUser["fullName"] && user?.getDateOfBirth() == updatedUser["birthDate"] && user?.getGender() == updatedUser["gender"] && user?.getPhone() == updatedUser["phoneNumber"]){
+        if(user?.getFullName() == updatedUser["fullName"] && user?.getEmail() == updatedUser["email"]  && user?.getDateOfBirth() == updatedUser["birthDate"] && user?.getGender() == updatedUser["gender"] && user?.getPhone() == updatedUser["phoneNumber"]){
             SCLAlertView(appearance: self.apperance).showCustom("Credentials Didn't Change", subTitle: "You have not updated your information yet!", color: self.redUIColor, icon: alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
             return
         }
         
-        ref.child("User").child(userID!).updateChildValues(["fullName": updatedUser["fullName"]!, "phone": updatedUser["phoneNumber"]!, "gender": updatedUser["gender"]!, "dateOfBirth": updatedUser["birthDate"]! ]){
+        if(user?.getEmail() != updatedUser["email"]){
+            //update user email -> if email exists display error
+        }
+        
+        ref.child("User").child(userID!).updateChildValues(["fullName": updatedUser["fullName"]!, "email": updatedUser["email"]!, "phone": updatedUser["phoneNumber"]!, "gender": updatedUser["gender"]!, "dateOfBirth": updatedUser["birthDate"]! ]){
             (error : Error?, ref: DatabaseReference) in
             if error != nil{
                 SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "An error ocuured, please try again later", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
@@ -262,6 +278,16 @@ class editAccountViewController: UIViewController {
             return
         }
         phoneNumber.setBorder(color: "valid", image: UIImage(named: "phoneValid")!)
+    }
+    
+    @IBAction func emailEditingChanged(_ sender: Any) {
+        let errors = validateFields()
+        
+        guard errors["email"] == "" else{
+            email.setBorder(color: "error", image: UIImage(named: "emailError")!)
+            return
+        }
+        email.setBorder(color: "valid", image: UIImage(named: "emailValid")!)
     }
     
 }
