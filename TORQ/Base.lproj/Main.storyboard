@@ -834,7 +834,8 @@
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <textInputTraits key="textInputTraits" textContentType="email"/>
                                                                 <connections>
-                                                                    <action selector="emailEditingChanged:" destination="A4a-8b-mps" eventType="editingDidEnd" id="AOn-xU-UJr"/>
+                                                                    <action selector="emailEditingChanged:" destination="A4a-8b-mps" eventType="editingChanged" id="V2J-Ri-m0A"/>
+                                                                    <outlet property="delegate" destination="A4a-8b-mps" id="A3g-Ql-zyi"/>
                                                                 </connections>
                                                             </textField>
                                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cyo-py-lrr">

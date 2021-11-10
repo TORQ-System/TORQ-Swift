@@ -168,10 +168,10 @@ class editAccountViewController: UIViewController {
             errors["fullName"] = "Error in full name"
         }
         
-        if email.text == nil || email.text == "" || !email.text!.isValidEmail{
+        if email.text == nil || email.text == "" || !email.text!.isValidEmail || !email.text!.isValidDomain{
             errors["email"] = "Error in email"
         }
-        
+      
         if nationalID.text == nil || nationalID.text == "" || !nationalID.text!.isValidNationalID{
             errors["nationalID"] = "National ID cannot be empty"
         }
@@ -257,7 +257,6 @@ class editAccountViewController: UIViewController {
                 self.fetchUserData()
             }
         }
-        
     }
     
     @IBAction func fullNameEditingChanged(_ sender: Any) {
@@ -289,7 +288,6 @@ class editAccountViewController: UIViewController {
         }
         email.setBorder(color: "valid", image: UIImage(named: "emailValid")!)
     }
-    
 }
 
 //MARK: - Extensions
@@ -353,6 +351,7 @@ extension editAccountViewController: UICollectionViewDelegateFlowLayout{
         return CGSize(width: collectionView.frame.width, height: 40)
     }
 }
+
 private var __maxLengths = [UITextField: Int]()
 
 extension UITextField {
