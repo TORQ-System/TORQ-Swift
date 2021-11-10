@@ -12,9 +12,9 @@ class AccidentHistoryViewController: UIViewController {
     
     //MARK: - @IBOutlets
     @IBOutlet weak var accidents: UICollectionView!
+    @IBOutlet weak var backgroundView: UIView!
     
-    
-    
+
     //MARK: - Variables
     var userID: String?
     var ref = Database.database().reference()
@@ -24,6 +24,7 @@ class AccidentHistoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchAccidents(userID: userID!)
+        background()
     }
     
     //MARK: - Functions
@@ -50,7 +51,7 @@ class AccidentHistoryViewController: UIViewController {
                 
                 if ( userID == request.getUserID() && ( request.getStatus() == "1" ||  request.getStatus() == "2" )  ) {
                     self.accidentsArray.append(request)
-                    self.accidents.reloadData()
+                    //self.accidents.reloadData()
                 }
                 
     }
@@ -59,6 +60,24 @@ class AccidentHistoryViewController: UIViewController {
     
     @IBAction func backButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    
+    func background() {
+        //1- background view
+         backgroundView.layer.cornerRadius = 50
+         backgroundView.layer.masksToBounds = true
+         backgroundView.layer.maskedCorners = [.layerMinXMaxYCorner,.layerMaxXMaxYCorner]
+         let gradientLayer = CAGradientLayer()
+         gradientLayer.frame = backgroundView.frame
+         gradientLayer.colors = [UIColor(red: 0.879, green: 0.462, blue: 0.524, alpha: 1).cgColor,UIColor(red: 0.757, green: 0.204, blue: 0.286, alpha: 1).cgColor]
+         gradientLayer.startPoint = CGPoint(x: 0.25, y: 0.5)
+         gradientLayer.endPoint = CGPoint(x: 0.75, y: 0.5)
+         gradientLayer.transform = CATransform3DMakeAffineTransform(CGAffineTransform(a: -0.96, b: 0.95, c: -0.95, d: -1.56, tx: 1.43, ty: 0.83))
+         gradientLayer.bounds = backgroundView.bounds.insetBy(dx: -0.5*backgroundView.bounds.size.width, dy: -0.5*backgroundView.bounds.size.height)
+         gradientLayer.position = backgroundView.center
+         backgroundView.layer.addSublayer(gradientLayer)
+         backgroundView.layer.insertSublayer(gradientLayer, at: 0)
     }
 }
     
@@ -127,10 +146,7 @@ class AccidentHistoryViewController: UIViewController {
     }
 }
 
-extension AccidentHistoryViewController: UICollectionViewDelegate{
-    
-    
-}
+
 
 
 
