@@ -1613,7 +1613,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uEL-rL-Wg1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-291.304347826087" y="3437.2767857142858"/>
+            <point key="canvasLocation" x="484" y="2768"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="sq0-UX-Sf3">
@@ -3600,16 +3600,16 @@
                         <color key="selectedImageTintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="9uD-wo-rSa" kind="relationship" relationship="viewControllers" id="FEB-rI-gt1"/>
-                        <segue destination="uf1-mY-apI" kind="relationship" relationship="viewControllers" id="715-IK-1at"/>
-                        <segue destination="UV5-cQ-ehM" kind="relationship" relationship="viewControllers" id="lkY-MC-aW7"/>
+                        <segue destination="9uD-wo-rSa" kind="relationship" relationship="viewControllers" id="MfO-tQ-Ev8"/>
+                        <segue destination="uf1-mY-apI" kind="relationship" relationship="viewControllers" id="Bte-tA-51W"/>
+                        <segue destination="UV5-cQ-ehM" kind="relationship" relationship="viewControllers" id="YyM-yW-KjQ"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZEQ-fp-VbT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-4023" y="3494"/>
         </scene>
-        <!--Item-->
+        <!--Home-->
         <scene sceneID="Mw9-os-CmG">
             <objects>
                 <viewController id="9uD-wo-rSa" sceneMemberID="viewController">
@@ -3631,13 +3631,13 @@
                             <constraint firstItem="i0F-su-SyR" firstAttribute="centerX" secondItem="g0O-bN-dP5" secondAttribute="centerX" id="k3o-Ky-MXS"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="szf-Kg-8Q4"/>
+                    <tabBarItem key="tabBarItem" title="Home" image="house" catalog="system" id="szf-Kg-8Q4"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jiS-AU-V6P" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-3272" y="3494"/>
         </scene>
-        <!--Item-->
+        <!--Accidents-->
         <scene sceneID="oUT-k2-niO">
             <objects>
                 <viewController storyboardIdentifier="ViewAccidentsVC" id="uf1-mY-apI" sceneMemberID="viewController">
@@ -3659,35 +3659,23 @@
                             <constraint firstItem="qVP-Bw-262" firstAttribute="centerY" secondItem="PxZ-Fh-BSU" secondAttribute="centerY" id="AOw-bP-rGT"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="gdd-mD-rqJ"/>
+                    <tabBarItem key="tabBarItem" title="Accidents" image="car.2" catalog="system" id="gdd-mD-rqJ"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IL9-BS-mGp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2500" y="3494"/>
         </scene>
-        <!--Item-->
+        <!--SOS-->
         <scene sceneID="ACa-ei-TJW">
             <objects>
                 <viewController storyboardIdentifier="ViewSOSVC" id="UV5-cQ-ehM" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="nzP-mx-5Nw">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SOS View" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kWo-7T-2ic">
-                                <rect key="frame" x="169.66666666666666" y="437.66666666666669" width="74.666666666666657" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="5lF-qs-nVE"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="kWo-7T-2ic" firstAttribute="centerY" secondItem="nzP-mx-5Nw" secondAttribute="centerY" id="5L3-Jq-JZa"/>
-                            <constraint firstItem="kWo-7T-2ic" firstAttribute="centerX" secondItem="nzP-mx-5Nw" secondAttribute="centerX" id="XuU-JS-5XR"/>
-                        </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="CSG-wd-rfv"/>
+                    <tabBarItem key="tabBarItem" title="SOS" image="hand.raised" catalog="system" id="CSG-wd-rfv"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6om-Rs-ws9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -3701,13 +3689,16 @@
         <image name="bell.fill" catalog="system" width="128" height="124"/>
         <image name="cancel" width="120" height="120"/>
         <image name="car" catalog="system" width="128" height="93"/>
+        <image name="car.2" catalog="system" width="128" height="72"/>
         <image name="cardView" width="750" height="750"/>
         <image name="chevron.backward" catalog="system" width="96" height="128"/>
         <image name="chevron.left" catalog="system" width="96" height="128"/>
         <image name="chevron.right" catalog="system" width="96" height="128"/>
         <image name="chevron.right.circle" catalog="system" width="128" height="121"/>
         <image name="customer Service" width="120" height="120"/>
+        <image name="hand.raised" catalog="system" width="128" height="128"/>
         <image name="header" width="1970" height="1114"/>
+        <image name="house" catalog="system" width="128" height="106"/>
         <image name="house.fill" catalog="system" width="128" height="106"/>
         <image name="illustration1" width="1529" height="1021"/>
         <image name="illustration2" width="942" height="851"/>
@@ -3722,8 +3713,8 @@
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="phone.fill" catalog="system" width="128" height="114"/>
         <image name="placeholder" width="120" height="120"/>
-        <image name="plus" catalog="system" width="128" height="113"/>
         <image name="plus" width="117" height="112"/>
+        <image name="plus" catalog="system" width="128" height="113"/>
         <image name="pulse" width="300" height="214"/>
         <image name="rec" width="277" height="280"/>
         <image name="star" width="150" height="150"/>
