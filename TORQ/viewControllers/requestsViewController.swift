@@ -35,11 +35,11 @@ class requestsViewController: UIViewController {
         
         //UI setup
 //        setGradientBackground()
-        setGradient()
+       // setGradient()
         
         configureContainerView()
         configureCenter()
-        
+        configureSegmentControl()
         getRequests()
     }
     
@@ -55,6 +55,18 @@ class requestsViewController: UIViewController {
         gradient.endPoint = CGPoint(x: 1.0, y: 1.0)
         gradient.frame = backgroundView.layer.frame
         backgroundView.layer.insertSublayer(gradient, at: 0)
+        backgroundView.layer.cornerRadius = 20
+    }
+    
+    func configureSegmentControl(){
+           segmentcontrol.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16.0)], for: UIControl.State.normal)
+        segmentcontrol.layer.cornerRadius = 45.0
+        //segmentcontrol.layer.borderColor = UIColor.white.cgColor
+        segmentcontrol.layer.borderWidth = 1.0
+        segmentcontrol.layer.masksToBounds = true
+        segmentcontrol.layer.cornerRadius = segmentcontrol.bounds.height / 2
+      //  segmentcontrol.layer.borderColor = UIColor.blueColor().CGColor
+        segmentcontrol.layer.borderWidth = 1
     }
    
     
