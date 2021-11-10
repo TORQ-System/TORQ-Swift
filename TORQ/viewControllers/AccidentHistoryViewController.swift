@@ -65,7 +65,7 @@ class AccidentHistoryViewController: UIViewController {
     
     
     func background() {
-        //1- background view
+        //background view
          backgroundView.layer.cornerRadius = 50
          backgroundView.layer.masksToBounds = true
          backgroundView.layer.maskedCorners = [.layerMinXMaxYCorner,.layerMaxXMaxYCorner]
@@ -81,13 +81,24 @@ class AccidentHistoryViewController: UIViewController {
          backgroundView.layer.insertSublayer(gradientLayer, at: 0)
     }
     
-    @objc func goToLocation (_ sender:UITapGestureRecognizer) {
-        self.dismiss(animated: true, completion: nil)
-}
+    @objc func goToLocation (sender:CustomTapGestureRecognizer) {
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(identifier: "viewLocationViewController") as! viewLocationViewController
+        vc.latitude = sender.lat
+        vc.longitude = sender.long
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
+    }
+
+    }
+    // create a custom class for UITapGestureRecognizer
+    class CustomTapGestureRecognizer: UITapGestureRecognizer {
+        var long: Double?
+        var lat: Double?
+    }
+ 
 
 
-}
-    
 //MARK: - extinsions
 
     extension AccidentHistoryViewController: UICollectionViewDataSource{
@@ -133,8 +144,11 @@ class AccidentHistoryViewController: UIViewController {
             cell.map.setRegion(coordinateRegion, animated: true)
             cell.map.addAnnotation(annotation)
 
-            // if user taps on map 
-            let tap:UIGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(goToLocation(_:)))
+            // if user taps on map
+            
+            let tap = CustomTapGestureRecognizer(target: self, action: #selector(goToLocation(sender:)))
+            tap.lat = lat
+            tap.long = long
             cell.map.addGestureRecognizer(tap)
             
             
