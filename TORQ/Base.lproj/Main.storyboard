@@ -3672,14 +3672,36 @@
                     <view key="view" contentMode="scaleToFill" id="nzP-mx-5Nw">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n11-Xr-jzV">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="300"/>
+                                <color key="backgroundColor" red="0.090263523159999998" green="0.14351689819999999" blue="0.35296022890000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="300" id="NML-KB-cOG"/>
+                                    <constraint firstAttribute="width" constant="414" id="QKE-YM-OJp"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ykO-cM-VTw">
+                                <rect key="frame" x="30" y="260" width="354" height="553"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="5lF-qs-nVE"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="5lF-qs-nVE" firstAttribute="trailing" secondItem="ykO-cM-VTw" secondAttribute="trailing" constant="30" id="2Uz-Yf-VbQ"/>
+                            <constraint firstItem="ykO-cM-VTw" firstAttribute="leading" secondItem="5lF-qs-nVE" secondAttribute="leading" constant="30" id="3nv-Pq-F0Y"/>
+                            <constraint firstItem="ykO-cM-VTw" firstAttribute="top" secondItem="n11-Xr-jzV" secondAttribute="bottom" constant="-40" id="8di-Pd-Gie"/>
+                            <constraint firstItem="n11-Xr-jzV" firstAttribute="top" secondItem="nzP-mx-5Nw" secondAttribute="top" id="TSu-Xp-sek"/>
+                            <constraint firstItem="n11-Xr-jzV" firstAttribute="leading" secondItem="5lF-qs-nVE" secondAttribute="leading" id="giN-hE-J6j"/>
+                            <constraint firstItem="ykO-cM-VTw" firstAttribute="bottom" secondItem="5lF-qs-nVE" secondAttribute="bottom" id="uvZ-Ex-Xgq"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="SOS" image="hand.raised" catalog="system" id="CSG-wd-rfv"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6om-Rs-ws9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1743" y="3494"/>
+            <point key="canvasLocation" x="-1743.4782608695652" y="3493.5267857142858"/>
         </scene>
     </scenes>
     <resources>
