@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import MapKit
 
 class AccidentHistoryViewController: UIViewController {
     
@@ -79,6 +80,12 @@ class AccidentHistoryViewController: UIViewController {
          backgroundView.layer.addSublayer(gradientLayer)
          backgroundView.layer.insertSublayer(gradientLayer, at: 0)
     }
+    
+    @objc func goToLocation (_ sender:UITapGestureRecognizer) {
+        self.dismiss(animated: true, completion: nil)
+}
+
+
 }
     
 //MARK: - extinsions
@@ -91,7 +98,7 @@ class AccidentHistoryViewController: UIViewController {
         }
         
         func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-            // get a reference to our storyboard cell
+            
             if ( accidentsArray.count == 0 ) {
                 //noAdded.alpha = 1
             } else{
@@ -112,6 +119,25 @@ class AccidentHistoryViewController: UIViewController {
             cell.vibration.text = "\(accidentsArray[indexPath.row].getVib())"
             cell.inclinationLabel.text = "Inclination detected: "
             cell.inclination.text = "\(accidentsArray[indexPath.row].getRotation())"
+            
+            // map view manipulation (inside cell)
+            let lat = Double(accidentsArray[indexPath.row].getLatitude())!
+            let long = Double(accidentsArray[indexPath.row].getLongitude())!
+            
+            let pin = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(lat), longitude: CLLocationDegrees(long)))
+            
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = pin.coordinate
+            annotation.title = "Accident Location"
+            let coordinateRegion = MKCoordinateRegion(center: pin.coordinate, latitudinalMeters: 80, longitudinalMeters: 80)
+            cell.map.setRegion(coordinateRegion, animated: true)
+            cell.map.addAnnotation(annotation)
+
+            // if user taps on map 
+            let tap:UIGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(goToLocation(_:)))
+            cell.map.addGestureRecognizer(tap)
+            
+            
                 if ( accidentsArray[indexPath.row].getStatus() == "1" ) {
                     cell.status.text = "Processed"
                 }
