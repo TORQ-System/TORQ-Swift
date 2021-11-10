@@ -60,13 +60,13 @@ class requestsViewController: UIViewController {
     
     func configureSegmentControl(){
            segmentcontrol.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16.0)], for: UIControl.State.normal)
-        segmentcontrol.layer.cornerRadius = 45.0
-        //segmentcontrol.layer.borderColor = UIColor.white.cgColor
-        segmentcontrol.layer.borderWidth = 1.0
+        segmentcontrol.layer.cornerRadius = 50
+       // segmentcontrol.layer.borderColor = UIColor.white.cgColor
+        segmentcontrol.layer.borderWidth = 0.01
         segmentcontrol.layer.masksToBounds = true
-        segmentcontrol.layer.cornerRadius = segmentcontrol.bounds.height / 2
+       // segmentcontrol.layer.cornerRadius = segmentcontrol.bounds.height / 2
       //  segmentcontrol.layer.borderColor = UIColor.blueColor().CGColor
-        segmentcontrol.layer.borderWidth = 1
+      //  segmentcontrol.layer.borderWidth = 1
     }
    
     
@@ -87,6 +87,7 @@ class requestsViewController: UIViewController {
         let centerName = loggedInCenterEmail[..<domainRange.lowerBound]
         loggedInCenter = SRCACenters.getSRCAInfo(name: String(centerName))
         namecenter.text="\(centerName.firstUppercased)'s Requests"
+        namecenter.text = "Accidents \nEmergency Requests"
     }
     
     func setGradientBackground() {
