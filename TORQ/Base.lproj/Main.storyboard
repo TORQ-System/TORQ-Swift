@@ -1316,20 +1316,20 @@
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="xU1-7K-wsH">
                                 <rect key="frame" x="20" y="170" width="374" height="726"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                 <color key="tintColor" red="0.90971142049999998" green="0.89412051439999995" blue="0.89412540200000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="dJt-ff-6nS">
-                                    <size key="itemSize" width="374" height="160"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="25" minimumInteritemSpacing="20" id="dJt-ff-6nS">
+                                    <size key="itemSize" width="361" height="160"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="Zz9-iE-6Wj" customClass="AccidentsCollectionViewCell" customModule="TORQ" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="160"/>
+                                        <rect key="frame" x="6.5" y="0.0" width="361" height="160"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="CoZ-Sc-0vi" customClass="AccidentsCollectionViewCell" customModule="TORQ">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="160"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="361" height="160"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BlueRectangle" translatesAutoresizingMaskIntoConstraints="NO" id="8Kz-a5-Idj">
@@ -1361,13 +1361,13 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="pzL-2P-eD2">
-                                                    <rect key="frame" x="255" y="38" width="101" height="90"/>
+                                                    <rect key="frame" x="255" y="38" width="88" height="90"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="90" id="XNY-SD-fgf"/>
                                                     </constraints>
                                                 </mapView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2021-09-23" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qSM-AS-GDn">
-                                                    <rect key="frame" x="264" y="12" width="83" height="18"/>
+                                                    <rect key="frame" x="257.5" y="12" width="83" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -1385,6 +1385,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="g1z-3U-q0T" secondAttribute="bottom" constant="58" id="0G3-eJ-lOS"/>
                                                 <constraint firstItem="TIV-Pq-NZh" firstAttribute="leading" secondItem="CoZ-Sc-0vi" secondAttribute="leading" constant="31" id="4UT-7o-k59"/>
@@ -1417,7 +1418,7 @@
                                                 <constraint firstItem="pzL-2P-eD2" firstAttribute="leading" secondItem="TIV-Pq-NZh" secondAttribute="trailing" constant="76" id="zmM-da-FP3"/>
                                             </constraints>
                                         </collectionViewCellContentView>
-                                        <size key="customSize" width="374" height="160"/>
+                                        <size key="customSize" width="361" height="160"/>
                                         <connections>
                                             <outlet property="accidentLabel" destination="gKB-mQ-TWc" id="SSV-0r-1oK"/>
                                             <outlet property="date" destination="qSM-AS-GDn" id="ahq-C2-jrt"/>

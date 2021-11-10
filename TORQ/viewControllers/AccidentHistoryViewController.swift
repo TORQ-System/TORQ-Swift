@@ -79,14 +79,15 @@ class AccidentHistoryViewController: UIViewController {
             }
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath as IndexPath) as! AccidentsCollectionViewCell
-            cell.layer.cornerRadius = 10
-            cell.layer.masksToBounds = false
-            cell.layer.shadowColor = UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1).cgColor
+            cell.layer.cornerRadius = 15
+            cell.layer.masksToBounds = true
+            cell.layer.shadowColor  = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
             cell.layer.shadowOpacity = 1
-            cell.layer.shadowRadius = 70
-            cell.layer.shadowOffset = CGSize(width: 5, height: 5)
+            cell.layer.shadowRadius = 90
+            cell.layer.shadowOffset = CGSize(width: 9, height: 9)
             cell.layer.borderColor = CGColor(red: 0, green: 0, blue: 0, alpha: 1)
-            cell.accidentLabel.text = "Accident #\(indexPath.row)"
+            
+            cell.accidentLabel.text = "Accident #\(indexPath.row + 1)"
             cell.vibrationLabel.text = "Vibration: "
             cell.vibration.text = "\(accidentsArray[indexPath.row].getVib())"
             cell.inclinationLabel.text = "Inclination: "
@@ -96,11 +97,21 @@ class AccidentHistoryViewController: UIViewController {
                 }
                 else {
                     cell.status.text = "Canceled"
+                    cell.status.textColor = UIColor(red: 0.784, green: 0.267, blue: 0.337, alpha: 1)
                 }
             var date: String
             var alteredDate: String
             date = accidentsArray[indexPath.row].getDateTime()
-            alteredDate = String((date.prefix(10)))
+            let year = String((date.prefix(4)))
+            let monthStart = date.index(date.startIndex, offsetBy: 5)
+            let monthEnd = date.index(date.startIndex, offsetBy: 6)
+            let range = monthStart...monthEnd
+            let month = String(date[range])
+            let dayStart = date.index(date.startIndex, offsetBy: 8)
+            let dayEnd = date.index(date.startIndex, offsetBy: 9)
+            let range2 = dayStart...dayEnd
+            let day = String(date[range2])
+            alteredDate = "\(year)-\(month)-\(day)"
             cell.date.text = alteredDate
             
             return cell
