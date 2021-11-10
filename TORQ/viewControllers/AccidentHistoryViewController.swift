@@ -14,6 +14,7 @@ class AccidentHistoryViewController: UIViewController {
     @IBOutlet weak var accidents: UICollectionView!
     
     
+    
     //MARK: - Variables
     var userID: String?
     var ref = Database.database().reference()
