@@ -38,26 +38,21 @@ class editAccountViewController: UIViewController {
     let settings = ["Change Email","Change Password"]
     let formatter = DateFormatter()
     
-    
     //MARK: - Overriden Functions
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //Setup the formatter
         formatter.dateStyle = .medium
         formatter.timeStyle = .none
-        formatter.dateFormat = "MMM d, yyyy" //Universal format
+        formatter.dateFormat = "MMM d, yyyy"
         
-        //Setup user data
         fetchUserData()
         
-        //Configure UI elements
         configureAccountView()
         configureInputs()
         configureSegmentControl()
         configureDatePickerView()
-        
-        
+
     }
     
     //MARK: - Functions
@@ -73,6 +68,11 @@ class editAccountViewController: UIViewController {
     }
     
     func configureInputs(){
+        fullName.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0)
+        email.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0)
+        phoneNumber.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0)
+        birthDate.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0)
+        
         fullName.setBorder(color: "valid", image: UIImage(named: "personValid")!)
         email.setBorder(color: "valid", image: UIImage(named: "emailValid")!)
         nationalID.setBorder(color: "default", image: UIImage(named: "idDefault")!)
@@ -168,7 +168,7 @@ class editAccountViewController: UIViewController {
             errors["fullName"] = "Error in full name"
         }
         
-        if email.text == nil || email.text == "" || !email.text!.isValidEmail || !email.text!.isValidDomain{
+        if email.text == nil || email.text == "" || !email.text!.trimWhiteSpace().isValidEmail || !email.text!.trimWhiteSpace().isValidDomain{
             errors["email"] = "Error in email"
         }
       
@@ -224,16 +224,15 @@ class editAccountViewController: UIViewController {
             birthDate.setBorder(color: "error", image: UIImage(named: "calendarError")!)
             return
         }
-        
-        fullName.setBorder(color: "valid", image: UIImage(named: "personValid")!)
-        nationalID.setBorder(color: "default", image: UIImage(named: "idDefault")!)
-        phoneNumber.setBorder(color: "valid", image: UIImage(named: "phoneValid")!)
-        birthDate.setBorder(color: "valid", image: UIImage(named: "calendarValid")!)
-        email.setBorder(color: "valid", image: UIImage(named: "emailValid")!)
+//        email.setBorder(color: "valid", image: UIImage(named: "emailValid")!)
+//        fullName.setBorder(color: "valid", image: UIImage(named: "personValid")!)
+//        nationalID.setBorder(color: "default", image: UIImage(named: "idDefault")!)
+//        phoneNumber.setBorder(color: "valid", image: UIImage(named: "phoneValid")!)
+//        birthDate.setBorder(color: "valid", image: UIImage(named: "calendarValid")!)
 
         let updatedUser = ["birthDate": birthDate.text!,
                            "fullName": fullName.text!,
-                           "email": email.text!,
+                           "email": email.text!.trimWhiteSpace(),
                            "gender": fetchGender(),
                            "nationalID": nationalID.text!,
                            "phoneNumber": phoneNumber.text!]
@@ -255,6 +254,11 @@ class editAccountViewController: UIViewController {
             else{
                 SCLAlertView(appearance: self.apperance).showCustom("Success!", subTitle: "We have updated your information", color: self.blueUIColor, icon: self.alertSuccessIcon!, closeButtonTitle: "Okay", animationStyle: SCLAnimationStyle.topToBottom)
                 self.fetchUserData()
+                self.email.setBorder(color: "valid", image: UIImage(named: "emailValid")!)
+                self.fullName.setBorder(color: "valid", image: UIImage(named: "personValid")!)
+                self.nationalID.setBorder(color: "default", image: UIImage(named: "idDefault")!)
+                self.phoneNumber.setBorder(color: "valid", image: UIImage(named: "phoneValid")!)
+                self.birthDate.setBorder(color: "valid", image: UIImage(named: "calendarValid")!)
             }
         }
     }
