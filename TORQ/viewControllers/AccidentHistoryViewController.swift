@@ -14,6 +14,7 @@ class AccidentHistoryViewController: UIViewController {
     //MARK: - @IBOutlets
     @IBOutlet weak var accidents: UICollectionView!
     @IBOutlet weak var backgroundView: UIView!
+    @IBOutlet weak var noAccidents: UILabel!
     
 
     //MARK: - Variables
@@ -79,6 +80,8 @@ class AccidentHistoryViewController: UIViewController {
          gradientLayer.position = backgroundView.center
          backgroundView.layer.addSublayer(gradientLayer)
          backgroundView.layer.insertSublayer(gradientLayer, at: 0)
+         // add corner radius to the clooection view as a whole
+         accidents.layer.cornerRadius = 15
     }
     
     @objc func goToLocation (sender:CustomTapGestureRecognizer) {
@@ -111,9 +114,9 @@ class AccidentHistoryViewController: UIViewController {
         func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
             
             if ( accidentsArray.count == 0 ) {
-                //noAdded.alpha = 1
+                noAccidents.alpha = 1
             } else{
-                //noAdded.alpha = 0
+                noAccidents.alpha = 0
             }
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath as IndexPath) as! AccidentsCollectionViewCell
@@ -132,6 +135,7 @@ class AccidentHistoryViewController: UIViewController {
             cell.inclination.text = "\(accidentsArray[indexPath.row].getRotation())"
             
             // map view manipulation (inside cell)
+            
             let lat = Double(accidentsArray[indexPath.row].getLatitude())!
             let long = Double(accidentsArray[indexPath.row].getLongitude())!
             
@@ -151,6 +155,7 @@ class AccidentHistoryViewController: UIViewController {
             tap.long = long
             cell.map.addGestureRecognizer(tap)
             
+            // accident status
             
                 if ( accidentsArray[indexPath.row].getStatus() == "1" ) {
                     cell.status.text = "Processed"
@@ -159,6 +164,7 @@ class AccidentHistoryViewController: UIViewController {
                     cell.status.text = "Canceled"
                     cell.status.textColor = UIColor(red: 0.784, green: 0.267, blue: 0.337, alpha: 1)
                 }
+            // date formatting
             var date: String
             var alteredDate: String
             date = accidentsArray[indexPath.row].getDateTime()
@@ -185,11 +191,3 @@ class AccidentHistoryViewController: UIViewController {
         return CGSize(width: 374, height: 160)
     }
 }
-
-
-
-
-
-
-
- 
