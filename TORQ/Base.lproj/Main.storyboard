@@ -3586,6 +3586,105 @@
             </objects>
             <point key="canvasLocation" x="-1743" y="2768"/>
         </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="DIg-2u-NhW">
+            <objects>
+                <tabBarController storyboardIdentifier="paramedicHome" modalPresentationStyle="fullScreen" id="dUE-2z-E6p" customClass="tabBarController" customModule="TORQ" customModuleProvider="target" sceneMemberID="viewController">
+                    <nil key="simulatedTopBarMetrics"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="vQW-Zl-5xj">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" red="0.76459763199999997" green="0.33231014009999998" blue="0.42352765799999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="selectedImageTintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZEQ-fp-VbT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-4023" y="3494"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="Mw9-os-CmG">
+            <objects>
+                <viewController id="9uD-wo-rSa" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" restorationIdentifier="paramedicHomeVC" id="g0O-bN-dP5">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Home" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i0F-su-SyR">
+                                <rect key="frame" x="184.33333333333334" y="437.66666666666669" width="45.666666666666657" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="HMc-Gh-hxP"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="i0F-su-SyR" firstAttribute="centerY" secondItem="g0O-bN-dP5" secondAttribute="centerY" id="Jzg-Gn-5GU"/>
+                            <constraint firstItem="i0F-su-SyR" firstAttribute="centerX" secondItem="g0O-bN-dP5" secondAttribute="centerX" id="k3o-Ky-MXS"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jiS-AU-V6P" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3272" y="3494"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="oUT-k2-niO">
+            <objects>
+                <viewController storyboardIdentifier="ViewAccidentsVC" id="uf1-mY-apI" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="PxZ-Fh-BSU">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Accidents view" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qVP-Bw-262">
+                                <rect key="frame" x="150" y="437.66666666666669" width="114.33333333333331" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="kDN-0S-QrD"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="qVP-Bw-262" firstAttribute="centerX" secondItem="PxZ-Fh-BSU" secondAttribute="centerX" id="04C-36-KvK"/>
+                            <constraint firstItem="qVP-Bw-262" firstAttribute="centerY" secondItem="PxZ-Fh-BSU" secondAttribute="centerY" id="AOw-bP-rGT"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IL9-BS-mGp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2500" y="3494"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="ACa-ei-TJW">
+            <objects>
+                <viewController storyboardIdentifier="ViewSOSVC" id="UV5-cQ-ehM" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="nzP-mx-5Nw">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SOS View" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kWo-7T-2ic">
+                                <rect key="frame" x="169.66666666666666" y="437.66666666666669" width="74.666666666666657" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="5lF-qs-nVE"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="kWo-7T-2ic" firstAttribute="centerY" secondItem="nzP-mx-5Nw" secondAttribute="centerY" id="5L3-Jq-JZa"/>
+                            <constraint firstItem="kWo-7T-2ic" firstAttribute="centerX" secondItem="nzP-mx-5Nw" secondAttribute="centerX" id="XuU-JS-5XR"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6om-Rs-ws9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1743" y="3494"/>
+        </scene>
     </scenes>
     <resources>
         <image name="arrow.backward" catalog="system" width="128" height="98"/>
