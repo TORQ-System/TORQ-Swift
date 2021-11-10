@@ -3859,6 +3859,10 @@
                                                 </tableViewCellContentView>
                                             </tableViewCell>
                                         </prototypes>
+                                        <connections>
+                                            <outlet property="dataSource" destination="UV5-cQ-ehM" id="DEx-g3-5LB"/>
+                                            <outlet property="delegate" destination="UV5-cQ-ehM" id="5HO-GW-30x"/>
+                                        </connections>
                                     </tableView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
