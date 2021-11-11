@@ -144,7 +144,7 @@ class addEmergencyContactViewController: UIViewController {
     // validate form entries
     func validateFields() -> [String: String] {
         
-        var errors = ["Empty":"","fullName":"", "phone":"","relationship":"","msg":"","phoneMatch":""]
+        var errors = ["Empty":"","fullName":"", "phone":"","relationship":"","msg":"","phoneMatch":"","phoneDNE":""]
         
         // CASE: empty fields
         if emergencyContactFullName.text?.trimWhiteSpace() == "" && emergencyContactPhoneNumber.text == "" && selectedRow == 0 {
@@ -179,14 +179,6 @@ class addEmergencyContactViewController: UIViewController {
         if phoneMatch == emergencyContactPhoneNumber.text {
             errors["phoneMatch"] = "Emergency phone cannot be the same as yours"
         }
-        
-        
-        return errors
-    }
-    func validatePhoneField() -> [String: String] {
-       
-        var phone_errors = ["phoneDNE":"","phoneExists":""]
-        
         // check if emergency contact number exists in user table in the database and retrieve its info
         ref.child("User").observe(.value) { snapshot in
             for user in snapshot.children{
@@ -203,16 +195,47 @@ class addEmergencyContactViewController: UIViewController {
                     self.recieverID = obj.key
                     print("Reciever ID: \(obj.key)")
                 }
-//                else {
-//                    phone_errors["phoneDNE"] = "The phone number must be registered in TORQ"
-//                }
             }
         }
-        print("Reciever ID outside snapshot: \(String(describing: recieverID))")
-        
         if recieverID == "" || recieverID == nil {
-            phone_errors["phoneDNE"] = "The phone number must be registered in TORQ"
+            errors["phoneDNE"] = "The phone number must be registered in TORQ"
         }
+        
+        return errors
+    }
+//    func validatePhoneField()-> [String: String] {
+//
+//        var phone_errors = ["phoneDNE":""]
+//
+//        // check if emergency contact number exists in user table in the database and retrieve its info
+//        ref.child("User").observe(.value) { snapshot in
+//            for user in snapshot.children{
+//                let obj = user as! DataSnapshot
+//                let dateOfBirth = obj.childSnapshot(forPath: "dateOfBirth").value as! String
+//                let email = obj.childSnapshot(forPath: "email").value as! String
+//                let fullName = obj.childSnapshot(forPath: "fullName").value as! String
+//                let gender = obj.childSnapshot(forPath: "gender").value as! String
+//                let nationalID = obj.childSnapshot(forPath: "nationalID").value as! String
+//                let password = obj.childSnapshot(forPath: "password").value as! String
+//                let phone = obj.childSnapshot(forPath:  "phone").value as! String
+//                if phone == self.emergencyContactPhoneNumber.text {
+//                    self.recieverInfo = User(dateOfBirth: dateOfBirth, email: email, fullName: fullName, gender: gender, nationalID: nationalID, password: password, phone: phone)
+//                    self.recieverID = obj.key
+//                    print("Reciever ID: \(obj.key)")
+//                }
+//            }
+//        }
+//        if recieverID == "" || recieverID == nil {
+//            phone_errors["phoneDNE"] = "The phone number must be registered in TORQ"
+//        }
+////        print("Reciever ID outside snapshot: \(String(describing: recieverID))")
+//
+//        return phone_errors
+//
+//    }
+    
+     func validatePhoneFieldTwo() -> [String: String]{
+        var phone_errors = ["phoneExists":""]
         
         // Check if phone number has been already added
         ref.child("EmergencyContact").observe(.value) { snapshot in
@@ -228,30 +251,31 @@ class addEmergencyContactViewController: UIViewController {
                 let msg = obj.childSnapshot(forPath: "msg").value as! String
                 //create a EC object
                 let emergencyContact = emergencyContact(name: name, phone_number: phone, senderID:senderID, recieverID: receiverID, sent: sent, contactID: contactId, msg: msg, relation: relation)
-                //                            print(emergencyContact.getPhoneNumber())
-                //                            print(emergencyContact.getSenderID())
-                
+
                 if (emergencyContact.getSenderID()) == self.usrID && (emergencyContact.getPhoneNumber() == self.emergencyContactPhoneNumber.text){
                     self.phoneNumExists = emergencyContact.getPhoneNumber()
-                    //                                print(emergencyContact.getPhoneNumber())
-                    //                                print(emergencyContact.getSenderID())
-//                    phone_errors["phoneExists"] = "Phone number have been already added"
+                    phone_errors["phoneExists"] = "Phone number have been already added"
                 }
                 
-            }
+             }
         }
+
         if phoneNumExists != nil {
             phone_errors["phoneExists"] = "Phone number have been already added"
         }
         
         return phone_errors
+        
     }
     
     // Go to Emergency Contatcs View After successful addition
     @IBAction func goToEmergencyContactsScreen(_ sender: Any) {
         
         let errors = validateFields()
-        let phone_errors = validatePhoneField()
+        // validate if phone number exists in User table
+//        let phone_errors = validatePhoneField()
+        // validate if phone number already added
+        let phone_errors2 = validatePhoneFieldTwo()
         
         if(errors["fullName"] != "" || errors["phone"] != "" || errors["relationship"] != "" || errors["msg"] != "" ) {
             SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "Make sure you entered all fields correctly" , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
@@ -302,13 +326,21 @@ class addEmergencyContactViewController: UIViewController {
             return
         }
         // phone number is not registered in TORQ
-        guard phone_errors["phoneDNE"] == "" else {
-            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: phone_errors["phoneDNE"]! , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+//        guard phone_errors["phoneDNE"] == "" else {
+//            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: phone_errors["phoneDNE"]! , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+//            return
+//        }
+        guard errors["phoneDNE"] == "" else {
+            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: errors["phoneDNE"]! , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
             return
         }
+//        guard recieverID != nil else {
+//            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "The phone number must be registered in TORQ" , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+//            return
+//        }
         // Phone has been added before
-        guard phone_errors["phoneExists"] == "" else {
-            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: phone_errors["phoneExists"]! , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+        guard phone_errors2["phoneExists"] == "" else {
+            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: phone_errors2["phoneExists"]! , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
             return
         }
       
