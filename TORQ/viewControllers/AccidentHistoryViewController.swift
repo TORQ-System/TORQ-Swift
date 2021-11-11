@@ -129,10 +129,27 @@ class AccidentHistoryViewController: UIViewController {
             cell.layer.borderColor = CGColor(red: 0, green: 0, blue: 0, alpha: 1)
             cell.map.layer.cornerRadius = 10
             cell.accidentLabel.text = "Accident #\(indexPath.row + 1)"
-            cell.vibrationLabel.text = "Vibration detected: "
-            cell.vibration.text = "\(accidentsArray[indexPath.row].getVib())"
-            cell.inclinationLabel.text = "Inclination detected: "
-            cell.inclination.text = "\(accidentsArray[indexPath.row].getRotation())"
+            
+            //cause
+            cell.vibrationLabel.text = "Accident cause: "
+            if (accidentsArray[indexPath.row].getRotation() == "1023" ) {
+                cell.vibration.text = "Rollover"
+            }
+            else {cell.vibration.text = "Impact" }
+            //severity
+            cell.inclinationLabel.text = "Accident severity: "
+            if ( accidentsArray[indexPath.row].getRotation() == "1023" ) {
+                cell.inclination.text = "High"
+            }
+            else if ( Double(accidentsArray[indexPath.row].getVib())! >= 50000 && Double(accidentsArray[indexPath.row].getVib())! <= 100000 ) {
+                cell.inclination.text = "Low"
+            }
+            else if ( Double(accidentsArray[indexPath.row].getVib())! > 100000 && Double(accidentsArray[indexPath.row].getVib())! <= 200000 ) {
+                cell.inclination.text = "Intermediate"
+            }
+            else if ( Double(accidentsArray[indexPath.row].getVib())! > 200000 ) {
+                cell.inclination.text = "High"
+            }
             
             // map view manipulation (inside cell)
             
