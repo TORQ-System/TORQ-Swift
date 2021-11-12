@@ -162,7 +162,7 @@ class userHomeViewController: UIViewController {
 //                    let newDate = date.replacingOccurrences(of: ":", with: "/")
                     self.sensor = Sensor(vib: vib, x: x, y: y, z: z, date: date, latitude: latitude, longitude: latitude, time: time)
                 }else{
-                    print("no sensor")
+//                    print("no sensor")
                 }
                 
             }

@@ -8,6 +8,7 @@ import UIKit
 import Firebase
 import SCLAlertView
 
+
 class profileViewController: UIViewController {
     
     
@@ -21,7 +22,7 @@ class profileViewController: UIViewController {
     
     
     //MARK: - Variables
-    var userID: String?
+    var userID = Auth.auth().currentUser?.uid
     let ref = Database.database().reference()
     var user: User?
     var services = ["Terms and conditions","Settings","Edit Account","Sensor Information","Change passowrd","Logout"]
@@ -39,7 +40,9 @@ class profileViewController: UIViewController {
         super.viewDidLoad()
         let fetchQueue = DispatchQueue.init(label: "fetchQueue")
         fetchQueue.sync {
+            print("before retrieve call")
             retreieveUser()
+            print("after retrieve call")
         }
                 
         strokeView.layer.cornerRadius = 85
@@ -69,6 +72,7 @@ class profileViewController: UIViewController {
             ref.child("User").observe(.value) { snapshot in
                 for user in snapshot.children{
                     let obj = user as! DataSnapshot
+                    let joinedDate = obj.childSnapshot(forPath: "joined_at").value as! String
                     let dateOfBirth = obj.childSnapshot(forPath: "dateOfBirth").value as! String
                     let email = obj.childSnapshot(forPath: "email").value as! String
                     let fullName = obj.childSnapshot(forPath: "fullName").value as! String
@@ -76,15 +80,23 @@ class profileViewController: UIViewController {
                     let nationalID = obj.childSnapshot(forPath: "nationalID").value as! String
                     let password = obj.childSnapshot(forPath: "password").value as! String
                     let phone = obj.childSnapshot(forPath:  "phone").value as! String
+                    print(obj.key)
                     if obj.key == self.userID {
+                        print("inside loop")
                         self.user = User(dateOfBirth: dateOfBirth,          email: email, fullName: fullName, gender:        gender, nationalID: nationalID, password:      password, phone: phone)
+                        let date = Date()
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "dd/MM/yyyy"
+                        print(dateFormatter.string(from: date))
+                        print("________________________________________________________________________________")
                         DispatchQueue.main.async {
                             //update UI here
                             self.userName.text = fullName
                             self.userEmail.text = email
-                            self.joinedLabel.text = "Joined 8 months ago"
+                            self.joinedLabel.text = "Joined \(joinedDate) ago"
                         }
                     }
+                    print("after loop")
                 }
             }
     }
