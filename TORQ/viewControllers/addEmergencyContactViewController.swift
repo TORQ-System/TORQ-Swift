@@ -25,7 +25,7 @@ class addEmergencyContactViewController: UIViewController {
     // current user varibles
     var usrID = Auth.auth().currentUser?.uid
     var usrName : String?
-    var phoneMatch : String?
+    var currentUserPhone : String?
     // arrays
     var usersArray: [User] = []
     var emergencyContactArray: [emergencyContact] = []
@@ -52,7 +52,7 @@ class addEmergencyContactViewController: UIViewController {
     ]
     var selectedRow = 0
     var pickerView = UIPickerView()
-    
+   
     
     //MARK: - Constants
     let screenWidth = UIScreen.main.bounds.width-10
@@ -208,8 +208,8 @@ class addEmergencyContactViewController: UIViewController {
         // CASE1: Emergency phone match current user phone
         for user in usersArray {
             if user.getUserID() == usrID {
-                 phoneMatch = user.getPhone()
-                if emergencyContactPhoneNumber.text == phoneMatch {
+                currentUserPhone = user.getPhone()
+                if emergencyContactPhoneNumber.text == currentUserPhone {
                     errors["phoneMatch"] = "Emergency phone cannot be the same as yours"
                 }
             }
@@ -217,7 +217,7 @@ class addEmergencyContactViewController: UIViewController {
         
         // CASE2: checking if emergency contact number exists in user table in the database
         for user in usersArray {
-            if user.getPhone() == emergencyContactPhoneNumber.text && user.getPhone() != phoneMatch {
+            if user.getPhone() == emergencyContactPhoneNumber.text && user.getPhone() != currentUserPhone {
                 recieverID = user.getUserID()
                 print("recieverID: \(recieverID!)")
             }
@@ -229,11 +229,13 @@ class addEmergencyContactViewController: UIViewController {
     
         // CASE3: check if user have added phone number before (to ensure there are no duplicates)
         for ec in emergencyContactArray {
-            if ec.getSenderID() == usrID && ec.getPhoneNumber() == emergencyContactPhoneNumber.text {
-                errors["phoneExists"] = "Phone number have been already added"
+                if ec.getSenderID() == usrID && ec.getPhoneNumber() == emergencyContactPhoneNumber.text  {
+                    errors["phoneExists"] = "Phone number have been already added"
+                    recieverID = ""
             }
+          
         }
-        
+
         
         return errors
         

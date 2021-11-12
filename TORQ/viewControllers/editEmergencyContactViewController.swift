@@ -25,26 +25,37 @@ class editEmergencyContactViewController: UIViewController {
     @IBOutlet weak var addButton: UIButton!
     
     //MARK: - Variables
+    // DB reference
     var ref = Database.database().reference()
+    
+    // current user varibles
     var usrID = Auth.auth().currentUser?.uid
     var usrName : String?
-    var user: User?
-    var eContact = [emergencyContact]()
+    var currentUserPhone: String?
+    
+    // arrays
+    var usersArray: [User] = []
+    var emergencyContactArray: [emergencyContact] = []
+    
+    // emergency contact varibles
     var fullName: String?
     var phoneNumber: String?
     var emergencyMessage: String?
     var selectedRelationship: String?
     var relationship: String?
-    var recieverID : String?
+    var newRecieverID : String?
+    
+    // to hold passed receiver id
     var passedReceiverID : String?
-    var phoneNumExists : String?
-    var phoneMatch : String?
+   
+    
     // varibles to hold previously added info
     var ecKey: String?
     var oldFullName: String?
     var oldPhoneNumber: String?
     var oldRelationship: String?
     var oldMsg: String?
+    
     // picker view variables
     var relationships = [
         "Please Select",
@@ -85,7 +96,7 @@ class editEmergencyContactViewController: UIViewController {
         // set up text fields with pre loaded info
         getEmergencyContactInfo()
         // get current user full name
-        getUserName()
+        getUserInfo()
     
     }
     
@@ -130,9 +141,11 @@ class editEmergencyContactViewController: UIViewController {
                 let contactId = 0
                 
                 let emergencyContact = emergencyContact(name: name, phone_number: phoneNum, senderID:sender, recieverID: reciever, sent: sent, contactID: contactId, msg: msg, relation: relation)
-//                print("Emergency Contact Key: \(obj.key)")
+                // append each emergency contact to array
+                self.emergencyContactArray.append(emergencyContact)
+                print("Emergency Contacts Array:\(self.emergencyContactArray)")
+                      
                 if (emergencyContact.getSenderID() == self.usrID) && (emergencyContact.getReciverID() == self.passedReceiverID) {
-                    
                     self.ecKey = obj.key
                     print("Emergency Contact Key: \(self.ecKey!)")
                     self.oldFullName = emergencyContact.getName()
@@ -150,7 +163,7 @@ class editEmergencyContactViewController: UIViewController {
         })
     }
     // getting current user name
-    func getUserName(){
+    func getUserInfo(){
         ref.child("User").observe(.value) { snapshot in
             for user in snapshot.children{
                 let obj = user as! DataSnapshot
@@ -162,11 +175,10 @@ class editEmergencyContactViewController: UIViewController {
                 let nationalID = obj.childSnapshot(forPath: "nationalID").value as! String
                 let password = obj.childSnapshot(forPath: "password").value as! String
                 let phone = obj.childSnapshot(forPath:  "phone").value as! String
-                if obj.key == self.usrID {
-                    self.user = User(userID: userID,dateOfBirth: dateOfBirth,email: email, fullName: fullName, gender:gender, nationalID: nationalID, password: password, phone: phone)
-                    self.usrName = self.user!.getFullName()
-                    self.phoneMatch = self.user!.getPhone()
-                }
+                let user = User(userID: userID,dateOfBirth: dateOfBirth,email: email, fullName: fullName, gender:gender, nationalID: nationalID, password: password, phone: phone)
+                self.usersArray.append(user)
+                print("Users Array:\(self.usersArray)")
+                
             }
         }
     }
@@ -193,7 +205,7 @@ class editEmergencyContactViewController: UIViewController {
     // validate form entries
     func validateFields() -> [String: String] {
         
-        var errors = ["Empty":"","fullName":"", "phone":"","relationship":"","msg":"","phoneDNE":"","phoneExists":"","phoneMatch":"","notUpdated":"","emptyMsg":""]
+        var errors = ["Empty":"","fullName":"", "phone":"","relationship":"","msg":"","notUpdated":""]
         
         // CASE: empty fields
         if emergencyContactFullName.text?.trimWhiteSpace() == "" && emergencyContactPhoneNumber.text == "" && selectedRow == 0 {
@@ -228,60 +240,60 @@ class editEmergencyContactViewController: UIViewController {
             errors["msg"] = "message is too long, try to shorten it"
         }
         
-        // Emergency phone match current user phone
-        if phoneMatch == emergencyContactPhoneNumber.text {
-            errors["phoneMatch"] = "Emergency phone cannot be the same as yours"
-        }
+        return errors
+    }
+    func validateEmergencyPhoneNumber()-> [String: String]{
+        var errors = ["phoneMatch":"","phoneDNE":"","phoneExists":""]
         
-        // check if emergency contact number exists in user table in the database and retrieve its info
-        ref.child("User").queryOrdered(byChild: "phone").queryEqual(toValue: emergencyContactPhoneNumber.text).observeSingleEvent(of: .value , with: { snapshot in
-            guard let dictionary = snapshot.value as? [String:Any] else { return }
-            dictionary.forEach({ (key , value) in
-                self.recieverID = key
-                //                 print("Key \(key), value \(value)")
-            })
-        })
-        if recieverID == "" || recieverID == nil {
-            errors["phoneDNE"] = "The phone number must be registered in TORQ"
-        }
-        if(emergencyContactPhoneNumber.text != oldPhoneNumber){
-        ref.child("EmergencyContact").observe(.value) { snapshot in
-            for contact in snapshot.children{
-                let obj = contact as! DataSnapshot
-                let relation = obj.childSnapshot(forPath: "relation").value as! String
-                let contactId = 0
-                let name = obj.childSnapshot(forPath: "name").value as! String
-                let phone = obj.childSnapshot(forPath: "phone").value as! String
-                let senderID = obj.childSnapshot(forPath: "sender").value as! String
-                let receiverID = obj.childSnapshot(forPath: "reciever").value as! String
-                let sent = obj.childSnapshot(forPath: "sent").value as! String
-                let msg = obj.childSnapshot(forPath: "msg").value as! String
-                //create a EC object
-                let emergencyContact = emergencyContact(name: name, phone_number: phone, senderID:senderID, recieverID: receiverID, sent: sent, contactID: contactId, msg: msg, relation: relation)
-                //                            print(emergencyContact.getPhoneNumber())
-                //                            print(emergencyContact.getSenderID())
-                
-                if (emergencyContact.getSenderID()) == self.usrID && (emergencyContact.getPhoneNumber() == self.emergencyContactPhoneNumber.text){
-                    self.phoneNumExists = emergencyContact.getPhoneNumber()
-                    //                                print(emergencyContact.getPhoneNumber())
-                    //                                print(emergencyContact.getSenderID())
-                    errors["phoneExists"] = "Phone number have been already added"
+        // CASE1: Emergency phone match current user phone
+        for user in usersArray {
+            if user.getUserID() == usrID {
+                currentUserPhone = user.getPhone()
+                if emergencyContactPhoneNumber.text == currentUserPhone {
+                    errors["phoneMatch"] = "Emergency phone cannot be the same as yours"
                 }
-                
             }
         }
+        
+        // CASE2: checking if emergency contact number exists in user table in the database
+        for user in usersArray {
+            if user.getPhone() == emergencyContactPhoneNumber.text && user.getPhone() != currentUserPhone {
+                newRecieverID = user.getUserID()
+                print("recieverID: \(newRecieverID!)")
+            }
         }
-        if phoneNumExists != nil {
-            errors["phoneExists"] = "Phone number have been already added"
+        
+        if newRecieverID == "" || newRecieverID == nil {
+            errors["phoneDNE"] = "The phone number must be registered in TORQ"
         }
+    
+        // CASE3: check if user have added phone number before (to ensure there are no duplicates)
+        for ec in emergencyContactArray {
+            if emergencyContactPhoneNumber.text != oldPhoneNumber {
+            if ec.getSenderID() == usrID && ec.getPhoneNumber() == emergencyContactPhoneNumber.text {
+                errors["phoneExists"] = "Phone number have been already added"
+                newRecieverID = ""
+            }
+          }
+        }
+        
+        
         return errors
+        
+    }
+    func getUserFullName(){
+        for user in usersArray {
+            if user.getUserID() == usrID {
+                usrName = user.getFullName()
+            }
+        }
     }
     
     // Go to Emergency Contatcs View After successful update
     @IBAction func goToEmergencyContactsScreen(_ sender: Any) {
         
         let errors = validateFields()
-        
+        let phone_errors = validateEmergencyPhoneNumber()
 //        if(errors["fullName"] != "" || errors["phone"] != "" || errors["relationship"] != "" || errors["msg"] != "" || errors["Empty"] != "") {
 //            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "Make sure you entered all fields correctly" , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
 //        }
@@ -331,18 +343,18 @@ class editEmergencyContactViewController: UIViewController {
             return
         }
         // chack if phone number equals current user number
-        guard errors["phoneMatch"] == "" else {
-            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: errors["phoneMatch"]! , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+        guard phone_errors["phoneMatch"] == "" else {
+            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: phone_errors["phoneMatch"]! , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
             return
         }
         // phone number is not registered in TORQ
-        guard errors["phoneDNE"] == "" else {
-            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: errors["phoneDNE"]! , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+        guard phone_errors["phoneDNE"] == "" else {
+            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: phone_errors["phoneDNE"]! , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
             return
         }
         // Phone has been added before
-        guard errors["phoneExists"] == "" else {
-            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: errors["phoneExists"]! , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+        guard phone_errors["phoneExists"] == "" else {
+            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: phone_errors["phoneExists"]! , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
             return
         }
         // relationship error
@@ -385,7 +397,7 @@ class editEmergencyContactViewController: UIViewController {
             "msg": emergencyMessage!,
             "sender": usrID!,
             "sent": "No",
-            "reciever": recieverID!,
+            "reciever": newRecieverID!,
         ]
         
         //4- push info to database
