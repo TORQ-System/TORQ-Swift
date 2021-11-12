@@ -9,6 +9,7 @@ import Foundation
 
 
 struct User {
+    var userID: String
     var dateOfBirth: String
     var email: String
     var fullName: String
@@ -18,7 +19,9 @@ struct User {
     var phone: String
     
     
-    init(dateOfBirth: String, email: String, fullName: String, gender: String, nationalID: String, password: String, phone: String){
+    
+    init(userID: String ,dateOfBirth: String, email: String, fullName: String, gender: String, nationalID: String, password: String, phone: String){
+        self.userID = userID
         self.dateOfBirth = dateOfBirth
         self.email = email
         self.fullName = fullName
@@ -26,6 +29,10 @@ struct User {
         self.nationalID = nationalID
         self.password = password
         self.phone = phone
+    }
+    
+    func getUserID()-> String{
+        return userID
     }
     
     func getDateOfBirth()-> String{

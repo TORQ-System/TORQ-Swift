@@ -154,6 +154,7 @@ class editEmergencyContactViewController: UIViewController {
         ref.child("User").observe(.value) { snapshot in
             for user in snapshot.children{
                 let obj = user as! DataSnapshot
+                let userID = obj.key
                 let dateOfBirth = obj.childSnapshot(forPath: "dateOfBirth").value as! String
                 let email = obj.childSnapshot(forPath: "email").value as! String
                 let fullName = obj.childSnapshot(forPath: "fullName").value as! String
@@ -162,7 +163,7 @@ class editEmergencyContactViewController: UIViewController {
                 let password = obj.childSnapshot(forPath: "password").value as! String
                 let phone = obj.childSnapshot(forPath:  "phone").value as! String
                 if obj.key == self.usrID {
-                    self.user = User(dateOfBirth: dateOfBirth,email: email, fullName: fullName, gender:gender, nationalID: nationalID, password: password, phone: phone)
+                    self.user = User(userID: userID,dateOfBirth: dateOfBirth,email: email, fullName: fullName, gender:gender, nationalID: nationalID, password: password, phone: phone)
                     self.usrName = self.user!.getFullName()
                     self.phoneMatch = self.user!.getPhone()
                 }
