@@ -85,7 +85,25 @@ class profileViewController: UIViewController {
                             //update UI here
                             self.userName.text = fullName
                             self.userEmail.text = email
-                            self.joinedLabel.text = "Joined on \(joinedDate)"
+                            
+                            //get the day
+                            let date = Date(joinedDate)
+                            let difference = Calendar.current.dateComponents([.month], from: date, to: Date()).month
+                            if difference == 0{
+                                let differenceD = Calendar.current.dateComponents([.day], from: date, to: Date()).day
+                                if differenceD == 0 {
+                                    self.joinedLabel.text = "Joined today"
+                                }else{
+                                    self.joinedLabel.text = "Joined \(differenceD!) days ago"
+                                }
+                            }else{
+                                if difference! > 11{
+                                    self.joinedLabel.text = "Joined \(difference! / 12) yaers ago"
+                                }else{
+                                    self.joinedLabel.text = "Joined \(difference!) months ago"
+                                }
+
+                            }
                         }
                     }
                     print("after loop")

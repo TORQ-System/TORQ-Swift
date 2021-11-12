@@ -310,7 +310,7 @@ class signUpSecondViewController: UIViewController {
             self.ref.child("User").child(id!).setValue(user)
             let date = Date()
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd/MM/yyyy"
+            dateFormatter.dateFormat = "MM/dd/yyyy"
             self.ref.child("User").child("\(id!)/joined_at").setValue(dateFormatter.string(from: date))
             self.ref.child("Sensor").child("S\(id!)/longitude").setValue("0")
             self.ref.child("Sensor").child("S\(id!)/latitude").setValue("0")
