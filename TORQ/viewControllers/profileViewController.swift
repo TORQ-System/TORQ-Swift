@@ -40,9 +40,7 @@ class profileViewController: UIViewController {
         super.viewDidLoad()
         let fetchQueue = DispatchQueue.init(label: "fetchQueue")
         fetchQueue.sync {
-            print("before retrieve call")
             retreieveUser()
-            print("after retrieve call")
         }
                 
         strokeView.layer.cornerRadius = 85
@@ -80,20 +78,14 @@ class profileViewController: UIViewController {
                     let nationalID = obj.childSnapshot(forPath: "nationalID").value as! String
                     let password = obj.childSnapshot(forPath: "password").value as! String
                     let phone = obj.childSnapshot(forPath:  "phone").value as! String
-                    print(obj.key)
                     if obj.key == self.userID {
-                        print("inside loop")
                         self.user = User(dateOfBirth: dateOfBirth,          email: email, fullName: fullName, gender:        gender, nationalID: nationalID, password:      password, phone: phone)
-                        let date = Date()
-                        let dateFormatter = DateFormatter()
-                        dateFormatter.dateFormat = "dd/MM/yyyy"
-                        print(dateFormatter.string(from: date))
-                        print("________________________________________________________________________________")
+                        
                         DispatchQueue.main.async {
                             //update UI here
                             self.userName.text = fullName
                             self.userEmail.text = email
-                            self.joinedLabel.text = "Joined \(joinedDate) ago"
+                            self.joinedLabel.text = "Joined on \(joinedDate)"
                         }
                     }
                     print("after loop")
