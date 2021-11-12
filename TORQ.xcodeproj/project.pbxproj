@@ -30,6 +30,7 @@
 		BEC34A2327284BCB001E99E5 /* resetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC34A2227284BCB001E99E5 /* resetPasswordViewController.swift */; };
 		BEC34A252728710C001E99E5 /* emergencyContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC34A242728710C001E99E5 /* emergencyContact.swift */; };
 		BEC34A27272938DD001E99E5 /* showAccidentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC34A26272938DD001E99E5 /* showAccidentViewController.swift */; };
+		BED10860273EB52F0099EE15 /* profileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED1085F273EB52F0099EE15 /* profileTableViewCell.swift */; };
 		BEDC3C18272653610026948E /* servicesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDC3C172726535F0026948E /* servicesCollectionViewCell.swift */; };
 		BEDC3C1A272681AE0026948E /* tabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDC3C19272681AE0026948E /* tabBarController.swift */; };
 		BEDC3C1C272681F40026948E /* notificationCenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDC3C1B272681F40026948E /* notificationCenterViewController.swift */; };
@@ -104,6 +105,7 @@
 		BEC34A2227284BCB001E99E5 /* resetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = resetPasswordViewController.swift; sourceTree = "<group>"; };
 		BEC34A242728710C001E99E5 /* emergencyContact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = emergencyContact.swift; sourceTree = "<group>"; };
 		BEC34A26272938DD001E99E5 /* showAccidentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = showAccidentViewController.swift; sourceTree = "<group>"; };
+		BED1085F273EB52F0099EE15 /* profileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = profileTableViewCell.swift; sourceTree = "<group>"; };
 		BEDC3C172726535F0026948E /* servicesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = servicesCollectionViewCell.swift; sourceTree = "<group>"; };
 		BEDC3C19272681AE0026948E /* tabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tabBarController.swift; sourceTree = "<group>"; };
 		BEDC3C1B272681F40026948E /* notificationCenterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = notificationCenterViewController.swift; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 				BE34F69C270F30B70093C633 /* requestCollectionViewCell.swift */,
 				BEDC3C172726535F0026948E /* servicesCollectionViewCell.swift */,
 				BEE76D29272D2C52001390D2 /* ECCollectionViewCell.swift */,
+				BED1085F273EB52F0099EE15 /* profileTableViewCell.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -568,6 +571,7 @@
 				BE64405E272CBD080051662F /* addMedicalReportViewController.swift in Sources */,
 				BEF9751B2707D63A00325281 /* dateExtension.swift in Sources */,
 				BEDC3C1C272681F40026948E /* notificationCenterViewController.swift in Sources */,
+				BED10860273EB52F0099EE15 /* profileTableViewCell.swift in Sources */,
 				BEF975142707293600325281 /* signUpSecondViewController.swift in Sources */,
 				BE34F6AB27118A800093C633 /* onboardingScreen1ViewController.swift in Sources */,
 				BE34F69D270F30B70093C633 /* requestCollectionViewCell.swift in Sources */,
@@ -770,13 +774,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = KLG5737U6K;
+				DEVELOPMENT_TEAM = 5P89X4DH5A;
 				INFOPLIST_FILE = TORQ/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.TORQ.swift;
+				PRODUCT_BUNDLE_IDENTIFIER = Alsulayfih.torq;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -796,7 +800,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Alsufih.TORQ;
+				PRODUCT_BUNDLE_IDENTIFIER = Alsulayfih.torq;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
