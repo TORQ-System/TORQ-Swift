@@ -70,6 +70,7 @@ class profileViewController: UIViewController {
             ref.child("User").observe(.value) { snapshot in
                 for user in snapshot.children{
                     let obj = user as! DataSnapshot
+                    let phone = obj.childSnapshot(forPath: "phone").value as! String
                     let joinedDate = obj.childSnapshot(forPath: "joined_at").value as! String
                     let dateOfBirth = obj.childSnapshot(forPath: "dateOfBirth").value as! String
                     let email = obj.childSnapshot(forPath: "email").value as! String
@@ -77,7 +78,6 @@ class profileViewController: UIViewController {
                     let gender = obj.childSnapshot(forPath: "gender").value as! String
                     let nationalID = obj.childSnapshot(forPath: "nationalID").value as! String
                     let password = obj.childSnapshot(forPath: "password").value as! String
-                    let phone = obj.childSnapshot(forPath:  "phone").value as! String
                     if obj.key == self.userID {
                         self.user = User(dateOfBirth: dateOfBirth,          email: email, fullName: fullName, gender:        gender, nationalID: nationalID, password:      password, phone: phone)
                         
