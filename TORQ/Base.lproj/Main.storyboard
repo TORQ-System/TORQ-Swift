@@ -1345,7 +1345,7 @@
                                 </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="xU1-7K-wsH">
-                                <rect key="frame" x="20" y="232" width="374" height="537"/>
+                                <rect key="frame" x="20" y="232" width="374" height="664"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                 <color key="tintColor" red="0.90971142049999998" green="0.89412051439999995" blue="0.89412540200000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -1356,14 +1356,14 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <label key="backgroundView" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You don't have any recorded accidents!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NGs-Rc-mBU">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="537"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="664"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
                                     <color key="textColor" red="0.1048104092" green="0.15278157589999999" blue="0.3451191783" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="Zz9-iE-6Wj" customClass="AccidentsCollectionViewCell" customModule="TORQ" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AccidentCell" id="Zz9-iE-6Wj" customClass="AccidentsCollectionViewCell" customModule="TORQ" customModuleProvider="target">
                                         <rect key="frame" x="6.5" y="0.0" width="361" height="168"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="CoZ-Sc-0vi" customClass="AccidentsCollectionViewCell" customModule="TORQ">
@@ -1403,6 +1403,9 @@
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="98" id="XNY-SD-fgf"/>
                                                     </constraints>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="xos-MD-Vb9" id="dOv-5P-rd9"/>
+                                                    </connections>
                                                 </mapView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1299" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eZZ-7v-Pks">
                                                     <rect key="frame" x="187" y="66" width="36" height="18"/>
@@ -3493,8 +3496,8 @@
         <image name="person.2.fill" catalog="system" width="128" height="80"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="phone.fill" catalog="system" width="128" height="114"/>
-        <image name="plus" width="117" height="112"/>
         <image name="plus" catalog="system" width="128" height="113"/>
+        <image name="plus" width="117" height="112"/>
         <image name="pulse" width="300" height="214"/>
         <image name="rec" width="277" height="280"/>
         <image name="star" width="150" height="150"/>

@@ -53,7 +53,7 @@ class AccidentHistoryViewController: UIViewController {
                 
                 if ( userID == request.getUserID() && ( request.getStatus() == "1" ||  request.getStatus() == "2" )  ) {
                     self.accidentsArray.append(request)
-                    //self.accidents.reloadData()
+                    self.accidents.reloadData()
                 }
                 
     }
@@ -119,7 +119,7 @@ class AccidentHistoryViewController: UIViewController {
                 noAccidents.alpha = 0
             }
             
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath as IndexPath) as! AccidentsCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AccidentCell", for: indexPath as IndexPath) as! AccidentsCollectionViewCell
             cell.layer.cornerRadius = 15
             cell.layer.masksToBounds = true
             cell.layer.shadowColor  = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
@@ -160,8 +160,8 @@ class AccidentHistoryViewController: UIViewController {
             
             let annotation = MKPointAnnotation()
             annotation.coordinate = pin.coordinate
-            annotation.title = "Accident Location"
-            let coordinateRegion = MKCoordinateRegion(center: pin.coordinate, latitudinalMeters: 80, longitudinalMeters: 80)
+            annotation.title = "Accident"
+            let coordinateRegion = MKCoordinateRegion(center: pin.coordinate, latitudinalMeters: 12000, longitudinalMeters: 12000)
             cell.map.setRegion(coordinateRegion, animated: true)
             cell.map.addAnnotation(annotation)
 
@@ -208,3 +208,26 @@ class AccidentHistoryViewController: UIViewController {
         return CGSize(width: 374, height: 160)
     }
 }
+
+    //MARK: - Map View Delegate Extension
+    extension AccidentHistoryViewController: MKMapViewDelegate{
+        
+        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+            guard !(annotation is MKUserLocation)else{
+                return nil
+            }
+            var pin = mapView.dequeueReusableAnnotationView(withIdentifier: "accidentView")
+            if pin == nil {
+                pin = MKAnnotationView(annotation: annotation, reuseIdentifier: "accidentView")
+                pin?.canShowCallout = true
+            }else{
+                pin?.annotation = annotation
+            }
+            let img = UIImageView(image: UIImage(named: "pin"))
+            pin?.image = img.image
+    //        pin?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+            return pin
+        }
+        
+        
+    }
