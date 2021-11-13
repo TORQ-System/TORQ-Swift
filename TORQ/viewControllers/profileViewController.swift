@@ -102,7 +102,6 @@ class profileViewController: UIViewController {
                                 }else{
                                     self.joinedLabel.text = "Joined \(difference!) months ago"
                                 }
-
                             }
                         }
                     }

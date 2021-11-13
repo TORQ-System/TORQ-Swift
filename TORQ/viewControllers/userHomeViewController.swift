@@ -29,7 +29,7 @@ class userHomeViewController: UIViewController {
     var userID: String?
     let locationManager = CLLocationManager()
     let ref = Database.database().reference()
-    let services = ["Medical Information","Emergency Contact"]
+    let services = ["Medical Information","Emergency Contact","SOS Request"]
     let center = UNUserNotificationCenter.current()
     var user: User? = nil
     var location: [String: String] = ["lon":"","lat":""]
@@ -175,15 +175,8 @@ class userHomeViewController: UIViewController {
             ref.child("User").observe(.value) { snapshot in
                 for user in snapshot.children{
                     let obj = user as! DataSnapshot
-                    let dateOfBirth = obj.childSnapshot(forPath: "dateOfBirth").value as! String
-                    let email = obj.childSnapshot(forPath: "email").value as! String
                     let fullName = obj.childSnapshot(forPath: "fullName").value as! String
-                    let gender = obj.childSnapshot(forPath: "gender").value as! String
-                    let nationalID = obj.childSnapshot(forPath: "nationalID").value as! String
-                    let password = obj.childSnapshot(forPath: "password").value as! String
-                    let phone = obj.childSnapshot(forPath:  "phone").value as! String
                     if obj.key == self.userID {
-                        self.user = User(dateOfBirth: dateOfBirth,          email: email, fullName: fullName, gender:        gender, nationalID: nationalID, password:      password, phone: phone)
                             self.userFullName.text = fullName
                     }
                 }
@@ -334,6 +327,12 @@ extension userHomeViewController: UICollectionViewDelegate{
             vc = viewVC
             break
         case 1:
+            let viewVC = storyboard.instantiateViewController(identifier: "ViewEmergencyContactViewController") as! ViewEmergencyContactViewController
+            viewVC.modalPresentationStyle = .fullScreen
+            viewVC.userID = userID
+            vc = viewVC
+            break
+        case 2:
             let viewVC = storyboard.instantiateViewController(identifier: "ViewEmergencyContactViewController") as! ViewEmergencyContactViewController
             viewVC.modalPresentationStyle = .fullScreen
             viewVC.userID = userID
