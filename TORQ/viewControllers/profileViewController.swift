@@ -71,7 +71,6 @@ class profileViewController: UIViewController {
                 for user in snapshot.children{
                     let obj = user as! DataSnapshot
                     let phone = obj.childSnapshot(forPath: "phone").value as! String
-                    let joinedDate = obj.childSnapshot(forPath: "joined_at").value as! String
                     let dateOfBirth = obj.childSnapshot(forPath: "dateOfBirth").value as! String
                     let email = obj.childSnapshot(forPath: "email").value as! String
                     let fullName = obj.childSnapshot(forPath: "fullName").value as! String
@@ -87,7 +86,7 @@ class profileViewController: UIViewController {
                             self.userEmail.text = email
                             
                             //get the day
-                            let date = Date(joinedDate)
+                            let date = Auth.auth().currentUser!.metadata.creationDate!
                             let difference = Calendar.current.dateComponents([.month], from: date, to: Date()).month
                             if difference == 0{
                                 let differenceD = Calendar.current.dateComponents([.day], from: date, to: Date()).day
@@ -103,9 +102,9 @@ class profileViewController: UIViewController {
                                     self.joinedLabel.text = "Joined \(difference!) months ago"
                                 }
                             }
+                            
                         }
                     }
-                    print("after loop")
                 }
             }
     }
