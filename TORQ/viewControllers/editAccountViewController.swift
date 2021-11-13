@@ -15,7 +15,6 @@ class editAccountViewController: UIViewController {
     
     //MARK: - @IBOutlets
     @IBOutlet weak var accountView: UIView!
-    @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var gender: UISegmentedControl!
     @IBOutlet weak var fullName: UITextField!
     @IBOutlet weak var email: UITextField!
@@ -72,20 +71,20 @@ class editAccountViewController: UIViewController {
         accountView.layer.shouldRasterize = true
         accountView.layer.rasterizationScale = UIScreen.main.scale
         
-        backgroundView.layer.shadowColor = red
-        backgroundView.layer.shadowOpacity = 0.8
-        backgroundView.layer.shadowOffset = CGSize(width: 5, height: 15)
-        backgroundView.layer.shadowRadius = 25
-        backgroundView.layer.shouldRasterize = true
-        backgroundView.layer.rasterizationScale = UIScreen.main.scale
-        
-        
-        gradient.colors = [pink, red]
-        gradient.locations = [0.0 , 1.0]
-        gradient.startPoint = CGPoint(x: 0.0, y: 0.0)
-        gradient.endPoint = CGPoint(x: 1.0, y: 1.0)
-        gradient.frame = backgroundView.layer.frame
-        backgroundView.layer.insertSublayer(gradient, at: 0)
+//        backgroundView.layer.shadowColor = red
+//        backgroundView.layer.shadowOpacity = 0.8
+//        backgroundView.layer.shadowOffset = CGSize(width: 5, height: 15)
+//        backgroundView.layer.shadowRadius = 25
+//        backgroundView.layer.shouldRasterize = true
+//        backgroundView.layer.rasterizationScale = UIScreen.main.scale
+//
+//
+//        gradient.colors = [pink, red]
+//        gradient.locations = [0.0 , 1.0]
+//        gradient.startPoint = CGPoint(x: 0.0, y: 0.0)
+//        gradient.endPoint = CGPoint(x: 1.0, y: 1.0)
+//        gradient.frame = backgroundView.layer.frame
+//        backgroundView.layer.insertSublayer(gradient, at: 0)
     }
     
     func configureInputs(){
