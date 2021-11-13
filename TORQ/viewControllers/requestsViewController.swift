@@ -2,6 +2,7 @@ import UIKit
 import FirebaseDatabase
 import SwiftUI
 import FirebaseAuth
+import CoreLocation
 
 
 class requestsViewController: UIViewController {
@@ -18,12 +19,15 @@ class requestsViewController: UIViewController {
     
     //MARK: - Variables
     var ref = Database.database().reference()
-    var requests: [Request] = []
+    var requests: [RequestAccident] = []
     var loggedInCenterEmail: String!
     var loggedInCenter: [String: Any]?
-    var myRequests: [Request] = []
+    var myRequests: [RequestAccident] = []
     let refrechcon = UIRefreshControl()
-    var prossed : [Request] = []
+    var prossed : [RequestAccident] = []
+   // var cordinate : [String: Any] = [:]
+    
+    var getnearest: [String : Any]?
     var switches = 0
     //MARK: - Overriden function
     override func viewWillAppear(_ animated: Bool) {
@@ -88,6 +92,7 @@ class requestsViewController: UIViewController {
         loggedInCenter = SRCACenters.getSRCAInfo(name: String(centerName))
         namecenter.text="\(centerName.firstUppercased)'s Requests"
         namecenter.text = "Accidents \nEmergency Requests"
+     
     }
     
     func setGradientBackground() {
@@ -106,10 +111,11 @@ class requestsViewController: UIViewController {
         requests.removeAll()
         myRequests.removeAll()
        prossed.removeAll()
-        
+        var fullName = ""
+        var gender = ""
         ref.child("Request").queryOrdered(byChild: "time_stamp").observe(.value) { snapshot in
             for contact in snapshot.children{
-                print("enter")
+             //   print("enter")
 
                 let obj = contact as! DataSnapshot
                 let user_id = obj.childSnapshot(forPath: "user_id").value as! String
@@ -121,29 +127,41 @@ class requestsViewController: UIViewController {
                 let vib = obj.childSnapshot(forPath: "vib").value as! String
                 let rotation = obj.childSnapshot(forPath: "rotation").value as! String
                 let status = obj.childSnapshot(forPath: "status").value as! String
-                
-                let request = Request(user_id:user_id, sensor_id: sensor_id, request_id: request_id, dateTime: time_stamp, longitude: lonitude, latitude:latitude , vib: vib, rotation:rotation , status: status )
-                print(request)
+              
+                self.ref.child("User").child(user_id).observe(.value, with: {(snapshot) in
+                    if let dec = snapshot.value as? [String :Any]
+                    {
+                         fullName = dec["fullName"] as! String
+                        gender = dec["gender"] as! String
+                      //  print(fullName)
+                        
+                    }
+               
+              //  print("print\(fullName)")
+                let request = RequestAccident(user_id:user_id, sensor_id: sensor_id, request_id: request_id, dateTime: time_stamp, longitude: lonitude, latitude:latitude , vib: vib, rotation:rotation , status: status ,name: fullName ,gender: gender)
+               // print(request)
 
                 //get active requests only
               //  if ( request.getStatus() == "0" ) {
                     self.requests.append(request)
-                print("try to add\(self.requests)")
+              //  print("try to add\(self.requests)")
                     self.nearest(longitude: request.getLongitude(), latitude: request.getLatitude(), request: request)
                 //}
-                
+                })
             }}
-        print(requests)
+       // print(requests)
 
-        print(myRequests)
-        print(prossed)
+      //  print(myRequests)
+      //  print(prossed)
         requestsColletionView.reloadData()
     }
     
     
-    func nearest(longitude: String, latitude:String, request: Request){
+    func nearest(longitude: String, latitude:String, request: RequestAccident){
         
         let nearest = SRCACenters.getNearest(longitude: Double(longitude)!, latitude: Double(latitude)!)
+        getnearest = nearest
+        
         print(nearest)
         if nearest["name"] as! String == loggedInCenter!["name"] as! String{
             var i = 0
@@ -162,12 +180,12 @@ class requestsViewController: UIViewController {
             }
             if request.status == "0"{
                 myRequests.append(request)
-                print(request)
+              ///  print(request)
 
             }
             else if request.status == "1"{
                 prossed.append(request)
-                print(request)
+               // print(request)
 
             }
             self.requestsColletionView.reloadData()
@@ -209,14 +227,34 @@ class requestsViewController: UIViewController {
     @objc
     func viewbutten(sender:UIButton){
         print("view")
+//        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+//        let vc = storyboard.instantiateViewController(identifier: "requestReportViewController") as! requestReportViewController
+//        vc.lang = Double(myRequests[sender.tag].getLatitude())!
+//        vc.long = Double(myRequests[sender.tag].getLongitude())!
+//        vc.time = myRequests[sender.tag].getDateTime()
+//        vc.userMedicalReportID = String(myRequests[sender.tag].getUserID())
+//        vc.modalPresentationStyle = .fullScreen
+//        self.present(vc, animated: true, completion: nil)
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(identifier: "requestReportViewController") as! requestReportViewController
-        vc.lang = Double(myRequests[sender.tag].getLatitude())!
+        if switches==1{
+            vc.lang = Double(myRequests[sender.tag].getLatitude())!
         vc.long = Double(myRequests[sender.tag].getLongitude())!
         vc.time = myRequests[sender.tag].getDateTime()
         vc.userMedicalReportID = String(myRequests[sender.tag].getUserID())
+            vc.Requestid = String(myRequests[sender.tag].getRequestID())
+            vc.statusid = String(myRequests[sender.tag].getStatus())
         vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: true, completion: nil)
+            self.present(vc, animated: true, completion: nil)}
+        if switches==2{
+        vc.lang = Double(prossed[sender.tag].getLatitude())!
+        vc.long = Double(prossed[sender.tag].getLongitude())!
+        vc.time = prossed[sender.tag].getDateTime()
+        vc.userMedicalReportID = String(prossed[sender.tag].getUserID())
+            vc.statusid = String(prossed[sender.tag].getStatus())
+        vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)}
+    
     }
     //MARK: - @IBActions
     
@@ -233,6 +271,7 @@ class requestsViewController: UIViewController {
     @IBAction func segment(_ sender: Any) {
         requestsColletionView.reloadData()
     }
+    
 }
 
 //MARK: - Extension
@@ -296,22 +335,40 @@ extension requestsViewController: UICollectionViewDataSource{
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "requestCell", for: indexPath) as! requestCollectionViewCell
         
         cell.shadowDecorate()
-        
         switch segmentcontrol.selectedSegmentIndex{
         case 0:
             switches = 1
             print(switches)
-            cell.name.text = "Accident #\(indexPath.row)"
 
-            cell.dateTime.text = myRequests[indexPath.row].getDateTime()
-            
+            //cell.name.text = "Accident #\(indexPath.row)"
+            cell.name.text = myRequests[indexPath.row].getname()
+
+            //My location
+           let myLocation = CLLocation(latitude: getnearest!["latitude"] as! Double , longitude:  getnearest!["longitude"] as! Double)
+            print("near\(String(describing: getnearest))")
+            print("near\(getnearest!["latitude"] as! Double)")
+            print("near\(getnearest!["longitude"] as! Double)")
+            //My buddy's location
+            let myBuddysLocation = CLLocation(latitude: Double (myRequests[indexPath.row].getLatitude())!, longitude: Double(myRequests[indexPath.row].getLongitude())!)
+
+            //Measuring my distance to my buddy's (in km)
+           let distance = myLocation.distance(from: myBuddysLocation) / 1000
+
+            //Display the result in km
+            print(String(format: "The distance to my buddy is %.01fkm", distance))
+           // cell.dateTime.text = myRequests[indexPath.row].getDateTime()
+//            cell.distance.text =  String(format: " %.01fkm", distance)
+//            cell.gender.text = myRequests[indexPath.row].getGender()
+//            cell.status.text = myRequests[indexPath.row].getStatus()
+
             cell.viewbutten.tag = indexPath.row
             cell.viewbutten.addTarget(self, action: #selector(viewbutten(sender: )), for: .touchUpInside)
             
         case 1:
             switches = 2
             print(switches)
-            cell.name.text = "Accident #\(indexPath.row)"
+           // cell.name.text = "Accident #\(indexPath.row)"
+            cell.name.text = prossed[indexPath.row].getname()
 
             cell.dateTime.text = prossed[indexPath.row].getDateTime()
             
