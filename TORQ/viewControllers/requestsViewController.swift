@@ -195,6 +195,8 @@ extension requestsViewController: UICollectionViewDelegate{
         vc.long = Double(myRequests[indexPath.row].getLongitude())!
         vc.time = myRequests[indexPath.row].getDateTime()
         vc.userMedicalReportID = String(myRequests[indexPath.row].getUserID())
+        vc.Requestid = String(myRequests[indexPath.row].getRequestID())
+        vc.statusid = String(myRequests[indexPath.row].getStatus())
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
     }
