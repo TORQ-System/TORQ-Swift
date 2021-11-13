@@ -29,7 +29,7 @@ class userHomeViewController: UIViewController {
     var userID: String?
     let locationManager = CLLocationManager()
     let ref = Database.database().reference()
-    let services = ["Medical Information","Emergency Contact","SOS Emergency Request"]
+    let services = ["My Medical Information","My Emergency Contact","SOS Emergency Request","My Accidents History"]
     let center = UNUserNotificationCenter.current()
     var user: User? = nil
     var location: [String: String] = ["lon":"","lat":""]
@@ -328,10 +328,10 @@ extension userHomeViewController: UICollectionViewDelegate{
             vc = viewVC
             break
         case 2:
-            let viewVC = storyboard.instantiateViewController(identifier: "ViewEmergencyContactViewController") as! ViewEmergencyContactViewController
-            viewVC.modalPresentationStyle = .fullScreen
-            viewVC.userID = userID
-            vc = viewVC
+//            let viewVC = storyboard.instantiateViewController(identifier: "ViewEmergencyContactViewController") as! ViewEmergencyContactViewController
+//            viewVC.modalPresentationStyle = .fullScreen
+//            viewVC.userID = userID
+//            vc = viewVC
             break
         default:
             print("unKnown")
@@ -367,6 +367,8 @@ extension userHomeViewController: UICollectionViewDataSource{
             cell.serviceImage.image = UIImage(imageLiteralResourceName: "telephone")
         case 2:
             cell.serviceImage.image = UIImage(imageLiteralResourceName: "sos")
+        case 3:
+            cell.serviceImage.image = UIImage(imageLiteralResourceName: "history")
         default:
             print("unknown")
         }
