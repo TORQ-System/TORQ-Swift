@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3DDC91A2940F7463283FBFE6 /* Pods_TORQ_TORQUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 404C9ACD593D6364A24EFF38 /* Pods_TORQ_TORQUITests.framework */; };
+		711A1C87273FC33500626AF2 /* filterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711A1C86273FC33400626AF2 /* filterCollectionViewCell.swift */; };
+		711A1C89273FDDD300626AF2 /* notificationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 711A1C88273FDDCF00626AF2 /* notificationCollectionViewCell.swift */; };
 		8FA67A0F52162B410B79BAF0 /* Pods_TORQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9EC7D60F5128DCF29B3517 /* Pods_TORQ.framework */; };
 		BE04B6D2272DA7B700EEE3EE /* requestReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE04B6D1272DA7B700EEE3EE /* requestReportViewController.swift */; };
 		BE04B6D4272DAA0600EEE3EE /* hospitalsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE04B6D3272DAA0600EEE3EE /* hospitalsViewController.swift */; };
@@ -82,6 +84,8 @@
 		2FF5348CF2C51FD8DA9067F8 /* Pods-TORQTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TORQTests.release.xcconfig"; path = "Target Support Files/Pods-TORQTests/Pods-TORQTests.release.xcconfig"; sourceTree = "<group>"; };
 		3AAFD3CBF88AE59FE9BCC730 /* Pods-TORQ-TORQUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TORQ-TORQUITests.release.xcconfig"; path = "Target Support Files/Pods-TORQ-TORQUITests/Pods-TORQ-TORQUITests.release.xcconfig"; sourceTree = "<group>"; };
 		404C9ACD593D6364A24EFF38 /* Pods_TORQ_TORQUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TORQ_TORQUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		711A1C86273FC33400626AF2 /* filterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = filterCollectionViewCell.swift; sourceTree = "<group>"; };
+		711A1C88273FDDCF00626AF2 /* notificationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = notificationCollectionViewCell.swift; sourceTree = "<group>"; };
 		9850D36D8AB92301B2DFBE7D /* Pods-TORQ-TORQUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TORQ-TORQUITests.debug.xcconfig"; path = "Target Support Files/Pods-TORQ-TORQUITests/Pods-TORQ-TORQUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		9F0737DF72CCC79CA95FDC8D /* Pods-TORQ.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TORQ.debug.xcconfig"; path = "Target Support Files/Pods-TORQ/Pods-TORQ.debug.xcconfig"; sourceTree = "<group>"; };
 		BE04B6D1272DA7B700EEE3EE /* requestReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = requestReportViewController.swift; sourceTree = "<group>"; };
@@ -194,6 +198,8 @@
 				BE34F69C270F30B70093C633 /* requestCollectionViewCell.swift */,
 				BEDC3C172726535F0026948E /* servicesCollectionViewCell.swift */,
 				BEE76D29272D2C52001390D2 /* ECCollectionViewCell.swift */,
+				711A1C86273FC33400626AF2 /* filterCollectionViewCell.swift */,
+				711A1C88273FDDCF00626AF2 /* notificationCollectionViewCell.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -580,6 +586,8 @@
 				BE04B6D4272DAA0600EEE3EE /* hospitalsViewController.swift in Sources */,
 				BEDC3C1A272681AE0026948E /* tabBarController.swift in Sources */,
 				BEDC3C20272682510026948E /* AccidentsViewController.swift in Sources */,
+				711A1C87273FC33500626AF2 /* filterCollectionViewCell.swift in Sources */,
+				711A1C89273FDDD300626AF2 /* notificationCollectionViewCell.swift in Sources */,
 				BEE76D28272D2BEC001390D2 /* ViewEmergencyContactViewController.swift in Sources */,
 				BEF9753D270AE0E500325281 /* paramedicHomeViewController.swift in Sources */,
 				BEF97539270AE07400325281 /* loginViewController.swift in Sources */,

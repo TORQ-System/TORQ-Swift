@@ -31,7 +31,6 @@ class requestsViewController: UIViewController {
         super.viewDidLoad()
         
         //UI setup
-//        setGradientBackground()
         setGradient()
         
         configureContainerView()
