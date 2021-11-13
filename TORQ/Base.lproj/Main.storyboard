@@ -830,40 +830,45 @@
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="160"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Are you okay?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uQb-37-ufj">
-                                                    <rect key="frame" x="128" y="64.000000000000114" width="117.33333333333333" height="31.666666666666668"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="swipe down to reply or we will send an ambulance request in 60 seconds" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="tjH-9h-FVM">
+                                                    <rect key="frame" x="25" y="77" width="324" height="70"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
-                                                    <color key="textColor" red="0.1019607843" green="0.15686274510000001" blue="0.34509803919999998" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="2-11-2021" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3qb-zl-PSg">
-                                                    <rect key="frame" x="154" y="65" width="65.666666666666671" height="30"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="30" id="5wT-Iu-Av1"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <color key="textColor" red="0.63921568630000003" green="0.63137254899999995" blue="0.63137254899999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="swipe down to reply or we will send an ambulance request in 60 seconds" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tjH-9h-FVM">
-                                                    <rect key="frame" x="27" y="52" width="294" height="100"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="270" id="HBx-oV-MYQ"/>
-                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.1019607843" green="0.14901960780000001" blue="0.3411764706" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="18:30:22" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5ev-jt-hlz">
-                                                    <rect key="frame" x="291" y="27" width="57.333333333333336" height="17"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2-11-2021" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3qb-zl-PSg">
+                                                    <rect key="frame" x="25" y="56" width="65.666666666666671" height="11"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <color key="textColor" red="0.63921568630000003" green="0.63137254899999995" blue="0.63137254899999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="18:30:22" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5ev-jt-hlz">
+                                                    <rect key="frame" x="291.66666666666669" y="27" width="57.333333333333314" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.28627450980000002" green="0.6705882353" blue="0.87450980389999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Are you okay?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uQb-37-ufj">
+                                                    <rect key="frame" x="24.999999999999993" y="25" width="117.33333333333331" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                                    <color key="textColor" red="0.1019607843" green="0.15686274510000001" blue="0.34509803919999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstItem="5ev-jt-hlz" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="uQb-37-ufj" secondAttribute="trailing" constant="8" symbolic="YES" id="1gf-Rp-cGa"/>
+                                                <constraint firstItem="3qb-zl-PSg" firstAttribute="leading" secondItem="aWD-9m-B9Y" secondAttribute="leading" constant="25" id="9CO-tR-4FQ"/>
+                                                <constraint firstItem="uQb-37-ufj" firstAttribute="leading" secondItem="aWD-9m-B9Y" secondAttribute="leading" constant="25" id="AWQ-10-ttv"/>
+                                                <constraint firstItem="tjH-9h-FVM" firstAttribute="top" secondItem="3qb-zl-PSg" secondAttribute="bottom" constant="10" id="GvM-dS-IlL"/>
+                                                <constraint firstItem="5ev-jt-hlz" firstAttribute="top" secondItem="aWD-9m-B9Y" secondAttribute="top" constant="27" id="IfU-Rj-eXm"/>
+                                                <constraint firstItem="uQb-37-ufj" firstAttribute="top" secondItem="aWD-9m-B9Y" secondAttribute="top" constant="25" id="JCt-aT-ynb"/>
+                                                <constraint firstItem="3qb-zl-PSg" firstAttribute="top" secondItem="uQb-37-ufj" secondAttribute="bottom" constant="10" id="fy0-0P-3Zv"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="3qb-zl-PSg" secondAttribute="trailing" constant="20" symbolic="YES" id="fzZ-lj-oom"/>
+                                                <constraint firstItem="uQb-37-ufj" firstAttribute="centerY" secondItem="5ev-jt-hlz" secondAttribute="centerY" id="iVV-gC-Tjm"/>
+                                                <constraint firstAttribute="trailing" secondItem="5ev-jt-hlz" secondAttribute="trailing" constant="25" id="jSt-vx-zT3"/>
+                                            </constraints>
                                         </collectionViewCellContentView>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <size key="customSize" width="374" height="160"/>
