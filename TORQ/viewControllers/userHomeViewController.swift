@@ -29,7 +29,7 @@ class userHomeViewController: UIViewController {
     var userID: String?
     let locationManager = CLLocationManager()
     let ref = Database.database().reference()
-    let services = ["Medical Information","Emergency Contact","SOS Request"]
+    let services = ["Medical Information","Emergency Contact","SOS Emergency Request"]
     let center = UNUserNotificationCenter.current()
     var user: User? = nil
     var location: [String: String] = ["lon":"","lat":""]
@@ -139,7 +139,6 @@ class userHomeViewController: UIViewController {
                 let longitude = obj.childSnapshot(forPath: "longitude").value as! String
                 let time = obj.childSnapshot(forPath:  "time").value as! String
                 let sensorID = obj.key
-//                print("S\(String(describing: self.userID!))")
                 if sensorID == "S\(String(describing: self.userID!))" {
                     self.vib.text = "\(vib) Hz"
                     if y == "1023" {
@@ -159,12 +158,8 @@ class userHomeViewController: UIViewController {
                     
                     
                     self.coordinate.text = "\(lonn), \(latt)"
-//                    let newDate = date.replacingOccurrences(of: ":", with: "/")
                     self.sensor = Sensor(vib: vib, x: x, y: y, z: z, date: date, latitude: latitude, longitude: latitude, time: time)
-                }else{
-//                    print("no sensor")
                 }
-                
             }
         }
     }
@@ -371,7 +366,7 @@ extension userHomeViewController: UICollectionViewDataSource{
         case 1:
             cell.serviceImage.image = UIImage(imageLiteralResourceName: "telephone")
         case 2:
-            cell.serviceImage.image = UIImage(imageLiteralResourceName: "clock")
+            cell.serviceImage.image = UIImage(imageLiteralResourceName: "sos")
         default:
             print("unknown")
         }
