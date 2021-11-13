@@ -207,6 +207,9 @@ class userHomeViewController: UIViewController {
         medicalReportContainer.layer.cornerRadius = 20
         medicalReportContainer.layer.masksToBounds = true
         medicalReportContainer.backgroundColor = UIColor(red: 0.83921569, green: 0.33333333, blue: 0.42352941, alpha: 1)
+        
+        
+        
         medicalReportContainer.layer.shadowColor = UIColor(red: 0.83921569, green: 0.33333333, blue: 0.42352941, alpha: 1).cgColor
         medicalReportContainer.layer.shadowOffset = CGSize(width: 0, height: 30)
         medicalReportContainer.layer.shadowOpacity = 0.35
