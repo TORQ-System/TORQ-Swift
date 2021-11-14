@@ -1,5 +1,6 @@
 import UIKit
 import FirebaseDatabase
+import MapKit
 
 class requestCollectionViewCell: UICollectionViewCell {
     
@@ -10,4 +11,6 @@ class requestCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var status: UILabel!    
     @IBOutlet weak var distance: UILabel!
     @IBOutlet weak var gender: UILabel!
+    
+    @IBOutlet weak var map: MKMapView!
 }

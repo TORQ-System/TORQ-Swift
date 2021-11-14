@@ -4,7 +4,7 @@ import SwiftUI
 import FirebaseAuth
 import CoreLocation
 
-
+import MapKit
 class requestsViewController: UIViewController {
     
     //MARK: - @IBOutlets
@@ -223,6 +223,22 @@ class requestsViewController: UIViewController {
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
     }
+    @objc func goToLocation (sender:CustomTapGestureRecognizer) {
+           let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+           let vc = storyboard.instantiateViewController(identifier: "viewLocationViewController") as! viewLocationViewController
+           vc.latitude = sender.lat
+           vc.longitude = sender.long
+           vc.modalPresentationStyle = .fullScreen
+           self.present(vc, animated: true, completion: nil)
+       }
+
+    // create a custom class for UITapGestureRecognizer
+    class CustomTapGestureRecognizer: UITapGestureRecognizer {
+        var long: Double?
+        var lat: Double?
+    }
+      
+    
     
     @objc
     func viewbutten(sender:UIButton){
@@ -278,25 +294,25 @@ class requestsViewController: UIViewController {
 extension requestsViewController: UICollectionViewDelegate{
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(identifier: "requestReportViewController") as! requestReportViewController
-        if switches==1{
-        vc.lang = Double(myRequests[indexPath.row].getLatitude())!
-        vc.long = Double(myRequests[indexPath.row].getLongitude())!
-        vc.time = myRequests[indexPath.row].getDateTime()
-        vc.userMedicalReportID = String(myRequests[indexPath.row].getUserID())
-            vc.Requestid = String(myRequests[indexPath.row].getRequestID())
-            vc.statusid = String(myRequests[indexPath.row].getStatus())
-        vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: true, completion: nil)}
-        if switches==2{
-        vc.lang = Double(prossed[indexPath.row].getLatitude())!
-        vc.long = Double(prossed[indexPath.row].getLongitude())!
-        vc.time = prossed[indexPath.row].getDateTime()
-        vc.userMedicalReportID = String(prossed[indexPath.row].getUserID())
-            vc.statusid = String(prossed[indexPath.row].getStatus())
-        vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: true, completion: nil)}
+//        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+//        let vc = storyboard.instantiateViewController(identifier: "requestReportViewController") as! requestReportViewController
+//        if switches==1{
+//        vc.lang = Double(myRequests[indexPath.row].getLatitude())!
+//        vc.long = Double(myRequests[indexPath.row].getLongitude())!
+//        vc.time = myRequests[indexPath.row].getDateTime()
+//        vc.userMedicalReportID = String(myRequests[indexPath.row].getUserID())
+//            vc.Requestid = String(myRequests[indexPath.row].getRequestID())
+//            vc.statusid = String(myRequests[indexPath.row].getStatus())
+//        vc.modalPresentationStyle = .fullScreen
+//            self.present(vc, animated: true, completion: nil)}
+//        if switches==2{
+//        vc.lang = Double(prossed[indexPath.row].getLatitude())!
+//        vc.long = Double(prossed[indexPath.row].getLongitude())!
+//        vc.time = prossed[indexPath.row].getDateTime()
+//        vc.userMedicalReportID = String(prossed[indexPath.row].getUserID())
+//            vc.statusid = String(prossed[indexPath.row].getStatus())
+//        vc.modalPresentationStyle = .fullScreen
+//            self.present(vc, animated: true, completion: nil)}
     }
     
 }
@@ -363,7 +379,27 @@ extension requestsViewController: UICollectionViewDataSource{
 
             cell.viewbutten.tag = indexPath.row
             cell.viewbutten.addTarget(self, action: #selector(viewbutten(sender: )), for: .touchUpInside)
+            let lat = Double(myRequests[indexPath.row].getLatitude())!
+            let long = Double(myRequests[indexPath.row].getLongitude())!
             
+            let pin = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(lat), longitude: CLLocationDegrees(long)))
+            
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = pin.coordinate
+            annotation.title = "Accident"
+            let coordinateRegion = MKCoordinateRegion(center: pin.coordinate, latitudinalMeters: 12000, longitudinalMeters: 12000)
+            cell.map.setRegion(coordinateRegion, animated: true)
+            cell.map.addAnnotation(annotation)
+
+            // if user taps on map
+            
+            let tap = CustomTapGestureRecognizer(target: self, action: #selector(goToLocation(sender:)))
+            tap.lat = lat
+            tap.long = long
+            cell.map.addGestureRecognizer(tap)
+
+
+
         case 1:
             switches = 2
             print(switches)
@@ -429,4 +465,40 @@ extension UICollectionViewCell {
         layer.cornerRadius = radius
     }
 }
+
+
+
+//extension requestsViewController: UICollectionViewDelegateFlowLayout{
+//
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        return CGSize(width: 360, height: 170)
+//    }
+//
+//}
+
+    //MARK: - Map View Delegate Extension
+    extension requestsViewController: MKMapViewDelegate{
+        
+        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+            guard !(annotation is MKUserLocation)else{
+                return nil
+            }
+            var pin = mapView.dequeueReusableAnnotationView(withIdentifier: "accidentPin")
+            if pin == nil {
+                pin = MKAnnotationView(annotation: annotation, reuseIdentifier: "accidentPin")
+                pin?.canShowCallout = true
+                pin?.image = UIImage(named: "Vector")
+            }else{
+                pin?.annotation = annotation
+            }
+
+            
+            
+            
+            return pin
+        }
+
+        
+    }
+
 
