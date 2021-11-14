@@ -18,9 +18,13 @@ class editAccountViewController: UIViewController {
     @IBOutlet weak var roundGradientView: UIView!
     @IBOutlet weak var gender: UISegmentedControl!
     @IBOutlet weak var fullName: UITextField!
+    @IBOutlet weak var fullNameError: UILabel!
     @IBOutlet weak var email: UITextField!
+    @IBOutlet weak var emailError: UILabel!
     @IBOutlet weak var birthDate: UITextField!
+    @IBOutlet weak var birthdateError: UILabel!
     @IBOutlet weak var phoneNumber: UITextField!
+    @IBOutlet weak var phoneNumberError: UILabel!
     @IBOutlet weak var nationalID: UITextField!
     
     //MARK: - Variables
@@ -42,7 +46,7 @@ class editAccountViewController: UIViewController {
     //MARK: - Overriden Functions
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         formatter.dateStyle = .medium
         formatter.timeStyle = .none
         formatter.dateFormat = "MMM d, yyyy"
@@ -52,6 +56,7 @@ class editAccountViewController: UIViewController {
         configureTapGesture()
         configureButtonView()
         configureInputs()
+        configureErrors()
         configureSegmentControl()
         configureDatePickerView()
         
@@ -63,6 +68,84 @@ class editAccountViewController: UIViewController {
         tap.numberOfTouchesRequired = 1
         buttonView.addGestureRecognizer(tap)
         buttonView.isUserInteractionEnabled = true
+    }
+    
+    func configureButtonView(){
+        roundGradientView.layer.cornerRadius = 20
+        roundGradientView.layer.shouldRasterize = true
+        roundGradientView.layer.rasterizationScale = UIScreen.main.scale
+        
+        let gradient: CAGradientLayer = CAGradientLayer()
+        
+        gradient.cornerRadius = 20
+        gradient.colors = [
+            UIColor(red: 0.887, green: 0.436, blue: 0.501, alpha: 1).cgColor,
+            UIColor(red: 0.75, green: 0.191, blue: 0.272, alpha: 1).cgColor
+        ]
+        
+        gradient.locations = [0, 1]
+        gradient.startPoint = CGPoint(x: 0, y: 0)
+        gradient.endPoint = CGPoint(x: 1, y: 1)
+        gradient.frame = roundGradientView.bounds
+        roundGradientView.layer.insertSublayer(gradient, at: 0)
+    }
+    
+    func configureInputs(){
+        fullName.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0)
+        email.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0)
+        phoneNumber.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0)
+        birthDate.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0)
+        
+        fullName.setBorder(color: "valid", image: UIImage(named: "personValid")!)
+        email.setBorder(color: "valid", image: UIImage(named: "emailValid")!)
+        nationalID.setBorder(color: "default", image: UIImage(named: "idDefault")!)
+        phoneNumber.setBorder(color: "valid", image: UIImage(named: "phoneValid")!)
+        birthDate.setBorder(color: "valid", image: UIImage(named: "calendarValid")!)
+        
+        fullName.clearsOnBeginEditing = false
+        email.clearsOnBeginEditing = false
+        phoneNumber.clearsOnBeginEditing = false
+        nationalID.isUserInteractionEnabled = false
+        
+    }
+    
+    func configureErrors(){
+        fullNameError.alpha = 0
+        emailError.alpha = 0
+        phoneNumberError.alpha = 0
+        birthdateError.alpha = 0
+        
+    }
+    
+    func configureSegmentControl(){
+        gender.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16.0)], for: UIControl.State.normal)
+    }
+    
+    func configureDatePickerView(){
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(chooseDate))
+        doneButton.tintColor = blueUIColor
+        toolbar.setItems([doneButton], animated: true)
+        
+        
+        birthDate.inputView = datePicker
+        birthDate.inputAccessoryView = toolbar
+        
+        datePicker.preferredDatePickerStyle = .wheels
+        datePicker.datePickerMode = .date
+        
+        datePicker.maximumDate = Date("12-31-2012")
+        datePicker.minimumDate = Date("01-01-1930")
+        
+    }
+    
+    @objc func chooseDate(){
+        birthDate.text = formatter.string(from: datePicker.date)
+        birthDate.setBorder(color: "valid", image: UIImage(named: "calendarValid")!)
+        
+        self.view.endEditing(true)
     }
     
     @objc func saveClicked(_ sender: UITapGestureRecognizer) {
@@ -80,21 +163,29 @@ class editAccountViewController: UIViewController {
         
         guard errors["fullName"] == "" else{
             fullName.setBorder(color: "error", image: UIImage(named: "personError")!)
+            fullNameError.text = errors["fullName"]!
+            fullNameError.alpha = 1
             return
         }
         
         guard errors["email"] == "" else{
             email.setBorder(color: "error", image: UIImage(named: "emailError")!)
+            emailError.text = errors["email"]!
+            emailError.alpha = 1
             return
         }
         
         guard errors["phoneNumber"] == "" else{
             phoneNumber.setBorder(color: "error", image: UIImage(named: "phoneError")!)
+            phoneNumberError.text = errors["phoneNumber"]!
+            phoneNumberError.alpha = 1
             return
         }
         
         guard errors["birthDate"] == "" else{
             birthDate.setBorder(color: "error", image: UIImage(named: "calendarError")!)
+            birthdateError.text = errors["birthDate"]!
+            birthdateError.alpha = 1
             return
         }
         
@@ -139,82 +230,19 @@ class editAccountViewController: UIViewController {
             }
         })
         
-        email.setBorder(color: "valid", image: UIImage(named: "emailValid")!)
-        fullName.setBorder(color: "valid", image: UIImage(named: "personValid")!)
-        nationalID.setBorder(color: "default", image: UIImage(named: "idDefault")!)
-        phoneNumber.setBorder(color: "valid", image: UIImage(named: "phoneValid")!)
-        birthDate.setBorder(color: "valid", image: UIImage(named: "calendarValid")!)
+//        fullNameError.alpha = 0
+//        emailError.alpha = 0
+//        phoneNumberError.alpha = 0
+//        birthdateError.alpha = 0
+//
+//        email.setBorder(color: "valid", image: UIImage(named: "emailValid")!)
+//        fullName.setBorder(color: "valid", image: UIImage(named: "personValid")!)
+//        nationalID.setBorder(color: "default", image: UIImage(named: "idDefault")!)
+//        phoneNumber.setBorder(color: "valid", image: UIImage(named: "phoneValid")!)
+//        birthDate.setBorder(color: "valid", image: UIImage(named: "calendarValid")!)
+        configureInputs()
+        configureErrors()
         
-    }
-    
-    func configureButtonView(){
-        roundGradientView.layer.cornerRadius = 20
-        roundGradientView.layer.shouldRasterize = true
-        roundGradientView.layer.rasterizationScale = UIScreen.main.scale
-        
-        let gradient: CAGradientLayer = CAGradientLayer()
-        
-        gradient.cornerRadius = 20
-        gradient.colors = [
-            UIColor(red: 0.887, green: 0.436, blue: 0.501, alpha: 1).cgColor,
-            UIColor(red: 0.75, green: 0.191, blue: 0.272, alpha: 1).cgColor
-        ]
-        
-        gradient.locations = [0, 1]
-        gradient.startPoint = CGPoint(x: 0, y: 0)
-        gradient.endPoint = CGPoint(x: 1, y: 1)
-        gradient.frame = roundGradientView.bounds
-        roundGradientView.layer.insertSublayer(gradient, at: 0)
-    }
-    
-    func configureInputs(){
-        fullName.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0)
-        email.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0)
-        phoneNumber.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0)
-        birthDate.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0)
-        
-        fullName.setBorder(color: "valid", image: UIImage(named: "personValid")!)
-        email.setBorder(color: "valid", image: UIImage(named: "emailValid")!)
-        nationalID.setBorder(color: "default", image: UIImage(named: "idDefault")!)
-        phoneNumber.setBorder(color: "valid", image: UIImage(named: "phoneValid")!)
-        birthDate.setBorder(color: "valid", image: UIImage(named: "calendarValid")!)
-        
-        fullName.clearsOnBeginEditing = false
-        email.clearsOnBeginEditing = false
-        phoneNumber.clearsOnBeginEditing = false
-        nationalID.isUserInteractionEnabled = false
-        
-    }
-    
-    func configureSegmentControl(){
-        gender.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16.0)], for: UIControl.State.normal)
-    }
-    
-    func configureDatePickerView(){
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-        
-        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(chooseDate))
-        doneButton.tintColor = blueUIColor
-        toolbar.setItems([doneButton], animated: true)
-        
-        
-        birthDate.inputView = datePicker
-        birthDate.inputAccessoryView = toolbar
-        
-        datePicker.preferredDatePickerStyle = .wheels
-        datePicker.datePickerMode = .date
-        
-        datePicker.maximumDate = Date("12-31-2012")
-        datePicker.minimumDate = Date("01-01-1930")
-        
-    }
-    
-    @objc func chooseDate(){
-        birthDate.text = formatter.string(from: datePicker.date)
-        birthDate.setBorder(color: "valid", image: UIImage(named: "calendarValid")!)
-        
-        self.view.endEditing(true)
     }
     
     func fetchUserData(){
@@ -264,24 +292,35 @@ class editAccountViewController: UIViewController {
     func validateFields() -> [String: String]{
         var errors = ["fullName": "", "nationalID": "", "phoneNumber": "", "birthDate": "", "email": ""]
         
-        if fullName.text == nil || fullName.text == "" || !fullName.text!.isValidName || fullName.text!.count <= 2{
-            errors["fullName"] = "Error in full name"
+        if fullName.text == nil || fullName.text == "" {
+            errors["fullName"] = "cannot be empty"
+        }
+        else if !fullName.text!.isValidName{
+            errors["fullName"] = "cannot have charachters"
+        } else if fullName.text!.count <= 2{
+            errors["fullName"] = "must be grater than two charachters "
         }
         
-        if email.text == nil || email.text == "" || !email.text!.trimWhiteSpace().isValidEmail || !email.text!.trimWhiteSpace().isValidDomain{
-            errors["email"] = "Error in email"
+        if email.text == nil || email.text == ""{
+            errors["email"] = "cannot be empty"
+        }  else if !email.text!.trimWhiteSpace().isValidEmail {
+            errors["email"] = "invalid email address"
+        } else if !email.text!.trimWhiteSpace().isValidDomain{
+            errors["email"] = "restricted domain"
         }
         
         if nationalID.text == nil || nationalID.text == "" || !nationalID.text!.isValidNationalID{
-            errors["nationalID"] = "National ID cannot be empty"
+            errors["nationalID"] = "cannot be empty"
         }
         
         if birthDate.text == nil || birthDate.text == "" {
-            errors["birthDate"] = "Date of birth cannot be empty"
+            errors["birthDate"] = "cannot be empty"
         }
         
-        if phoneNumber.text == nil || phoneNumber.text == "" || !phoneNumber.text!.isValidPhone {
+        if phoneNumber.text == nil || phoneNumber.text == "" {
             errors["phoneNumber"] = "Phone number cannot be empty"
+        } else if !phoneNumber.text!.isValidPhone {
+            errors["phoneNumber"] = "invalid phone number"
         }
         
         return errors
@@ -297,9 +336,12 @@ class editAccountViewController: UIViewController {
         
         guard errors["fullName"] == "" else{
             fullName.setBorder(color: "error", image: UIImage(named: "personError")!)
+            fullNameError.text = errors["fullName"]!
+            fullNameError.alpha = 1
             return
         }
         fullName.setBorder(color: "valid", image: UIImage(named: "personValid")!)
+        fullNameError.alpha = 0
     }
     
     @IBAction func phoneNumberEditingChanged(_ sender: UITextField) {
@@ -307,9 +349,12 @@ class editAccountViewController: UIViewController {
         
         guard errors["phoneNumber"] == "" else{
             phoneNumber.setBorder(color: "error", image: UIImage(named: "phoneError")!)
+            phoneNumberError.text = errors["phoneNumber"]!
+            phoneNumberError.alpha = 1
             return
         }
         phoneNumber.setBorder(color: "valid", image: UIImage(named: "phoneValid")!)
+        phoneNumberError.alpha = 0
     }
     
     @IBAction func emailEditingChanged(_ sender: Any) {
@@ -317,9 +362,12 @@ class editAccountViewController: UIViewController {
         
         guard errors["email"] == "" else{
             email.setBorder(color: "error", image: UIImage(named: "emailError")!)
+            emailError.text = errors["email"]!
+            emailError.alpha = 1
             return
         }
         email.setBorder(color: "valid", image: UIImage(named: "emailValid")!)
+        emailError.alpha = 0
     }
 }
 
@@ -328,12 +376,6 @@ extension editAccountViewController: UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true;
-    }
-}
-
-extension editAccountViewController: UICollectionViewDelegateFlowLayout{
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: 40)
     }
 }
 

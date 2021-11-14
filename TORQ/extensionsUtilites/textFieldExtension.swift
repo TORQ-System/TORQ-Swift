@@ -32,7 +32,7 @@ extension UITextField{
         
         if(color == "valid"){
             border.borderColor = blue
-            attributedText.setAttributes([NSAttributedString.Key.foregroundColor : UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0), NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14.0, weight: .medium)], range: NSMakeRange(0, attributedText.length))
+            attributedText.setAttributes([NSAttributedString.Key.foregroundColor : UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0), NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14.0, weight: .regular)], range: NSMakeRange(0, attributedText.length))
         }
         
         border.frame = CGRect(origin: CGPoint(x: 0,y :self.frame.size.height - borderWidth), size: CGSize(width: self.frame.size.width, height: self.frame.size.height))
