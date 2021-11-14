@@ -20,7 +20,8 @@ class notificationCenterViewController: UIViewController {
     var userID: String?
     var wellbeing: [notification] = []
     var emergency: [notification] = []
-    var all: [notification] = []
+    var all: [notification] = [] //stores everything -> not used for display
+    var notifications: [notification] = []
     var count: Int = 0 //Counts the number of items to be displayed
     
     //MARK: - Constants
@@ -29,9 +30,9 @@ class notificationCenterViewController: UIViewController {
     //MARK: - Overriden functions
     override func viewDidLoad() {
         super.viewDidLoad()
-        classifyNotifications(userID: userID!)
+        getNotifications(userID: userID!)
         self.notificationCollectionView.reloadData()
-
+        
         // Configure the gradient
         configureGradient()
         
@@ -57,21 +58,17 @@ class notificationCenterViewController: UIViewController {
         
         gradient.frame = backgroundView.layer.frame
         backgroundView.layer.insertSublayer(gradient, at: 0)
-
         
         
-       
+        
+        
     }
     
     // Fetch all notifications from database and assign it to its appropriate array
-    func classifyNotifications (userID: String) {
-        
-        let ref = Database.database().reference()
+    func getNotifications(userID: String) {
         let searchQueue = DispatchQueue.init(label: "searchQueue")
-        
         searchQueue.sync {
             ref.child("Notification").observe(.childAdded) {snapshot in
-                
                 let obj = snapshot.value as! [String: Any]
                 let title = obj["title"] as! String
                 let subtitle = obj["subtitle"] as! String
@@ -84,38 +81,29 @@ class notificationCenterViewController: UIViewController {
                 
                 let alert = notification(title: title, subtitle: subtitle, body:body, date: date, time: time, type: type, sender: sender, receiver: receiver)
                 
+                if alert.getReceiver() == userID {
+                self.notifications.append(alert)
                 self.all.append(alert)
+                }
 
-                if (alert.getReceiver() == userID && alert.getType() == "wellbeing") {
-                    self.wellbeing.append(alert)
-                }
                 
-                if (alert.getReceiver() == userID && alert.getType() == "emergency") {
-                    self.emergency.append(alert)
-                }
                 self.notificationCollectionView.reloadData()
             }
         }
     }
     
-}
+    
+    func classifyNotifications(userID: String, type: String) {
+        notifications.removeAll()
+        for (index, alert) in all.enumerated(){
+            if(alert.getType() == type){
+                notifications.append(alert)
+            }
+        }
+        self.notificationCollectionView.reloadData()
 
-extension UICollectionViewCell {
-    func configureCellView() {
-        let radius: CGFloat = 25
-        contentView.layer.cornerRadius = radius
-        contentView.layer.borderColor = UIColor.clear.cgColor
-        contentView.layer.masksToBounds = true
-        layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOffset = CGSize(width: 5, height: 5)
-        layer.shadowRadius = 25
-        layer.shadowOpacity = 0.25
-        layer.masksToBounds = false
-        layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: radius).cgPath
-        layer.cornerRadius = radius
     }
 }
-
 
 extension notificationCenterViewController: UICollectionViewDelegate{
     
@@ -126,18 +114,15 @@ extension notificationCenterViewController: UICollectionViewDelegate{
         
         switch indexPath.row {
         case 0:
-            classifyNotifications(userID: userID!)
-            count = all.count
+            getNotifications(userID: userID!)
             print("filter all")
             break
         case 1:
-            classifyNotifications(userID: userID!)
-            count = emergency.count
+            classifyNotifications(userID: userID!, type: "emergency")
             print("filter emergency")
             break
         case 2:
-            classifyNotifications(userID: userID!)
-            count = wellbeing.count
+            classifyNotifications(userID: userID!, type: "wellbeing")
             print("filter wellbeing")
             break
         default:
@@ -151,7 +136,7 @@ extension notificationCenterViewController: UICollectionViewDelegate{
 extension notificationCenterViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard collectionView == filterCollectionView else{
-            return 3 // Should be count
+            return notifications.count
         }
         return filterBy.count
     }
@@ -159,25 +144,22 @@ extension notificationCenterViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let colors = [UIColor(red: 0.314, green: 0.663, blue: 0.859, alpha: 1),
                       UIColor.gray,
-                      UIColor(red: 0.133, green: 0.192, blue: 0.404, alpha: 0.63)
-        ]
+                      UIColor(red: 0.133, green: 0.192, blue: 0.404, alpha: 0.63)]
         
         guard collectionView == filterCollectionView else{
             let notificationCell = collectionView.dequeueReusableCell(withReuseIdentifier: "notificationCell", for: indexPath) as! notificationCollectionViewCell
             notificationCell.configureCellView()
             
-            /*
             notificationCell.title.text = notifications[indexPath.row].getTitle()
             notificationCell.details.text = notifications[indexPath.row].getBody()
             notificationCell.time.text = notifications[indexPath.row].getTime()
             notificationCell.date.text = notifications[indexPath.row].getDate()
-             */
-
+            
             return notificationCell
         }
         
         let filterCell = collectionView.dequeueReusableCell(withReuseIdentifier: "filterCell", for: indexPath) as! filterCollectionViewCell
-
+        
         filterCell.layer.cornerRadius = 15
         filterCell.layer.masksToBounds = true
         filterCell.filterLabel.text = filterBy[indexPath.row]
@@ -203,6 +185,22 @@ extension notificationCenterViewController: UICollectionViewDelegateFlowLayout{
             return CGSize(width: collectionView.frame.width/1.1, height: 160)
         }
         return CGSize(width: filterBy[indexPath.item].size(withAttributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18)]).width+25, height: 30)
+    }
+}
+
+extension UICollectionViewCell {
+    func configureCellView() {
+        let radius: CGFloat = 25
+        contentView.layer.cornerRadius = radius
+        contentView.layer.borderColor = UIColor.clear.cgColor
+        contentView.layer.masksToBounds = true
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = CGSize(width: 5, height: 5)
+        layer.shadowRadius = 25
+        layer.shadowOpacity = 0.25
+        layer.masksToBounds = false
+        layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: radius).cgPath
+        layer.cornerRadius = radius
     }
 }
 
