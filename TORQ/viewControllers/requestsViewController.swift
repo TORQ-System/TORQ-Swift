@@ -426,7 +426,24 @@ extension requestsViewController: UICollectionViewDataSource{
          cell.distance.text =  String(format: " %.01fkm", distance)
           cell.gender.text = prossed[indexPath.row].getGender()
            cell.status.text = "procced"
+            let lat = Double(prossed[indexPath.row].getLatitude())!
+            let long = Double(prossed[indexPath.row].getLongitude())!
             
+            let pin = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(lat), longitude: CLLocationDegrees(long)))
+            
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = pin.coordinate
+            annotation.title = "Accident"
+            let coordinateRegion = MKCoordinateRegion(center: pin.coordinate, latitudinalMeters: 12000, longitudinalMeters: 12000)
+            cell.map.setRegion(coordinateRegion, animated: true)
+            cell.map.addAnnotation(annotation)
+
+            // if user taps on map
+            
+            let tap = CustomTapGestureRecognizer(target: self, action: #selector(goToLocation(sender:)))
+            tap.lat = lat
+            tap.long = long
+            cell.map.addGestureRecognizer(tap)
             cell.viewbutten.tag = indexPath.row
             cell.viewbutten.addTarget(self, action: #selector(viewbutten(sender: )), for: .touchUpInside)
         default:
