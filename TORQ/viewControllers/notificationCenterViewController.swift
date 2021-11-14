@@ -18,11 +18,8 @@ class notificationCenterViewController: UIViewController {
     //MARK: - Variables
     var ref = Database.database().reference()
     var userID: String?
-    var wellbeing: [notification] = []
-    var emergency: [notification] = []
-    var all: [notification] = [] //stores everything -> not used for display
+    var all: [notification] = []
     var notifications: [notification] = []
-    var count: Int = 0 //Counts the number of items to be displayed
     
     //MARK: - Constants
     let filterBy = ["All", "From Contacts", "From TORQ"]
@@ -30,10 +27,8 @@ class notificationCenterViewController: UIViewController {
     //MARK: - Overriden functions
     override func viewDidLoad() {
         super.viewDidLoad()
-        getNotifications(userID: userID!)
-        self.notificationCollectionView.reloadData()
         
-        // Configure the gradient
+        getNotifications(userID: userID!)
         configureGradient()
         
     }
@@ -55,17 +50,16 @@ class notificationCenterViewController: UIViewController {
         gradient.locations = [0, 1]
         gradient.startPoint = CGPoint(x: 0, y: 0)
         gradient.endPoint = CGPoint(x: 1, y: 1)
-        
         gradient.frame = backgroundView.layer.frame
+        
         backgroundView.layer.insertSublayer(gradient, at: 0)
-        
-        
-        
         
     }
     
-    // Fetch all notifications from database and assign it to its appropriate array
     func getNotifications(userID: String) {
+        notifications.removeAll()
+        all.removeAll()
+        
         let searchQueue = DispatchQueue.init(label: "searchQueue")
         searchQueue.sync {
             ref.child("Notification").observe(.childAdded) {snapshot in
@@ -82,16 +76,14 @@ class notificationCenterViewController: UIViewController {
                 let alert = notification(title: title, subtitle: subtitle, body:body, date: date, time: time, type: type, sender: sender, receiver: receiver)
                 
                 if alert.getReceiver() == userID {
-                self.notifications.append(alert)
-                self.all.append(alert)
+                    self.notifications.append(alert)
+                    self.all.append(alert)
                 }
-
                 
                 self.notificationCollectionView.reloadData()
             }
         }
     }
-    
     
     func classifyNotifications(userID: String, type: String) {
         notifications.removeAll()
@@ -99,14 +91,12 @@ class notificationCenterViewController: UIViewController {
             if(alert.getType() == type){
                 notifications.append(alert)
             }
+            self.notificationCollectionView.reloadData()
         }
-        self.notificationCollectionView.reloadData()
-
     }
 }
 
 extension notificationCenterViewController: UICollectionViewDelegate{
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard collectionView == filterCollectionView else{
             return
@@ -115,20 +105,16 @@ extension notificationCenterViewController: UICollectionViewDelegate{
         switch indexPath.row {
         case 0:
             getNotifications(userID: userID!)
-            print("filter all")
             break
         case 1:
             classifyNotifications(userID: userID!, type: "emergency")
-            print("filter emergency")
             break
         case 2:
             classifyNotifications(userID: userID!, type: "wellbeing")
-            print("filter wellbeing")
             break
         default:
-            print("unKnown")
+            getNotifications(userID: userID!)
         }
-        
         notificationCollectionView.reloadData()
     }
 }
