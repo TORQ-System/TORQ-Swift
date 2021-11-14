@@ -26,7 +26,7 @@ class editAccountViewController: UIViewController {
     //MARK: - Variables
     var ref = Database.database().reference()
     var user: User?
-    
+    var tap = UITapGestureRecognizer()
     
     //MARK: - Constants
     let datePicker = UIDatePicker()
@@ -42,13 +42,14 @@ class editAccountViewController: UIViewController {
     //MARK: - Overriden Functions
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         formatter.dateStyle = .medium
         formatter.timeStyle = .none
         formatter.dateFormat = "MMM d, yyyy"
         
         fetchUserData()
         
+        configureTapGesture()
         configureButtonView()
         configureInputs()
         configureSegmentControl()
@@ -56,21 +57,116 @@ class editAccountViewController: UIViewController {
         
     }
     //MARK: - Functions
-    func configureButtonView(){
-//        let gradient: CAGradientLayer = CAGradientLayer()
-//                let red = UIColor(red: 191.0/255.0, green: 49.0/255.0, blue: 69.0/255.0, alpha: 1.0).cgColor
-//                let pink = UIColor(red: 226.0/255.0, green: 111.0/255.0, blue: 128.0/255.0, alpha: 1.0).cgColor
-//
-//                accountView.layer.cornerRadius = 25
-//                accountView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-//                accountView.layer.shadowColor = UIColor.black.cgColor
-//                accountView.layer.shadowOpacity = 0.4
-//                accountView.layer.shadowOffset = CGSize(width: 5, height: 5)
-//                accountView.layer.shadowRadius = 25
-//                accountView.layer.shouldRasterize = true
-//                accountView.layer.rasterizationScale = UIScreen.main.scale
+    func configureTapGesture(){
+        tap = UITapGestureRecognizer(target: self, action: #selector(self.saveClicked(_:)))
+        tap.numberOfTapsRequired = 1
+        tap.numberOfTouchesRequired = 1
+        buttonView.addGestureRecognizer(tap)
+        buttonView.isUserInteractionEnabled = true
     }
-
+    
+    @objc func saveClicked(_ sender: UITapGestureRecognizer) {
+        let errors = validateFields()
+        let userID = Auth.auth().currentUser?.uid
+        
+        if errors["nationalID"] != "" || errors["fullName"] != "" || errors["phoneNumber"] != "" || errors["birthDate"] != "" ||  errors["email"] != ""{
+            SCLAlertView(appearance: self.apperance).showCustom("Invalid Credentials", subTitle: "Please make sure you entered all fields correctly", color: self.redUIColor, icon: alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+        }
+        
+        guard errors["nationalID"] == "" else{
+            nationalID.setBorder(color: "error", image: UIImage(named: "idError")!)
+            return
+        }
+        
+        guard errors["fullName"] == "" else{
+            fullName.setBorder(color: "error", image: UIImage(named: "personError")!)
+            return
+        }
+        
+        guard errors["email"] == "" else{
+            email.setBorder(color: "error", image: UIImage(named: "emailError")!)
+            return
+        }
+        
+        guard errors["phoneNumber"] == "" else{
+            phoneNumber.setBorder(color: "error", image: UIImage(named: "phoneError")!)
+            return
+        }
+        
+        guard errors["birthDate"] == "" else{
+            birthDate.setBorder(color: "error", image: UIImage(named: "calendarError")!)
+            return
+        }
+        
+        let updatedUser = ["birthDate": birthDate.text!,
+                           "fullName": fullName.text!,
+                           "email": email.text!.trimWhiteSpace(),
+                           "gender": fetchGender(),
+                           "nationalID": nationalID.text!,
+                           "phoneNumber": phoneNumber.text!]
+        
+        if(user?.getFullName() == updatedUser["fullName"] && user?.getEmail() == updatedUser["email"]  && user?.getDateOfBirth() == updatedUser["birthDate"] && user?.getGender() == updatedUser["gender"] && user?.getPhone() == updatedUser["phoneNumber"]){
+            SCLAlertView(appearance: self.apperance).showCustom("Credentials Didn't Change", subTitle: "You have not updated your information yet!", color: self.redUIColor, icon: alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+            return
+        }
+        
+        let currentEmail = Auth.auth().currentUser?.email
+        var credential: AuthCredential
+        
+        credential = EmailAuthProvider.credential(withEmail: currentEmail!, password: (user?.getPassword())!)
+        
+        Auth.auth().currentUser?.reauthenticate(with: credential, completion: { (result, error)  in
+            if error != nil  {
+                SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "An error occured while authenticating your information", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+            } else {
+                Auth.auth().currentUser?.updateEmail(to: updatedUser["email"]!, completion: { error in
+                    if error != nil {
+                        SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "An error occured while updating your information", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+                    } else{
+                        self.ref.child("User").child(userID!).updateChildValues(["fullName": updatedUser["fullName"]!, "email": updatedUser["email"]!, "phone": updatedUser["phoneNumber"]!, "gender": updatedUser["gender"]!, "dateOfBirth": updatedUser["birthDate"]! ]){
+                            (error : Error?, ref: DatabaseReference) in
+                            if error != nil{
+                                SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "An error ocuured, please try again later", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+                            }
+                            else{
+                                SCLAlertView(appearance: self.apperance).showCustom("Success!", subTitle: "We have updated your information", color: self.blueUIColor, icon: self.alertSuccessIcon!, closeButtonTitle: "Okay", animationStyle: SCLAnimationStyle.topToBottom)
+                                
+                                self.fetchUserData()
+                            }
+                        }
+                    }
+                })
+            }
+        })
+        
+        email.setBorder(color: "valid", image: UIImage(named: "emailValid")!)
+        fullName.setBorder(color: "valid", image: UIImage(named: "personValid")!)
+        nationalID.setBorder(color: "default", image: UIImage(named: "idDefault")!)
+        phoneNumber.setBorder(color: "valid", image: UIImage(named: "phoneValid")!)
+        birthDate.setBorder(color: "valid", image: UIImage(named: "calendarValid")!)
+        
+    }
+    
+    func configureButtonView(){
+        roundGradientView.layer.cornerRadius = 20
+        roundGradientView.layer.shouldRasterize = true
+        roundGradientView.layer.rasterizationScale = UIScreen.main.scale
+        
+        let gradient: CAGradientLayer = CAGradientLayer()
+        
+        gradient.cornerRadius = 20
+        gradient.colors = [
+            UIColor(red: 0.887, green: 0.436, blue: 0.501, alpha: 1).cgColor,
+            UIColor(red: 0.75, green: 0.191, blue: 0.272, alpha: 1).cgColor
+        ]
+        
+        gradient.locations = [0, 1]
+        gradient.startPoint = CGPoint(x: 0, y: 0)
+        gradient.endPoint = CGPoint(x: 1, y: 1)
+        gradient.frame = roundGradientView.bounds
+        roundGradientView.layer.insertSublayer(gradient, at: 0)
+    }
+    
     func configureInputs(){
         fullName.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0)
         email.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0)
@@ -191,119 +287,10 @@ class editAccountViewController: UIViewController {
         return errors
     }
     
-    func updateUserEmail(newEmail: String) -> Bool {
-        let currentEmail = Auth.auth().currentUser?.email
-        var credential: AuthCredential
-        var updateEmail: Bool = false
-        
-        credential = EmailAuthProvider.credential(withEmail: currentEmail!, password: (user?.getPassword())!)
-        
-        Auth.auth().currentUser?.reauthenticate(with: credential, completion: { (result, error)  in
-            if error != nil  {
-                SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "An error occured while authenticating your information", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
-                updateEmail = false
-            } else {
-                Auth.auth().currentUser?.updateEmail(to: newEmail, completion: { error in
-                    if error != nil {
-                        SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "An error occured while updating your information", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
-                        updateEmail = false
-                    } else{
-                        updateEmail = true
-                    }
-                })
-            }
-        })
-        
-        return updateEmail
-    }
     //MARK: - @IBActions
     @IBAction func backButtonPressed(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
-    
-    @IBAction func saveButtonPressed(_ sender: Any) {
-        let errors = validateFields()
-        let userID = Auth.auth().currentUser?.uid
-        
-        
-        if errors["nationalID"] != "" || errors["fullName"] != "" || errors["phoneNumber"] != "" || errors["birthDate"] != "" ||  errors["email"] != ""{
-            SCLAlertView(appearance: self.apperance).showCustom("Invalid Credentials", subTitle: "Please make sure you entered all fields correctly", color: self.redUIColor, icon: alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
-        }
-        
-        guard errors["nationalID"] == "" else{
-            nationalID.setBorder(color: "error", image: UIImage(named: "idError")!)
-            return
-        }
-        
-        guard errors["fullName"] == "" else{
-            fullName.setBorder(color: "error", image: UIImage(named: "personError")!)
-            return
-        }
-        
-        guard errors["email"] == "" else{
-            email.setBorder(color: "error", image: UIImage(named: "emailError")!)
-            return
-        }
-        
-        guard errors["phoneNumber"] == "" else{
-            phoneNumber.setBorder(color: "error", image: UIImage(named: "phoneError")!)
-            return
-        }
-        
-        guard errors["birthDate"] == "" else{
-            birthDate.setBorder(color: "error", image: UIImage(named: "calendarError")!)
-            return
-        }
-        
-        let updatedUser = ["birthDate": birthDate.text!,
-                           "fullName": fullName.text!,
-                           "email": email.text!.trimWhiteSpace(),
-                           "gender": fetchGender(),
-                           "nationalID": nationalID.text!,
-                           "phoneNumber": phoneNumber.text!]
-        
-        if(user?.getFullName() == updatedUser["fullName"] && user?.getEmail() == updatedUser["email"]  && user?.getDateOfBirth() == updatedUser["birthDate"] && user?.getGender() == updatedUser["gender"] && user?.getPhone() == updatedUser["phoneNumber"]){
-            SCLAlertView(appearance: self.apperance).showCustom("Credentials Didn't Change", subTitle: "You have not updated your information yet!", color: self.redUIColor, icon: alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
-            return
-        }
-        
-        let currentEmail = Auth.auth().currentUser?.email
-        var credential: AuthCredential
-        
-        credential = EmailAuthProvider.credential(withEmail: currentEmail!, password: (user?.getPassword())!)
-        
-        Auth.auth().currentUser?.reauthenticate(with: credential, completion: { (result, error)  in
-            if error != nil  {
-                SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "An error occured while authenticating your information", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
-            } else {
-                Auth.auth().currentUser?.updateEmail(to: updatedUser["email"]!, completion: { error in
-                    if error != nil {
-                        SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "An error occured while updating your information", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
-                    } else{
-                        self.ref.child("User").child(userID!).updateChildValues(["fullName": updatedUser["fullName"]!, "email": updatedUser["email"]!, "phone": updatedUser["phoneNumber"]!, "gender": updatedUser["gender"]!, "dateOfBirth": updatedUser["birthDate"]! ]){
-                            (error : Error?, ref: DatabaseReference) in
-                            if error != nil{
-                                SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "An error ocuured, please try again later", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
-                            }
-                            else{
-                                SCLAlertView(appearance: self.apperance).showCustom("Success!", subTitle: "We have updated your information", color: self.blueUIColor, icon: self.alertSuccessIcon!, closeButtonTitle: "Okay", animationStyle: SCLAnimationStyle.topToBottom)
-                                
-                                self.fetchUserData()
-                            }
-                        }
-                    }
-                })
-            }
-        })
-        
-        email.setBorder(color: "valid", image: UIImage(named: "emailValid")!)
-        fullName.setBorder(color: "valid", image: UIImage(named: "personValid")!)
-        nationalID.setBorder(color: "default", image: UIImage(named: "idDefault")!)
-        phoneNumber.setBorder(color: "valid", image: UIImage(named: "phoneValid")!)
-        birthDate.setBorder(color: "valid", image: UIImage(named: "calendarValid")!)
-        
-    }
-    
     
     @IBAction func fullNameEditingChanged(_ sender: Any) {
         let errors = validateFields()
