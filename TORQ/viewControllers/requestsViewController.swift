@@ -391,7 +391,9 @@ extension requestsViewController: UICollectionViewDataSource{
             let coordinateRegion = MKCoordinateRegion(center: pin.coordinate, latitudinalMeters: 12000, longitudinalMeters: 12000)
             cell.map.setRegion(coordinateRegion, animated: true)
             cell.map.addAnnotation(annotation)
-
+            cell.circle1.layer.cornerRadius = cell.circle1.frame.size.height / 2
+            cell.circle2.layer.cornerRadius = cell.circle2.frame.size.height / 2
+            cell.circle3.layer.cornerRadius = cell.circle3.frame.size.height / 2
             // if user taps on map
             
             let tap = CustomTapGestureRecognizer(target: self, action: #selector(goToLocation(sender:)))
@@ -438,9 +440,17 @@ extension requestsViewController: UICollectionViewDataSource{
             let coordinateRegion = MKCoordinateRegion(center: pin.coordinate, latitudinalMeters: 12000, longitudinalMeters: 12000)
             cell.map.setRegion(coordinateRegion, animated: true)
             cell.map.addAnnotation(annotation)
-
-            // if user taps on map
+            cell.circle1.layer.cornerRadius = cell.circle1.frame.size.height / 2
+            cell.circle2.layer.cornerRadius = cell.circle2.frame.size.height / 2
+            cell.circle3.layer.cornerRadius = cell.circle3.frame.size.height / 2
             
+           // cell.circle1.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+          //  cell.circle1.layer.shadowColor = UIColor.black.cgColor
+            //cell.circle1.layer.shadowOpacity = 0.5
+           // cell.circle1.layer.shadowOffset = CGSize(width: 5, height: 5)
+            //cell.circle1.layer.shadowRadius = 25
+           // cell.circle1.layer.shouldRasterize = true
+            // if user taps on map
             let tap = CustomTapGestureRecognizer(target: self, action: #selector(goToLocation(sender:)))
             tap.lat = lat
             tap.long = long
