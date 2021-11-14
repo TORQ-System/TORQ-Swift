@@ -202,6 +202,15 @@ class AccidentHistoryViewController: UIViewController {
         }
 }
 
+
+extension AccidentHistoryViewController: UICollectionViewDelegateFlowLayout{
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 360, height: 170)
+    }
+    
+}
+
     //MARK: - Map View Delegate Extension
     extension AccidentHistoryViewController: MKMapViewDelegate{
         
@@ -209,18 +218,21 @@ class AccidentHistoryViewController: UIViewController {
             guard !(annotation is MKUserLocation)else{
                 return nil
             }
-            var pin = mapView.dequeueReusableAnnotationView(withIdentifier: "accidentView")
+            var pin = mapView.dequeueReusableAnnotationView(withIdentifier: "accidentPin")
+            pin?.sizeThatFits(CGSize(width: 24, height: 24))
             if pin == nil {
-                pin = MKAnnotationView(annotation: annotation, reuseIdentifier: "accidentView")
+                pin = MKAnnotationView(annotation: annotation, reuseIdentifier: "accidentPin")
                 pin?.canShowCallout = true
+                pin?.image = UIImage(named: "Vector")
             }else{
                 pin?.annotation = annotation
             }
-            let img = UIImageView(image: UIImage(named: "pin"))
-            pin?.image = img.image
-    //        pin?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+
+            
+            
+            
             return pin
         }
-        
+
         
     }
