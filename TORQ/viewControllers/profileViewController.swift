@@ -16,8 +16,13 @@ class profileViewController: UIViewController {
     }
     
     @IBAction func editAccountPressed(_ sender: Any) {
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        let vc = storyboard.instantiateViewController(withIdentifier: "editAccountViewController") as! editAccountViewController
+//        vc.modalPresentationStyle = .fullScreen
+//        present(vc, animated: true, completion: nil)
+        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "editAccountViewController") as! editAccountViewController
+        let vc = storyboard.instantiateViewController(withIdentifier: "changePasswordViewController") as! changePasswordViewController
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
     }

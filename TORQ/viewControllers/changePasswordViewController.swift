@@ -19,13 +19,14 @@ class changePasswordViewController: UIViewController{
     @IBOutlet weak var newPasswordError: UILabel!
     @IBOutlet weak var confirmPassword: UITextField!
     @IBOutlet weak var confirmPasswordError: UILabel!
-    @IBOutlet weak var updateButton: UIButton!
-    @IBOutlet weak var passwordView: UIView!
+    @IBOutlet weak var buttonView: UIView!
+    @IBOutlet weak var roundGradientView: UIView!
     
     //MARK: - Variables
     var ref = Database.database().reference()
     var email: String?
     var password: String?
+    var tap = UITapGestureRecognizer()
     
     //MARK: - Constants
     let redUIColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
@@ -39,28 +40,78 @@ class changePasswordViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configurePasswordView()
+        configureTapGesture()
+        configureButtonView()
         configureInputs()
         configureErrors()
     }
     
     //MARK: - Functions
-    func configurePasswordView(){
-        passwordView.layer.cornerRadius = 50
-        passwordView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        passwordView.layer.shadowColor = UIColor.black.cgColor
-        passwordView.layer.shadowOpacity = 0.25
-        passwordView.layer.shadowOffset = CGSize(width: 5, height: 5)
-        passwordView.layer.shadowRadius = 25
-        passwordView.layer.shouldRasterize = true
-        passwordView.layer.rasterizationScale = UIScreen.main.scale
+    func configureTapGesture(){
+        tap = UITapGestureRecognizer(target: self, action: #selector(self.saveClicked(_:)))
+        tap.numberOfTapsRequired = 1
+        tap.numberOfTouchesRequired = 1
+        buttonView.addGestureRecognizer(tap)
+        buttonView.isUserInteractionEnabled = true
+    }
+    
+    func configureButtonView(){
+        roundGradientView.layer.cornerRadius = 20
+        roundGradientView.layer.shouldRasterize = true
+        roundGradientView.layer.rasterizationScale = UIScreen.main.scale
+        
+        let gradient: CAGradientLayer = CAGradientLayer()
+        
+        gradient.cornerRadius = 20
+        gradient.colors = [
+            UIColor(red: 0.887, green: 0.436, blue: 0.501, alpha: 1).cgColor,
+            UIColor(red: 0.75, green: 0.191, blue: 0.272, alpha: 1).cgColor
+        ]
+        
+        gradient.locations = [0, 1]
+        gradient.startPoint = CGPoint(x: 0, y: 0)
+        gradient.endPoint = CGPoint(x: 1, y: 1)
+        gradient.frame = roundGradientView.bounds
+        
+        roundGradientView.layer.insertSublayer(gradient, at: 0)
+    }
+    
+    @objc func saveClicked(_ sender: UITapGestureRecognizer) {
+        let errors = validateFields()
+        let user = Auth.auth().currentUser
+        var credential: AuthCredential
+        
+        email = (Auth.auth().currentUser?.email)!
+        password = currentPassword.text!
+        
+        guard errors["current"] == "" && errors["new"] == "" && errors["confirm"] == "" else {
+            SCLAlertView(appearance: self.apperance).showCustom("Invalid Credentials", subTitle: "Please make sure you entered all fields correctly", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+            return
+        }
+        
+        credential = EmailAuthProvider.credential(withEmail: email!, password: currentPassword.text!)
+        
+        user?.reauthenticate(with: credential, completion: { (result, error)  in
+            if error != nil  {
+                SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "An error occured while authenticating your information", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+                return
+            } else{
+                user?.updatePassword(to: self.newPassword.text!, completion: { error in
+                    if error != nil {
+                        SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "An error occured while updating your information", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+                        return
+                    } else{
+                        self.updateUserPassword()
+                    }
+                })
+            }
+        })
     }
     
     func configureInputs(){
         currentPassword.setBorder(color: "default", image: UIImage(named: "lockDefault")!)
         newPassword.setBorder(color: "default", image: UIImage(named: "lockDefault")!)
         confirmPassword.setBorder(color: "default", image: UIImage(named: "lockDefault")!)
-        updateButton.layer.cornerRadius = 12
     }
     
     func configureErrors(){
@@ -105,8 +156,6 @@ class changePasswordViewController: UIViewController{
             }
             SCLAlertView(appearance: self.apperance).showCustom("Success!", subTitle: "We have updated your information", color: self.blueUIColor, icon: self.alertSuccessIcon!, closeButtonTitle: "Okay", animationStyle: SCLAnimationStyle.topToBottom)
         }
-        
-        
     }
     
     //MARK: - @IBActions
@@ -148,38 +197,6 @@ class changePasswordViewController: UIViewController{
         confirmPassword.setBorder(color: "valid", image: UIImage(named: "lockValid")!)
         confirmPasswordError.alpha = 0
         
-    }
-    
-    @IBAction func updateButtonPressed(_ sender: Any) {
-        let errors = validateFields()
-        let user = Auth.auth().currentUser
-        var credential: AuthCredential
-        
-        email = (Auth.auth().currentUser?.email)!
-        password = currentPassword.text!
-        
-        guard errors["current"] == "" && errors["new"] == "" && errors["confirm"] == "" else {
-            SCLAlertView(appearance: self.apperance).showCustom("Invalid Credentials", subTitle: "Please make sure you entered all fields correctly", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
-            return
-        }
-        
-        credential = EmailAuthProvider.credential(withEmail: email!, password: currentPassword.text!)
-        
-        user?.reauthenticate(with: credential, completion: { (result, error)  in
-            if error != nil  {
-                SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "An error occured while authenticating your information", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
-                return
-            } else{
-                user?.updatePassword(to: self.newPassword.text!, completion: { error in
-                    if error != nil {
-                        SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "An error occured while updating your information", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
-                        return
-                    } else{
-                        self.updateUserPassword()
-                    }
-                })
-            }
-        })
     }
     
     @IBAction func backButtonPressed(_ sender: Any) {
