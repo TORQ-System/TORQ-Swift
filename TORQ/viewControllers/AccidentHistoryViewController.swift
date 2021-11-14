@@ -219,7 +219,6 @@ extension AccidentHistoryViewController: UICollectionViewDelegateFlowLayout{
                 return nil
             }
             var pin = mapView.dequeueReusableAnnotationView(withIdentifier: "accidentPin")
-            pin?.sizeThatFits(CGSize(width: 24, height: 24))
             if pin == nil {
                 pin = MKAnnotationView(annotation: annotation, reuseIdentifier: "accidentPin")
                 pin?.canShowCallout = true

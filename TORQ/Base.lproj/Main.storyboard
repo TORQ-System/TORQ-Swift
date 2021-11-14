@@ -1259,6 +1259,9 @@
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="2yL-pa-lN9">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <connections>
+                                    <outlet property="delegate" destination="prp-jc-ZhY" id="NgP-S2-hdl"/>
+                                </connections>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SfR-iQ-9ri">
                                 <rect key="frame" x="20" y="44" width="25" height="29"/>
@@ -3541,8 +3544,8 @@
         <image name="person.2.fill" catalog="system" width="128" height="80"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="phone.fill" catalog="system" width="128" height="114"/>
-        <image name="plus" width="117" height="112"/>
         <image name="plus" catalog="system" width="128" height="113"/>
+        <image name="plus" width="117" height="112"/>
         <image name="pulse" width="300" height="214"/>
         <image name="rec" width="277" height="280"/>
         <image name="star" width="150" height="150"/>
