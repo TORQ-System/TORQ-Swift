@@ -7,4 +7,7 @@ class requestCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var dateTime: UILabel!
     @IBOutlet weak var viewbutten: UIButton!
     
+    @IBOutlet weak var status: UILabel!    
+    @IBOutlet weak var distance: UILabel!
+    @IBOutlet weak var gender: UILabel!
 }

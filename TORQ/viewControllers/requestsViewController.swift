@@ -357,9 +357,9 @@ extension requestsViewController: UICollectionViewDataSource{
             //Display the result in km
             print(String(format: "The distance to my buddy is %.01fkm", distance))
            // cell.dateTime.text = myRequests[indexPath.row].getDateTime()
-//            cell.distance.text =  String(format: " %.01fkm", distance)
-//            cell.gender.text = myRequests[indexPath.row].getGender()
-//            cell.status.text = myRequests[indexPath.row].getStatus()
+         cell.distance.text =  String(format: " %.01fkm", distance)
+          cell.gender.text = myRequests[indexPath.row].getGender()
+           cell.status.text = "Active"
 
             cell.viewbutten.tag = indexPath.row
             cell.viewbutten.addTarget(self, action: #selector(viewbutten(sender: )), for: .touchUpInside)
@@ -368,9 +368,28 @@ extension requestsViewController: UICollectionViewDataSource{
             switches = 2
             print(switches)
            // cell.name.text = "Accident #\(indexPath.row)"
+           // cell.name.text = prossed[indexPath.row].getname()
+
+            //cell.dateTime.text = prossed[indexPath.row].getDateTime()
             cell.name.text = prossed[indexPath.row].getname()
 
-            cell.dateTime.text = prossed[indexPath.row].getDateTime()
+            //My location
+           let myLocation = CLLocation(latitude: getnearest!["latitude"] as! Double , longitude:  getnearest!["longitude"] as! Double)
+            print("near\(String(describing: getnearest))")
+            print("near\(getnearest!["latitude"] as! Double)")
+            print("near\(getnearest!["longitude"] as! Double)")
+            //My buddy's location
+            let myBuddysLocation = CLLocation(latitude: Double (prossed[indexPath.row].getLatitude())!, longitude: Double(prossed[indexPath.row].getLongitude())!)
+
+            //Measuring my distance to my buddy's (in km)
+           let distance = myLocation.distance(from: myBuddysLocation) / 1000
+
+            //Display the result in km
+            print(String(format: "The distance to my buddy is %.01fkm", distance))
+           // cell.dateTime.text = myRequests[indexPath.row].getDateTime()
+         cell.distance.text =  String(format: " %.01fkm", distance)
+          cell.gender.text = prossed[indexPath.row].getGender()
+           cell.status.text = "procced"
             
             cell.viewbutten.tag = indexPath.row
             cell.viewbutten.addTarget(self, action: #selector(viewbutten(sender: )), for: .touchUpInside)
@@ -386,7 +405,7 @@ extension requestsViewController: UICollectionViewDataSource{
 
 extension requestsViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width/1.1, height: 60)
+        return CGSize(width: collectionView.frame.width/1.1, height: 129)
     }
 }
 
