@@ -336,6 +336,13 @@ extension userHomeViewController: UICollectionViewDelegate{
 //            viewVC.userID = userID
 //            vc = viewVC
             break
+        case 3:
+            let viewVC = storyboard.instantiateViewController(identifier: "AccidentsHistory") as! AccidentHistoryViewController
+            viewVC.modalPresentationStyle = .fullScreen
+            viewVC.userID = userID
+            vc = viewVC
+            break
+
         default:
             print("unKnown")
         }

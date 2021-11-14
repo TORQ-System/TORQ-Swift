@@ -31,6 +31,8 @@
 		BEC34A252728710C001E99E5 /* emergencyContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC34A242728710C001E99E5 /* emergencyContact.swift */; };
 		BEC34A27272938DD001E99E5 /* showAccidentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC34A26272938DD001E99E5 /* showAccidentViewController.swift */; };
 		BED10860273EB52F0099EE15 /* profileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED1085F273EB52F0099EE15 /* profileTableViewCell.swift */; };
+		BED10862274148040099EE15 /* AccidentHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED10861274148040099EE15 /* AccidentHistoryViewController.swift */; };
+		BED10864274148650099EE15 /* AccidentsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED10863274148650099EE15 /* AccidentsCollectionViewCell.swift */; };
 		BEDC3C18272653610026948E /* servicesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDC3C172726535F0026948E /* servicesCollectionViewCell.swift */; };
 		BEDC3C1A272681AE0026948E /* tabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDC3C19272681AE0026948E /* tabBarController.swift */; };
 		BEDC3C1C272681F40026948E /* notificationCenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDC3C1B272681F40026948E /* notificationCenterViewController.swift */; };
@@ -106,6 +108,8 @@
 		BEC34A242728710C001E99E5 /* emergencyContact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = emergencyContact.swift; sourceTree = "<group>"; };
 		BEC34A26272938DD001E99E5 /* showAccidentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = showAccidentViewController.swift; sourceTree = "<group>"; };
 		BED1085F273EB52F0099EE15 /* profileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = profileTableViewCell.swift; sourceTree = "<group>"; };
+		BED10861274148040099EE15 /* AccidentHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccidentHistoryViewController.swift; sourceTree = "<group>"; };
+		BED10863274148650099EE15 /* AccidentsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccidentsCollectionViewCell.swift; sourceTree = "<group>"; };
 		BEDC3C172726535F0026948E /* servicesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = servicesCollectionViewCell.swift; sourceTree = "<group>"; };
 		BEDC3C19272681AE0026948E /* tabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tabBarController.swift; sourceTree = "<group>"; };
 		BEDC3C1B272681F40026948E /* notificationCenterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = notificationCenterViewController.swift; sourceTree = "<group>"; };
@@ -195,6 +199,7 @@
 				BEDC3C172726535F0026948E /* servicesCollectionViewCell.swift */,
 				BEE76D29272D2C52001390D2 /* ECCollectionViewCell.swift */,
 				BED1085F273EB52F0099EE15 /* profileTableViewCell.swift */,
+				BED10863274148650099EE15 /* AccidentsCollectionViewCell.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -304,6 +309,7 @@
 				BEE76D2B272D3139001390D2 /* addEmergencyContactViewController.swift */,
 				BE04B6D1272DA7B700EEE3EE /* requestReportViewController.swift */,
 				BE04B6D3272DAA0600EEE3EE /* hospitalsViewController.swift */,
+				BED10861274148040099EE15 /* AccidentHistoryViewController.swift */,
 			);
 			path = viewControllers;
 			sourceTree = "<group>";
@@ -559,6 +565,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BE34F6AD27118A8F0093C633 /* onboardingScreen2ViewController.swift in Sources */,
+				BED10864274148650099EE15 /* AccidentsCollectionViewCell.swift in Sources */,
 				BE64405C272C6F2B0051662F /* Sensor.swift in Sources */,
 				BEF9751827076C0800325281 /* stringExtension.swift in Sources */,
 				BE34F6A4270F32260093C633 /* SRCACenters.swift in Sources */,
@@ -568,6 +575,7 @@
 				BE34F6A2270F31FB0093C633 /* Request.swift in Sources */,
 				BEDC3C18272653610026948E /* servicesCollectionViewCell.swift in Sources */,
 				BE04B6D2272DA7B700EEE3EE /* requestReportViewController.swift in Sources */,
+				BED10862274148040099EE15 /* AccidentHistoryViewController.swift in Sources */,
 				BE64405E272CBD080051662F /* addMedicalReportViewController.swift in Sources */,
 				BEF9751B2707D63A00325281 /* dateExtension.swift in Sources */,
 				BEDC3C1C272681F40026948E /* notificationCenterViewController.swift in Sources */,
