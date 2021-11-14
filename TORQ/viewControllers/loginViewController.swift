@@ -97,12 +97,8 @@ class loginViewController: UIViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let tb = storyboard.instantiateViewController(identifier: "paramedicHome") as! UITabBarController
         let vcs = tb.viewControllers!
-        let home = vcs[0] as! userHomeViewController
-        let profile = vcs[2] as! profileViewController
-        profile.userID = userID
-        home.userEmail = email.text
-        home.userID = userID
-        home.modalPresentationStyle = .fullScreen
+        let viewSOS = vcs[2] as! ViewSOSRequestsViewController
+        viewSOS.modalPresentationStyle = .fullScreen
         present(tb, animated: true, completion: nil)
     }
     

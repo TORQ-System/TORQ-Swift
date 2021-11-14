@@ -3754,7 +3754,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="sosCell" rowHeight="130" id="N5H-A4-BC6">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="sosCell" rowHeight="130" id="N5H-A4-BC6" customClass="sosRequestTableViewCell" customModule="TORQ" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="24.333333969116211" width="374" height="130"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="N5H-A4-BC6" id="jbQ-PV-cb5">
@@ -3766,6 +3766,9 @@
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="100" id="96H-Oy-fYv"/>
                                                             </constraints>
+                                                            <connections>
+                                                                <outlet property="delegate" destination="UV5-cQ-ehM" id="lLH-rH-VoR"/>
+                                                            </connections>
                                                         </mapView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="lVK-rf-sht">
                                                             <rect key="frame" x="110" y="10" width="241" height="110"/>
@@ -3950,6 +3953,12 @@
                                                         <constraint firstAttribute="bottom" secondItem="lVK-rf-sht" secondAttribute="bottom" constant="10" id="Zq6-AN-yOc"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
+                                                <connections>
+                                                    <outlet property="mapView" destination="AbO-Lc-Wqn" id="nuT-tm-t94"/>
+                                                    <outlet property="name" destination="VZb-xO-IdW" id="FAG-2N-l5h"/>
+                                                    <outlet property="occuredAt" destination="KWH-ZP-bqz" id="TAI-H0-yds"/>
+                                                    <outlet property="status" destination="pSv-FW-BQt" id="hQ6-xc-hQs"/>
+                                                </connections>
                                             </tableViewCell>
                                         </prototypes>
                                         <connections>
@@ -3970,6 +3979,9 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="SOS" image="hand.raised" catalog="system" id="CSG-wd-rfv"/>
+                    <connections>
+                        <outlet property="tableView" destination="SVk-XI-6Wi" id="zVF-y4-eE1"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6om-Rs-ws9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
