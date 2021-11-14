@@ -12,9 +12,10 @@ class requestsViewController: UIViewController {
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var assignedRequests: UILabel!
     @IBOutlet weak var namecenter: UILabel!
-    @IBOutlet weak var backgroundView: UIView!
     
+    @IBOutlet weak var circle1: UIView!
     @IBOutlet weak var noprossing: UILabel!
+    @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var segmentcontrol: UISegmentedControl!
     
     //MARK: - Variables
@@ -39,7 +40,7 @@ class requestsViewController: UIViewController {
         
         //UI setup
 //        setGradientBackground()
-       // setGradient()
+       setGradient()
         
         configureContainerView()
         configureCenter()
@@ -49,18 +50,18 @@ class requestsViewController: UIViewController {
     
     
     //MARK: - Functions
+   
     func setGradient() {
-        let gradient: CAGradientLayer = CAGradientLayer()
-        let blue =  UIColor(red: 26.0/255.0, green: 40.0/255.0, blue: 88.0/255.0, alpha: 1.0).cgColor
-        let lightblue =  UIColor(red: 49.0/255.0, green: 90.0/255.0, blue: 149.0/255.0, alpha: 1.0).cgColor
-        gradient.colors = [blue, lightblue]
-        gradient.locations = [0.0 , 1.0]
-        gradient.startPoint = CGPoint(x: 0.0, y: 1.0)
-        gradient.endPoint = CGPoint(x: 1.0, y: 1.0)
-        gradient.frame = backgroundView.layer.frame
-        backgroundView.layer.insertSublayer(gradient, at: 0)
-        backgroundView.layer.cornerRadius = 20
-    }
+          let gradient: CAGradientLayer = CAGradientLayer()
+          let blue =  UIColor(red: 26.0/255.0, green: 40.0/255.0, blue: 88.0/255.0, alpha: 1.0).cgColor
+          let lightblue =  UIColor(red: 49.0/255.0, green: 90.0/255.0, blue: 149.0/255.0, alpha: 1.0).cgColor
+          gradient.colors = [blue, lightblue]
+          gradient.locations = [0.0 , 1.0]
+          gradient.startPoint = CGPoint(x: 0.0, y: 1.0)
+          gradient.endPoint = CGPoint(x: 1.0, y: 1.0)
+          gradient.frame = backgroundView.layer.frame
+          backgroundView.layer.insertSublayer(gradient, at: 0)
+      }
     
     func configureSegmentControl(){
            segmentcontrol.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16.0)], for: UIControl.State.normal)

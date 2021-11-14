@@ -18,6 +18,7 @@ class requestReportViewController: UIViewController {
     @IBOutlet weak var prosseing0: UIButton!
     @IBOutlet weak var scroolview: UIScrollView!
     @IBOutlet weak var Gender: UILabel!
+    @IBOutlet weak var backgroundView: UIView!
     
     //MARK: - Variables
     var userMedicalReportID : String!
@@ -39,6 +40,7 @@ class requestReportViewController: UIViewController {
             
         }
         configureView()
+        configureGradient()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -66,6 +68,28 @@ class requestReportViewController: UIViewController {
         location_report.backgroundColor = .white
         location_report.layer.cornerRadius = 25
     }
+    //MARK: - Functions
+      func configureGradient() {
+          backgroundView.layer.cornerRadius = 40
+          backgroundView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+          backgroundView.layer.shouldRasterize = true
+          backgroundView.layer.rasterizationScale = UIScreen.main.scale
+          
+          let gradient: CAGradientLayer = CAGradientLayer()
+          
+          gradient.colors = [
+              UIColor(red: 0.887, green: 0.436, blue: 0.501, alpha: 1).cgColor,
+              UIColor(red: 0.75, green: 0.191, blue: 0.272, alpha: 1).cgColor
+          ]
+          
+          gradient.locations = [0, 1]
+          gradient.startPoint = CGPoint(x: 0, y: 0)
+          gradient.endPoint = CGPoint(x: 1, y: 1)
+          gradient.frame = backgroundView.layer.frame
+          
+          backgroundView.layer.insertSublayer(gradient, at: 0)
+          
+      }
     
     func contetnt(){
         //location
