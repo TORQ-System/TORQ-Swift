@@ -14,14 +14,14 @@ import SCLAlertView
 class editAccountViewController: UIViewController {
     
     //MARK: - @IBOutlets
-    @IBOutlet weak var accountView: UIView!
+    @IBOutlet weak var buttonView: UIView!
+    @IBOutlet weak var roundGradientView: UIView!
     @IBOutlet weak var gender: UISegmentedControl!
     @IBOutlet weak var fullName: UITextField!
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var birthDate: UITextField!
     @IBOutlet weak var phoneNumber: UITextField!
     @IBOutlet weak var nationalID: UITextField!
-    @IBOutlet weak var settingsCollectionView: UICollectionView!
     
     //MARK: - Variables
     var ref = Database.database().reference()
@@ -49,44 +49,28 @@ class editAccountViewController: UIViewController {
         
         fetchUserData()
         
-        configureViews()
+        configureButtonView()
         configureInputs()
         configureSegmentControl()
         configureDatePickerView()
         
     }
-    
     //MARK: - Functions
-    func configureViews(){
-        let gradient: CAGradientLayer = CAGradientLayer()
-        let red = UIColor(red: 191.0/255.0, green: 49.0/255.0, blue: 69.0/255.0, alpha: 1.0).cgColor
-        let pink = UIColor(red: 226.0/255.0, green: 111.0/255.0, blue: 128.0/255.0, alpha: 1.0).cgColor
-        
-        accountView.layer.cornerRadius = 25
-        accountView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        accountView.layer.shadowColor = UIColor.black.cgColor
-        accountView.layer.shadowOpacity = 0.4
-        accountView.layer.shadowOffset = CGSize(width: 5, height: 5)
-        accountView.layer.shadowRadius = 25
-        accountView.layer.shouldRasterize = true
-        accountView.layer.rasterizationScale = UIScreen.main.scale
-        
-//        backgroundView.layer.shadowColor = red
-//        backgroundView.layer.shadowOpacity = 0.8
-//        backgroundView.layer.shadowOffset = CGSize(width: 5, height: 15)
-//        backgroundView.layer.shadowRadius = 25
-//        backgroundView.layer.shouldRasterize = true
-//        backgroundView.layer.rasterizationScale = UIScreen.main.scale
+    func configureButtonView(){
+//        let gradient: CAGradientLayer = CAGradientLayer()
+//                let red = UIColor(red: 191.0/255.0, green: 49.0/255.0, blue: 69.0/255.0, alpha: 1.0).cgColor
+//                let pink = UIColor(red: 226.0/255.0, green: 111.0/255.0, blue: 128.0/255.0, alpha: 1.0).cgColor
 //
-//
-//        gradient.colors = [pink, red]
-//        gradient.locations = [0.0 , 1.0]
-//        gradient.startPoint = CGPoint(x: 0.0, y: 0.0)
-//        gradient.endPoint = CGPoint(x: 1.0, y: 1.0)
-//        gradient.frame = backgroundView.layer.frame
-//        backgroundView.layer.insertSublayer(gradient, at: 0)
+//                accountView.layer.cornerRadius = 25
+//                accountView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+//                accountView.layer.shadowColor = UIColor.black.cgColor
+//                accountView.layer.shadowOpacity = 0.4
+//                accountView.layer.shadowOffset = CGSize(width: 5, height: 5)
+//                accountView.layer.shadowRadius = 25
+//                accountView.layer.shouldRasterize = true
+//                accountView.layer.rasterizationScale = UIScreen.main.scale
     }
-    
+
     func configureInputs(){
         fullName.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0)
         email.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0)
@@ -312,9 +296,6 @@ class editAccountViewController: UIViewController {
             }
         })
         
-        
-        
-        
         email.setBorder(color: "valid", image: UIImage(named: "emailValid")!)
         fullName.setBorder(color: "valid", image: UIImage(named: "personValid")!)
         nationalID.setBorder(color: "default", image: UIImage(named: "idDefault")!)
@@ -360,54 +341,6 @@ extension editAccountViewController: UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true;
-    }
-}
-
-extension editAccountViewController: UICollectionViewDelegate{
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        var vc = UIViewController()
-        
-        switch indexPath.row {
-        case 0:
-            let viewVC =  storyboard.instantiateViewController(identifier: "changeEmailViewController") as! changeEmailViewController
-            viewVC.modalPresentationStyle = .fullScreen
-            vc = viewVC
-            break
-        case 1:
-            let viewVC = storyboard.instantiateViewController(identifier: "changePasswordViewController") as! changePasswordViewController
-            viewVC.modalPresentationStyle = .fullScreen
-            vc = viewVC
-            break
-        default:
-            print("error")
-        }
-        
-        self.present(vc, animated: true, completion: nil)
-    }
-}
-
-extension editAccountViewController: UICollectionViewDataSource{
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return settings.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "accountSettingsViewCell", for: indexPath) as! accountSettingCollectionViewCell
-        
-        cell.layer.cornerRadius = 20
-        cell.layer.masksToBounds = true
-        
-        cell.settingLabel.text = settings[indexPath.row]
-        switch indexPath.row {
-        case 0:
-            cell.settingImage.image = UIImage(systemName: "envelope.fill")
-        case 1:
-            cell.settingImage.image = UIImage(systemName: "lock.fill")
-        default:
-            print("unknown")
-        }
-        return cell
     }
 }
 
