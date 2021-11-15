@@ -14,5 +14,5 @@ class ECCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var phone: UILabel!
     @IBOutlet weak var relation: UILabel!
     @IBOutlet weak var deleteECButton: UIButton!
-    @IBOutlet weak var editButton: UIButton!
+    
 }

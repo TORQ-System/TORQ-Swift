@@ -2688,22 +2688,14 @@
                                                     <color key="tintColor" red="0.64312928920000001" green="0.64313310379999999" blue="0.64314311739999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <state key="normal" image="trash.fill" catalog="system"/>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hEp-b1-ugu">
-                                                    <rect key="frame" x="93" y="102" width="21" height="22"/>
-                                                    <color key="tintColor" red="0.64312928920000001" green="0.64313310379999999" blue="0.64314311739999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                    <state key="normal" image="square.and.pencil" catalog="system"/>
-                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="KuC-Wt-zZh" firstAttribute="top" secondItem="ZxN-IQ-E93" secondAttribute="bottom" constant="14" id="2DW-Iy-hOK"/>
                                                 <constraint firstAttribute="trailing" secondItem="ZxN-IQ-E93" secondAttribute="trailing" constant="8" id="7Gn-Lf-pAG"/>
-                                                <constraint firstItem="hEp-b1-ugu" firstAttribute="top" secondItem="ZxN-IQ-E93" secondAttribute="bottom" constant="20" id="8qN-Pq-TMc"/>
                                                 <constraint firstItem="QeK-Rb-Iif" firstAttribute="top" secondItem="wjw-3I-suz" secondAttribute="top" constant="17" id="BVd-Ns-ZfD"/>
                                                 <constraint firstAttribute="trailing" secondItem="QeK-Rb-Iif" secondAttribute="trailing" constant="3" id="Hpd-7b-faY"/>
                                                 <constraint firstItem="ZZi-9P-WYW" firstAttribute="leading" secondItem="KuC-Wt-zZh" secondAttribute="trailing" constant="38" id="LIA-Ou-gRn"/>
                                                 <constraint firstItem="KuC-Wt-zZh" firstAttribute="leading" secondItem="ZxN-IQ-E93" secondAttribute="leading" id="Ofb-83-0Tb"/>
-                                                <constraint firstItem="ZZi-9P-WYW" firstAttribute="leading" secondItem="hEp-b1-ugu" secondAttribute="trailing" constant="-3" id="VeX-9I-uOO"/>
-                                                <constraint firstItem="hEp-b1-ugu" firstAttribute="leading" secondItem="KuC-Wt-zZh" secondAttribute="trailing" constant="20" id="XAI-nh-GEb"/>
                                                 <constraint firstItem="QeK-Rb-Iif" firstAttribute="leading" secondItem="wjw-3I-suz" secondAttribute="leading" constant="8" id="Xe9-p0-pUC"/>
                                                 <constraint firstItem="KuC-Wt-zZh" firstAttribute="leading" secondItem="mRP-N5-dbU" secondAttribute="trailing" constant="3" id="b5o-g7-RFW"/>
                                                 <constraint firstItem="rqY-Mp-QdB" firstAttribute="centerX" secondItem="mRP-N5-dbU" secondAttribute="centerX" id="dDr-Ie-lg3"/>
@@ -2721,7 +2713,6 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
                                             <outlet property="deleteECButton" destination="ZZi-9P-WYW" id="6Ln-GO-haL"/>
-                                            <outlet property="editButton" destination="hEp-b1-ugu" id="2ZQ-W2-clK"/>
                                             <outlet property="name" destination="QeK-Rb-Iif" id="Hot-ic-6YI"/>
                                             <outlet property="phone" destination="ZxN-IQ-E93" id="SuJ-y0-7Dv"/>
                                             <outlet property="relation" destination="KuC-Wt-zZh" id="adk-je-cvm"/>
@@ -3895,11 +3886,10 @@
         <image name="person.2.fill" catalog="system" width="128" height="80"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="phone.fill" catalog="system" width="128" height="114"/>
-        <image name="plus" width="117" height="112"/>
         <image name="plus" catalog="system" width="128" height="113"/>
+        <image name="plus" width="117" height="112"/>
         <image name="pulse" width="300" height="214"/>
         <image name="rec" width="277" height="280"/>
-        <image name="square.and.pencil" catalog="system" width="128" height="115"/>
         <image name="thermometer" catalog="system" width="81" height="128"/>
         <image name="timer" catalog="system" width="128" height="121"/>
         <image name="trash" catalog="system" width="121" height="128"/>

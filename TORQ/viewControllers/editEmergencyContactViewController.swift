@@ -36,7 +36,6 @@ class editEmergencyContactViewController: UIViewController {
     
     // arrays
     var usersArray: [User] = []
-    var emergencyContactArray: [emergencyContact] = []
     
     // emergency contact varibles
     var fullName: String?
@@ -46,8 +45,11 @@ class editEmergencyContactViewController: UIViewController {
     var relationship: String?
     var newRecieverID : String?
     
-    // to hold passed receiver id
-    var passedReceiverID : String?
+    // to hold passed array and emergency contact
+//    var passedReceiverID : String?
+    var emContact: emergencyContact?
+    var emergencyContactArray: [emergencyContact] = []
+    
    // tap gesture variable
     var tap = UITapGestureRecognizer()
     
@@ -154,42 +156,18 @@ class editEmergencyContactViewController: UIViewController {
             buttonView.isUserInteractionEnabled = true
         }
     
-    // get emergency contact information from "EmergencyContact" node in DB
+    // get emergency contact information and set up text fields
     func getEmergencyContactInfo(){
-        
-        self.ref.child("EmergencyContact").observeSingleEvent(of: .value, with: { snapshot in
-            for EC in snapshot.children{
-                let obj = EC as! DataSnapshot
-                let msg = obj.childSnapshot(forPath: "msg").value as! String
-                let phoneNum = obj.childSnapshot(forPath: "phone").value as! String
-                let name = obj.childSnapshot(forPath: "name").value as! String
-                let reciever = obj.childSnapshot(forPath: "reciever").value as! String
-                let sender = obj.childSnapshot(forPath: "sender").value as! String
-                let relation = obj.childSnapshot(forPath: "relation").value as! String
-                let sent = obj.childSnapshot(forPath: "sent").value as! String
-                let contactId = 0
-                
-                let emergencyContact = emergencyContact(name: name, phone_number: phoneNum, senderID:sender, recieverID: reciever, sent: sent, contactID: contactId, msg: msg, relation: relation)
-                // append each emergency contact to array
-                self.emergencyContactArray.append(emergencyContact)
-                print("Emergency Contacts Array:\(self.emergencyContactArray)")
-                      
-                if (emergencyContact.getSenderID() == self.usrID) && (emergencyContact.getReciverID() == self.passedReceiverID) {
-                    self.ecKey = obj.key
-                    print("Emergency Contact Key: \(self.ecKey!)")
-                    self.oldFullName = emergencyContact.getName()
-                    self.oldPhoneNumber = emergencyContact.getPhoneNumber()
-                    self.oldRelationship = emergencyContact.getRelation()
-                    self.oldMsg = emergencyContact.getMsg()
+                    self.oldFullName = emContact!.getName()
+                    self.oldPhoneNumber = emContact!.getPhoneNumber()
+                    self.oldRelationship = emContact!.getRelation()
+                    self.oldMsg = emContact!.getMsg()
                     // set up text fields
                     self.emergencyContactFullName.text = self.oldFullName
                     self.emergencyContactPhoneNumber.text = self.oldPhoneNumber
                     self.relationTextField.text = self.oldRelationship
                     self.message.text = self.oldMsg
-                    
-                }
-            }
-        })
+
     }
     // getting current user name
     func getUserInfo(){
@@ -211,7 +189,6 @@ class editEmergencyContactViewController: UIViewController {
             }
         }
     }
-    
     func setUpRelationshipPickerView(){
         pickerView.delegate = self
         pickerView.dataSource = self
@@ -305,8 +282,6 @@ class editEmergencyContactViewController: UIViewController {
             }
           }
         }
-        
-        
         return errors
         
     }
