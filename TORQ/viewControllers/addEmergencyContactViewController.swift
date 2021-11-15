@@ -16,7 +16,8 @@ class addEmergencyContactViewController: UIViewController {
     @IBOutlet weak var errorRelationship: UILabel!
     @IBOutlet weak var errorMessage: UILabel!
     @IBOutlet weak var relationTextField: UITextField!
-    @IBOutlet weak var addButton: UIButton!
+    @IBOutlet weak var buttonView: UIView!
+    @IBOutlet weak var roundGradientView: UIView!
     
     //MARK: - Variables
     
@@ -36,6 +37,9 @@ class addEmergencyContactViewController: UIViewController {
     var selectedRelationship: String?
     var relationship: String?
     var recieverID : String?
+    
+    // tap gesture variable
+     var tap = UITapGestureRecognizer()
     
     // picker view variables
     var relationships = [
@@ -78,6 +82,8 @@ class addEmergencyContactViewController: UIViewController {
         getUserInfo()
         getEmergencyContactsInfo()
         configureInputs()
+        configureButtonView()
+        configureTapGesture()
     
     }
     //MARK: - Functions
@@ -105,7 +111,32 @@ class addEmergencyContactViewController: UIViewController {
         message.setBorder(color: "default", image: UIImage(named: "messageDefault")!)
         message.clearsOnBeginEditing = false
     }
-    
+    func configureButtonView(){
+            roundGradientView.layer.cornerRadius = 20
+            roundGradientView.layer.shouldRasterize = true
+            roundGradientView.layer.rasterizationScale = UIScreen.main.scale
+            
+            let gradient: CAGradientLayer = CAGradientLayer()
+            
+            gradient.cornerRadius = 20
+            gradient.colors = [
+                UIColor(red: 0.887, green: 0.436, blue: 0.501, alpha: 1).cgColor,
+                UIColor(red: 0.75, green: 0.191, blue: 0.272, alpha: 1).cgColor
+            ]
+            
+            gradient.locations = [0, 1]
+            gradient.startPoint = CGPoint(x: 0, y: 0)
+            gradient.endPoint = CGPoint(x: 1, y: 1)
+            gradient.frame = roundGradientView.bounds
+            roundGradientView.layer.insertSublayer(gradient, at: 0)
+    }
+    func configureTapGesture(){
+            tap = UITapGestureRecognizer(target: self, action: #selector(self.addClicked(_:)))
+            tap.numberOfTapsRequired = 1
+            tap.numberOfTouchesRequired = 1
+            buttonView.addGestureRecognizer(tap)
+            buttonView.isUserInteractionEnabled = true
+        }
     func setUpRelationshipPickerView(){
         pickerView.delegate = self
         pickerView.dataSource = self
@@ -160,6 +191,7 @@ class addEmergencyContactViewController: UIViewController {
              }
         }
     }
+    
     // should go to emergency contacts screen
     @IBAction func back(_ sender:Any){
         dismiss(animated: true, completion: nil)
@@ -247,10 +279,8 @@ class addEmergencyContactViewController: UIViewController {
             }
         }
     }
-    
     // Go to Emergency Contatcs View After successful addition
-    @IBAction func goToEmergencyContactsScreen(_ sender: Any) {
-        
+    @objc func addClicked(_ sender: UITapGestureRecognizer) {
         // to set up default message we need the current user full name
         getUserFullName()
         
@@ -369,8 +399,130 @@ class addEmergencyContactViewController: UIViewController {
             self.dismiss(animated: true, completion: nil)
         }
         alertView.showCustom("Success!", subTitle: "Your emergency contact has been added successfully", color: self.blueUIColor, icon: self.alertSuccessIcon!, animationStyle: SCLAnimationStyle.topToBottom)
-        
     }
+    // Go to Emergency Contatcs View After successful addition
+//    @IBAction func goToEmergencyContactsScreen(_ sender: Any) {
+//
+//        // to set up default message we need the current user full name
+//        getUserFullName()
+//
+//        let errors = validateFields()
+//        let phone_errors = validateEmergencyPhoneNumber()
+//
+//        if(errors["fullName"] != "" || errors["phone"] != "" || errors["relationship"] != "" || errors["msg"] != "" ) {
+//            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "Make sure you entered all fields correctly" , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+//        }
+//
+//        // if fields are empty
+//        guard errors["Empty"] == "" else {
+//
+//            // show error message
+//            errorFullName.text = "Full Name cannot be empty"
+//            errorFullName.alpha = 1
+//
+//            errorPhoneNumber.text = "Phone cannot be empty"
+//            errorPhoneNumber.alpha = 1
+//
+//            errorRelationship.text = "Relationship cannot be empty"
+//            errorRelationship.alpha = 1
+//
+//            // set borders
+//            emergencyContactFullName.setBorder(color: "error", image: UIImage(named: "personError")!)
+//
+//            emergencyContactPhoneNumber.setBorder(color: "error", image: UIImage(named: "phoneError")!)
+//
+//            relationTextField.setBorder(color: "error", image: UIImage(named: "relationshipError")!)
+//
+//            return
+//        }
+//
+//        // if full name has an error
+//        guard errors["fullName"] == "" else {
+//            //handle the error
+//            errorFullName.text = errors["fullName"]!
+//            emergencyContactFullName.setBorder(color: "error", image: UIImage(named: "personError")!)
+//            errorFullName.alpha = 1
+//            return
+//        }
+//        // if phone number has an error
+//        guard errors["phone"] == "" else {
+//            //handle the error
+//            errorPhoneNumber.text = errors["phone"]!
+//            emergencyContactPhoneNumber.setBorder(color: "error", image: UIImage(named: "phoneError")!)
+//            errorPhoneNumber.alpha = 1
+//            return
+//        }
+//        // chack if phone number equals current user number
+//        guard phone_errors["phoneMatch"] == "" else {
+//            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: phone_errors["phoneMatch"]! , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+//            return
+//        }
+//        // phone number is not registered in TORQ
+//        guard phone_errors["phoneDNE"] == "" else {
+//            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: phone_errors["phoneDNE"]! , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+//            return
+//        }
+//        // Phone has been added before
+//        guard phone_errors["phoneExists"] == "" else {
+//            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: phone_errors["phoneExists"]! , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+//            return
+//        }
+//
+//        // relationship error
+//        guard errors["relationship"] == "" else {
+//            //handle the error
+//            errorRelationship.text = errors["relationship"]!
+//            errorRelationship.alpha = 1
+//            relationTextField.setBorder(color: "error", image: UIImage(named: "relationshipError")!)
+//            return
+//        }
+//        guard errors["msg"] == "" else {
+//            errorMessage.text = errors["msg"]
+//            message.setBorder(color: "error", image: UIImage(named: "messageError")!)
+//            errorMessage.alpha = 1
+//            return
+//        }
+//
+//        // if msg is empty, then set up TORQ Default msg
+//        if message.text?.trimWhiteSpace() == "" || message.text?.trimWhiteSpace() == nil {
+//            message.text = "\(usrName!) had a Car Accident, you are receiving this because \(usrName!) has listed you as an emergency contact"
+//        }
+//
+//        // if no error is detected hide the error view
+//        errorFullName.alpha = 0
+//        errorPhoneNumber.alpha = 0
+//        errorRelationship.alpha = 0
+//        errorMessage.alpha = 0
+//
+//        //2- caching information
+//        fullName = emergencyContactFullName.text!.trimWhiteSpace()
+//        phoneNumber = emergencyContactPhoneNumber.text
+//        relationship = relationTextField.text
+//        emergencyMessage = message.text!.trimWhiteSpace()
+//
+//        //3- create Emergency Contact info
+//        let emergencyContact: [String: Any] = [
+//            "name": fullName!,
+//            "phone": phoneNumber!,
+//            "relation": relationship!,
+//            "msg": emergencyMessage!,
+//            "sender": usrID!,
+//            "sent": "No",
+//            "reciever": recieverID!,
+//        ]
+//
+//        //4- push info to database
+//        self.ref.child("EmergencyContact").childByAutoId().setValue(emergencyContact)
+//
+//        //5- alert of success
+//        let alertView = SCLAlertView(appearance: self.apperanceWithoutClose)
+//
+//        alertView.addButton("Got it!", backgroundColor: self.blueUIColor){
+//            self.dismiss(animated: true, completion: nil)
+//        }
+//        alertView.showCustom("Success!", subTitle: "Your emergency contact has been added successfully", color: self.blueUIColor, icon: self.alertSuccessIcon!, animationStyle: SCLAnimationStyle.topToBottom)
+        
+//    }
     
     // Editing changed functions
     @IBAction func fullNameEditingChanged(_ sender: UITextField) {

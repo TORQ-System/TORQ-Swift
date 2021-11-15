@@ -23,6 +23,8 @@ class editMedicalReportViewController: UIViewController {
     @IBOutlet weak var errorDisability: UILabel!
     @IBOutlet weak var errorAllergy: UILabel!
     @IBOutlet weak var errorPrescribedMedication: UILabel!
+    @IBOutlet weak var buttonView: UIView!
+    @IBOutlet weak var roundGradientView: UIView!
     //MARK: - Variables
     
     var ref = Database.database().reference()
@@ -33,6 +35,7 @@ class editMedicalReportViewController: UIViewController {
     var userDisability : String?
     var userAllergy : String?
     var userPrescribedMedication : String?
+    var tap = UITapGestureRecognizer()
     
     // varibles to hold previously added info
     var mrKey: String?
@@ -79,6 +82,8 @@ class editMedicalReportViewController: UIViewController {
         
         configureInputs()
         getMedicalReport()
+        configureButtonView()
+        configureTapGesture()
         
     }
     //MARK: - Functions
@@ -157,7 +162,6 @@ class editMedicalReportViewController: UIViewController {
         })
     }
     
-    
     // configure inputs function
     func configureInputs(){
         //hide error labels
@@ -175,6 +179,34 @@ class editMedicalReportViewController: UIViewController {
         // set up blood type picker view
         setUpBloodTypePickerView()
     }
+    func configureButtonView(){
+            roundGradientView.layer.cornerRadius = 20
+            roundGradientView.layer.shouldRasterize = true
+            roundGradientView.layer.rasterizationScale = UIScreen.main.scale
+            
+            let gradient: CAGradientLayer = CAGradientLayer()
+            
+            gradient.cornerRadius = 20
+            gradient.colors = [
+                UIColor(red: 0.887, green: 0.436, blue: 0.501, alpha: 1).cgColor,
+                UIColor(red: 0.75, green: 0.191, blue: 0.272, alpha: 1).cgColor
+            ]
+            
+            gradient.locations = [0, 1]
+            gradient.startPoint = CGPoint(x: 0, y: 0)
+            gradient.endPoint = CGPoint(x: 1, y: 1)
+            gradient.frame = roundGradientView.bounds
+            roundGradientView.layer.insertSublayer(gradient, at: 0)
+    }
+    
+    func configureTapGesture(){
+            tap = UITapGestureRecognizer(target: self, action: #selector(self.saveClicked(_:)))
+            tap.numberOfTapsRequired = 1
+            tap.numberOfTouchesRequired = 1
+            buttonView.addGestureRecognizer(tap)
+            buttonView.isUserInteractionEnabled = true
+    }
+    
     // picker functions
     func setUpBloodTypePickerView(){
         pickerView.delegate = self
@@ -187,6 +219,7 @@ class editMedicalReportViewController: UIViewController {
         bloodTypeTextField.inputView = pickerView
         bloodTypeTextField.inputAccessoryView = toolbar
     }
+    
     @objc func closePicker(){
         bloodTypeTextField.text = blood_types[selectedRow]
         view.endEditing(true)
@@ -197,8 +230,6 @@ class editMedicalReportViewController: UIViewController {
     }
     
     // validate form entries
-    
-    
     func validateFields() -> [String: String] {
         
         var errors = ["Empty":"","bloodtype":"", "chronicDisease":"","disability":"","allergy":"","prescribedMedication":"","notUpdated":""]
@@ -208,7 +239,7 @@ class editMedicalReportViewController: UIViewController {
 //            errors["notUpdated"] = "You have not updated any information"
 //        }
         // CASE all fields were empty
-        if (bloodTypeTextField.text == "" || bloodTypeTextField.text == "None" || bloodTypeTextField.text == nil ) && chronicDisease.text == "" && disability.text == "" && allergy.text == "" && prescribedMedication.text == "" {
+        if (bloodTypeTextField.text == "" || bloodTypeTextField.text == nil ) && chronicDisease.text == "" && disability.text == "" && allergy.text == "" && prescribedMedication.text == "" {
             errors["Empty"] = "Please fill one of the fields or return"
         }
         // CASE: user selected "Please select option "
@@ -253,8 +284,8 @@ class editMedicalReportViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    // go to medical report screen after success addition
-    @IBAction func goToMedicalReportScreen(_ sender: Any) {
+    // go to medical report screen after success update
+    @objc func saveClicked(_ sender: UITapGestureRecognizer) {
         let errors = validateFields()
         
         // if fields are not updated
@@ -325,9 +356,8 @@ class editMedicalReportViewController: UIViewController {
         
         //check emptiness of fields and set variables
         
-        
         //CASE: empty Blood Type
-        if bloodTypeTextField.text == nil || bloodTypeTextField.text == ""  {
+        if bloodTypeTextField.text == nil || bloodTypeTextField.text == "" || bloodTypeTextField.text == "None"  {
             // not mandatory then set it to empty
             userBloodType = "-"
         }
