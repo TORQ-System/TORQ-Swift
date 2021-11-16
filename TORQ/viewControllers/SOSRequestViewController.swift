@@ -113,7 +113,15 @@ class SOSRequestViewController: UIViewController {
                     let latitude = obj.childSnapshot(forPath: "latitude").value as! String
                     let assigned_center = obj.childSnapshot(forPath: "assigned_center").value as! String
                     
-                    let sos = SOSRequest(user_id: user_id, user_name: user_name, status: status, assignedCenter: assigned_center, sent: sent, longitude: longitude, latitude: latitude)
+                    let date = Date()
+                    let calendar = Calendar.current
+                    let day = calendar.component(.day, from: date)
+                    let month = calendar.component(.month, from: date)
+                    let year = calendar.component(.year, from: date)
+                    let hour = calendar.component(.hour, from: date)
+                    let minutes = calendar.component(.minute, from: date)
+                    
+                    let sos = SOSRequest(user_id: user_id, user_name: user_name, status: status, assignedCenter: assigned_center, sent: sent, longitude: longitude, latitude: latitude, timeDate: "\(month)/\(day)/\(year)   \(hour):\(minutes)")
                     
 
                     if user_id == self.userID && (status != "processed" && status != "cancelled") {
@@ -213,10 +221,17 @@ class SOSRequestViewController: UIViewController {
                 print("seconds remaining: \(self.secondsRemaining)")
                 
                 //1-  create SOS Request object
-                let sosRequest = SOSRequest(user_id: self.userID!, user_name: "user", status: "0", assignedCenter: self.nearest(), sent: "Yes", longitude: self.longitude!, latitude: self.latitude!)
+                let date = Date()
+                let calendar = Calendar.current
+                let day = calendar.component(.day, from: date)
+                let month = calendar.component(.month, from: date)
+                let year = calendar.component(.year, from: date)
+                let hour = calendar.component(.hour, from: date)
+                let minutes = calendar.component(.minute, from: date)
+                let sosRequest = SOSRequest(user_id: self.userID!, user_name: "user", status: "0", assignedCenter: self.nearest(), sent: "Yes", longitude: self.longitude!, latitude: self.latitude!, timeDate: "\(month)/\(day)/\(year)   \(hour):\(minutes)")
                 
                 //2- write the child into the node in firebase
-                self.ref.child("SOSRequests").childByAutoId().setValue(["user_id":sosRequest.getUserID(),"user_name":sosRequest.getUserName(),"status":sosRequest.getStatus(),"assigned_center":sosRequest.getAssignedCenter(),"sent":sosRequest.getSent(),"longitude":sosRequest.getLongitude(),"latitude":sosRequest.getLatitude()])
+                self.ref.child("SOSRequests").childByAutoId().setValue(["user_id":sosRequest.getUserID(),"status":sosRequest.getStatus(),"assigned_center":sosRequest.getAssignedCenter(),"sent":sosRequest.getSent(),"longitude":sosRequest.getLongitude(),"latitude":sosRequest.getLatitude()])
                 
                 self.sosLabel.text = "00:15"
                 self.seeDetails.alpha = 0
