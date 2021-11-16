@@ -34,14 +34,14 @@ class editAccountViewController: UIViewController {
     
     //MARK: - Constants
     let datePicker = UIDatePicker()
-    let redUIColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
-    let blueUIColor = UIColor( red: 49/255, green: 90/255, blue:149/255, alpha: 1.0 )
+    let redUIColor = UIColor(red: 200/255, green: 68/255, blue:86/255, alpha: 1.0)
+    let blueUIColor = UIColor(red: 49/255, green: 90/255, blue:149/255, alpha: 1.0)
     let alertErrorIcon = UIImage(named: "errorIcon")
     let alertSuccessIcon = UIImage(named: "successIcon")
     let apperanceWithoutClose = SCLAlertView.SCLAppearance( showCloseButton: false, contentViewCornerRadius: 15, buttonCornerRadius: 7)
     let apperance = SCLAlertView.SCLAppearance( contentViewCornerRadius: 15, buttonCornerRadius: 7, hideWhenBackgroundViewIsTapped: true)
-    let settings = ["Change Email","Change Password"]
     let formatter = DateFormatter()
+    let validColor = UIColor(red: 73/255, green: 171/255, blue:223/255, alpha: 1.0)
     
     //MARK: - Overriden Functions
     override func viewDidLoad() {
@@ -56,7 +56,6 @@ class editAccountViewController: UIViewController {
         configureTapGesture()
         configureButtonView()
         configureInputs()
-        configureErrors()
         configureSegmentControl()
         configureDatePickerView()
         
@@ -91,32 +90,25 @@ class editAccountViewController: UIViewController {
     }
     
     func configureInputs(){
-        fullName.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0)
-        email.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0)
-        phoneNumber.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0)
-        birthDate.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0)
-        
         fullName.setBorder(color: "valid", image: UIImage(named: "personValid")!)
         email.setBorder(color: "valid", image: UIImage(named: "emailValid")!)
         nationalID.setBorder(color: "default", image: UIImage(named: "idDefault")!)
         phoneNumber.setBorder(color: "valid", image: UIImage(named: "phoneValid")!)
         birthDate.setBorder(color: "valid", image: UIImage(named: "calendarValid")!)
         
-        fullName.clearsOnBeginEditing = false
-        email.clearsOnBeginEditing = false
-        phoneNumber.clearsOnBeginEditing = false
-        nationalID.isUserInteractionEnabled = false
+        fullName.textColor = validColor
+        email.textColor = validColor
+        phoneNumber.textColor = validColor
+        birthDate.textColor = validColor
         
-    }
-    
-    func configureErrors(){
         fullNameError.alpha = 0
         emailError.alpha = 0
         phoneNumberError.alpha = 0
         birthdateError.alpha = 0
-        
+
+        nationalID.isUserInteractionEnabled = false
     }
-    
+
     func configureSegmentControl(){
         gender.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16.0)], for: UIControl.State.normal)
     }
@@ -126,16 +118,14 @@ class editAccountViewController: UIViewController {
         toolbar.sizeToFit()
         
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(chooseDate))
-        doneButton.tintColor = blueUIColor
+        doneButton.tintColor = validColor
         toolbar.setItems([doneButton], animated: true)
-        
         
         birthDate.inputView = datePicker
         birthDate.inputAccessoryView = toolbar
         
         datePicker.preferredDatePickerStyle = .wheels
         datePicker.datePickerMode = .date
-        
         datePicker.maximumDate = Date("12-31-2012")
         datePicker.minimumDate = Date("01-01-1930")
         
@@ -231,8 +221,6 @@ class editAccountViewController: UIViewController {
         })
         
         configureInputs()
-        configureErrors()
-        
     }
     
     func fetchUserData(){
@@ -325,12 +313,12 @@ class editAccountViewController: UIViewController {
         let errors = validateFields()
         
         guard errors["fullName"] == "" else{
-            fullName.changeBorder(type: "error", image: UIImage(named: "personError")!)
+            fullName.setBorder(color: "error", image: UIImage(named: "personError")!)
             fullNameError.text = errors["fullName"]!
             fullNameError.alpha = 1
             return
         }
-        fullName.changeBorder(type: "valid", image: UIImage(named: "personValid")!)
+        fullName.setBorder(color: "valid", image: UIImage(named: "personValid")!)
         fullNameError.alpha = 0
     }
     
@@ -338,25 +326,26 @@ class editAccountViewController: UIViewController {
         let errors = validateFields()
         
         guard errors["phoneNumber"] == "" else{
-            phoneNumber.changeBorder(type: "error", image: UIImage(named: "phoneError")!)
+            phoneNumber.setBorder(color: "error", image: UIImage(named: "phoneError")!)
             phoneNumberError.text = errors["phoneNumber"]!
             phoneNumberError.alpha = 1
             return
         }
-        phoneNumber.changeBorder(type: "valid", image: UIImage(named: "phoneValid")!)
+        phoneNumber.setBorder(color: "valid", image: UIImage(named: "phoneValid")!)
         phoneNumberError.alpha = 0
+
     }
     
     @IBAction func emailEditingChanged(_ sender: Any) {
         let errors = validateFields()
         
         guard errors["email"] == "" else{
-            email.changeBorder(type: "error", image: UIImage(named: "emailError")!)
+            email.setBorder(color: "error", image: UIImage(named: "emailError")!)
             emailError.text = errors["email"]!
             emailError.alpha = 1
             return
         }
-        email.changeBorder(type: "valid", image: UIImage(named: "emailValid")!)
+        email.setBorder(color: "valid", image: UIImage(named: "emailValid")!)
         emailError.alpha = 0
     }
 }
