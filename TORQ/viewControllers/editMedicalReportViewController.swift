@@ -239,7 +239,7 @@ class editMedicalReportViewController: UIViewController {
 //            errors["notUpdated"] = "You have not updated any information"
 //        }
         // CASE all fields were empty
-        if (bloodTypeTextField.text == "" || bloodTypeTextField.text == nil ) && chronicDisease.text == "" && disability.text == "" && allergy.text == "" && prescribedMedication.text == "" {
+        if (bloodTypeTextField.text == "" || bloodTypeTextField.text == nil || bloodTypeTextField.text == "None" ) && chronicDisease.text == "" && disability.text == "" && allergy.text == "" && prescribedMedication.text == "" {
             errors["Empty"] = "Please fill one of the fields or return"
         }
         // CASE: user selected "Please select option "
@@ -307,7 +307,7 @@ class editMedicalReportViewController: UIViewController {
             return
         }
         guard errors["Empty"] == "" else {
-            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "Please make sure you entered all fields correctly", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: errors["Empty"]!, color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
             return
         }
         // if Chronic Disease has an error
