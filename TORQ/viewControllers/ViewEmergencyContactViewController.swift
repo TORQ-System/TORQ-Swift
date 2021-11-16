@@ -98,6 +98,15 @@ class ViewEmergencyContactViewController: UIViewController {
         }
         alertView.showCustom("Are you sure?", subTitle: "We will delete your your emergency contact.", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Cancel", animationStyle: SCLAnimationStyle.topToBottom)
     }
+    // go to edit page
+    @objc func goToLocation (sender:CustomTapGestureRecognizer) {
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(identifier: "editEmergencyContactViewController") as! editEmergencyContactViewController
+        vc.emContact = sender.EC
+        vc.emergencyContactArray = sender.emergencyContacts
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
+    }
 
 }
 
@@ -111,15 +120,6 @@ extension ViewEmergencyContactViewController: UICollectionViewDelegate{
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
         }
-         if (indexPath.row < eContacts.count){
-             // go to edit screen
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let vc = storyboard.instantiateViewController(withIdentifier: "editEmergencyContactViewController") as! editEmergencyContactViewController
-                    vc.emergencyContactArray = eContacts
-                    vc.emContact = eContacts[indexPath.row]
-                    vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: true, completion: nil)
-         }
     }
     
 }
@@ -156,7 +156,13 @@ extension ViewEmergencyContactViewController: UICollectionViewDataSource{
             cell.relation.text = "\(eContacts[indexPath.row].getRelation())"
             cell.deleteECButton.tag = indexPath.row
             cell.deleteECButton.addTarget(self, action: #selector(deletefunc), for: .touchUpInside)
-            cell.contentView.isUserInteractionEnabled = false
+            
+            // if user taps on cell
+            let tap = CustomTapGestureRecognizer(target: self, action: #selector(goToLocation(sender:)))
+            tap.emergencyContacts = eContacts
+            tap.EC = eContacts[indexPath.row]
+            cell.addGestureRecognizer(tap)
+            
             return cell
         }
         let add = collectionView.dequeueReusableCell(withReuseIdentifier: "add", for: indexPath as IndexPath)
@@ -172,7 +178,12 @@ extension ViewEmergencyContactViewController: UICollectionViewDelegateFlowLayout
         return CGSize(width: 160, height: 160)
     }
 }
-
+// create a custom class for UITapGestureRecognizer
+    class CustomTapGestureRecognizer: UITapGestureRecognizer {
+        var emergencyContacts: [emergencyContact] = []
+        var EC: emergencyContact?
+    }
+ 
 
 
 

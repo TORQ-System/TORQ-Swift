@@ -157,6 +157,18 @@ class editEmergencyContactViewController: UIViewController {
     
     // get emergency contact information and set up text fields
     func getEmergencyContactInfo(){
+        
+        self.ref.child("EmergencyContact").observeSingleEvent(of: .value, with: { snapshot in
+                    for EC in snapshot.children{
+                        let obj = EC as! DataSnapshot
+                        let sender = obj.childSnapshot(forPath: "sender").value as! String
+                        let phone = obj.childSnapshot(forPath: "phone").value as! String
+                        if sender == self.usrID && phone == self.emContact!.getPhoneNumber(){
+                            // need the key in order to update the information later
+                            self.ecKey = obj.key
+                        }
+                    }
+        })
                     self.oldFullName = emContact!.getName()
                     self.oldPhoneNumber = emContact!.getPhoneNumber()
                     self.oldRelationship = emContact!.getRelation()
