@@ -15,7 +15,13 @@ class sosRequestTableViewCell: UITableViewCell {
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var status: UILabel!
     @IBOutlet weak var occuredAt: UILabel!
-    
+    @IBOutlet weak var distanceView: UIView!
+    @IBOutlet weak var distanceLabel: UILabel!
+    @IBOutlet weak var genderView: UIView!
+    @IBOutlet weak var genderLabel: UILabel!
+    @IBOutlet weak var ageView: UIView!
+    @IBOutlet weak var ageLabel: UILabel!
+    @IBOutlet weak var viewDetailsButton: UIButton!
     
 
     override func awakeFromNib() {

@@ -27,6 +27,7 @@ class ViewSOSRequestsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCenter()
+        fetchSOSRequests()
     }
     
     //MARK: - Functions
@@ -42,11 +43,10 @@ class ViewSOSRequestsViewController: UIViewController {
                 let sent = obj.childSnapshot(forPath: "sent").value as! String
                 let status = obj.childSnapshot(forPath: "status").value as! String
                 let time_date = obj.childSnapshot(forPath: "time_date").value as! String
-                let time_stamp = obj.childSnapshot(forPath: "time_stamp").value as! String
                 let user_id = obj.childSnapshot(forPath: "user_id").value as! String
                 
                 if assigned_center == self.center {
-                    self.sosRequests.append(SOSRequest(user_id: user_id, user_name: "User", status: status, assignedCenter: assigned_center, sent: sent, longitude: longitude, latitude: latitude))
+                    self.sosRequests.append(SOSRequest(user_id: user_id, user_name: "User", status: status, assignedCenter: assigned_center, sent: sent, longitude: longitude, latitude: latitude,timeDate: time_date))
                     self.tableView.reloadData()
                 }
             }
