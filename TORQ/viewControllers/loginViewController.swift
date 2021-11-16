@@ -132,17 +132,17 @@ class loginViewController: UIViewController {
     //MARK: - @IBActions
     @IBAction func emailEditingChanged(_ sender: UITextField) {
         if sender.text == nil ||  sender.text == ""{
-            sender.setBorder(color: "error", image: UIImage(named: "emailError")!)
+            sender.changeBorder(type: "error", image: UIImage(named: "emailError")!)
         } else{
-            sender.setBorder(color: "valid", image:  UIImage(named: "emailValid")!)
+            sender.changeBorder(type: "valid", image:  UIImage(named: "emailValid")!)
         }
     }
     
     @IBAction func passwordEditingChanged(_ sender: UITextField) {
         if sender.text == nil || sender.text == "" {
-            sender.setBorder(color: "error", image: UIImage(named: "lockError")!)
+            sender.changeBorder(type: "error", image: UIImage(named: "lockError")!)
         } else{
-            sender.setBorder(color: "valid", image:  UIImage(named: "lockValid")!)
+            sender.changeBorder(type: "valid", image:  UIImage(named: "lockValid")!)
         }
     }
     

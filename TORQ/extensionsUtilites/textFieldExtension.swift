@@ -17,6 +17,7 @@ extension UITextField{
         
         let border = CALayer()
         let borderWidth = CGFloat(2.0)
+        
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 28, height: 20))
         let attributedText = NSMutableAttributedString(attributedString: self.attributedText!)
         
@@ -46,5 +47,39 @@ extension UITextField{
         self.leftViewMode = .always
         self.attributedText = attributedText
         
+    }
+    
+    func changeBorder(type: String, image: UIImage){
+        let red = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
+        let blue = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 )
+        let gray = UIColor( red: 163/255, green: 161/255, blue:161/255, alpha: 1.0 )
+        let border = CALayer()
+        let borderWidth = CGFloat(2.0)
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 28, height: 20))
+        
+        imageView.image = image
+        border.frame = CGRect(origin: CGPoint(x: 0,y :self.frame.size.height - borderWidth), size: CGSize(width: self.frame.size.width, height: self.frame.size.height))
+        border.borderWidth = borderWidth
+
+        if(type == "error"){
+            border.borderColor = red.cgColor
+            self.textColor = red
+        }
+        
+        if(type == "default"){
+            border.borderColor = gray.cgColor
+            self.textColor = gray
+        }
+        
+        if(type == "valid"){
+            border.borderColor = blue.cgColor
+            self.textColor = blue
+        }
+        
+        self.leftView = imageView
+        self.leftViewMode = .always
+        self.layer.addSublayer(border)
+        self.layer.masksToBounds = true
+
     }
 }
