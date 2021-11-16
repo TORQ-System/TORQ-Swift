@@ -312,12 +312,12 @@ class signUpSecondViewController: UIViewController {
         
         // change national ID border if national ID is not valid, and set error msg
         if  errors["nationalID"] != "" {
-            nationalID.setBorder(color: "error", image: UIImage(named: "idError")!)
+            nationalID.changeBorder(type: "error", image: UIImage(named: "idError")!)
             errorNationalID.text = errors["nationalID"]!
             errorNationalID.alpha = 1
         }
         else {
-            nationalID.setBorder(color: "valid", image: UIImage(named: "idValid")!)
+            nationalID.changeBorder(type: "valid", image: UIImage(named: "idValid")!)
             errorNationalID.alpha = 0
         }
     }
@@ -344,12 +344,12 @@ class signUpSecondViewController: UIViewController {
         
         // change phone border if phone is not valid, and set error msg
         if  errors["phone"] != "" {
-            phone.setBorder(color: "error", image: UIImage(named: "phoneError")!)
+            phone.changeBorder(type: "error", image: UIImage(named: "phoneError")!)
             errorPhone.text = errors["phone"]!
             errorPhone.alpha = 1
         }
         else {
-            phone.setBorder(color: "valid", image: UIImage(named: "phoneValid")!)
+            phone.changeBorder(type: "valid", image: UIImage(named: "phoneValid")!)
             errorPhone.alpha = 0
         }
     }
@@ -372,7 +372,7 @@ class signUpSecondViewController: UIViewController {
         percentageLabel.text = "\(calculatePercentage())%"
         
         if  errors["date"] == "" {
-            date.setBorder(color: "valid", image: UIImage(named: "calendarValid")!)
+            date.changeBorder(type: "valid", image: UIImage(named: "calendarValid")!)
             errorDOB.alpha = 0
         }
         

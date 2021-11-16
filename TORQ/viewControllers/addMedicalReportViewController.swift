@@ -339,12 +339,12 @@ class addMedicalReportViewController: UIViewController {
     @IBAction func bloodTypeDidEnd(_ sender: UITextField) {
         let errors = validateFields()
         if  errors["bloodtype"] != "" {
-            bloodTypeTextField.setBorder(color: "error", image: UIImage(named: "bloodError")!)
+            bloodTypeTextField.changeBorder(type: "error", image: UIImage(named: "bloodError")!)
             errorBloodType.text = errors["bloodtype"]!
             errorBloodType.alpha = 1
         }
         else {
-            bloodTypeTextField.setBorder(color: "valid", image: UIImage(named: "bloodValid")!)
+            bloodTypeTextField.changeBorder(type: "valid", image: UIImage(named: "bloodValid")!)
             errorBloodType.alpha = 0
         }
     }
@@ -353,16 +353,16 @@ class addMedicalReportViewController: UIViewController {
         let errors = validateFields()
         // change chronic Disease border if chronic Disease is invalid, and set error msg
         if  errors["chronicDisease"] != "" {
-            chronicDisease.setBorder(color: "error", image: UIImage(named: "bandageError")!)
+            chronicDisease.changeBorder(type: "error", image: UIImage(named: "bandageError")!)
             errorChronicDisease.text = errors["chronicDisease"]!
             errorChronicDisease.alpha = 1
         }
         else if chronicDisease.text == nil || chronicDisease.text == ""{
-            chronicDisease.setBorder(color: "default", image: UIImage(named: "bandageDefault")!)
+            chronicDisease.changeBorder(type: "default", image: UIImage(named: "bandageDefault")!)
             errorChronicDisease.alpha = 0
         }
         else {
-            chronicDisease.setBorder(color: "valid", image: UIImage(named: "bandageValid")!)
+            chronicDisease.changeBorder(type: "valid", image: UIImage(named: "bandageValid")!)
             errorChronicDisease.alpha = 0
         }
         
@@ -371,16 +371,16 @@ class addMedicalReportViewController: UIViewController {
         let errors = validateFields()
         // change disability border if disability is invalid, and set error msg
         if  errors["disability"] != "" {
-            disability.setBorder(color: "error", image: UIImage(named: "disabilityError")!)
+            disability.changeBorder(type: "error", image: UIImage(named: "disabilityError")!)
             errorDisability.text = errors["disability"]!
             errorDisability.alpha = 1
         }
         else if disability.text == nil || disability.text == "" {
-            disability.setBorder(color: "default", image: UIImage(named: "disabilityDefault")!)
+            disability.changeBorder(type: "default", image: UIImage(named: "disabilityDefault")!)
             errorDisability.alpha = 0
         }
         else {
-            disability.setBorder(color: "valid", image: UIImage(named: "disabilityValid")!)
+            disability.changeBorder(type: "valid", image: UIImage(named: "disabilityValid")!)
             errorDisability.alpha = 0
         }
         
@@ -389,15 +389,15 @@ class addMedicalReportViewController: UIViewController {
         let errors = validateFields()
         // change allergy border if allergy is invalid, and set error msg
         if  errors["allergy"] != "" {
-            allergy.setBorder(color: "error", image: UIImage(named: "heartError")!)
+            allergy.changeBorder(type: "error", image: UIImage(named: "heartError")!)
             errorAllergy.text = errors["allergy"]!
             errorAllergy.alpha = 1
         } else if allergy.text == nil || allergy.text == "" {
-            allergy.setBorder(color: "default", image: UIImage(named: "heartDefault")!)
+            allergy.changeBorder(type: "default", image: UIImage(named: "heartDefault")!)
             errorAllergy.alpha = 0
         }
         else {
-            allergy.setBorder(color: "valid", image: UIImage(named: "heartValid")!)
+            allergy.changeBorder(type: "valid", image: UIImage(named: "heartValid")!)
             errorAllergy.alpha = 0
         }
     }
@@ -406,15 +406,15 @@ class addMedicalReportViewController: UIViewController {
         let errors = validateFields()
         // change prescribed Medication border if prescribed Medication invalid, and set error msg
         if  errors["prescribedMedication"] != "" {
-            prescribedMedication.setBorder(color: "error", image: UIImage(named: "pillError")!)
+            prescribedMedication.changeBorder(type: "error", image: UIImage(named: "pillError")!)
             errorPrescribedMedication.text = errors["prescribedMedication"]!
             errorPrescribedMedication.alpha = 1
         } else if prescribedMedication.text == nil || prescribedMedication.text == "" {
-            prescribedMedication.setBorder(color: "default", image: UIImage(named: "pillDefault")!)
+            prescribedMedication.changeBorder(type: "default", image: UIImage(named: "pillDefault")!)
             errorPrescribedMedication.alpha = 0
         }
         else {
-            prescribedMedication.setBorder(color: "valid", image: UIImage(named: "pillValid")!)
+            prescribedMedication.changeBorder(type: "valid", image: UIImage(named: "pillValid")!)
             errorPrescribedMedication.alpha = 0
         }
         

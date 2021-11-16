@@ -428,13 +428,13 @@ class editEmergencyContactViewController: UIViewController {
         // change full Name border if  name invalid, and set error msg
         if  errors["fullName"] != "" {
             // full Name invalid
-            emergencyContactFullName.setBorder(color: "error", image: UIImage(named: "personError")!)
+            emergencyContactFullName.changeBorder(type: "error", image: UIImage(named: "personError")!)
             errorFullName.text = errors["fullName"]!
             errorFullName.alpha = 1
         }
         else {
             // full Name valid
-            emergencyContactFullName.setBorder(color: "valid", image: UIImage(named: "personValid")!)
+            emergencyContactFullName.changeBorder(type: "valid", image: UIImage(named: "personValid")!)
             errorFullName.alpha = 0
         }
     }
@@ -444,12 +444,12 @@ class editEmergencyContactViewController: UIViewController {
         
         // change phone border if phone is not valid, and set error msg
         if  errors["phone"] != "" {
-            emergencyContactPhoneNumber.setBorder(color: "error", image: UIImage(named: "phoneError")!)
+            emergencyContactPhoneNumber.changeBorder(type: "error", image: UIImage(named: "phoneError")!)
             errorPhoneNumber.text = errors["phone"]!
             errorPhoneNumber.alpha = 1
         }
         else {
-            emergencyContactPhoneNumber.setBorder(color: "valid", image: UIImage(named: "phoneValid")!)
+            emergencyContactPhoneNumber.changeBorder(type: "valid", image: UIImage(named: "phoneValid")!)
             errorPhoneNumber.alpha = 0
         }
     }
@@ -457,12 +457,12 @@ class editEmergencyContactViewController: UIViewController {
     @IBAction func relationshipEditingDidEnd(_ sender: UITextField) {
         let errors = validateFields()
         if  errors["relationship"] != "" {
-            relationTextField.setBorder(color: "error", image: UIImage(named: "relationshipError")!)
+            relationTextField.changeBorder(type: "error", image: UIImage(named: "relationshipError")!)
             errorRelationship.text = errors["relationship"]!
             errorRelationship.alpha = 1
         }
         else {
-            relationTextField.setBorder(color: "valid", image: UIImage(named: "relationshipValid")!)
+            relationTextField.changeBorder(type: "valid", image: UIImage(named: "relationshipValid")!)
             errorRelationship.alpha = 0
         }
     }
@@ -470,12 +470,12 @@ class editEmergencyContactViewController: UIViewController {
     @IBAction func msgEditingChanged(_ sender: UITextField) {
         let errors = validateFields()
         if  errors["msg"] != "" {
-            message.setBorder(color: "error", image: UIImage(named: "messageError")!)
+            message.changeBorder(type: "error", image: UIImage(named: "messageError")!)
             errorMessage.text = errors["msg"]!
             errorMessage.alpha = 1
         }
         else {
-            message.setBorder(color: "valid", image: UIImage(named: "messageValid")!)
+            message.changeBorder(type: "valid", image: UIImage(named: "messageValid")!)
             errorMessage.alpha = 0
         }
     }
