@@ -163,24 +163,24 @@ class changePasswordViewController: UIViewController{
         let errors = validateFields()
         
         guard errors["current"] == "" else{
-            currentPassword.setBorder(color: "error", image: UIImage(named: "lockError")!)
+            currentPassword.changeBorder(type: "error", image: UIImage(named: "lockError")!)
             return
         }
         
-        currentPassword.setBorder(color: "valid", image: UIImage(named: "lockValid")!)
+        currentPassword.changeBorder(type: "valid", image: UIImage(named: "lockValid")!)
     }
     
     @IBAction func newPasswordEditingChanged(_ sender: Any) {
         let errors = validateFields()
         
         guard errors["new"] == "" else{
-            newPassword.setBorder(color: "error", image: UIImage(named: "lockError")!)
+            newPassword.changeBorder(type: "error", image: UIImage(named: "lockError")!)
             newPasswordError.text = errors["new"]!
             newPasswordError.alpha = 1
             return
         }
         
-        newPassword.setBorder(color: "valid", image: UIImage(named: "lockValid")!)
+        newPassword.changeBorder(type: "valid", image: UIImage(named: "lockValid")!)
         newPasswordError.alpha = 0
     }
     
@@ -188,13 +188,13 @@ class changePasswordViewController: UIViewController{
         let errors = validateFields()
         
         guard errors["confirm"] == "" else{
-            confirmPassword.setBorder(color: "error", image: UIImage(named: "lockError")!)
+            confirmPassword.changeBorder(type: "error", image: UIImage(named: "lockError")!)
             confirmPasswordError.text = errors["confirm"]!
             confirmPasswordError.alpha = 1
             return
         }
         
-        confirmPassword.setBorder(color: "valid", image: UIImage(named: "lockValid")!)
+        confirmPassword.changeBorder(type: "valid", image: UIImage(named: "lockValid")!)
         confirmPasswordError.alpha = 0
         
     }

@@ -230,16 +230,6 @@ class editAccountViewController: UIViewController {
             }
         })
         
-//        fullNameError.alpha = 0
-//        emailError.alpha = 0
-//        phoneNumberError.alpha = 0
-//        birthdateError.alpha = 0
-//
-//        email.setBorder(color: "valid", image: UIImage(named: "emailValid")!)
-//        fullName.setBorder(color: "valid", image: UIImage(named: "personValid")!)
-//        nationalID.setBorder(color: "default", image: UIImage(named: "idDefault")!)
-//        phoneNumber.setBorder(color: "valid", image: UIImage(named: "phoneValid")!)
-//        birthDate.setBorder(color: "valid", image: UIImage(named: "calendarValid")!)
         configureInputs()
         configureErrors()
         
@@ -335,12 +325,12 @@ class editAccountViewController: UIViewController {
         let errors = validateFields()
         
         guard errors["fullName"] == "" else{
-            fullName.setBorder(color: "error", image: UIImage(named: "personError")!)
+            fullName.changeBorder(type: "error", image: UIImage(named: "personError")!)
             fullNameError.text = errors["fullName"]!
             fullNameError.alpha = 1
             return
         }
-        fullName.setBorder(color: "valid", image: UIImage(named: "personValid")!)
+        fullName.changeBorder(type: "valid", image: UIImage(named: "personValid")!)
         fullNameError.alpha = 0
     }
     
@@ -348,12 +338,12 @@ class editAccountViewController: UIViewController {
         let errors = validateFields()
         
         guard errors["phoneNumber"] == "" else{
-            phoneNumber.setBorder(color: "error", image: UIImage(named: "phoneError")!)
+            phoneNumber.changeBorder(type: "error", image: UIImage(named: "phoneError")!)
             phoneNumberError.text = errors["phoneNumber"]!
             phoneNumberError.alpha = 1
             return
         }
-        phoneNumber.setBorder(color: "valid", image: UIImage(named: "phoneValid")!)
+        phoneNumber.changeBorder(type: "valid", image: UIImage(named: "phoneValid")!)
         phoneNumberError.alpha = 0
     }
     
@@ -361,12 +351,12 @@ class editAccountViewController: UIViewController {
         let errors = validateFields()
         
         guard errors["email"] == "" else{
-            email.setBorder(color: "error", image: UIImage(named: "emailError")!)
+            email.changeBorder(type: "error", image: UIImage(named: "emailError")!)
             emailError.text = errors["email"]!
             emailError.alpha = 1
             return
         }
-        email.setBorder(color: "valid", image: UIImage(named: "emailValid")!)
+        email.changeBorder(type: "valid", image: UIImage(named: "emailValid")!)
         emailError.alpha = 0
     }
 }
