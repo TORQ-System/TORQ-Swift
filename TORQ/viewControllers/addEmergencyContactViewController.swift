@@ -141,7 +141,7 @@ class addEmergencyContactViewController: UIViewController {
         pickerView.dataSource = self
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
-        let btnDone = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(closePicker))
+        let btnDone = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(closePicker))
         toolbar.setItems([btnDone], animated: true)
         
         relationTextField.inputView = pickerView
