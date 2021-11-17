@@ -160,7 +160,12 @@ extension profileViewController: UITableViewDelegate{
             //settings
             //let settingsVC = storyboard.instantiateViewController(identifier: "settingsViewController") as! settingsViewController
             //vc = settingsVC
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "PrivacyPolicyViewController") as! PrivacyPolicyViewController
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true, completion: nil)
             break
+            
         case 2:
             //edit Account
             //let editVC = storyboard.instantiateViewController(identifier: "editAccountViewController") as! editAccountViewController
