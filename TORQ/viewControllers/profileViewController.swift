@@ -148,9 +148,13 @@ extension profileViewController: UITableViewDelegate{
 //        vc.presentationStyle = .fullScreen
         switch indexPath.row {
         case 0:
-            //terms and conditions
-            //let TermsVC = storyboard.instantiateViewController(identifier: "termsAndConditionsViewController") as! termsAndConditionsViewController
-            //vc = TermsVC
+           // terms and conditions
+//            let TermsVC = storyboard.instantiateViewController(identifier: "termsAndConditionsViewController") as! termsAndConditionsViewController
+//            vc = TermsVC
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "termsAndConditionsViewController") as! termsAndConditionsViewController
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true, completion: nil)
             break
         case 1:
             //settings
