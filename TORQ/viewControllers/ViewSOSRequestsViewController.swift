@@ -82,6 +82,59 @@ extension ViewSOSRequestsViewController: UITableViewDataSource{
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "sosCell") as! sosRequestTableViewCell
+        
+        
+        //1-cell view:
+        cell.layer.cornerRadius = 20
+        let cellShadowLayer = CAShapeLayer()
+        cellShadowLayer.path = UIBezierPath(roundedRect: cell.bounds, cornerRadius: cell.layer.cornerRadius).cgPath
+        cellShadowLayer.fillColor = UIColor.white.cgColor
+        cellShadowLayer.shadowColor = UIColor.black.cgColor
+        cellShadowLayer.shadowPath = cellShadowLayer.path
+        cellShadowLayer.shadowOffset = CGSize(width: 0.0, height: 1.0)
+        cellShadowLayer.shadowOpacity = 0.15
+        cellShadowLayer.shadowRadius = 3
+        cell.layer.insertSublayer(cellShadowLayer, at: 0)
+        
+        
+        //2- distance circle view:
+        let distanceShadowLayer = CAShapeLayer()
+        distanceShadowLayer.path = UIBezierPath(roundedRect: cell.distanceView.bounds, cornerRadius: cell.distanceView.layer.frame.width/2).cgPath
+        distanceShadowLayer.fillColor = UIColor.white.cgColor
+        distanceShadowLayer.shadowColor = UIColor.black.cgColor
+        distanceShadowLayer.shadowPath = distanceShadowLayer.path
+        distanceShadowLayer.shadowOffset = CGSize(width: 0.0, height: 1.0)
+        distanceShadowLayer.shadowOpacity = 0.15
+        distanceShadowLayer.shadowRadius = 3
+        cell.distanceView.layer.insertSublayer(distanceShadowLayer, at: 0)
+        
+        //3- gender circle view:
+        let genderShadowLayer = CAShapeLayer()
+        genderShadowLayer.path = UIBezierPath(roundedRect: cell.genderView.bounds, cornerRadius: cell.genderView.layer.frame.width/2).cgPath
+        genderShadowLayer.fillColor = UIColor.white.cgColor
+        genderShadowLayer.shadowColor = UIColor.black.cgColor
+        genderShadowLayer.shadowPath = genderShadowLayer.path
+        genderShadowLayer.shadowOffset = CGSize(width: 0.0, height: 1.0)
+        genderShadowLayer.shadowOpacity = 0.15
+        genderShadowLayer.shadowRadius = 3
+        cell.genderView.layer.insertSublayer(genderShadowLayer, at: 0)
+        
+        //4- age circle view:
+        let ageShadowLayer = CAShapeLayer()
+        ageShadowLayer.path = UIBezierPath(roundedRect: cell.ageView.bounds, cornerRadius: cell.ageView.layer.frame.width/2).cgPath
+        ageShadowLayer.fillColor = UIColor.white.cgColor
+        ageShadowLayer.shadowColor = UIColor.black.cgColor
+        ageShadowLayer.shadowPath = ageShadowLayer.path
+        ageShadowLayer.shadowOffset = CGSize(width: 0.0, height: 1.0)
+        ageShadowLayer.shadowOpacity = 0.15
+        ageShadowLayer.shadowRadius = 3
+        cell.ageView.layer.insertSublayer(ageShadowLayer, at: 0)
+        
+        //5- map view:
+        cell.mapView.layer.cornerRadius = 20
+        cell.mapView.layer.maskedCorners = [.layerMaxXMaxYCorner,.layerMaxXMinYCorner]
+        
+        
 
         //configuring the information of the cell
         
@@ -94,7 +147,7 @@ extension ViewSOSRequestsViewController: UITableViewDataSource{
         
         cell.distanceLabel.text = "\(Double(round(10*(distance/1000))/10)) Km"
         cell.status.text = "Active"
-        cell.occuredAt.text = sosRequests[indexPath.row].getTimeDate()
+//        cell.occuredAt.text = sosRequests[indexPath.row].getTimeDate()
         
         cell.ageLabel.text = "age"
         cell.genderLabel.text = "gender"
