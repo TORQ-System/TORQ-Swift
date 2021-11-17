@@ -130,12 +130,16 @@ class ViewSOSRequestsViewController: UIViewController {
         
         //2- active button
         activeButton.layer.cornerRadius = 10
+        activeButton.titleEdgeInsets = UIEdgeInsets(top: 5,left: 5,bottom: 5,right: 5)
         
         //3- processed button
         processedButton.layer.cornerRadius = 10
-        
+        processedButton.titleEdgeInsets = UIEdgeInsets(top: 5,left: 5,bottom: 5,right: 5)
+
         //3- cancelled button
         cancelButton.layer.cornerRadius = 10
+        cancelButton.titleEdgeInsets = UIEdgeInsets(top: 5,left: 5,bottom: 5,right: 5)
+
         
     }
     
@@ -181,7 +185,7 @@ class ViewSOSRequestsViewController: UIViewController {
 extension ViewSOSRequestsViewController: UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 150
+        return 160
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
