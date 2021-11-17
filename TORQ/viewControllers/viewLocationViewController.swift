@@ -43,3 +43,28 @@ class viewLocationViewController: UIViewController {
     
     
 }
+
+//MARK: - Map View Delegate Extension
+extension viewLocationViewController: MKMapViewDelegate{
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard !(annotation is MKUserLocation)else{
+            return nil
+        }
+        var pin = mapView.dequeueReusableAnnotationView(withIdentifier: "accidentPin")
+        if pin == nil {
+            pin = MKAnnotationView(annotation: annotation, reuseIdentifier: "accidentPin")
+            pin?.canShowCallout = true
+            pin?.image = UIImage(named: "Vector")
+        }else{
+            pin?.annotation = annotation
+        }
+
+        
+        
+        
+        return pin
+    }
+
+    
+}
