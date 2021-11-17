@@ -30,6 +30,7 @@ class viewMedicalReportViewController: UIViewController {
     var user: User?
     var ref = Database.database().reference()
     var medicalReport: MedicalReport?
+    var medicalReportKey : String?
     var front = true
     
     //MARK: - Constants
@@ -100,6 +101,7 @@ class viewMedicalReportViewController: UIViewController {
                 
                 if report.getUserID() == self.userID {
                     self.medicalReport = report
+                    self.medicalReportKey = obj.key
                     DispatchQueue.main.async {
                         self.bloodType.text = "\(report.getBloodType())"
                         self.allergies.text = "\(report.getAllergies())"
@@ -179,6 +181,9 @@ class viewMedicalReportViewController: UIViewController {
     @IBAction func editMedicalReport(_ sender: Any) {
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(identifier: "editMedicalReportViewController") as! editMedicalReportViewController
+        vc.usrID = userID
+        vc.mdReport = medicalReport
+        vc.mrKey = medicalReportKey
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
     }

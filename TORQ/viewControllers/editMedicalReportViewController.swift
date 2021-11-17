@@ -28,7 +28,8 @@ class editMedicalReportViewController: UIViewController {
     //MARK: - Variables
     
     var ref = Database.database().reference()
-    var usrID = Auth.auth().currentUser!.uid
+    var usrID : String?
+    var mdReport : MedicalReport?
     var userBloodType : String?
     var selectedBloodtype : String?
     var userChronicDisease : String?
@@ -81,86 +82,66 @@ class editMedicalReportViewController: UIViewController {
         super.viewDidLoad()
         
         configureInputs()
-        getMedicalReport()
+        setUpTextFields()
         configureButtonView()
         configureTapGesture()
         
     }
     //MARK: - Functions
     
-    // Get previously added info
-    func getMedicalReport(){
-        
-        self.ref.child("MedicalReport").observeSingleEvent(of: .value, with: { snapshot in
-            for MR in snapshot.children{
-                let obj = MR as! DataSnapshot
-                let bt = obj.childSnapshot(forPath: "blood_type").value as! String
-                let allergies = obj.childSnapshot(forPath: "allergies").value as! String
-                let cd = obj.childSnapshot(forPath: "chronic_disease").value as! String
-                let disabilities = obj.childSnapshot(forPath: "disabilities").value as! String
-                let pm = obj.childSnapshot(forPath: "prescribed_medication").value as! String
-                
-                let medicalReport = MedicalReport(userID: self.usrID, bloodType: bt, allergies: allergies,chronic_disease: cd, disabilities: disabilities, prescribed_medication: pm)
-//                print("Emergency Contact Key: \(obj.key)")
-                if (medicalReport.getUserID() == self.usrID){
-                    
-                    self.mrKey = obj.key
-                    print("Medical Report Key: \(self.mrKey!)")
-                    self.oldBloodType = medicalReport.getBloodType()
-                    self.oldChronicDisease = medicalReport.getDiseases()
-                    self.oldDisability = medicalReport.getDisabilities()
-                    self.oldAllergy = medicalReport.getAllergies()
-                    self.oldPrescribedMedication = medicalReport.getMedications()
-                    
-                    // set up text fields
-                    if self.oldBloodType == "-" {
-                        self.bloodTypeTextField.setBorder(color: "default", image: UIImage(named: "bloodDefault")!)
-                    }
-                    else {
-                        self.bloodTypeTextField.setBorder(color: "valid", image: UIImage(named: "bloodValid")!)
-                        self.bloodTypeTextField.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 )
-                        self.bloodTypeTextField.text = self.oldBloodType
-                    }
-                    // set up chronic disease
-                    if self.oldChronicDisease == "-" {
-                        self.chronicDisease.setBorder(color: "default", image: UIImage(named: "bandageDefault")!)
-                    }
-                    else {
-                        self.chronicDisease.setBorder(color: "valid", image: UIImage(named: "bandageValid")!)
-                        self.chronicDisease.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 )
-                        self.chronicDisease.text = self.oldChronicDisease
-                    }
-                    // set up disabilities
-                    if self.oldDisability == "-"{
-                        self.disability.setBorder(color: "default", image: UIImage(named: "disabilityDefault")!)
-                    }
-                    else {
-                        self.disability.setBorder(color: "valid", image: UIImage(named: "disabilityValid")!)
-                        self.disability.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 )
-                        self.disability.text = self.oldDisability
-                    }
-                    // set up allergies
-                    if self.oldAllergy == "-"{
-                        self.allergy.setBorder(color: "default", image: UIImage(named: "heartDefault")!)
-                    }
-                    else {
-                        self.allergy.setBorder(color: "valid", image: UIImage(named: "heartValid")!)
-                        self.allergy.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 )
-                        self.allergy.text = self.oldAllergy
-                    }
-                    // set up Prescribed Medication
-                    if self.oldPrescribedMedication == "-"{
-                        self.prescribedMedication.setBorder(color: "default", image: UIImage(named: "pillDefault")!)
-                    }
-                    else {
-                        self.prescribedMedication.setBorder(color: "valid", image: UIImage(named: "pillValid")!)
-                        self.prescribedMedication.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 )
-                        self.prescribedMedication.text = self.oldPrescribedMedication
-                    }
-                }
+    func setUpTextFields(){
+            
+            oldBloodType = mdReport!.getBloodType()
+            oldChronicDisease = mdReport!.getDiseases()
+            oldDisability = mdReport!.getDisabilities()
+            oldAllergy = mdReport!.getAllergies()
+            oldPrescribedMedication = mdReport!.getMedications()
+            
+            if oldBloodType == "-" {
+                bloodTypeTextField.setBorder(color: "default", image: UIImage(named: "bloodDefault")!)
             }
-        })
-    }
+            else {
+                bloodTypeTextField.setBorder(color: "valid", image: UIImage(named: "bloodValid")!)
+                bloodTypeTextField.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 )
+                bloodTypeTextField.text = oldBloodType
+            }
+            // set up chronic disease
+            if oldChronicDisease == "-" {
+                chronicDisease.setBorder(color: "default", image: UIImage(named: "bandageDefault")!)
+            }
+            else {
+                chronicDisease.setBorder(color: "valid", image: UIImage(named: "bandageValid")!)
+                chronicDisease.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 )
+                chronicDisease.text = oldChronicDisease
+            }
+            // set up disabilities
+            if oldDisability == "-"{
+                disability.setBorder(color: "default", image: UIImage(named: "disabilityDefault")!)
+            }
+            else {
+                disability.setBorder(color: "valid", image: UIImage(named: "disabilityValid")!)
+                disability.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 )
+                disability.text = oldDisability
+            }
+            // set up allergies
+            if oldAllergy == "-"{
+                allergy.setBorder(color: "default", image: UIImage(named: "heartDefault")!)
+            }
+            else {
+                allergy.setBorder(color: "valid", image: UIImage(named: "heartValid")!)
+                allergy.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 )
+                allergy.text = oldAllergy
+            }
+            // set up Prescribed Medication
+            if oldPrescribedMedication == "-"{
+                prescribedMedication.setBorder(color: "default", image: UIImage(named: "pillDefault")!)
+            }
+            else {
+                prescribedMedication.setBorder(color: "valid", image: UIImage(named: "pillValid")!)
+                prescribedMedication.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 )
+                prescribedMedication.text = oldPrescribedMedication
+            }
+        }
     
     // configure inputs function
     func configureInputs(){
@@ -235,9 +216,13 @@ class editMedicalReportViewController: UIViewController {
         var errors = ["Empty":"","bloodtype":"", "chronicDisease":"","disability":"","allergy":"","prescribedMedication":"","notUpdated":""]
         
         // CASE: user did not update any of the fields
-//        if ( oldBloodType != "" && bloodTypeTextField.text == oldBloodType) && ( oldChronicDisease != "" && chronicDisease.text == oldChronicDisease) && (oldDisability != "" && disability.text == oldDisability) && (oldAllergy != "" && allergy.text == oldAllergy) && (oldPrescribedMedication != "" && prescribedMedication.text == oldPrescribedMedication) {
-//            errors["notUpdated"] = "You have not updated any information"
-//        }
+        if (bloodTypeTextField.text == oldBloodType || (bloodTypeTextField.text == "" && oldBloodType == "-") ) &&
+            (chronicDisease.text == oldChronicDisease || ( chronicDisease.text == "" && oldChronicDisease == "-") ) &&
+            (disability.text == oldDisability || ( disability.text == "" && oldDisability == "-") ) &&
+            (allergy.text == oldAllergy || ( allergy.text == "" && oldAllergy == "-")) &&
+            (prescribedMedication.text == oldPrescribedMedication || ( prescribedMedication.text == "" && oldPrescribedMedication == "-")) {
+            errors["notUpdated"] = "You have not updated any information"
+        }
         // CASE all fields were empty
         if (bloodTypeTextField.text == "" || bloodTypeTextField.text == nil || bloodTypeTextField.text == "None" ) && chronicDisease.text == "" && disability.text == "" && allergy.text == "" && prescribedMedication.text == "" {
             errors["Empty"] = "Please fill one of the fields or return"
@@ -289,10 +274,10 @@ class editMedicalReportViewController: UIViewController {
         let errors = validateFields()
         
         // if fields are not updated
-//        guard errors["notUpdated"] == "" else {
-//            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "You have not updated any information yet!", color: self.redUIColor, icon: alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
-//            return
-//        }
+        guard errors["notUpdated"] == "" else {
+            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: errors["notUpdated"]!, color: self.redUIColor, icon: alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+            return
+        }
         
         if errors["bloodtype"] != ""  || errors["chronicDisease"] != "" || errors["chronicDisease"] != "" || errors["disability"] != "" || errors["allergy"] != "" || errors["prescribedMedication"] != "" {
             SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "Please make sure you entered all fields correctly", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
@@ -401,7 +386,7 @@ class editMedicalReportViewController: UIViewController {
         
         //3- create user medical report info
         let MedicalReport: [String: Any] = [
-            "user_id": usrID,
+            "user_id": usrID!,
             "blood_type": userBloodType!,
             "chronic_disease": userChronicDisease!,
             "disabilities": userDisability!,
