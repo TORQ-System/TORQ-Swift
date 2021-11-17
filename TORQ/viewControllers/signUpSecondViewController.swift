@@ -89,6 +89,8 @@ class signUpSecondViewController: UIViewController {
         phone.clearsOnBeginEditing = false
         // date
         setupDatePickerView()
+        // gender
+        gender.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16.0)], for: UIControl.State.normal)
         
         // conditions label
         let stringValue = "By signing up, you are accepting our Terms & Conditions, and Privacy Policy"
