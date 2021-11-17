@@ -61,26 +61,22 @@ class notificationCenterViewController: UIViewController {
         notifications.removeAll()
         all.removeAll()
         
-        let searchQueue = DispatchQueue.init(label: "searchQueue")
-        searchQueue.sync {
-            ref.child("Notification").observe(.childAdded) {snapshot in
-                let obj = snapshot.value as! [String: Any]
-                let title = obj["title"] as! String
-                let subtitle = obj["subtitle"] as! String
-                let body = obj["body"] as! String
-                let type = obj["type"] as! String
-                let date = obj["date"] as! String
-                let sender = obj["sender"] as! String
-                let receiver = obj["receiver"] as! String
-                let time = obj["time"] as! String
-                
-                let alert = notification(title: title, subtitle: subtitle, body:body, date: date, time: time, type: type, sender: sender, receiver: receiver)
-                
-                if alert.getReceiver() == userID {
-                    self.notifications.append(alert)
-                    self.all.append(alert)
-                }
-                
+        ref.child("Notification").observe(.childAdded) {snapshot in
+            let obj = snapshot.value as! [String: Any]
+            let title = obj["title"] as! String
+            let subtitle = obj["subtitle"] as! String
+            let body = obj["body"] as! String
+            let type = obj["type"] as! String
+            let date = obj["date"] as! String
+            let sender = obj["sender"] as! String
+            let receiver = obj["receiver"] as! String
+            let time = obj["time"] as! String
+            
+            let alert = notification(title: title, subtitle: subtitle, body:body, date: date, time: time, type: type, sender: sender, receiver: receiver)
+            
+            if alert.getReceiver() == userID {
+                self.notifications.append(alert)
+                self.all.append(alert)
                 self.notificationCollectionView.reloadData()
             }
         }
@@ -88,12 +84,12 @@ class notificationCenterViewController: UIViewController {
     
     func classifyNotifications(userID: String, type: String) {
         notifications.removeAll()
-        for (index, alert) in all.enumerated(){
+        for (_, alert) in all.enumerated(){
             if(alert.getType() == type){
                 notifications.append(alert)
             }
-            self.notificationCollectionView.reloadData()
         }
+        self.notificationCollectionView.reloadData()
     }
 }
 
@@ -102,7 +98,6 @@ extension notificationCenterViewController: UICollectionViewDelegate{
         guard collectionView == filterCollectionView else{
             return
         }
-        
         switch indexPath.row {
         case 0:
             getNotifications(userID: userID!)
@@ -116,7 +111,6 @@ extension notificationCenterViewController: UICollectionViewDelegate{
         default:
             getNotifications(userID: userID!)
         }
-        notificationCollectionView.reloadData()
     }
 }
 
