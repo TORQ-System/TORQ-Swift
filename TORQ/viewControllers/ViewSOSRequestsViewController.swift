@@ -83,19 +83,16 @@ extension ViewSOSRequestsViewController: UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: "sosCell") as! sosRequestTableViewCell
         
         //1- distance circle view:
-        let container = UIView(frame: CGRect(x: cell.distanceView.layer.frame.origin.x, y: cell.distanceView.layer.frame.origin.y, width: cell.distanceView.layer.frame.width, height: cell.distanceView.layer.frame.height))
-        container.center = cell.distanceView.center
-        container.frame = cell.distanceView.bounds
-        container.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        container.layer.cornerRadius = cell.distanceView.layer.frame.width/2
-        cell.distanceView.addSubview(container)
-        cell.distanceView.sendSubviewToBack(container)
-        container.backgroundColor = .white
-        container.layer.shadowOpacity = 1
+        let shadowLayer = CAShapeLayer()
+        shadowLayer.path = UIBezierPath(roundedRect: cell.distanceView.bounds, cornerRadius: cell.distanceView.layer.frame.width/2).cgPath
+        shadowLayer.fillColor = UIColor.white.cgColor
+        shadowLayer.shadowColor = UIColor.black.cgColor
+        shadowLayer.shadowPath = shadowLayer.path
+        shadowLayer.shadowOffset = CGSize(width: 0.0, height: 1.0)
+        shadowLayer.shadowOpacity = 0.2
+        shadowLayer.shadowRadius = 3
+        cell.distanceView.layer.insertSublayer(shadowLayer, at: 0)
         
-        
-        
-
 
         
         
