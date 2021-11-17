@@ -1249,6 +1249,9 @@
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="2yL-pa-lN9">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <connections>
+                                    <outlet property="delegate" destination="prp-jc-ZhY" id="1LU-We-PcZ"/>
+                                </connections>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SfR-iQ-9ri">
                                 <rect key="frame" x="20" y="44" width="25" height="29"/>
@@ -3766,7 +3769,7 @@
                                                         <constraint firstAttribute="width" constant="120" id="iSc-WU-SKG"/>
                                                     </constraints>
                                                     <connections>
-                                                        <outlet property="delegate" destination="UV5-cQ-ehM" id="2e5-jy-sB1"/>
+                                                        <outlet property="delegate" destination="UV5-cQ-ehM" id="FDB-3T-rZg"/>
                                                     </connections>
                                                 </mapView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="VRn-8t-OP0">
@@ -4041,8 +4044,8 @@
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="phone.fill" catalog="system" width="128" height="114"/>
         <image name="placeholder" width="120" height="120"/>
-        <image name="plus" width="117" height="112"/>
         <image name="plus" catalog="system" width="128" height="113"/>
+        <image name="plus" width="117" height="112"/>
         <image name="pulse" width="300" height="214"/>
         <image name="rec" width="277" height="280"/>
         <image name="star" width="150" height="150"/>

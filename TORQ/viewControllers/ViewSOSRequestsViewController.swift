@@ -12,8 +12,7 @@ import MapKit
 
 class ViewSOSRequestsViewController: UIViewController {
     
-    
-    
+
     //MARK: - @IBOutlets
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var backgroundView: UIView!
@@ -25,7 +24,6 @@ class ViewSOSRequestsViewController: UIViewController {
     var sosRequests: [SOSRequest] = []
 
 
-    
     //MARK: - Overriden Function
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +35,6 @@ class ViewSOSRequestsViewController: UIViewController {
     
     //MARK: - Functions
     private func fetchSOSRequests(){
-        
         ref.child("SOSRequests").queryOrdered(byChild: "time_date").observe(.value) { snapshot in
             self.sosRequests = []
             for request in snapshot.children{
@@ -56,8 +53,6 @@ class ViewSOSRequestsViewController: UIViewController {
                 }
             }
         }
-  
-        
     }
     
     private func configureCenter(){
@@ -85,13 +80,26 @@ class ViewSOSRequestsViewController: UIViewController {
         backgroundView.layer.insertSublayer(gradientLayer, at: 0)
     }
     
+    @objc func goToLocation (sender:CustomTapGestureRecognizer) {
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(identifier: "viewLocationViewController") as! viewLocationViewController
+        vc.latitude = sender.lat
+        vc.longitude = sender.long
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    class CustomTapGestureRecognizer: UITapGestureRecognizer {
+        var long: Double?
+        var lat: Double?
+    }
     
     //MARK: - @IBActions
     
     
 }
 
-//MARK: -
+//MARK: - UITableViewDelegate
 extension ViewSOSRequestsViewController: UITableViewDelegate{
     
 }
@@ -143,14 +151,13 @@ extension ViewSOSRequestsViewController: UITableViewDataSource{
         let pin = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(Double(sosRequests[indexPath.row].getLatitude())!), longitude: CLLocationDegrees(Double(sosRequests[indexPath.row].getLongitude())!)))
         let annotation = MKPointAnnotation()
         annotation.coordinate = pin.coordinate
-        annotation.title = "Accident"
         let coordinateRegion = MKCoordinateRegion(center: pin.coordinate, latitudinalMeters: 12000, longitudinalMeters: 12000)
         cell.mapView.setRegion(coordinateRegion, animated: true)
         cell.mapView.addAnnotation(annotation)
         let tap = CustomTapGestureRecognizer(target: self, action: #selector(goToLocation(sender:)))
-        tap.lat = lat
-        tap.long = long
-        cell.map.addGestureRecognizer(tap)
+        tap.lat = Double(sosRequests[indexPath.row].getLatitude())!
+        tap.long = Double(sosRequests[indexPath.row].getLongitude())!
+        cell.mapView.addGestureRecognizer(tap)
         
         //6- view details button:
         cell.viewDetailsButton.backgroundColor = nil
