@@ -248,13 +248,13 @@ class signUpFirstViewController: UIViewController {
         // change full Name border if  name invalid, and set error msg
         if  errors["fullName"] != "" {
             // first name invalid
-            fullName.changeBorder(type: "error", image: UIImage(named: "personError")!)
+            fullName.setBorder(color: "error", image: UIImage(named: "personError")!)
             errorFullName.text = errors["fullName"]!
             errorFullName.alpha = 1
         }
         else {
             // full Name valid
-            fullName.changeBorder(type: "valid", image: UIImage(named: "personValid")!)
+            fullName.setBorder(color: "valid", image: UIImage(named: "personValid")!)
             errorFullName.alpha = 0
         }
     }
@@ -281,13 +281,13 @@ class signUpFirstViewController: UIViewController {
         // change last name border if confirm Password is invalid, and set error msg
         if  errors["confirmPass"] != "" {
             // confirm Pass is invalid
-            confirmPassword.changeBorder(type: "error", image: UIImage(named: "lockError")!)
+            confirmPassword.setBorder(color: "error", image: UIImage(named: "lockError")!)
             errorConfirmPassword.text = errors["confirmPass"]!
             errorConfirmPassword.alpha = 1
         }
         else {
             // confirm Pass is valid
-            confirmPassword.changeBorder(type: "valid", image: UIImage(named: "lockValid")!)
+            confirmPassword.setBorder(color: "valid", image: UIImage(named: "lockValid")!)
             errorConfirmPassword.alpha = 0
         }
     }
@@ -312,12 +312,12 @@ class signUpFirstViewController: UIViewController {
         
         // change email  border if email invalid, and set error msg
         if  errors["email"] != "" {
-            email.changeBorder(type: "error", image: UIImage(named: "emailError")!)
+            email.setBorder(color: "error", image: UIImage(named: "emailError")!)
             errorEmail.text = errors["email"]!
             errorEmail.alpha = 1
         }
         else {
-            email.changeBorder(type: "valid", image: UIImage(named: "emailValid")!)
+            email.setBorder(color: "valid", image: UIImage(named: "emailValid")!)
             errorEmail.alpha = 0
         }
     }
@@ -343,12 +343,12 @@ class signUpFirstViewController: UIViewController {
 
         if password.text == nil || password.text == "" || errors["password"] != "" {
             // password is invalid
-            password.changeBorder(type: "error", image: UIImage(named: "lockError")!)
+            password.setBorder(color: "error", image: UIImage(named: "lockError")!)
             errorPassword.text = errors["password"]!
             errorPassword.alpha = 1
         } else{
             // password is valid
-            password.changeBorder(type: "valid", image: UIImage(named: "lockValid")!)
+            password.setBorder(color: "valid", image: UIImage(named: "lockValid")!)
             errorPassword.alpha = 0
         }
     }

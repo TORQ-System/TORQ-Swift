@@ -165,6 +165,9 @@ class addEmergencyContactViewController: UIViewController {
         // set up placeholder
         msgTextView.text = "Message (Optional)"
         msgTextView.textColor = UIColor(red: 0, green: 0, blue: 0.0980392, alpha: 0.22)
+        
+        //  set up padding
+        msgTextView.textContainerInset = UIEdgeInsets(top: 10,left: 25,bottom: 10,right: 5);
     }
     // getting user info from User node in DB and append it to usersArray
     func getUserInfo(){
@@ -398,13 +401,13 @@ class addEmergencyContactViewController: UIViewController {
         // change full Name border if  name invalid, and set error msg
         if  errors["fullName"] != "" {
             // full Name invalid
-            emergencyContactFullName.changeBorder(type: "error", image: UIImage(named: "personError")!)
+            emergencyContactFullName.setBorder(color: "error", image: UIImage(named: "personError")!)
             errorFullName.text = errors["fullName"]!
             errorFullName.alpha = 1
         }
         else {
             // full Name valid
-            emergencyContactFullName.changeBorder(type: "valid", image: UIImage(named: "personValid")!)
+            emergencyContactFullName.setBorder(color: "valid", image: UIImage(named: "personValid")!)
             errorFullName.alpha = 0
         }
     }
@@ -414,12 +417,12 @@ class addEmergencyContactViewController: UIViewController {
         
         // change phone border if phone is not valid, and set error msg
         if  errors["phone"] != "" {
-            emergencyContactPhoneNumber.changeBorder(type: "error", image: UIImage(named: "phoneError")!)
+            emergencyContactPhoneNumber.setBorder(color: "error", image: UIImage(named: "phoneError")!)
             errorPhoneNumber.text = errors["phone"]!
             errorPhoneNumber.alpha = 1
         }
         else {
-            emergencyContactPhoneNumber.changeBorder(type: "valid", image: UIImage(named: "phoneValid")!)
+            emergencyContactPhoneNumber.setBorder(color: "valid", image: UIImage(named: "phoneValid")!)
             errorPhoneNumber.alpha = 0
         }
     }
@@ -427,12 +430,12 @@ class addEmergencyContactViewController: UIViewController {
     @IBAction func relationshipEditingDidEnd(_ sender: UITextField) {
         let errors = validateFields()
         if  errors["relationship"] != "" {
-            relationTextField.changeBorder(type: "error", image: UIImage(named: "relationshipError")!)
+            relationTextField.setBorder(color: "error", image: UIImage(named: "relationshipError")!)
             errorRelationship.text = errors["relationship"]!
             errorRelationship.alpha = 1
         }
         else {
-            relationTextField.changeBorder(type: "valid", image: UIImage(named: "relationshipValid")!)
+            relationTextField.setBorder(color: "valid", image: UIImage(named: "relationshipValid")!)
             errorRelationship.alpha = 0
         }
     }
@@ -511,27 +514,6 @@ extension addEmergencyContactViewController: UITextViewDelegate{
             msgTextView.layer.borderColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 ).cgColor
             // hide error view
             errorMessage.alpha = 0
-        }
-    }
-}
-private var __maxLengths = [UITextField: Int]()
-
-extension UITextField {
-    @IBInspectable var maxLength: Int {
-        get {
-            guard let l = __maxLengths[self] else {
-                return 150 // (global default-limit. or just, Int.max)
-            }
-            return l
-        }
-        set {
-            __maxLengths[self] = newValue
-            addTarget(self, action: #selector(fix), for: .editingChanged)
-        }
-    }
-    @objc func fix(textField: UITextField) {
-        if let t = textField.text {
-            textField.text = String(t.prefix(maxLength))
         }
     }
 }
