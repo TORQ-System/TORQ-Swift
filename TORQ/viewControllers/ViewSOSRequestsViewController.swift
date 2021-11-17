@@ -103,20 +103,6 @@ extension ViewSOSRequestsViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "sosCell") as! sosRequestTableViewCell
         
-        
-        //1-cell view:
-        cell.layer.cornerRadius = 20
-        let cellShadowLayer = CAShapeLayer()
-        cellShadowLayer.path = UIBezierPath(roundedRect: cell.bounds, cornerRadius: 20).cgPath
-        cellShadowLayer.fillColor = UIColor.white.cgColor
-        cellShadowLayer.shadowColor = UIColor.black.cgColor
-        cellShadowLayer.shadowPath = cellShadowLayer.path
-        cellShadowLayer.shadowOffset = CGSize(width: 0.0, height: 1.0)
-        cellShadowLayer.shadowOpacity = 0.15
-        cellShadowLayer.shadowRadius = 3
-        cell.layer.insertSublayer(cellShadowLayer, at: 0)
-        
-        
         //2- distance circle view:
         let distanceShadowLayer = CAShapeLayer()
         distanceShadowLayer.path = UIBezierPath(roundedRect: cell.distanceView.bounds, cornerRadius: cell.distanceView.layer.frame.width/2).cgPath

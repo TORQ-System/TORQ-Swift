@@ -37,7 +37,15 @@ class sosRequestTableViewCell: UITableViewCell {
     }
     
     override func layoutSubviews() {
-
+        
+        self.layer.cornerRadius = 20
+        self.contentView.layer.cornerRadius = 20
+        let shadowPath = UIBezierPath(roundedRect: contentView.bounds, cornerRadius: 20)
+        self.layer.masksToBounds = false
+        self.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
+        self.layer.shadowOffset = CGSize(width: 4, height: 9)
+        self.layer.shadowOpacity = 0.5
+        self.layer.shadowPath = shadowPath.cgPath
     }
     
     
