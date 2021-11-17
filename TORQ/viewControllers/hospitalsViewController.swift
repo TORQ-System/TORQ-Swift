@@ -126,7 +126,7 @@ class hospitalsViewController: UIViewController ,UITableViewDelegate ,UITableVie
                     if (dec["request_id"] as? String == self.RequestID && dec["status"]as! String == "0"){
                         let snapshotKey = snapshot.key
                         self.ref.child("Request").child(snapshotKey).updateChildValues(["status": "1"])
-                        self.ref.child("processingRequest").childByAutoId().setValue(["healthcare":self.selhealth,"Rquest_id":dec["request_id"] as! String])
+                        self.ref.child("ProcessingRequest").child(self.selhealth).childByAutoId().setValue(["Rquest_id":dec["request_id"] as! String? ,"User_id": self.userMedicalReportID])
                         
                         let alertView = SCLAlertView(appearance: self.apperanceWithoutClose)
                         

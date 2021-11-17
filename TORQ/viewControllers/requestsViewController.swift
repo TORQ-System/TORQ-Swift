@@ -5,7 +5,7 @@ import FirebaseAuth
 import CoreLocation
 
 import MapKit
-class requestsViewController: UIViewController ,MKMapViewDelegate{
+class requestsViewController: UIViewController {
     
     //MARK: - @IBOutlets
     @IBOutlet weak var requestsColletionView: UICollectionView!
@@ -398,7 +398,6 @@ extension requestsViewController: UICollectionViewDataSource{
             cell.viewbutten.layer.shadowRadius = 10
             let lat = Double(myRequests[indexPath.row].getLatitude())!
             let long = Double(myRequests[indexPath.row].getLongitude())!
-            cell.map.delegate = self
 
             let pin = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(lat), longitude: CLLocationDegrees(long)))
             
@@ -469,7 +468,6 @@ extension requestsViewController: UICollectionViewDataSource{
            cell.status.text = "Procced"
             let lat = Double(prossed[indexPath.row].getLatitude())!
             let long = Double(prossed[indexPath.row].getLongitude())!
-            cell.map.delegate = self
             let pin = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(lat), longitude: CLLocationDegrees(long)))
             
             let annotation = MKPointAnnotation()
@@ -533,6 +531,30 @@ extension StringProtocol {
     var firstUppercased: String { return prefix(1).uppercased() + dropFirst() }
     var firstCapitalized: String { return prefix(1).capitalized + dropFirst() }
 }
+//MARK: - Map View Delegate Extension
+extension requestsViewController: MKMapViewDelegate{
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard !(annotation is MKUserLocation)else{
+            return nil
+        }
+        var pin = mapView.dequeueReusableAnnotationView(withIdentifier: "accidentPin")
+        if pin == nil {
+            pin = MKAnnotationView(annotation: annotation, reuseIdentifier: "accidentPin")
+            pin?.canShowCallout = true
+            pin?.image = UIImage(named: "Vector")
+        }else{
+            pin?.annotation = annotation
+        }
+
+        
+        
+        
+        return pin
+    }
+
+    
+}
 
 extension UICollectionViewCell {
     func shadowDecorate() {
@@ -549,27 +571,7 @@ extension UICollectionViewCell {
         layer.cornerRadius = radius
     }
     
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard !(annotation is MKUserLocation)else{
-            return nil
-        }
-        var pinview = mapView.dequeueReusableAnnotationView(withIdentifier: "Pin")
-        if pinview == nil {
-            pinview = MKAnnotationView(annotation: annotation, reuseIdentifier: "Pin")
-            pinview?.canShowCallout = true
-            pinview?.image = UIImage(named: "Vector")
-        }else{
-            pinview?.annotation = annotation
-        }
-
-        
-        
-        
-        return pinview
-    }
-}
-
-
+    
 
 //extension requestsViewController: UICollectionViewDelegateFlowLayout{
 //
@@ -579,29 +581,5 @@ extension UICollectionViewCell {
 //
 //}
 
-    //MARK: - Map View Delegate Extension
-//    extension requestsViewController: MKMapViewDelegate{
-//
-//        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-//            guard !(annotation is MKUserLocation)else{
-//                return nil
-//            }
-//            var pinview = mapView.dequeueReusableAnnotationView(withIdentifier: "Pin")
-//            if pinview == nil {
-//                pinview = MKAnnotationView(annotation: annotation, reuseIdentifier: "Pin")
-//                pinview?.canShowCallout = true
-//                pinview?.image = UIImage(named: "Vector")
-//            }else{
-//                pinview?.annotation = annotation
-//            }
-//
-//
-//
-//
-//            return pinview
-//        }
-//
-//
-//    }
-
-
+   
+}
