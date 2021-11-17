@@ -103,6 +103,17 @@ extension ViewSOSRequestsViewController: UITableViewDataSource{
         genderShadowLayer.shadowOpacity = 0.2
         genderShadowLayer.shadowRadius = 3
         cell.genderView.layer.insertSublayer(genderShadowLayer, at: 0)
+        
+        //3- age circle view:
+        let ageShadowLayer = CAShapeLayer()
+        ageShadowLayer.path = UIBezierPath(roundedRect: cell.ageView.bounds, cornerRadius: cell.ageView.layer.frame.width/2).cgPath
+        ageShadowLayer.fillColor = UIColor.white.cgColor
+        ageShadowLayer.shadowColor = UIColor.black.cgColor
+        ageShadowLayer.shadowPath = ageShadowLayer.path
+        ageShadowLayer.shadowOffset = CGSize(width: 0.0, height: 1.0)
+        ageShadowLayer.shadowOpacity = 0.2
+        ageShadowLayer.shadowRadius = 3
+        cell.ageView.layer.insertSublayer(ageShadowLayer, at: 0)
 
         
 
