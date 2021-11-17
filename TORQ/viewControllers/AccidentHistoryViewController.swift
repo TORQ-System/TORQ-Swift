@@ -96,7 +96,10 @@ class AccidentHistoryViewController: UIViewController {
         self.present(vc, animated: true, completion: nil)
     }
 
+
     }
+
+    
     // create a custom class for UITapGestureRecognizer
     class CustomTapGestureRecognizer: UITapGestureRecognizer {
         var long: Double?
@@ -122,12 +125,7 @@ class AccidentHistoryViewController: UIViewController {
         func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AccidentCell", for: indexPath as IndexPath) as! AccidentsCollectionViewCell
-            cell.layer.cornerRadius = 15
-            cell.layer.masksToBounds = true
-            cell.layer.shadowColor  = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
-            cell.layer.shadowOpacity = 1
-            cell.layer.shadowRadius = 90
-            cell.layer.shadowOffset = CGSize(width: 9, height: 9)
+            
             cell.layer.borderColor = CGColor(red: 0, green: 0, blue: 0, alpha: 1)
             cell.map.layer.cornerRadius = 10
             cell.accidentLabel.text = "Accident #\(indexPath.row + 1)"
