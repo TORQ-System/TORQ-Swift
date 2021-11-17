@@ -76,3 +76,26 @@ class showAccidentViewController: UIViewController {
 //
 //
 //}
+extension showAccidentViewController: MKMapViewDelegate{
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard !(annotation is MKUserLocation)else{
+            return nil
+        }
+        var pinview = mapView.dequeueReusableAnnotationView(withIdentifier: "Pin")
+        if pinview == nil {
+            pinview = MKAnnotationView(annotation: annotation, reuseIdentifier: "Pin")
+            pinview?.canShowCallout = true
+            pinview?.image = UIImage(named: "Vector")
+        }else{
+            pinview?.annotation = annotation
+        }
+
+        
+        
+        
+        return pinview
+    }
+
+    
+}

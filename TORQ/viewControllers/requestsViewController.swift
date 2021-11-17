@@ -5,7 +5,7 @@ import FirebaseAuth
 import CoreLocation
 
 import MapKit
-class requestsViewController: UIViewController {
+class requestsViewController: UIViewController ,MKMapViewDelegate{
     
     //MARK: - @IBOutlets
     @IBOutlet weak var requestsColletionView: UICollectionView!
@@ -380,26 +380,64 @@ extension requestsViewController: UICollectionViewDataSource{
 
             cell.viewbutten.tag = indexPath.row
             cell.viewbutten.addTarget(self, action: #selector(viewbutten(sender: )), for: .touchUpInside)
+            let gradient: CAGradientLayer = CAGradientLayer()
+            
+            gradient.colors = [
+                UIColor(red: 0.887, green: 0.436, blue: 0.501, alpha: 1).cgColor,
+                UIColor(red: 0.75, green: 0.191, blue: 0.272, alpha: 1).cgColor
+            ]
+            
+            gradient.locations = [0, 1]
+            gradient.startPoint = CGPoint(x: 0, y: 0)
+            gradient.endPoint = CGPoint(x: 1, y: 1)
+            gradient.frame = cell.viewbutten.layer.frame
+            
+            cell.viewbutten.layer.insertSublayer(gradient, at: 0)
+            cell.viewbutten.layer.shadowOpacity = 0.3
+            cell.viewbutten.layer.shadowOffset = CGSize(width: 5, height: 5)
+            cell.viewbutten.layer.shadowRadius = 10
             let lat = Double(myRequests[indexPath.row].getLatitude())!
             let long = Double(myRequests[indexPath.row].getLongitude())!
-            
+            cell.map.delegate = self
+
             let pin = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(lat), longitude: CLLocationDegrees(long)))
             
             let annotation = MKPointAnnotation()
             annotation.coordinate = pin.coordinate
-            annotation.title = "Accident"
+            annotation.title = ""
             let coordinateRegion = MKCoordinateRegion(center: pin.coordinate, latitudinalMeters: 12000, longitudinalMeters: 12000)
             cell.map.setRegion(coordinateRegion, animated: true)
             cell.map.addAnnotation(annotation)
-            cell.circle1.layer.cornerRadius = cell.circle1.frame.size.height / 2
-            cell.circle2.layer.cornerRadius = cell.circle2.frame.size.height / 2
-            cell.circle3.layer.cornerRadius = cell.circle3.frame.size.height / 2
             // if user taps on map
             
             let tap = CustomTapGestureRecognizer(target: self, action: #selector(goToLocation(sender:)))
             tap.lat = lat
             tap.long = long
             cell.map.addGestureRecognizer(tap)
+            
+            cell.circle1.layer.cornerRadius = cell.circle1.frame.size.height / 2
+           
+          //  cell.circle1.layer.shadowColor = UIColor.black.cgColor
+            cell.circle1.layer.shadowOpacity = 0.3
+            cell.circle1.layer.shadowOffset = CGSize(width: 5, height: 5)
+            cell.circle1.layer.shadowRadius = 10
+           // cell.circle1.layer.shouldRasterize = true
+           // cell.circle1.layer.rasterizationScale = UIScreen.main.scale
+            cell.circle2.layer.cornerRadius = cell.circle2.frame.size.height / 2
+            
+            // cell.circle2.layer.shadowColor = UIColor.black.cgColor
+             cell.circle2.layer.shadowOpacity = 0.3
+             cell.circle2.layer.shadowOffset = CGSize(width: 5, height: 5)
+             cell.circle2.layer.shadowRadius = 10
+            // cell.circle2.layer.shouldRasterize = true
+            cell.circle3.layer.cornerRadius = cell.circle3.frame.size.height / 2
+            
+             //cell.circle3.layer.shadowColor = UIColor.black.cgColor
+             cell.circle3.layer.shadowOpacity = 0.3
+             cell.circle3.layer.shadowOffset = CGSize(width: 5, height: 5)
+             cell.circle3.layer.shadowRadius = 10
+            // cell.circle3.layer.shouldRasterize = true
+           
 
 
 
@@ -428,21 +466,39 @@ extension requestsViewController: UICollectionViewDataSource{
            // cell.dateTime.text = myRequests[indexPath.row].getDateTime()
          cell.distance.text =  String(format: " %.01fkm", distance)
           cell.gender.text = prossed[indexPath.row].getGender()
-           cell.status.text = "procced"
+           cell.status.text = "Procced"
             let lat = Double(prossed[indexPath.row].getLatitude())!
             let long = Double(prossed[indexPath.row].getLongitude())!
-            
+            cell.map.delegate = self
             let pin = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(lat), longitude: CLLocationDegrees(long)))
             
             let annotation = MKPointAnnotation()
             annotation.coordinate = pin.coordinate
-            annotation.title = "Accident"
+            annotation.title = ""
             let coordinateRegion = MKCoordinateRegion(center: pin.coordinate, latitudinalMeters: 12000, longitudinalMeters: 12000)
             cell.map.setRegion(coordinateRegion, animated: true)
             cell.map.addAnnotation(annotation)
             cell.circle1.layer.cornerRadius = cell.circle1.frame.size.height / 2
+           
+          //  cell.circle1.layer.shadowColor = UIColor.black.cgColor
+            cell.circle1.layer.shadowOpacity = 0.3
+            cell.circle1.layer.shadowOffset = CGSize(width: 5, height: 5)
+            cell.circle1.layer.shadowRadius = 10
+           // cell.circle1.layer.shouldRasterize = true
+           // cell.circle1.layer.rasterizationScale = UIScreen.main.scale
             cell.circle2.layer.cornerRadius = cell.circle2.frame.size.height / 2
+            
+            // cell.circle2.layer.shadowColor = UIColor.black.cgColor
+             cell.circle2.layer.shadowOpacity = 0.3
+             cell.circle2.layer.shadowOffset = CGSize(width: 5, height: 5)
+             cell.circle2.layer.shadowRadius = 10
+            // cell.circle2.layer.shouldRasterize = true
             cell.circle3.layer.cornerRadius = cell.circle3.frame.size.height / 2
+            
+             //cell.circle3.layer.shadowColor = UIColor.black.cgColor
+             cell.circle3.layer.shadowOpacity = 0.3
+             cell.circle3.layer.shadowOffset = CGSize(width: 5, height: 5)
+             cell.circle3.layer.shadowRadius = 10
             
            // cell.circle1.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
           //  cell.circle1.layer.shadowColor = UIColor.black.cgColor
@@ -492,6 +548,25 @@ extension UICollectionViewCell {
         layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: radius).cgPath
         layer.cornerRadius = radius
     }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard !(annotation is MKUserLocation)else{
+            return nil
+        }
+        var pinview = mapView.dequeueReusableAnnotationView(withIdentifier: "Pin")
+        if pinview == nil {
+            pinview = MKAnnotationView(annotation: annotation, reuseIdentifier: "Pin")
+            pinview?.canShowCallout = true
+            pinview?.image = UIImage(named: "Vector")
+        }else{
+            pinview?.annotation = annotation
+        }
+
+        
+        
+        
+        return pinview
+    }
 }
 
 
@@ -505,28 +580,28 @@ extension UICollectionViewCell {
 //}
 
     //MARK: - Map View Delegate Extension
-    extension requestsViewController: MKMapViewDelegate{
-        
-        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-            guard !(annotation is MKUserLocation)else{
-                return nil
-            }
-            var pin = mapView.dequeueReusableAnnotationView(withIdentifier: "accidentPin")
-            if pin == nil {
-                pin = MKAnnotationView(annotation: annotation, reuseIdentifier: "accidentPin")
-                pin?.canShowCallout = true
-                pin?.image = UIImage(named: "Vector")
-            }else{
-                pin?.annotation = annotation
-            }
-
-            
-            
-            
-            return pin
-        }
-
-        
-    }
+//    extension requestsViewController: MKMapViewDelegate{
+//
+//        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+//            guard !(annotation is MKUserLocation)else{
+//                return nil
+//            }
+//            var pinview = mapView.dequeueReusableAnnotationView(withIdentifier: "Pin")
+//            if pinview == nil {
+//                pinview = MKAnnotationView(annotation: annotation, reuseIdentifier: "Pin")
+//                pinview?.canShowCallout = true
+//                pinview?.image = UIImage(named: "Vector")
+//            }else{
+//                pinview?.annotation = annotation
+//            }
+//
+//
+//
+//
+//            return pinview
+//        }
+//
+//
+//    }
 
 
