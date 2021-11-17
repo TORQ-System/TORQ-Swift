@@ -8,6 +8,7 @@
 import UIKit
 import Firebase
 import CoreLocation
+import MapKit
 
 class ViewSOSRequestsViewController: UIViewController {
     
@@ -139,6 +140,17 @@ extension ViewSOSRequestsViewController: UITableViewDataSource{
         //5- map view:
         cell.mapView.layer.cornerRadius = 20
         cell.mapView.layer.maskedCorners = [.layerMaxXMaxYCorner,.layerMaxXMinYCorner]
+        let pin = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(Double(sosRequests[indexPath.row].getLatitude())!), longitude: CLLocationDegrees(Double(sosRequests[indexPath.row].getLongitude())!)))
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = pin.coordinate
+        annotation.title = "Accident"
+        let coordinateRegion = MKCoordinateRegion(center: pin.coordinate, latitudinalMeters: 12000, longitudinalMeters: 12000)
+        cell.mapView.setRegion(coordinateRegion, animated: true)
+        cell.mapView.addAnnotation(annotation)
+        let tap = CustomTapGestureRecognizer(target: self, action: #selector(goToLocation(sender:)))
+        tap.lat = lat
+        tap.long = long
+        cell.map.addGestureRecognizer(tap)
         
         //6- view details button:
         cell.viewDetailsButton.backgroundColor = nil
@@ -173,23 +185,35 @@ extension ViewSOSRequestsViewController: UITableViewDataSource{
         cell.ageLabel.textColor = UIColor(red: 0.286, green: 0.671, blue: 0.875, alpha: 1)
         
         //configuring the information of the cell
-        
-        
-        
         let centerLocation = CLLocation(latitude: CLLocationDegrees(center!["latitude"] as! Double), longitude: CLLocationDegrees(center!["longitude"] as! Double))
         let distance = centerLocation.distance(from: CLLocation(latitude: CLLocationDegrees(sosRequests[indexPath.row].getLatitude())!, longitude: CLLocationDegrees(CLLocationDegrees(sosRequests[indexPath.row].getLongitude())!)))
-        
         cell.name.text = "Noura Alsulayfih"
-        
         cell.distanceLabel.text = "\(Double(round(10*(distance/1000))/10)) Km"
         cell.status.text = "Active"
 //        cell.occuredAt.text = sosRequests[indexPath.row].getTimeDate()
-        
         cell.ageLabel.text = "21"
         cell.genderLabel.text = "female"
-
         return cell
     }
 
 
+}
+
+//MARK: - MKMapViewDelegate
+extension ViewSOSRequestsViewController: MKMapViewDelegate{
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard !(annotation is MKUserLocation)else{
+            return nil
+        }
+        var pin = mapView.dequeueReusableAnnotationView(withIdentifier: "sosPin")
+        if pin == nil {
+            pin = MKAnnotationView(annotation: annotation, reuseIdentifier: "sosPin")
+            pin?.canShowCallout = true
+            pin?.image = UIImage(named: "Vector")
+        }else{
+            pin?.annotation = annotation
+        }
+        return pin
+    }
 }
