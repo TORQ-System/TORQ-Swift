@@ -725,6 +725,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <stackView opaque="NO" alpha="0.0" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Iol-gc-hwO">
+                                <rect key="frame" x="39.666666666666657" y="404.66666666666669" width="335" height="86.666666666666686"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="hQR-LH-u6b">
+                                        <rect key="frame" x="0.0" y="-3.0000000000000036" width="335" height="35"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="tintColor" red="0.63921568630000003" green="0.63137254899999995" blue="0.63137254899999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <imageReference key="image" image="bell.fill" catalog="system" symbolScale="large"/>
+                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="24" scale="large" weight="regular"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Looks like you haven't gotten any notifications." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vee-9q-6tp">
+                                        <rect key="frame" x="0.0" y="38.666666666666629" width="335" height="48"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
+                                        <color key="textColor" red="0.63921568630000003" green="0.63137254899999995" blue="0.63137254899999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="335" id="fFL-QD-dL7"/>
+                                </constraints>
+                            </stackView>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PUt-bb-aDM">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="302"/>
                                 <subviews>
@@ -808,6 +829,7 @@
                                     <constraint firstItem="uJq-mK-yBu" firstAttribute="leading" secondItem="PUt-bb-aDM" secondAttribute="leading" constant="30" id="2vD-6A-Te5"/>
                                     <constraint firstItem="uJq-mK-yBu" firstAttribute="centerY" secondItem="PUt-bb-aDM" secondAttribute="centerY" id="4ID-gZ-iRd"/>
                                     <constraint firstItem="Kop-nV-Hmq" firstAttribute="trailing" secondItem="PUt-bb-aDM" secondAttribute="trailingMargin" id="Cet-hh-hvc"/>
+                                    <constraint firstAttribute="bottom" secondItem="Kop-nV-Hmq" secondAttribute="bottom" constant="54" id="Dme-4P-MU0"/>
                                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Kop-nV-Hmq" secondAttribute="bottom" constant="30" id="DqQ-Ws-yHG"/>
                                     <constraint firstItem="Kop-nV-Hmq" firstAttribute="top" secondItem="uJq-mK-yBu" secondAttribute="bottom" constant="20" id="clK-tc-ejd"/>
                                     <constraint firstItem="Kop-nV-Hmq" firstAttribute="leading" secondItem="PUt-bb-aDM" secondAttribute="leading" constant="30" id="gQC-si-ln7"/>
@@ -889,13 +911,14 @@
                         <viewLayoutGuide key="safeArea" id="CgV-zZ-BdD"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="PUt-bb-aDM" firstAttribute="top" secondItem="Ic1-4z-8wv" secondAttribute="topMargin" constant="-44" id="9Bj-PF-d4j"/>
-                            <constraint firstItem="CgV-zZ-BdD" firstAttribute="trailing" secondItem="FH3-Hb-rFE" secondAttribute="trailing" id="9dA-7b-ZUa"/>
                             <constraint firstItem="PUt-bb-aDM" firstAttribute="centerX" secondItem="Ic1-4z-8wv" secondAttribute="centerX" id="BZ7-zM-NNh"/>
+                            <constraint firstItem="Iol-gc-hwO" firstAttribute="centerX" secondItem="Ic1-4z-8wv" secondAttribute="centerX" id="MKy-zg-nYK"/>
                             <constraint firstItem="FH3-Hb-rFE" firstAttribute="leading" secondItem="CgV-zZ-BdD" secondAttribute="leading" id="VFc-Le-l44"/>
                             <constraint firstItem="PUt-bb-aDM" firstAttribute="leading" secondItem="CgV-zZ-BdD" secondAttribute="leading" id="fQj-vX-WlR"/>
                             <constraint firstItem="FH3-Hb-rFE" firstAttribute="top" secondItem="CgV-zZ-BdD" secondAttribute="top" constant="210" id="j4X-gJ-JZs"/>
-                            <constraint firstItem="CgV-zZ-BdD" firstAttribute="bottom" secondItem="PUt-bb-aDM" secondAttribute="bottom" constant="511" id="pDq-0k-hxc"/>
+                            <constraint firstItem="FH3-Hb-rFE" firstAttribute="trailing" secondItem="PUt-bb-aDM" secondAttribute="trailing" id="ms7-Ps-jJ4"/>
+                            <constraint firstItem="PUt-bb-aDM" firstAttribute="top" secondItem="Ic1-4z-8wv" secondAttribute="top" id="oq2-oP-QHg"/>
+                            <constraint firstItem="Iol-gc-hwO" firstAttribute="centerY" secondItem="Ic1-4z-8wv" secondAttribute="centerY" id="pRv-FV-Zs2"/>
                             <constraint firstAttribute="bottom" secondItem="FH3-Hb-rFE" secondAttribute="bottom" id="wgH-QW-Cl2"/>
                         </constraints>
                     </view>
@@ -903,6 +926,7 @@
                     <connections>
                         <outlet property="backgroundView" destination="PUt-bb-aDM" id="hgA-mG-4v7"/>
                         <outlet property="filterCollectionView" destination="2zy-hl-FLb" id="d1H-bX-PMz"/>
+                        <outlet property="noNotificationsView" destination="Iol-gc-hwO" id="c7S-lV-dMG"/>
                         <outlet property="notificationCollectionView" destination="FH3-Hb-rFE" id="CzJ-bD-VQ2"/>
                     </connections>
                 </viewController>

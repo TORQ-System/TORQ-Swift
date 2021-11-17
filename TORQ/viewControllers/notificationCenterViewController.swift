@@ -14,6 +14,7 @@ class notificationCenterViewController: UIViewController {
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var filterCollectionView: UICollectionView!
     @IBOutlet weak var notificationCollectionView: UICollectionView!
+    @IBOutlet weak var noNotificationsView: UIStackView!
     
     //MARK: - Variables
     var ref = Database.database().reference()
@@ -122,6 +123,7 @@ extension notificationCenterViewController: UICollectionViewDelegate{
 extension notificationCenterViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard collectionView == filterCollectionView else{
+            noNotificationsView.alpha = notifications.count == 0 ? 1.0 : 0.0
             return notifications.count
         }
         return filterBy.count
