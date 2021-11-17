@@ -111,8 +111,16 @@ class signUpSecondViewController: UIViewController {
         let privacyPolicyRange = (text as NSString).range(of: "Privacy Policy")
         if gesture.didTapAttributedTextInLabel(label: self.conditionsLabel, inRange: privacyPolicyRange) {
             print("user tapped on privacy policy text")
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "privacyPolicyViewController") as! privacyPolicyViewController
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true, completion: nil)
         } else if gesture.didTapAttributedTextInLabel(label: self.conditionsLabel, inRange: termsAndConditionRange){
             print("user tapped on terms and conditions text")
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "termsAndConditionsViewController") as! termsAndConditionsViewController
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true, completion: nil)
         }
     }
     func configureButtonView(){

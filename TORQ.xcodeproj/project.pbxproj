@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		3DDC91A2940F7463283FBFE6 /* Pods_TORQ_TORQUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 404C9ACD593D6364A24EFF38 /* Pods_TORQ_TORQUITests.framework */; };
 		8FA67A0F52162B410B79BAF0 /* Pods_TORQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9EC7D60F5128DCF29B3517 /* Pods_TORQ.framework */; };
+		A3041BD02745BE3600527442 /* termsAndConditionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3041BCF2745BE3600527442 /* termsAndConditionsViewController.swift */; };
+		A3041BD22745BE8500527442 /* privacyPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3041BD12745BE8500527442 /* privacyPolicyViewController.swift */; };
 		A306B1292733A388007A218F /* editEmergencyContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A306B1282733A388007A218F /* editEmergencyContactViewController.swift */; };
 		A306B12B2735D248007A218F /* editMedicalReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A306B12A2735D248007A218F /* editMedicalReportViewController.swift */; };
 		BE04B6D2272DA7B700EEE3EE /* requestReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE04B6D1272DA7B700EEE3EE /* requestReportViewController.swift */; };
@@ -85,6 +87,8 @@
 		404C9ACD593D6364A24EFF38 /* Pods_TORQ_TORQUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TORQ_TORQUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9850D36D8AB92301B2DFBE7D /* Pods-TORQ-TORQUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TORQ-TORQUITests.debug.xcconfig"; path = "Target Support Files/Pods-TORQ-TORQUITests/Pods-TORQ-TORQUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		9F0737DF72CCC79CA95FDC8D /* Pods-TORQ.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TORQ.debug.xcconfig"; path = "Target Support Files/Pods-TORQ/Pods-TORQ.debug.xcconfig"; sourceTree = "<group>"; };
+		A3041BCF2745BE3600527442 /* termsAndConditionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = termsAndConditionsViewController.swift; sourceTree = "<group>"; };
+		A3041BD12745BE8500527442 /* privacyPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = privacyPolicyViewController.swift; sourceTree = "<group>"; };
 		A306B1282733A388007A218F /* editEmergencyContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editEmergencyContactViewController.swift; sourceTree = "<group>"; };
 		A306B12A2735D248007A218F /* editMedicalReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editMedicalReportViewController.swift; sourceTree = "<group>"; };
 		BE04B6D1272DA7B700EEE3EE /* requestReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = requestReportViewController.swift; sourceTree = "<group>"; };
@@ -307,6 +311,8 @@
 				BE04B6D3272DAA0600EEE3EE /* hospitalsViewController.swift */,
 				A306B1282733A388007A218F /* editEmergencyContactViewController.swift */,
 				A306B12A2735D248007A218F /* editMedicalReportViewController.swift */,
+				A3041BCF2745BE3600527442 /* termsAndConditionsViewController.swift */,
+				A3041BD12745BE8500527442 /* privacyPolicyViewController.swift */,
 			);
 			path = viewControllers;
 			sourceTree = "<group>";
@@ -576,6 +582,7 @@
 				BE64405E272CBD080051662F /* addMedicalReportViewController.swift in Sources */,
 				BEF9751B2707D63A00325281 /* dateExtension.swift in Sources */,
 				BEDC3C1C272681F40026948E /* notificationCenterViewController.swift in Sources */,
+				A3041BD22745BE8500527442 /* privacyPolicyViewController.swift in Sources */,
 				BEF975142707293600325281 /* signUpSecondViewController.swift in Sources */,
 				BE34F6AB27118A800093C633 /* onboardingScreen1ViewController.swift in Sources */,
 				BE34F69D270F30B70093C633 /* requestCollectionViewCell.swift in Sources */,
@@ -591,6 +598,7 @@
 				BEC34A1F27281B0D001E99E5 /* textFieldExtension.swift in Sources */,
 				BEF974DE2707146300325281 /* AppDelegate.swift in Sources */,
 				BEC34A27272938DD001E99E5 /* showAccidentViewController.swift in Sources */,
+				A3041BD02745BE3600527442 /* termsAndConditionsViewController.swift in Sources */,
 				BEF974E02707146300325281 /* SceneDelegate.swift in Sources */,
 				BEF9753B270AE0D100325281 /* userHomeViewController.swift in Sources */,
 				BEDC3C1E272682160026948E /* profileViewController.swift in Sources */,
