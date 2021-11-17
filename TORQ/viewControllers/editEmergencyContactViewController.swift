@@ -17,13 +17,13 @@ class editEmergencyContactViewController: UIViewController {
     @IBOutlet weak var emergencyContactFullName: UITextField!
     @IBOutlet weak var emergencyContactPhoneNumber: UITextField!
     @IBOutlet weak var relationTextField: UITextField!
-    @IBOutlet weak var message: UITextField!
     @IBOutlet weak var errorFullName: UILabel!
     @IBOutlet weak var errorPhoneNumber: UILabel!
     @IBOutlet weak var errorRelationship: UILabel!
     @IBOutlet weak var errorMessage: UILabel!
     @IBOutlet weak var buttonView: UIView!
     @IBOutlet weak var roundGradientView: UIView!
+    @IBOutlet weak var msgTextView: UITextView!
     
     //MARK: - Variables
     // DB reference
@@ -124,9 +124,8 @@ class editEmergencyContactViewController: UIViewController {
         relationTextField.setBorder(color: "valid", image: UIImage(named: "relationshipValid")!)
         // picker view
         setUpRelationshipPickerView()
-        // message border
-        message.setBorder(color: "valid", image: UIImage(named: "messageValid")!)
-        message.clearsOnBeginEditing = false
+        // msg text view
+        configureMsgTextView()
     }
     func configureButtonView(){
             roundGradientView.layer.cornerRadius = 20
@@ -177,10 +176,10 @@ class editEmergencyContactViewController: UIViewController {
                     self.emergencyContactFullName.text = self.oldFullName
                     self.emergencyContactPhoneNumber.text = self.oldPhoneNumber
                     self.relationTextField.text = self.oldRelationship
-                    self.message.text = self.oldMsg
+                    self.msgTextView.text = self.oldMsg
 
     }
-    // getting current user name
+    // getting current user name & phone in order to set up default msg and to validate phone number
     func getUserInfo(){
         ref.child("User").observe(.value) { snapshot in
             for user in snapshot.children{
@@ -191,7 +190,6 @@ class editEmergencyContactViewController: UIViewController {
                 let user = userInfo(userID: userID, phone: phone)
             
                 self.usersArray.append(user)
-                print("Users Array:\(self.usersArray)")
                 
                 if userID == self.usrID {
                     self.currentUserPhone = phone
@@ -218,6 +216,24 @@ class editEmergencyContactViewController: UIViewController {
     @IBAction func backButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
+    func configureMsgTextView(){
+        // Round the corners.
+        msgTextView.layer.masksToBounds = true
+
+        // Set the size of the roundness.
+        msgTextView.layer.cornerRadius = 10
+
+        // Set the thickness of the border.
+        msgTextView.layer.borderWidth = 1.5
+
+        // Set the border color to blue.
+        msgTextView.layer.borderColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 ).cgColor
+        
+        // set up placeholder
+        msgTextView.text = "Message (Optional)"
+        // blue text  color
+        msgTextView.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 )
+    }
     
     // validate form entries
     func validateFields() -> [String: String] {
@@ -229,7 +245,7 @@ class editEmergencyContactViewController: UIViewController {
             errors["Empty"] = "Empty Fields"
         }
         // CASE: user did not update any of the fields
-        if emergencyContactFullName.text == oldFullName && emergencyContactPhoneNumber.text == oldPhoneNumber && relationTextField.text == oldRelationship && message.text == oldMsg {
+        if emergencyContactFullName.text == oldFullName && emergencyContactPhoneNumber.text == oldPhoneNumber && relationTextField.text == oldRelationship && msgTextView.text == oldMsg {
             errors["notUpdated"] = "You have not updated any information"
         }
         
@@ -253,7 +269,7 @@ class editEmergencyContactViewController: UIViewController {
             errors["relationship"] = "Relationship cannot be empty"
         }
         // CASE: msg greater than 80 characters
-        if message.text!.count >= 150 {
+        if msgTextView.text!.count >= 135 {
             errors["msg"] = "message is too long, try to shorten it"
         }
         
@@ -375,14 +391,17 @@ class editEmergencyContactViewController: UIViewController {
         }
         guard errors["msg"] == "" else {
             errorMessage.text = errors["msg"]
-            message.setBorder(color: "error", image: UIImage(named: "messageError")!)
+            // set text color to red
+            msgTextView.textColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
+            // set border color to red
+            msgTextView.layer.borderColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 ).cgColor
             errorMessage.alpha = 1
             return
         }
         
         // if msg is empty, then set up TORQ Default msg
-        if message.text?.trimWhiteSpace() == "" || message.text == nil {
-            message.text = "\(usrName!) had a Car Accident, you are receiving this because \(usrName!) has listed you as an emergency contact"
+        if msgTextView.text?.trimWhiteSpace() == "" || msgTextView.text == nil || msgTextView.text == "Message (Optional)" {
+            msgTextView.text = "\(usrName!) had a Car Accident, you are receiving this because \(usrName!) has listed you as an emergency contact"
         }
         
         // if no error is detected hide the error view
@@ -395,7 +414,7 @@ class editEmergencyContactViewController: UIViewController {
         fullName = emergencyContactFullName.text!.trimWhiteSpace()
         phoneNumber = emergencyContactPhoneNumber.text
         relationship = relationTextField.text
-        emergencyMessage = message.text!.trimWhiteSpace()
+        emergencyMessage = msgTextView.text!.trimWhiteSpace()
         
         //3- create Emergency Contact info
         let emergencyContact: [String: Any] = [
@@ -468,16 +487,16 @@ class editEmergencyContactViewController: UIViewController {
     }
     
     @IBAction func msgEditingChanged(_ sender: UITextField) {
-        let errors = validateFields()
-        if  errors["msg"] != "" {
-            message.changeBorder(type: "error", image: UIImage(named: "messageError")!)
-            errorMessage.text = errors["msg"]!
-            errorMessage.alpha = 1
-        }
-        else {
-            message.changeBorder(type: "valid", image: UIImage(named: "messageValid")!)
-            errorMessage.alpha = 0
-        }
+//        let errors = validateFields()
+//        if  errors["msg"] != "" {
+//            message.changeBorder(type: "error", image: UIImage(named: "messageError")!)
+//            errorMessage.text = errors["msg"]!
+//            errorMessage.alpha = 1
+//        }
+//        else {
+//            message.changeBorder(type: "valid", image: UIImage(named: "messageValid")!)
+//            errorMessage.alpha = 0
+//        }
     }
     
     } // editEmergencyContactViewCont
@@ -501,5 +520,52 @@ extension editEmergencyContactViewController : UIPickerViewDelegate,UIPickerView
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         selectedRow = row
         relationTextField.text = relationships[row]
+    }
+}
+extension editEmergencyContactViewController: UITextViewDelegate{
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if msgTextView.text == "Message (Optional)" {
+            msgTextView.text = ""
+            // blue text  color
+            msgTextView.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 )
+            // blue border
+            msgTextView.layer.borderColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 ).cgColor
+            // hide error view
+            errorMessage.alpha = 0
+        }
+    }
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n"{
+            msgTextView.resignFirstResponder()
+        }
+        return true
+    }
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text == "" {
+            msgTextView.text = "Message (Optional)"
+            // gray placeholder text color
+            msgTextView.textColor = UIColor(red: 0, green: 0, blue: 0.0980392, alpha: 0.22)
+            // gray border color
+            msgTextView.layer.borderColor = UIColor( red: 163/255, green: 161/255, blue:161/255, alpha: 1.0 ).cgColor
+            // hide error view
+            errorMessage.alpha = 0
+            
+        }
+        else if textView.text!.count >= 135 {
+            errorMessage.text = "message is too long, try to shorten it"
+            // set text color to red
+            msgTextView.textColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
+            // set border color to red
+            msgTextView.layer.borderColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 ).cgColor
+            errorMessage.alpha = 1
+        } else {
+            // blue text  color
+            msgTextView.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 )
+            // blue border
+            msgTextView.layer.borderColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 ).cgColor
+            // hide error view
+            errorMessage.alpha = 0
+        }
     }
 }

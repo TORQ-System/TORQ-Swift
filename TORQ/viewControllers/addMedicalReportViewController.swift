@@ -49,7 +49,7 @@ class addMedicalReportViewController: UIViewController {
     
     // picker view variables
     var blood_types = [
-        "Please Select",
+        "None",
         "A+",
         "A-",
         "B+",
@@ -163,13 +163,13 @@ class addMedicalReportViewController: UIViewController {
         var errors = ["Empty":"","bloodtype":"", "chronicDisease":"","disability":"","allergy":"","prescribedMedication":""]
         
         // CASE all fields were empty
-        if (bloodTypeTextField.text == "" || bloodTypeTextField.text == "Please Select" || bloodTypeTextField.text == nil ) && chronicDisease.text == "" && disability.text == "" && allergy.text == "" && prescribedMedication.text == "" {
+        if (bloodTypeTextField.text == "" || bloodTypeTextField.text == "None" || bloodTypeTextField.text == nil ) && chronicDisease.text == "" && disability.text == "" && allergy.text == "" && prescribedMedication.text == "" {
             errors["Empty"] = "Please fill one of the fields or return"
         }
-        // CASE: user selected "Please select option "
-        if bloodTypeTextField.text == "Please Select" {
-            errors["bloodtype"] = "Please select a valid blood type"
-        }
+//        // CASE: user selected "Please select option "
+//        if bloodTypeTextField.text == "Please Select" {
+//            errors["bloodtype"] = "Please select a valid blood type"
+//        }
         // since there are no chronic disease less than 2 characters
         if chronicDisease.text!.count == 1 {
             errors["chronicDisease"] = "Chronic Disease must be greater than two characters"
@@ -221,7 +221,7 @@ class addMedicalReportViewController: UIViewController {
             return
         }
         guard errors["Empty"] == "" else {
-            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "Please make sure you entered all fields correctly", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: errors["Empty"]!, color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
             return
         }
         // if Chronic Disease has an error
@@ -272,7 +272,7 @@ class addMedicalReportViewController: UIViewController {
         
         
         //CASE: empty Blood Type
-        if bloodTypeTextField.text == nil || bloodTypeTextField.text == ""  {
+        if bloodTypeTextField.text == nil || bloodTypeTextField.text == "" || bloodTypeTextField.text == "None" {
             // not mandatory then set it to empty
             userBloodType = "-"
         }

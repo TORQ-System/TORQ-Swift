@@ -10,7 +10,6 @@ class addEmergencyContactViewController: UIViewController {
     //MARK: - @IBOutlets
     @IBOutlet weak var emergencyContactFullName: UITextField!
     @IBOutlet weak var emergencyContactPhoneNumber: UITextField!
-    @IBOutlet weak var message: UITextField!
     @IBOutlet weak var errorFullName: UILabel!
     @IBOutlet weak var errorPhoneNumber: UILabel!
     @IBOutlet weak var errorRelationship: UILabel!
@@ -18,6 +17,7 @@ class addEmergencyContactViewController: UIViewController {
     @IBOutlet weak var relationTextField: UITextField!
     @IBOutlet weak var buttonView: UIView!
     @IBOutlet weak var roundGradientView: UIView!
+    @IBOutlet weak var msgTextView: UITextView!
     
     //MARK: - Variables
     
@@ -83,6 +83,7 @@ class addEmergencyContactViewController: UIViewController {
         configureInputs()
         configureButtonView()
         configureTapGesture()
+        
     
     }
     //MARK: - Functions
@@ -102,13 +103,10 @@ class addEmergencyContactViewController: UIViewController {
         emergencyContactPhoneNumber.clearsOnBeginEditing = false
         // relationship border
         relationTextField.setBorder(color: "default", image: UIImage(named: "relationshipDefault")!)
-        
         // picker view
         setUpRelationshipPickerView()
-        
-        // message border
-        message.setBorder(color: "default", image: UIImage(named: "messageDefault")!)
-        message.clearsOnBeginEditing = false
+        // msg text view
+        configureMsgTextView()
     }
     func configureButtonView(){
             roundGradientView.layer.cornerRadius = 20
@@ -151,6 +149,23 @@ class addEmergencyContactViewController: UIViewController {
         relationTextField.text = relationships[selectedRow]
         view.endEditing(true)
     }
+    func configureMsgTextView(){
+        // Round the corners.
+        msgTextView.layer.masksToBounds = true
+
+        // Set the size of the roundness.
+        msgTextView.layer.cornerRadius = 10
+
+        // Set the thickness of the border.
+        msgTextView.layer.borderWidth = 1.5
+
+        // Set the border color to gray.
+        msgTextView.layer.borderColor = UIColor( red: 163/255, green: 161/255, blue:161/255, alpha: 1.0 ).cgColor
+        
+        // set up placeholder
+        msgTextView.text = "Message (Optional)"
+        msgTextView.textColor = UIColor(red: 0, green: 0, blue: 0.0980392, alpha: 0.22)
+    }
     // getting user info from User node in DB and append it to usersArray
     func getUserInfo(){
         ref.child("User").observe(.value) { snapshot in
@@ -162,7 +177,7 @@ class addEmergencyContactViewController: UIViewController {
                 let user = userInfo(userID: userID, phone: phone)
             
                 self.usersArray.append(user)
-                print("Users Array:\(self.usersArray)")
+//                print("Users Array:\(self.usersArray)")
                 
                 if userID == self.usrID {
                     self.currentUserPhone = phone
@@ -208,8 +223,8 @@ class addEmergencyContactViewController: UIViewController {
         if selectedRow == 0 {
             errors["relationship"] = "Relationship cannot be empty"
         }
-        // CASE: msg greater than 150 characters
-        if message.text!.count >= 150 {
+        // CASE: msg greater than 135 characters
+        if msgTextView.text!.count >= 135 {
             errors["msg"] = "message is too long, try to shorten it"
         }
         
@@ -255,8 +270,6 @@ class addEmergencyContactViewController: UIViewController {
     }
     // Go to Emergency Contatcs View After successful addition
     @objc func addClicked(_ sender: UITapGestureRecognizer) {
-        // to set up default message we need the current user full name
-//        getUserFullName()
         
         let errors = validateFields()
         let phone_errors = validateEmergencyPhoneNumber()
@@ -330,14 +343,17 @@ class addEmergencyContactViewController: UIViewController {
         }
         guard errors["msg"] == "" else {
             errorMessage.text = errors["msg"]
-            message.setBorder(color: "error", image: UIImage(named: "messageError")!)
+            // set text color to red
+            msgTextView.textColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
+            // set border color to red
+            msgTextView.layer.borderColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 ).cgColor
             errorMessage.alpha = 1
             return
         }
         
         // if msg is empty, then set up TORQ Default msg
-        if message.text?.trimWhiteSpace() == "" || message.text?.trimWhiteSpace() == nil {
-            message.text = "\(usrName!) had a Car Accident, you are receiving this because \(usrName!) has listed you as an emergency contact"
+        if msgTextView.text?.trimWhiteSpace() == "" || msgTextView.text?.trimWhiteSpace() == nil || msgTextView.text == "Message (Optional)" {
+            msgTextView.text = "\(usrName!) had a Car Accident, you are receiving this because \(usrName!) has listed you as an emergency contact"
         }
         
         // if no error is detected hide the error view
@@ -350,7 +366,7 @@ class addEmergencyContactViewController: UIViewController {
         fullName = emergencyContactFullName.text!.trimWhiteSpace()
         phoneNumber = emergencyContactPhoneNumber.text
         relationship = relationTextField.text
-        emergencyMessage = message.text!.trimWhiteSpace()
+        emergencyMessage = msgTextView.text!.trimWhiteSpace()
         
         //3- create Emergency Contact info
         let emergencyContact: [String: Any] = [
@@ -421,21 +437,6 @@ class addEmergencyContactViewController: UIViewController {
         }
     }
     
-    @IBAction func msgEditingChanged(_ sender: UITextField) {
-        let errors = validateFields()
-        if  errors["msg"] != "" {
-            message.changeBorder(type: "error", image: UIImage(named: "messageError")!)
-            errorMessage.text = errors["msg"]!
-            errorMessage.alpha = 1
-        }else if message.text?.trimWhiteSpace() == nil || message.text?.trimWhiteSpace() == "" {
-            message.changeBorder(type: "default", image: UIImage(named: "messageDefault")!)
-            errorMessage.alpha = 0
-        }
-        else {
-            message.changeBorder(type: "valid", image: UIImage(named: "messageValid")!)
-            errorMessage.alpha = 0
-        }
-    }
     
 }
 //MARK: - Extensions
@@ -464,6 +465,53 @@ extension addEmergencyContactViewController: UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true;
+    }
+}
+extension addEmergencyContactViewController: UITextViewDelegate{
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if msgTextView.text == "Message (Optional)" {
+            msgTextView.text = ""
+            // blue text  color
+            msgTextView.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 )
+            // blue border
+            msgTextView.layer.borderColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 ).cgColor
+            // hide error view
+            errorMessage.alpha = 0
+        }
+    }
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n"{
+            msgTextView.resignFirstResponder()
+        }
+        return true
+    }
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text == "" {
+            msgTextView.text = "Message (Optional)"
+            // gray placeholder text color
+            msgTextView.textColor = UIColor(red: 0, green: 0, blue: 0.0980392, alpha: 0.22)
+            // gray border color
+            msgTextView.layer.borderColor = UIColor( red: 163/255, green: 161/255, blue:161/255, alpha: 1.0 ).cgColor
+            // hide error view
+            errorMessage.alpha = 0
+            
+        }
+        else if textView.text!.count >= 135 {
+            errorMessage.text = "message is too long, try to shorten it"
+            // set text color to red
+            msgTextView.textColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
+            // set border color to red
+            msgTextView.layer.borderColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 ).cgColor
+            errorMessage.alpha = 1
+        } else {
+            // blue text  color
+            msgTextView.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 )
+            // blue border
+            msgTextView.layer.borderColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 ).cgColor
+            // hide error view
+            errorMessage.alpha = 0
+        }
     }
 }
 private var __maxLengths = [UITextField: Int]()
