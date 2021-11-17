@@ -216,7 +216,7 @@ class editMedicalReportViewController: UIViewController {
         var errors = ["Empty":"","bloodtype":"", "chronicDisease":"","disability":"","allergy":"","prescribedMedication":"","notUpdated":""]
         
         // CASE: user did not update any of the fields
-        if (bloodTypeTextField.text == oldBloodType || (bloodTypeTextField.text == "" && oldBloodType == "-") ) &&
+        if (bloodTypeTextField.text == oldBloodType || ((bloodTypeTextField.text == "" || bloodTypeTextField.text == "None") && oldBloodType == "-") ) &&
             (chronicDisease.text == oldChronicDisease || ( chronicDisease.text == "" && oldChronicDisease == "-") ) &&
             (disability.text == oldDisability || ( disability.text == "" && oldDisability == "-") ) &&
             (allergy.text == oldAllergy || ( allergy.text == "" && oldAllergy == "-")) &&
