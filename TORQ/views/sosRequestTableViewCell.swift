@@ -38,6 +38,8 @@ class sosRequestTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         
+//        let bottomSpace: CGFloat = 10.0 // Let's assume the space you want is 10
+//              self.contentView.frame = self.contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: bottomSpace, right: 0))
         self.layer.cornerRadius = 20
         self.contentView.layer.cornerRadius = 20
         let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: 20)

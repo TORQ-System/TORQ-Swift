@@ -180,10 +180,29 @@ class ViewSOSRequestsViewController: UIViewController {
 //MARK: - UITableViewDelegate
 extension ViewSOSRequestsViewController: UITableViewDelegate{
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 150
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 60
+    }
+    
 }
 
 extension ViewSOSRequestsViewController: UITableViewDataSource{
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let view = UIView()
+        view.backgroundColor = .clear
+        return view
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
         var count: Int = 10
         
         // if "Active" option is selected
@@ -200,7 +219,6 @@ extension ViewSOSRequestsViewController: UITableViewDataSource{
         else if cancelled {
             count = cancelledRequests.count
         }
-        print("count: \(count)")
         return count
     }
 
@@ -307,7 +325,6 @@ extension ViewSOSRequestsViewController: UITableViewDataSource{
         cell.genderLabel.text = "female"
         return cell
     }
-
 
 }
 
