@@ -15,6 +15,7 @@ class ViewSOSRequestsViewController: UIViewController {
     
     //MARK: - @IBOutlets
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var backgroundView: UIView!
     
     //MARK: - Varibales
     var loggedInCenterEmail = Auth.auth().currentUser?.email
@@ -27,6 +28,7 @@ class ViewSOSRequestsViewController: UIViewController {
     //MARK: - Overriden Function
     override func viewDidLoad() {
         super.viewDidLoad()
+        layoutViews()
         configureCenter()
         fetchSOSRequests()
 
@@ -62,6 +64,24 @@ class ViewSOSRequestsViewController: UIViewController {
         let centerName = loggedInCenterEmail![..<domainRange.lowerBound]
         center = SRCACenters.getSRCAInfo(name: String(centerName))
         print("SRCA Center info: \(String(describing: center))")
+    }
+    
+    private func layoutViews(){
+        backgroundView.layer.cornerRadius = 30
+        backgroundView.layer.masksToBounds = true
+        backgroundView.layer.maskedCorners = [.layerMinXMaxYCorner,.layerMaxXMaxYCorner]
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = backgroundView.frame
+        gradientLayer.colors =  [
+            UIColor(red: 0.102, green: 0.157, blue: 0.345, alpha: 1).cgColor,
+            UIColor(red: 0.192, green: 0.353, blue: 0.584, alpha: 1).cgColor]
+        gradientLayer.startPoint = CGPoint(x: 0.25, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 0.75, y: 0.5)
+        gradientLayer.transform = CATransform3DMakeAffineTransform(CGAffineTransform(a: 0.99, b: 0.98, c: -0.75, d: 1.6, tx: 0.38, ty: -0.77))
+        gradientLayer.bounds = backgroundView.bounds.insetBy(dx: -0.5*backgroundView.bounds.size.width, dy: -0.5*backgroundView.bounds.size.height)
+        gradientLayer.position = backgroundView.center
+        backgroundView.layer.addSublayer(gradientLayer)
+        backgroundView.layer.insertSublayer(gradientLayer, at: 0)
     }
     
     
@@ -151,8 +171,21 @@ extension ViewSOSRequestsViewController: UITableViewDataSource{
         cell.viewDetailsButton.layer.insertSublayer(gradientLayerr, at: 0)
         cell.viewDetailsButton.contentVerticalAlignment = .center
         
+        //7- status label:
+        cell.status.textColor = UIColor(red: 0.286, green: 0.671, blue: 0.875, alpha: 1)
         
-
+        //8- occuredAt label:
+        cell.occuredAt.textColor = UIColor(red: 0.286, green: 0.671, blue: 0.875, alpha: 1)
+        
+        //9- distance label:
+        cell.distanceLabel.textColor = UIColor(red: 0.286, green: 0.671, blue: 0.875, alpha: 1)
+        
+        //10- gender label:
+        cell.genderLabel.textColor = UIColor(red: 0.286, green: 0.671, blue: 0.875, alpha: 1)
+        
+        //11- age label:
+        cell.ageLabel.textColor = UIColor(red: 0.286, green: 0.671, blue: 0.875, alpha: 1)
+        
         //configuring the information of the cell
         
         
@@ -160,14 +193,14 @@ extension ViewSOSRequestsViewController: UITableViewDataSource{
         let centerLocation = CLLocation(latitude: CLLocationDegrees(center!["latitude"] as! Double), longitude: CLLocationDegrees(center!["longitude"] as! Double))
         let distance = centerLocation.distance(from: CLLocation(latitude: CLLocationDegrees(sosRequests[indexPath.row].getLatitude())!, longitude: CLLocationDegrees(CLLocationDegrees(sosRequests[indexPath.row].getLongitude())!)))
         
-        cell.name.text = "User Name"
+        cell.name.text = "Noura Alsulayfih"
         
         cell.distanceLabel.text = "\(Double(round(10*(distance/1000))/10)) Km"
         cell.status.text = "Active"
 //        cell.occuredAt.text = sosRequests[indexPath.row].getTimeDate()
         
-        cell.ageLabel.text = "age"
-        cell.genderLabel.text = "gender"
+        cell.ageLabel.text = "21"
+        cell.genderLabel.text = "female"
 
         return cell
     }
