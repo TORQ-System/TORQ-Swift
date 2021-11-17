@@ -4004,7 +4004,10 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="SOS" image="hand.raised" catalog="system" id="CSG-wd-rfv"/>
                     <connections>
+                        <outlet property="activeButton" destination="MBp-Jh-gwJ" id="JrE-4n-mbi"/>
                         <outlet property="backgroundView" destination="n11-Xr-jzV" id="nES-6z-Bd9"/>
+                        <outlet property="cancelButton" destination="xIb-yk-2uJ" id="YZp-NU-bOZ"/>
+                        <outlet property="processedButton" destination="M6y-6g-eUx" id="CF6-cd-Hg6"/>
                         <outlet property="tableView" destination="ktm-Ln-jv4" id="Y4P-P9-r2g"/>
                     </connections>
                 </viewController>
@@ -4044,8 +4047,8 @@
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="phone.fill" catalog="system" width="128" height="114"/>
         <image name="placeholder" width="120" height="120"/>
-        <image name="plus" catalog="system" width="128" height="113"/>
         <image name="plus" width="117" height="112"/>
+        <image name="plus" catalog="system" width="128" height="113"/>
         <image name="pulse" width="300" height="214"/>
         <image name="rec" width="277" height="280"/>
         <image name="star" width="150" height="150"/>

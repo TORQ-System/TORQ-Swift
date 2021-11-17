@@ -16,6 +16,9 @@ class ViewSOSRequestsViewController: UIViewController {
     //MARK: - @IBOutlets
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var backgroundView: UIView!
+    @IBOutlet weak var processedButton: UIButton!
+    @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var activeButton: UIButton!
     
     //MARK: - Varibales
     var loggedInCenterEmail = Auth.auth().currentUser?.email
@@ -63,6 +66,7 @@ class ViewSOSRequestsViewController: UIViewController {
     }
     
     private func layoutViews(){
+        //1- background view
         backgroundView.layer.cornerRadius = 30
         backgroundView.layer.masksToBounds = true
         backgroundView.layer.maskedCorners = [.layerMinXMaxYCorner,.layerMaxXMaxYCorner]
@@ -78,6 +82,16 @@ class ViewSOSRequestsViewController: UIViewController {
         gradientLayer.position = backgroundView.center
         backgroundView.layer.addSublayer(gradientLayer)
         backgroundView.layer.insertSublayer(gradientLayer, at: 0)
+        
+        //2- active button
+        activeButton.layer.cornerRadius = 10
+        
+        //3- processed button
+        processedButton.layer.cornerRadius = 10
+        
+        //3- cancelled button
+        cancelButton.layer.cornerRadius = 10
+        
     }
     
     @objc func goToLocation (sender:CustomTapGestureRecognizer) {
