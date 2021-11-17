@@ -83,15 +83,27 @@ extension ViewSOSRequestsViewController: UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: "sosCell") as! sosRequestTableViewCell
         
         //1- distance circle view:
-        let shadowLayer = CAShapeLayer()
-        shadowLayer.path = UIBezierPath(roundedRect: cell.distanceView.bounds, cornerRadius: cell.distanceView.layer.frame.width/2).cgPath
-        shadowLayer.fillColor = UIColor.white.cgColor
-        shadowLayer.shadowColor = UIColor.black.cgColor
-        shadowLayer.shadowPath = shadowLayer.path
-        shadowLayer.shadowOffset = CGSize(width: 0.0, height: 1.0)
-        shadowLayer.shadowOpacity = 0.2
-        shadowLayer.shadowRadius = 3
-        cell.distanceView.layer.insertSublayer(shadowLayer, at: 0)
+        let distanceShadowLayer = CAShapeLayer()
+        distanceShadowLayer.path = UIBezierPath(roundedRect: cell.distanceView.bounds, cornerRadius: cell.distanceView.layer.frame.width/2).cgPath
+        distanceShadowLayer.fillColor = UIColor.white.cgColor
+        distanceShadowLayer.shadowColor = UIColor.black.cgColor
+        distanceShadowLayer.shadowPath = distanceShadowLayer.path
+        distanceShadowLayer.shadowOffset = CGSize(width: 0.0, height: 1.0)
+        distanceShadowLayer.shadowOpacity = 0.2
+        distanceShadowLayer.shadowRadius = 3
+        cell.distanceView.layer.insertSublayer(distanceShadowLayer, at: 0)
+        
+        //2- gender circle view:
+        let genderShadowLayer = CAShapeLayer()
+        genderShadowLayer.path = UIBezierPath(roundedRect: cell.genderView.bounds, cornerRadius: cell.genderView.layer.frame.width/2).cgPath
+        genderShadowLayer.fillColor = UIColor.white.cgColor
+        genderShadowLayer.shadowColor = UIColor.black.cgColor
+        genderShadowLayer.shadowPath = genderShadowLayer.path
+        genderShadowLayer.shadowOffset = CGSize(width: 0.0, height: 1.0)
+        genderShadowLayer.shadowOpacity = 0.2
+        genderShadowLayer.shadowRadius = 3
+        cell.genderView.layer.insertSublayer(genderShadowLayer, at: 0)
+
         
 
         
