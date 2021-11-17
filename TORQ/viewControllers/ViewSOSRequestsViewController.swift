@@ -87,7 +87,7 @@ extension ViewSOSRequestsViewController: UITableViewDataSource{
         //1-cell view:
         cell.layer.cornerRadius = 20
         let cellShadowLayer = CAShapeLayer()
-        cellShadowLayer.path = UIBezierPath(roundedRect: cell.bounds, cornerRadius: cell.layer.cornerRadius).cgPath
+        cellShadowLayer.path = UIBezierPath(roundedRect: cell.bounds, cornerRadius: 20).cgPath
         cellShadowLayer.fillColor = UIColor.white.cgColor
         cellShadowLayer.shadowColor = UIColor.black.cgColor
         cellShadowLayer.shadowPath = cellShadowLayer.path
@@ -101,38 +101,55 @@ extension ViewSOSRequestsViewController: UITableViewDataSource{
         let distanceShadowLayer = CAShapeLayer()
         distanceShadowLayer.path = UIBezierPath(roundedRect: cell.distanceView.bounds, cornerRadius: cell.distanceView.layer.frame.width/2).cgPath
         distanceShadowLayer.fillColor = UIColor.white.cgColor
-        distanceShadowLayer.shadowColor = UIColor.black.cgColor
+        distanceShadowLayer.shadowColor = UIColor.darkGray.cgColor
         distanceShadowLayer.shadowPath = distanceShadowLayer.path
         distanceShadowLayer.shadowOffset = CGSize(width: 0.0, height: 1.0)
         distanceShadowLayer.shadowOpacity = 0.15
-        distanceShadowLayer.shadowRadius = 3
+        distanceShadowLayer.shadowRadius = 5
         cell.distanceView.layer.insertSublayer(distanceShadowLayer, at: 0)
         
         //3- gender circle view:
         let genderShadowLayer = CAShapeLayer()
         genderShadowLayer.path = UIBezierPath(roundedRect: cell.genderView.bounds, cornerRadius: cell.genderView.layer.frame.width/2).cgPath
         genderShadowLayer.fillColor = UIColor.white.cgColor
-        genderShadowLayer.shadowColor = UIColor.black.cgColor
+        genderShadowLayer.shadowColor = UIColor.darkGray.cgColor
         genderShadowLayer.shadowPath = genderShadowLayer.path
         genderShadowLayer.shadowOffset = CGSize(width: 0.0, height: 1.0)
         genderShadowLayer.shadowOpacity = 0.15
-        genderShadowLayer.shadowRadius = 3
+        genderShadowLayer.shadowRadius = 5.0
         cell.genderView.layer.insertSublayer(genderShadowLayer, at: 0)
         
         //4- age circle view:
         let ageShadowLayer = CAShapeLayer()
         ageShadowLayer.path = UIBezierPath(roundedRect: cell.ageView.bounds, cornerRadius: cell.ageView.layer.frame.width/2).cgPath
         ageShadowLayer.fillColor = UIColor.white.cgColor
-        ageShadowLayer.shadowColor = UIColor.black.cgColor
+        ageShadowLayer.shadowColor = UIColor.darkGray.cgColor
         ageShadowLayer.shadowPath = ageShadowLayer.path
         ageShadowLayer.shadowOffset = CGSize(width: 0.0, height: 1.0)
         ageShadowLayer.shadowOpacity = 0.15
-        ageShadowLayer.shadowRadius = 3
+        ageShadowLayer.shadowRadius = 5.0
         cell.ageView.layer.insertSublayer(ageShadowLayer, at: 0)
         
         //5- map view:
         cell.mapView.layer.cornerRadius = 20
         cell.mapView.layer.maskedCorners = [.layerMaxXMaxYCorner,.layerMaxXMinYCorner]
+        
+        //6- view details button:
+        cell.viewDetailsButton.backgroundColor = nil
+        cell.viewDetailsButton.layoutIfNeeded()
+        let gradientLayerr = CAGradientLayer()
+        gradientLayerr.colors = [UIColor(red: 0.879, green: 0.462, blue: 0.524, alpha: 1).cgColor,UIColor(red: 0.757, green: 0.204, blue: 0.286, alpha: 1).cgColor]
+        gradientLayerr.startPoint = CGPoint(x: 0, y: 0)
+        gradientLayerr.endPoint = CGPoint(x: 1, y: 0)
+        gradientLayerr.frame = cell.viewDetailsButton.bounds
+        gradientLayerr.cornerRadius = cell.viewDetailsButton.frame.height/2
+        gradientLayerr.shadowColor = UIColor.darkGray.cgColor
+        gradientLayerr.shadowOffset = CGSize(width: 2.5, height: 2.5)
+        gradientLayerr.shadowRadius = 5.0
+        gradientLayerr.shadowOpacity = 0.3
+        gradientLayerr.masksToBounds = false
+        cell.viewDetailsButton.layer.insertSublayer(gradientLayerr, at: 0)
+        cell.viewDetailsButton.contentVerticalAlignment = .center
         
         
 
