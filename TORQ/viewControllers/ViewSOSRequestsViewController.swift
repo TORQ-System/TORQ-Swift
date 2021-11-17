@@ -24,7 +24,14 @@ class ViewSOSRequestsViewController: UIViewController {
     var loggedInCenterEmail = Auth.auth().currentUser?.email
     var center:[String: Any]?
     var ref = Database.database().reference()
-    var sosRequests: [SOSRequest] = []
+    var users: [User] = []
+    var activeRequests: [SOSRequest] = []
+    var processedRequests: [SOSRequest] = []
+    var cancelledRequests: [SOSRequest] = []
+    var active = true
+    var processed = false
+    var cancelled = false
+    
 
 
     //MARK: - Overriden Function
@@ -33,13 +40,14 @@ class ViewSOSRequestsViewController: UIViewController {
         layoutViews()
         configureCenter()
         fetchSOSRequests()
-
     }
     
     //MARK: - Functions
     private func fetchSOSRequests(){
         ref.child("SOSRequests").queryOrdered(byChild: "time_date").observe(.value) { snapshot in
-            self.sosRequests = []
+            self.activeRequests = []
+            self.processedRequests = []
+            self.cancelledRequests = []
             for request in snapshot.children{
                 let obj = request as! DataSnapshot
                 let assigned_center = obj.childSnapshot(forPath: "assigned_center").value as! String
@@ -51,12 +59,49 @@ class ViewSOSRequestsViewController: UIViewController {
                 let user_id = obj.childSnapshot(forPath: "user_id").value as! String
                 
                 if assigned_center == self.center!["name"] as! String {
-                    self.sosRequests.append(SOSRequest(user_id: user_id, user_name: "User", status: status, assignedCenter: assigned_center, sent: sent, longitude: longitude, latitude: latitude,timeDate: time_date))
+                    
+                    let sosRequest = SOSRequest(user_id: user_id, user_name: "User", status: status, assignedCenter: assigned_center, sent: sent, longitude: longitude, latitude: latitude,timeDate: time_date)
+                    
+                    switch status {
+                    case "cancelled":
+                        self.cancelledRequests.append(sosRequest)
+                        break
+                    case "1":
+                        self.activeRequests.append(sosRequest)
+                        break
+                    case "processed":
+                        self.processedRequests.append(sosRequest)
+                        break
+                    default:
+                        print("unknown status")
+                    }
+                    
                     self.tableView.reloadData()
                 }
             }
         }
     }
+    
+//    private func fetchUsers(){
+//        ref.child("User").observe(.value) { snapshot in
+//            self.users = []
+//            for user in snapshot.children{
+//                let obj = user as! DataSnapshot
+//                let assigned_center = obj.childSnapshot(forPath: "assigned_center").value as! String
+//                let latitude = obj.childSnapshot(forPath: "latitude").value as! String
+//                let longitude = obj.childSnapshot(forPath: "longitude").value as! String
+//                let sent = obj.childSnapshot(forPath: "sent").value as! String
+//                let status = obj.childSnapshot(forPath: "status").value as! String
+//                let time_date = obj.childSnapshot(forPath: "time_date").value as! String
+//                let user_id = obj.childSnapshot(forPath: "user_id").value as! String
+//
+//                if assigned_center == self.center!["name"] as! String {
+//                    self.sosRequests.append(SOSRequest(user_id: user_id, user_name: "User", status: status, assignedCenter: assigned_center, sent: sent, longitude: longitude, latitude: latitude,timeDate: time_date))
+//                    self.tableView.reloadData()
+//                }
+//            }
+//        }
+//    }
     
     private func configureCenter(){
         let domainRange = loggedInCenterEmail!.range(of: "@")!
@@ -109,7 +154,26 @@ class ViewSOSRequestsViewController: UIViewController {
     }
     
     //MARK: - @IBActions
+    @IBAction func activeButton(_ sender: Any) {
+        active = true
+        processed = false
+        cancelled = false
+        tableView.reloadData()
+    }
     
+    @IBAction func processedButton(_ sender: Any) {
+        active = false
+        processed = true
+        cancelled = false
+        tableView.reloadData()
+    }
+    
+    @IBAction func cancelledButton(_ sender: Any) {
+        active = false
+        processed = false
+        cancelled = true
+        tableView.reloadData()
+    }
     
 }
 
@@ -120,11 +184,38 @@ extension ViewSOSRequestsViewController: UITableViewDelegate{
 
 extension ViewSOSRequestsViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sosRequests.count
+        var count: Int = 10
+        
+        // if "Active" option is selected
+        if active{
+            count = activeRequests.count
+        }
+        
+        // if "processed" option is selected
+        else if processed {
+            count = processedRequests.count
+        }
+        
+        // if "cancelled" option is selected
+        else if cancelled {
+            count = cancelledRequests.count
+        }
+        print("count: \(count)")
+        return count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "sosCell") as! sosRequestTableViewCell
+        
+        //1- which filter option is choosed:
+        let array: [SOSRequest]
+        if processed {
+            array = processedRequests
+        }else if cancelled {
+            array = cancelledRequests
+        } else {
+            array = activeRequests
+        }
         
         //2- distance circle view:
         let distanceShadowLayer = CAShapeLayer()
@@ -162,15 +253,15 @@ extension ViewSOSRequestsViewController: UITableViewDataSource{
         //5- map view:
         cell.mapView.layer.cornerRadius = 20
         cell.mapView.layer.maskedCorners = [.layerMaxXMaxYCorner,.layerMaxXMinYCorner]
-        let pin = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(Double(sosRequests[indexPath.row].getLatitude())!), longitude: CLLocationDegrees(Double(sosRequests[indexPath.row].getLongitude())!)))
+        let pin = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(Double(array[indexPath.row].getLatitude())!), longitude: CLLocationDegrees(Double(array[indexPath.row].getLongitude())!)))
         let annotation = MKPointAnnotation()
         annotation.coordinate = pin.coordinate
         let coordinateRegion = MKCoordinateRegion(center: pin.coordinate, latitudinalMeters: 12000, longitudinalMeters: 12000)
         cell.mapView.setRegion(coordinateRegion, animated: true)
         cell.mapView.addAnnotation(annotation)
         let tap = CustomTapGestureRecognizer(target: self, action: #selector(goToLocation(sender:)))
-        tap.lat = Double(sosRequests[indexPath.row].getLatitude())!
-        tap.long = Double(sosRequests[indexPath.row].getLongitude())!
+        tap.lat = Double(array[indexPath.row].getLatitude())!
+        tap.long = Double(array[indexPath.row].getLongitude())!
         cell.mapView.addGestureRecognizer(tap)
         
         //6- view details button:
@@ -207,7 +298,7 @@ extension ViewSOSRequestsViewController: UITableViewDataSource{
         
         //configuring the information of the cell
         let centerLocation = CLLocation(latitude: CLLocationDegrees(center!["latitude"] as! Double), longitude: CLLocationDegrees(center!["longitude"] as! Double))
-        let distance = centerLocation.distance(from: CLLocation(latitude: CLLocationDegrees(sosRequests[indexPath.row].getLatitude())!, longitude: CLLocationDegrees(CLLocationDegrees(sosRequests[indexPath.row].getLongitude())!)))
+        let distance = centerLocation.distance(from: CLLocation(latitude: CLLocationDegrees(array[indexPath.row].getLatitude())!, longitude: CLLocationDegrees(CLLocationDegrees(array[indexPath.row].getLongitude())!)))
         cell.name.text = "Noura Alsulayfih"
         cell.distanceLabel.text = "\(Double(round(10*(distance/1000))/10)) Km"
         cell.status.text = "Active"

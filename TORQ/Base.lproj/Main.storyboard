@@ -3717,6 +3717,9 @@
                                                                 <state key="normal" title="Active">
                                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </state>
+                                                                <connections>
+                                                                    <action selector="activeButton:" destination="UV5-cQ-ehM" eventType="touchUpInside" id="Ycq-2A-3Fe"/>
+                                                                </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M6y-6g-eUx">
                                                                 <rect key="frame" x="64.333333333333314" y="0.0" width="84" height="30"/>
@@ -3724,6 +3727,9 @@
                                                                 <state key="normal" title="Processed">
                                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </state>
+                                                                <connections>
+                                                                    <action selector="processedButton:" destination="UV5-cQ-ehM" eventType="touchUpInside" id="waV-EE-5uM"/>
+                                                                </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xIb-yk-2uJ">
                                                                 <rect key="frame" x="163.33333333333334" y="0.0" width="82.333333333333343" height="30"/>
@@ -3731,6 +3737,9 @@
                                                                 <state key="normal" title="Cancelled">
                                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </state>
+                                                                <connections>
+                                                                    <action selector="cancelledButton:" destination="UV5-cQ-ehM" eventType="touchUpInside" id="V9r-0Q-UnX"/>
+                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                     </stackView>
@@ -4047,8 +4056,8 @@
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="phone.fill" catalog="system" width="128" height="114"/>
         <image name="placeholder" width="120" height="120"/>
-        <image name="plus" width="117" height="112"/>
         <image name="plus" catalog="system" width="128" height="113"/>
+        <image name="plus" width="117" height="112"/>
         <image name="pulse" width="300" height="214"/>
         <image name="rec" width="277" height="280"/>
         <image name="star" width="150" height="150"/>
