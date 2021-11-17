@@ -131,16 +131,17 @@ class ViewSOSRequestsViewController: UIViewController {
         //2- active button
         activeButton.layer.cornerRadius = 10
         activeButton.titleEdgeInsets = UIEdgeInsets(top: 5,left: 5,bottom: 5,right: 5)
+        activeButton.backgroundColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
         
         //3- processed button
         processedButton.layer.cornerRadius = 10
         processedButton.titleEdgeInsets = UIEdgeInsets(top: 5,left: 5,bottom: 5,right: 5)
+        processedButton.backgroundColor = UIColor(red: 0.286, green: 0.671, blue: 0.875, alpha: 0.30)
 
-        //3- cancelled button
+        //4- cancelled button
         cancelButton.layer.cornerRadius = 10
         cancelButton.titleEdgeInsets = UIEdgeInsets(top: 5,left: 5,bottom: 5,right: 5)
-
-        
+        cancelButton.backgroundColor = UIColor(red: 0.667, green: 0.667, blue: 0.667, alpha: 0.30)
     }
     
     @objc func goToLocation (sender:CustomTapGestureRecognizer) {
@@ -163,6 +164,9 @@ class ViewSOSRequestsViewController: UIViewController {
         processed = false
         cancelled = false
         tableView.reloadData()
+        activeButton.backgroundColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
+        processedButton.backgroundColor = UIColor(red: 0.286, green: 0.671, blue: 0.875, alpha: 0.30)
+        cancelButton.backgroundColor = UIColor(red: 0.667, green: 0.667, blue: 0.667, alpha: 0.30)
     }
     
     @IBAction func processedButton(_ sender: Any) {
@@ -170,6 +174,9 @@ class ViewSOSRequestsViewController: UIViewController {
         processed = true
         cancelled = false
         tableView.reloadData()
+        activeButton.backgroundColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 0.30)
+        processedButton.backgroundColor = UIColor(red: 0.286, green: 0.671, blue: 0.875, alpha: 1)
+        cancelButton.backgroundColor = UIColor(red: 0.667, green: 0.667, blue: 0.667, alpha: 0.30)
     }
     
     @IBAction func cancelledButton(_ sender: Any) {
@@ -177,6 +184,9 @@ class ViewSOSRequestsViewController: UIViewController {
         processed = false
         cancelled = true
         tableView.reloadData()
+        activeButton.backgroundColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 0.30)
+        processedButton.backgroundColor = UIColor(red: 0.286, green: 0.671, blue: 0.875, alpha: 0.30)
+        cancelButton.backgroundColor = UIColor(red: 0.667, green: 0.667, blue: 0.667, alpha: 1)
     }
     
 }
