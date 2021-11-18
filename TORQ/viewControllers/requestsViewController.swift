@@ -418,7 +418,7 @@ extension requestsViewController: UICollectionViewDataSource{
            
           //  cell.circle1.layer.shadowColor = UIColor.black.cgColor
             cell.circle1.layer.shadowOpacity = 0.3
-            cell.circle1.layer.shadowOffset = CGSize(width: 5, height: 5)
+            cell.circle1.layer.shadowOffset = CGSize(width: 1, height: 1)
             cell.circle1.layer.shadowRadius = 10
            // cell.circle1.layer.shouldRasterize = true
            // cell.circle1.layer.rasterizationScale = UIScreen.main.scale
@@ -426,14 +426,14 @@ extension requestsViewController: UICollectionViewDataSource{
             
             // cell.circle2.layer.shadowColor = UIColor.black.cgColor
              cell.circle2.layer.shadowOpacity = 0.3
-             cell.circle2.layer.shadowOffset = CGSize(width: 5, height: 5)
+             cell.circle2.layer.shadowOffset = CGSize(width: 1, height: 1)
              cell.circle2.layer.shadowRadius = 10
             // cell.circle2.layer.shouldRasterize = true
             cell.circle3.layer.cornerRadius = cell.circle3.frame.size.height / 2
             
              //cell.circle3.layer.shadowColor = UIColor.black.cgColor
              cell.circle3.layer.shadowOpacity = 0.3
-             cell.circle3.layer.shadowOffset = CGSize(width: 5, height: 5)
+             cell.circle3.layer.shadowOffset = CGSize(width: 1, height: 1)
              cell.circle3.layer.shadowRadius = 10
             // cell.circle3.layer.shouldRasterize = true
            
@@ -480,7 +480,7 @@ extension requestsViewController: UICollectionViewDataSource{
            
           //  cell.circle1.layer.shadowColor = UIColor.black.cgColor
             cell.circle1.layer.shadowOpacity = 0.3
-            cell.circle1.layer.shadowOffset = CGSize(width: 5, height: 5)
+            cell.circle1.layer.shadowOffset = CGSize(width: 1, height: 1)
             cell.circle1.layer.shadowRadius = 10
            // cell.circle1.layer.shouldRasterize = true
            // cell.circle1.layer.rasterizationScale = UIScreen.main.scale
@@ -488,14 +488,14 @@ extension requestsViewController: UICollectionViewDataSource{
             
             // cell.circle2.layer.shadowColor = UIColor.black.cgColor
              cell.circle2.layer.shadowOpacity = 0.3
-             cell.circle2.layer.shadowOffset = CGSize(width: 5, height: 5)
+             cell.circle2.layer.shadowOffset = CGSize(width: 1, height: 1)
              cell.circle2.layer.shadowRadius = 10
             // cell.circle2.layer.shouldRasterize = true
             cell.circle3.layer.cornerRadius = cell.circle3.frame.size.height / 2
             
              //cell.circle3.layer.shadowColor = UIColor.black.cgColor
              cell.circle3.layer.shadowOpacity = 0.3
-             cell.circle3.layer.shadowOffset = CGSize(width: 5, height: 5)
+             cell.circle3.layer.shadowOffset = CGSize(width: 1, height: 5)
              cell.circle3.layer.shadowRadius = 10
             
            // cell.circle1.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]

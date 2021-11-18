@@ -1259,6 +1259,9 @@
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="2yL-pa-lN9">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <connections>
+                                    <outlet property="delegate" destination="prp-jc-ZhY" id="2Ic-gW-lcF"/>
+                                </connections>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SfR-iQ-9ri">
                                 <rect key="frame" x="20" y="44" width="25" height="29"/>
@@ -2817,6 +2820,9 @@
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="108" id="rZ9-Lt-TIu"/>
                                                             </constraints>
+                                                            <connections>
+                                                                <outlet property="delegate" destination="BP0-4U-9sd" id="AOg-c4-nhH"/>
+                                                            </connections>
                                                         </mapView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mq5-9s-EAj">
                                                             <rect key="frame" x="180" y="55" width="42.5" height="10"/>
@@ -3055,7 +3061,7 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" showsCompass="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N20-zN-XkF">
+                                    <mapView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" showsCompass="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N20-zN-XkF">
                                         <rect key="frame" x="255" y="117" width="99" height="98"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="98" id="qYe-fb-jmF"/>
@@ -3306,7 +3312,7 @@
                                     <action selector="prosessing:" destination="hCb-ji-XW4" eventType="touchUpInside" id="6vg-Pa-uUH"/>
                                 </connections>
                             </button>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="haS-k4-SR3">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="haS-k4-SR3">
                                 <rect key="frame" x="284" y="154" width="50" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>

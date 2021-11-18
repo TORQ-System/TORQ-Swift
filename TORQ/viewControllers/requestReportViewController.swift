@@ -88,23 +88,23 @@ class requestReportViewController: UIViewController {
     //MARK: - Functions
       func configureGradient() {
           backgroundView.layer.cornerRadius = 40
-          backgroundView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-          backgroundView.layer.shouldRasterize = true
-          backgroundView.layer.rasterizationScale = UIScreen.main.scale
-          
-          let gradient: CAGradientLayer = CAGradientLayer()
-          
-          gradient.colors = [
-              UIColor(red: 0.887, green: 0.436, blue: 0.501, alpha: 1).cgColor,
-              UIColor(red: 0.75, green: 0.191, blue: 0.272, alpha: 1).cgColor
-          ]
-          
-          gradient.locations = [0, 1]
-          gradient.startPoint = CGPoint(x: 0, y: 0)
-          gradient.endPoint = CGPoint(x: 1, y: 1)
-          gradient.frame = backgroundView.layer.frame
-          
-          backgroundView.layer.insertSublayer(gradient, at: 0)
+                  backgroundView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+                  backgroundView.layer.shouldRasterize = true
+                  backgroundView.layer.rasterizationScale = UIScreen.main.scale
+                  
+                  let gradient: CAGradientLayer = CAGradientLayer()
+                  
+                  gradient.colors = [
+                      UIColor(red: 0.887, green: 0.436, blue: 0.501, alpha: 1).cgColor,
+                      UIColor(red: 0.75, green: 0.191, blue: 0.272, alpha: 1).cgColor
+                  ]
+                  
+                  gradient.locations = [0, 1]
+                  gradient.startPoint = CGPoint(x: 0, y: 0)
+                  gradient.endPoint = CGPoint(x: 1, y: 1)
+                  gradient.frame = backgroundView.layer.frame
+                  
+                  backgroundView.layer.insertSublayer(gradient, at: 0)
           
       }
     
