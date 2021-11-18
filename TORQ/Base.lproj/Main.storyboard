@@ -4092,14 +4092,17 @@
                                         </subviews>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lVS-Yh-RDA">
-                                        <rect key="frame" x="0.0" y="50" width="50" height="30"/>
+                                        <rect key="frame" x="0.0" y="50" width="70" height="40"/>
                                         <color key="backgroundColor" red="0.59858280419999998" green="0.15238550310000001" blue="0.2196014225" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="50" id="9aB-1S-OUR"/>
-                                            <constraint firstAttribute="height" constant="30" id="wAk-jL-ZHE"/>
+                                            <constraint firstAttribute="width" constant="70" id="9aB-1S-OUR"/>
+                                            <constraint firstAttribute="height" constant="40" id="wAk-jL-ZHE"/>
                                         </constraints>
                                         <color key="tintColor" red="0.59858280419999998" green="0.15238550310000001" blue="0.2196014225" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <state key="normal" image="chevron.left" catalog="system"/>
+                                        <connections>
+                                            <action selector="backButton:" destination="Iri-PP-RSg" eventType="touchUpInside" id="rtO-N8-DgG"/>
+                                        </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="LkT-Xq-ISl">
                                         <rect key="frame" x="20" y="220" width="374" height="22"/>

@@ -26,6 +26,9 @@ class viewSOSRequestDetailsViewController: UIViewController {
     
     //MARK: - Variables
     var sosRequester: String?
+    var sosRequestTime: String?
+    var sosRequestName: String?
+    var sosRequestAge: String?
 
     
     //MARK: - Overriden functions
@@ -39,7 +42,9 @@ class viewSOSRequestDetailsViewController: UIViewController {
     private func layoutViews(){
         
         //1- back button
-        
+        backButton.backgroundColor = UIColor(red: 0.784, green: 0.267, blue: 0.337, alpha: 0.17)
+        backButton.layer.cornerRadius = 10
+        backButton.layer.maskedCorners = [.layerMaxXMaxYCorner,.layerMaxXMinYCorner]
         //2- profile container
         
         //3- chat button
@@ -52,7 +57,11 @@ class viewSOSRequestDetailsViewController: UIViewController {
         
         //7- Report Deatils button
         
-        //8- stack view 
+        //8- stack view
+        
+        //9- container view
+        
+        
     }
     
     private func fetchMedicalReports(){
@@ -61,8 +70,9 @@ class viewSOSRequestDetailsViewController: UIViewController {
     
     
     //MARK: - @IBActions
-    
-    
+    @IBAction func backButton(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
 }
 
 //MARK: - extension
