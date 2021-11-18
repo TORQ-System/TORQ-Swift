@@ -24,12 +24,13 @@ class ViewSOSRequestsViewController: UIViewController {
     var loggedInCenterEmail = Auth.auth().currentUser?.email
     var center:[String: Any]?
     var ref = Database.database().reference()
+    var usersInfo: [ [User:String] ] = [[:]]
     var users: [User] = []
-    var usersID: [String] = []
     var allSosRequests: [SOSRequest] = []
     var activeRequests: [SOSRequest] = []
     var processedRequests: [SOSRequest] = []
     var cancelledRequests: [SOSRequest] = []
+    var all = false
     var active = true
     var processed = false
     var cancelled = false
@@ -47,68 +48,75 @@ class ViewSOSRequestsViewController: UIViewController {
     //MARK: - Functions
     private func fetchSOSRequests(){
         //fetching sos requests from the database
-        ref.child("SOSRequests").queryOrdered(byChild: "time_date").observe(.value) { snapshot in
-            self.activeRequests = []
-            self.processedRequests = []
-            self.cancelledRequests = []
-            for request in snapshot.children{
-                let obj = request as! DataSnapshot
-                let assigned_center = obj.childSnapshot(forPath: "assigned_center").value as! String
-                let latitude = obj.childSnapshot(forPath: "latitude").value as! String
-                let longitude = obj.childSnapshot(forPath: "longitude").value as! String
-                let sent = obj.childSnapshot(forPath: "sent").value as! String
-                let status = obj.childSnapshot(forPath: "status").value as! String
-                let time_date = obj.childSnapshot(forPath: "time_date").value as! String
-                let user_id = obj.childSnapshot(forPath: "user_id").value as! String
-                if assigned_center == self.center!["name"] as! String {
-                    let sosRequest = SOSRequest(user_id: user_id, user_name: "User", status: status, assignedCenter: assigned_center, sent: sent, longitude: longitude, latitude: latitude,timeDate: time_date)
-                    self.allSosRequests.append(sosRequest)
-                    switch status {
-                    case "cancelled":
-                        self.cancelledRequests.append(sosRequest)
-                        break
-                    case "1":
-                        self.activeRequests.append(sosRequest)
-                        break
-                    case "processed":
-                        self.processedRequests.append(sosRequest)
-                        break
-                    default:
-                        print("unknown status")
+        let requestsQueue = DispatchQueue.init(label: "requestsQueue")
+        let usersQueue = DispatchQueue.init(label: "usersQueue")
+        requestsQueue.sync {
+            ref.child("SOSRequests").queryOrdered(byChild: "time_date").observe(.value) { snapshot in
+                self.activeRequests = []
+                self.processedRequests = []
+                self.cancelledRequests = []
+                for request in snapshot.children{
+                    let obj = request as! DataSnapshot
+                    let assigned_center = obj.childSnapshot(forPath: "assigned_center").value as! String
+                    let latitude = obj.childSnapshot(forPath: "latitude").value as! String
+                    let longitude = obj.childSnapshot(forPath: "longitude").value as! String
+                    let sent = obj.childSnapshot(forPath: "sent").value as! String
+                    let status = obj.childSnapshot(forPath: "status").value as! String
+                    let time_date = obj.childSnapshot(forPath: "time_date").value as! String
+                    let user_id = obj.childSnapshot(forPath: "user_id").value as! String
+                    if assigned_center == self.center!["name"] as! String {
+                        let sosRequest = SOSRequest(user_id: user_id, user_name: "User", status: status, assignedCenter: assigned_center, sent: sent, longitude: longitude, latitude: latitude,timeDate: time_date)
+                        self.allSosRequests.append(sosRequest)
+                        switch status {
+                        case "cancelled":
+                            self.cancelledRequests.append(sosRequest)
+                            break
+                        case "1":
+                            self.activeRequests.append(sosRequest)
+                            break
+                        case "processed":
+                            self.processedRequests.append(sosRequest)
+                            break
+                        default:
+                            print("unknown status")
+                        }
                     }
-//                    self.tableView.reloadData()
+                }
+                usersQueue.sync {
+                    self.fetchUsers()
                 }
             }
-            self.fetchUsers()
         }
     }
     
     private func fetchUsers(){
         // getting the user's information of sos requests
-        ref.child("User").observe(.value) { snapshot in
-            self.users = []
-            for user in snapshot.children{
-                let obj = user as! DataSnapshot
-                let dateOfBirth = obj.childSnapshot(forPath: "dateOfBirth").value as! String
-                let email = obj.childSnapshot(forPath: "email").value as! String
-                let fullName = obj.childSnapshot(forPath: "fullName").value as! String
-                let gender = obj.childSnapshot(forPath: "gender").value as! String
-                let nationalID = obj.childSnapshot(forPath: "nationalID").value as! String
-                let password = obj.childSnapshot(forPath: "password").value as! String
-                let phone = obj.childSnapshot(forPath: "phone").value as! String
+        let usersQueue = DispatchQueue.init(label: "usersQueue")
+        usersQueue.sync {
+            ref.child("User").observe(.value) { snapshot in
+                self.users = []
+                for user in snapshot.children{
+                    let obj = user as! DataSnapshot
+                    let dateOfBirth = obj.childSnapshot(forPath: "dateOfBirth").value as! String
+                    let email = obj.childSnapshot(forPath: "email").value as! String
+                    let fullName = obj.childSnapshot(forPath: "fullName").value as! String
+                    let gender = obj.childSnapshot(forPath: "gender").value as! String
+                    let nationalID = obj.childSnapshot(forPath: "nationalID").value as! String
+                    let password = obj.childSnapshot(forPath: "password").value as! String
+                    let phone = obj.childSnapshot(forPath: "phone").value as! String
 
-                let user = User(dateOfBirth: dateOfBirth, email: email, fullName: fullName, gender: gender, nationalID: nationalID, password: password, phone: phone)
-                
-                for req in self.allSosRequests {
-                    if req.getUserID() == obj.key {
-                        self.users.append(user)
-                        self.usersID.append(obj.key)
-//                        self.tableView.reloadData()
+                    let user = User(dateOfBirth: dateOfBirth, email: email, fullName: fullName, gender: gender, nationalID: nationalID, password: password, phone: phone)
+                    
+                    for req in self.allSosRequests {
+                        if req.getUserID() == obj.key {
+                            self.usersInfo.append([user:obj.key])
+//                            self.tableView.reloadData()
+                        }
                     }
+                    self.tableView.reloadData()
                 }
-//                self.tableView.reloadData()
+                print("usersInfo: \(self.usersInfo)")
             }
-            self.tableView.reloadData()
         }
     }
     
@@ -217,16 +225,6 @@ extension ViewSOSRequestsViewController: UITableViewDelegate{
 extension ViewSOSRequestsViewController: UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let view = UIView()
-        view.backgroundColor = .clear
-        return view
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
         var count: Int = 10
         
         // if "Active" option is selected
@@ -244,6 +242,16 @@ extension ViewSOSRequestsViewController: UITableViewDataSource{
             count = cancelledRequests.count
         }
         return count
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let view = UIView()
+        view.backgroundColor = .clear
+        return view
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -336,6 +344,7 @@ extension ViewSOSRequestsViewController: UITableViewDataSource{
         //8- occuredAt label:
         cell.occuredAt.textColor = UIColor(red: 0.286, green: 0.671, blue: 0.875, alpha: 1)
         let domainRange = array[indexPath.row].getTimeDate().range(of: " ")!
+        let date = array[indexPath.row].getTimeDate()[...domainRange.lowerBound]
         let time = array[indexPath.row].getTimeDate()[domainRange.lowerBound...]
         cell.occuredAt.text = "\(time)"
 
@@ -345,18 +354,31 @@ extension ViewSOSRequestsViewController: UITableViewDataSource{
         let distance = centerLocation.distance(from: CLLocation(latitude: CLLocationDegrees(array[indexPath.row].getLatitude())!, longitude: CLLocationDegrees(CLLocationDegrees(array[indexPath.row].getLongitude())!)))
         cell.distanceLabel.text = "\(Double(round(10*(distance/1000))/10)) Km"
         
-        //10-getting the user of the sos accident from the array
+        //10-getting the user information
+        print("array: \(array)")
+        var userInfo: [User:String]?
+        for info in usersInfo {
+            if info != [:] {
+                if array[indexPath.row].getUserID() == info.first?.value {
+                    userInfo = info
+                }
+            }
+        }
+        let userObject = userInfo?.keys
         
         //11- gender label:
         cell.genderLabel.textColor = UIColor(red: 0.286, green: 0.671, blue: 0.875, alpha: 1)
-        cell.genderLabel.text = "female"
+        cell.genderLabel.text = "\(String(describing: userObject!.first!.getGender()))"
         
         //12- age label:
         cell.ageLabel.textColor = UIColor(red: 0.286, green: 0.671, blue: 0.875, alpha: 1)
-        cell.ageLabel.text = "21"
+        let calendar = Calendar.current
+        let ageComponents = calendar.dateComponents([.year], from: Date(String(date)),to: Date())
+        let age = ageComponents.year!
+        cell.ageLabel.text = "\(age)"
         
         //13- name label:
-        cell.name.text = "Noura Alsulayfih"
+        cell.name.text = "\(String(describing: userObject!.first!.getFullName()))"
         
         return cell
     }
