@@ -4104,7 +4104,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="LkT-Xq-ISl">
                                         <rect key="frame" x="20" y="220" width="374" height="22"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u5k-pf-f4W">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u5k-pf-f4W" userLabel="Chat">
                                                 <rect key="frame" x="0.0" y="0.0" width="83.333333333333329" height="22"/>
                                                 <color key="backgroundColor" red="0.27500000000000002" green="0.53700000000000003" blue="0.97599999999999998" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <color key="tintColor" red="0.27500000000000002" green="0.53700000000000003" blue="0.68627450980000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -4173,6 +4173,18 @@
                             <constraint firstItem="FpD-TH-jZR" firstAttribute="top" secondItem="Q5R-tc-AVX" secondAttribute="top" id="MBN-87-Fdk"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="backButton" destination="lVS-Yh-RDA" id="7iJ-fK-njz"/>
+                        <outlet property="chatButton" destination="u5k-pf-f4W" id="QiR-Kn-QjC"/>
+                        <outlet property="containerView" destination="FpD-TH-jZR" id="DfI-Uh-76F"/>
+                        <outlet property="directionsButton" destination="1es-ox-gSm" id="uqY-HC-v4k"/>
+                        <outlet property="medicalReportButton" destination="HXc-FI-ESu" id="ccQ-1t-CQE"/>
+                        <outlet property="patientName" destination="BBa-Yy-4Rr" id="vNN-fE-hgf"/>
+                        <outlet property="processButton" destination="xOO-SP-hcI" id="q86-CW-ITq"/>
+                        <outlet property="profileContainer" destination="rdf-sV-Lod" id="8lg-1z-zDE"/>
+                        <outlet property="requestDetailsButton" destination="9fq-Kt-Hue" id="kCH-UK-2Cw"/>
+                        <outlet property="requestTime" destination="UMn-ED-jcs" id="aw8-hW-3pG"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mWd-YG-fi2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
