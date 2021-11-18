@@ -22,6 +22,7 @@ class sosRequestTableViewCell: UITableViewCell {
     @IBOutlet weak var ageView: UIView!
     @IBOutlet weak var ageLabel: UILabel!
     @IBOutlet weak var viewDetailsButton: UIButton!
+    @IBOutlet weak var backView: UIView!
     
 
     override func awakeFromNib() {
@@ -38,10 +39,8 @@ class sosRequestTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         
-//        let bottomSpace: CGFloat = 10.0 // Let's assume the space you want is 10
-//              self.contentView.frame = self.contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: bottomSpace, right: 0))
-        self.layer.cornerRadius = 20
-        self.contentView.layer.cornerRadius = 20
+        backView.layer.cornerRadius = 20
+        backView.layer.cornerRadius = 20
         let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: 20)
         self.layer.masksToBounds = false
         self.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor

@@ -373,9 +373,12 @@ extension ViewSOSRequestsViewController: UITableViewDataSource{
         //12- age label:
         cell.ageLabel.textColor = UIColor(red: 0.286, green: 0.671, blue: 0.875, alpha: 1)
         let calendar = Calendar.current
-        let ageComponents = calendar.dateComponents([.year], from: Date(String(date)),to: Date())
+        let components = calendar.dateComponents([.year, .month, .day, .hour], from: Date(String(date)))
+        let now = calendar.dateComponents([.year, .month, .day], from: Date())
+        let ageComponents = calendar.dateComponents([.year], from: components, to: now)
         let age = ageComponents.year!
         cell.ageLabel.text = "\(age)"
+        print(date)
         
         //13- name label:
         cell.name.text = "\(String(describing: userObject!.first!.getFullName()))"
