@@ -27,6 +27,7 @@ class hospitalsViewController: UIViewController ,UITableViewDelegate ,UITableVie
                         "King Khalid Hospital",
                         "King Abduallah Hospital",
                         "Prince Sultan Hospital"]
+    
     let redUIColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
     let blueUIColor = UIColor( red: 49/255, green: 90/255, blue:149/255, alpha: 1.0 )
     let alertErrorIcon = UIImage(named: "errorIcon")
