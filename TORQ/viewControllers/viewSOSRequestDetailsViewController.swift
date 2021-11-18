@@ -70,14 +70,32 @@ class viewSOSRequestDetailsViewController: UIViewController {
         requestTime.text = "Occured at: \(String(describing: sosRequestTime!))"
         
         //5- chat button
+        chatButton.layer.cornerRadius = 10
+        chatButton.layer.masksToBounds = true
+        chatButton.backgroundColor = UIColor(red: 0.286, green: 0.671, blue: 0.875, alpha: 0.1)
+        chatButton.tintColor = UIColor(red: 0.286, green: 0.671, blue: 0.875, alpha: 1)
+        chatButton.setTitleColor(UIColor(red: 0.286, green: 0.671, blue: 0.875, alpha: 1), for: .normal)
         
         //6- process button
+        processButton.layer.cornerRadius = 10
+        processButton.layer.masksToBounds = true
+        processButton.backgroundColor = UIColor(red: 0.286, green: 0.671, blue: 0.875, alpha: 0.1)
+        processButton.tintColor = UIColor(red: 0.286, green: 0.671, blue: 0.875, alpha: 1)
+        processButton.setTitleColor(UIColor(red: 0.286, green: 0.671, blue: 0.875, alpha: 1), for: .normal)
         
         //7- directions button
+        directionsButton.layer.cornerRadius = 10
+        directionsButton.layer.masksToBounds = true
+        directionsButton.backgroundColor = UIColor(red: 0.286, green: 0.671, blue: 0.875, alpha: 0.1)
+        directionsButton.tintColor = UIColor(red: 0.286, green: 0.671, blue: 0.875, alpha: 1)
+        directionsButton.setTitleColor(UIColor(red: 0.286, green: 0.671, blue: 0.875, alpha: 1), for: .normal)
         
         //8- Medical Report button
+        medicalReportButton.setTitleColor(UIColor(red: 0.788, green: 0.271, blue: 0.341, alpha: 1), for: .normal)
         
         //9- Report Deatils button
+        requestDetailsButton.setTitleColor(UIColor(red: 0.788, green: 0.271, blue: 0.341, alpha: 1), for: .normal)
+
         
         //10- stack view
         

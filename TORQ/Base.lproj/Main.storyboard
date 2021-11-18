@@ -4104,11 +4104,11 @@
                                             <action selector="backButton:" destination="Iri-PP-RSg" eventType="touchUpInside" id="rtO-N8-DgG"/>
                                         </connections>
                                     </button>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="LkT-Xq-ISl">
-                                        <rect key="frame" x="20" y="220" width="374" height="22"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="LkT-Xq-ISl">
+                                        <rect key="frame" x="20" y="220" width="374" height="50"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u5k-pf-f4W" userLabel="Chat">
-                                                <rect key="frame" x="0.0" y="0.0" width="83.333333333333329" height="22"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="118" height="50"/>
                                                 <color key="backgroundColor" red="0.27500000000000002" green="0.53700000000000003" blue="0.97599999999999998" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <color key="tintColor" red="0.27500000000000002" green="0.53700000000000003" blue="0.68627450980000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <state key="normal" title="  Chat" image="message" catalog="system">
@@ -4116,7 +4116,7 @@
                                                 </state>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xOO-SP-hcI">
-                                                <rect key="frame" x="103.33333333333334" y="0.0" width="110.33333333333334" height="22"/>
+                                                <rect key="frame" x="128" y="0.0" width="118" height="50"/>
                                                 <color key="backgroundColor" red="0.27500000000000002" green="0.53700000000000003" blue="0.97599999999999998" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <color key="tintColor" red="0.27500000000000002" green="0.53700000000000003" blue="0.68627450980000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <state key="normal" title="  Process" image="checkmark" catalog="system">
@@ -4124,7 +4124,7 @@
                                                 </state>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1es-ox-gSm">
-                                                <rect key="frame" x="233.66666666666663" y="0.0" width="140.33333333333337" height="22"/>
+                                                <rect key="frame" x="256" y="0.0" width="118" height="50"/>
                                                 <color key="backgroundColor" red="0.27500000000000002" green="0.53700000000000003" blue="0.97599999999999998" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <color key="tintColor" red="0.27500000000000002" green="0.53700000000000003" blue="0.68627450980000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <state key="normal" title="  Directions" image="location" catalog="system">
@@ -4132,6 +4132,9 @@
                                                 </state>
                                             </button>
                                         </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="aSX-MW-AaU"/>
+                                        </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="vTt-Gm-ojo">
                                         <rect key="frame" x="20" y="298" width="374" height="30"/>
@@ -4228,8 +4231,8 @@
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="phone.fill" catalog="system" width="128" height="114"/>
         <image name="placeholder" width="120" height="120"/>
-        <image name="plus" catalog="system" width="128" height="113"/>
         <image name="plus" width="117" height="112"/>
+        <image name="plus" catalog="system" width="128" height="113"/>
         <image name="pulse" width="300" height="214"/>
         <image name="rec" width="277" height="280"/>
         <image name="star" width="150" height="150"/>
