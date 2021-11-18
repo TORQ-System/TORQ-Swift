@@ -22,6 +22,7 @@ class viewSOSRequestDetailsViewController: UIViewController {
     @IBOutlet weak var directionsButton: UIButton!
     @IBOutlet weak var medicalReportButton: UIButton!
     @IBOutlet weak var requestDetailsButton: UIButton!
+    @IBOutlet weak var stackView: UIStackView!
     
     
     //MARK: - Variables
@@ -96,10 +97,14 @@ class viewSOSRequestDetailsViewController: UIViewController {
         //9- Report Deatils button
         requestDetailsButton.setTitleColor(UIColor(red: 0.788, green: 0.271, blue: 0.341, alpha: 1), for: .normal)
 
-        
         //10- stack view
+        stackView.layer.borderWidth = 1
+        stackView.layer.borderColor = UIColor.darkGray.cgColor
+
         
         //11- container view
+        
+        //12- background view
         
         
     }

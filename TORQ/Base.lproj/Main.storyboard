@@ -4104,30 +4104,30 @@
                                             <action selector="backButton:" destination="Iri-PP-RSg" eventType="touchUpInside" id="rtO-N8-DgG"/>
                                         </connections>
                                     </button>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="LkT-Xq-ISl">
-                                        <rect key="frame" x="20" y="220" width="374" height="50"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="LkT-Xq-ISl">
+                                        <rect key="frame" x="30" y="220" width="354" height="50"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u5k-pf-f4W" userLabel="Chat">
-                                                <rect key="frame" x="0.0" y="0.0" width="118" height="50"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="82.333333333333329" height="50"/>
                                                 <color key="backgroundColor" red="0.27500000000000002" green="0.53700000000000003" blue="0.97599999999999998" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <color key="tintColor" red="0.27500000000000002" green="0.53700000000000003" blue="0.68627450980000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                <state key="normal" title="  Chat" image="message" catalog="system">
+                                                <state key="normal" title=" Chat" image="message" catalog="system">
                                                     <color key="titleColor" red="0.27500000000000002" green="0.53700000000000003" blue="0.68627450980000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 </state>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xOO-SP-hcI">
-                                                <rect key="frame" x="128" y="0.0" width="118" height="50"/>
+                                                <rect key="frame" x="92.333333333333343" y="0.0" width="111.33333333333334" height="50"/>
                                                 <color key="backgroundColor" red="0.27500000000000002" green="0.53700000000000003" blue="0.97599999999999998" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <color key="tintColor" red="0.27500000000000002" green="0.53700000000000003" blue="0.68627450980000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                <state key="normal" title="  Process" image="checkmark" catalog="system">
+                                                <state key="normal" title=" Process" image="checkmark" catalog="system">
                                                     <color key="titleColor" red="0.27500000000000002" green="0.53700000000000003" blue="0.68627450980000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 </state>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1es-ox-gSm">
-                                                <rect key="frame" x="256" y="0.0" width="118" height="50"/>
+                                                <rect key="frame" x="213.66666666666663" y="0.0" width="140.33333333333337" height="50"/>
                                                 <color key="backgroundColor" red="0.27500000000000002" green="0.53700000000000003" blue="0.97599999999999998" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <color key="tintColor" red="0.27500000000000002" green="0.53700000000000003" blue="0.68627450980000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                <state key="normal" title="  Directions" image="location" catalog="system">
+                                                <state key="normal" title=" Directions" image="location" catalog="system">
                                                     <color key="titleColor" red="0.27500000000000002" green="0.53700000000000003" blue="0.68627450980000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 </state>
                                             </button>
@@ -4136,17 +4136,17 @@
                                             <constraint firstAttribute="height" constant="50" id="aSX-MW-AaU"/>
                                         </constraints>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="vTt-Gm-ojo">
-                                        <rect key="frame" x="20" y="298" width="374" height="30"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="vTt-Gm-ojo">
+                                        <rect key="frame" x="0.0" y="298" width="414" height="30"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HXc-FI-ESu">
-                                                <rect key="frame" x="0.0" y="0.0" width="177" height="30"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="207" height="30"/>
                                                 <state key="normal" title="Medical Report">
                                                     <color key="titleColor" red="0.59858280419999998" green="0.15238550310000001" blue="0.2196014225" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 </state>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9fq-Kt-Hue">
-                                                <rect key="frame" x="197" y="0.0" width="177" height="30"/>
+                                                <rect key="frame" x="207" y="0.0" width="207" height="30"/>
                                                 <state key="normal" title="Request Details">
                                                     <color key="titleColor" red="0.59858280419999998" green="0.15238550310000001" blue="0.2196014225" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 </state>
@@ -4159,11 +4159,11 @@
                                     <constraint firstAttribute="bottom" secondItem="vTt-Gm-ojo" secondAttribute="bottom" constant="20" id="0Dx-wl-vr4"/>
                                     <constraint firstItem="s1C-ws-zS2" firstAttribute="leading" secondItem="FpD-TH-jZR" secondAttribute="leading" constant="40" id="3Cm-qE-hH5"/>
                                     <constraint firstItem="LkT-Xq-ISl" firstAttribute="top" secondItem="s1C-ws-zS2" secondAttribute="bottom" constant="20" id="3LI-LS-uaO"/>
-                                    <constraint firstItem="vTt-Gm-ojo" firstAttribute="leading" secondItem="FpD-TH-jZR" secondAttribute="leading" constant="20" id="69Y-wB-ys0"/>
+                                    <constraint firstItem="vTt-Gm-ojo" firstAttribute="leading" secondItem="FpD-TH-jZR" secondAttribute="leading" id="69Y-wB-ys0"/>
                                     <constraint firstAttribute="trailing" secondItem="s1C-ws-zS2" secondAttribute="trailing" constant="40" id="AKb-9E-Qrf"/>
-                                    <constraint firstItem="LkT-Xq-ISl" firstAttribute="leading" secondItem="FpD-TH-jZR" secondAttribute="leading" constant="20" id="AQz-1P-XlO"/>
-                                    <constraint firstAttribute="trailing" secondItem="LkT-Xq-ISl" secondAttribute="trailing" constant="20" id="Eae-CY-Yov"/>
-                                    <constraint firstAttribute="trailing" secondItem="vTt-Gm-ojo" secondAttribute="trailing" constant="20" id="M1w-ot-9l5"/>
+                                    <constraint firstItem="LkT-Xq-ISl" firstAttribute="leading" secondItem="FpD-TH-jZR" secondAttribute="leading" constant="30" id="AQz-1P-XlO"/>
+                                    <constraint firstAttribute="trailing" secondItem="LkT-Xq-ISl" secondAttribute="trailing" constant="30" id="Eae-CY-Yov"/>
+                                    <constraint firstAttribute="trailing" secondItem="vTt-Gm-ojo" secondAttribute="trailing" id="M1w-ot-9l5"/>
                                     <constraint firstItem="lVS-Yh-RDA" firstAttribute="top" secondItem="FpD-TH-jZR" secondAttribute="top" constant="50" id="aCE-42-0tI"/>
                                     <constraint firstAttribute="width" secondItem="FpD-TH-jZR" secondAttribute="height" multiplier="69:58" id="i9g-kr-6Cf"/>
                                     <constraint firstItem="lVS-Yh-RDA" firstAttribute="leading" secondItem="FpD-TH-jZR" secondAttribute="leading" id="tB5-S8-np8"/>
@@ -4190,6 +4190,7 @@
                         <outlet property="profileContainer" destination="rdf-sV-Lod" id="8lg-1z-zDE"/>
                         <outlet property="requestDetailsButton" destination="9fq-Kt-Hue" id="kCH-UK-2Cw"/>
                         <outlet property="requestTime" destination="UMn-ED-jcs" id="aw8-hW-3pG"/>
+                        <outlet property="stackView" destination="vTt-Gm-ojo" id="7ml-Sw-XYQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mWd-YG-fi2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -4231,8 +4232,8 @@
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="phone.fill" catalog="system" width="128" height="114"/>
         <image name="placeholder" width="120" height="120"/>
-        <image name="plus" width="117" height="112"/>
         <image name="plus" catalog="system" width="128" height="113"/>
+        <image name="plus" width="117" height="112"/>
         <image name="pulse" width="300" height="214"/>
         <image name="rec" width="277" height="280"/>
         <image name="star" width="150" height="150"/>
