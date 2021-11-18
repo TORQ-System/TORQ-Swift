@@ -171,7 +171,7 @@ class ViewSOSRequestsViewController: UIViewController {
         self.present(vc, animated: true, completion: nil)
     }
     
-    @objc func viewDetails(sender: UIButton) {
+    @objc func viewDetails(sender: viewSOSRequestsDetails) {
         // clicking on view location view conyroller after clicking on the map
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(identifier: "viewSOSRequestDetailsViewController") as! viewSOSRequestDetailsViewController
@@ -183,7 +183,9 @@ class ViewSOSRequestsViewController: UIViewController {
         } else {
             array = activeRequests
         }
-        vc.sosRequester = array[sender.tag].getUserID()
+        vc.sosRequester = sender.userID
+        vc.sosRequestName = sender.userName
+        vc.sosRequestTime = sender.requestTime
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
     }
@@ -191,6 +193,13 @@ class ViewSOSRequestsViewController: UIViewController {
     class CustomTapGestureRecognizer: UITapGestureRecognizer {
         var long: Double?
         var lat: Double?
+    }
+    
+    class viewSOSRequestsDetails: UITapGestureRecognizer {
+        var userName: String?
+        var requestTime: String?
+        var userID: String?
+        
     }
     
     //MARK: - @IBActions
@@ -398,9 +407,11 @@ extension ViewSOSRequestsViewController: UITableViewDataSource{
         cell.name.text = "\(String(describing: userObject!.first!.getFullName()))"
         
         //14- view deatils button
-        cell.viewDetailsButton.tag = indexPath.row
-        cell.viewDetailsButton.addTarget(self,action:#selector(viewDetails),
-                                         for:.touchUpInside)
+        let buttonTap = viewSOSRequestsDetails(target: self, action: #selector(viewDetails(sender:)))
+        buttonTap.userID = array[indexPath.row].getUserID()
+        buttonTap.userName = userObject!.first!.getFullName()
+        buttonTap.requestTime = String(time)
+        cell.viewDetailsButton.addGestureRecognizer(buttonTap)
         return cell
     }
 
