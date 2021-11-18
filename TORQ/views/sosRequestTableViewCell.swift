@@ -28,6 +28,20 @@ class sosRequestTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        backView.layer.shadowColor = UIColor.clear.cgColor
+        backView.layer.shadowOffset = CGSize(width: 0, height: 0)
+        backView.layer.shadowOpacity = .zero
+        backView.layer.shadowPath = nil
+        
+        self.layer.cornerRadius = 20
+        self.layer.masksToBounds = true
+        backView.layer.cornerRadius = 20
+        let shadowPath = UIBezierPath(roundedRect: backView.bounds, cornerRadius: 20)
+        backView.layer.masksToBounds = false
+        backView.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
+        backView.layer.shadowOffset = CGSize(width: 4, height: 9)
+        backView.layer.shadowOpacity = 0.5
+        backView.layer.shadowPath = shadowPath.cgPath
 
     }
 
@@ -36,19 +50,4 @@ class sosRequestTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
-    override func layoutSubviews() {
-        
-        backView.layer.cornerRadius = 20
-        backView.layer.cornerRadius = 20
-        let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: 20)
-        self.layer.masksToBounds = false
-        self.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
-        self.layer.shadowOffset = CGSize(width: 4, height: 9)
-        self.layer.shadowOpacity = 0.5
-        self.layer.shadowPath = shadowPath.cgPath
-    }
-    
-    
-
 }

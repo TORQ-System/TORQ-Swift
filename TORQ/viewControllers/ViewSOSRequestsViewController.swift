@@ -146,17 +146,17 @@ class ViewSOSRequestsViewController: UIViewController {
         backgroundView.layer.insertSublayer(gradientLayer, at: 0)
         
         //2- active button
-        activeButton.layer.cornerRadius = 10
+        activeButton.layer.cornerRadius = 15
         activeButton.titleEdgeInsets = UIEdgeInsets(top: 5,left: 5,bottom: 5,right: 5)
         activeButton.backgroundColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
         
         //3- processed button
-        processedButton.layer.cornerRadius = 10
+        processedButton.layer.cornerRadius = 15
         processedButton.titleEdgeInsets = UIEdgeInsets(top: 5,left: 5,bottom: 5,right: 5)
         processedButton.backgroundColor = UIColor(red: 0.286, green: 0.671, blue: 0.875, alpha: 0.30)
 
         //4- cancelled button
-        cancelButton.layer.cornerRadius = 10
+        cancelButton.layer.cornerRadius = 15
         cancelButton.titleEdgeInsets = UIEdgeInsets(top: 5,left: 5,bottom: 5,right: 5)
         cancelButton.backgroundColor = UIColor(red: 0.667, green: 0.667, blue: 0.667, alpha: 0.30)
     }
@@ -167,6 +167,23 @@ class ViewSOSRequestsViewController: UIViewController {
         let vc = storyboard.instantiateViewController(identifier: "viewLocationViewController") as! viewLocationViewController
         vc.latitude = sender.lat
         vc.longitude = sender.long
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    @objc func viewDetails(sender: UIButton) {
+        // clicking on view location view conyroller after clicking on the map
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(identifier: "viewSOSRequestDetailsViewController") as! viewSOSRequestDetailsViewController
+        let array: [SOSRequest]
+        if processed {
+            array = processedRequests
+        }else if cancelled {
+            array = cancelledRequests
+        } else {
+            array = activeRequests
+        }
+        vc.sosRequester = array[sender.tag].getUserID()
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
     }
@@ -213,12 +230,9 @@ class ViewSOSRequestsViewController: UIViewController {
 extension ViewSOSRequestsViewController: UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 160
+        return 230
     }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 60
-    }
+
     
 }
 
@@ -302,7 +316,7 @@ extension ViewSOSRequestsViewController: UITableViewDataSource{
         
         //5- map view:
         cell.mapView.layer.cornerRadius = 20
-        cell.mapView.layer.maskedCorners = [.layerMaxXMaxYCorner,.layerMaxXMinYCorner]
+//        cell.mapView.layer.maskedCorners = [.layerMaxXMaxYCorner,.layerMaxXMinYCorner]
         let pin = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(Double(array[indexPath.row].getLatitude())!), longitude: CLLocationDegrees(Double(array[indexPath.row].getLongitude())!)))
         let annotation = MKPointAnnotation()
         annotation.coordinate = pin.coordinate
@@ -383,6 +397,10 @@ extension ViewSOSRequestsViewController: UITableViewDataSource{
         //13- name label:
         cell.name.text = "\(String(describing: userObject!.first!.getFullName()))"
         
+        //14- view deatils button
+        cell.viewDetailsButton.tag = indexPath.row
+        cell.viewDetailsButton.addTarget(self,action:#selector(viewDetails),
+                                         for:.touchUpInside)
         return cell
     }
 
