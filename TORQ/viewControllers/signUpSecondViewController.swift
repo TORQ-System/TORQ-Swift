@@ -153,7 +153,7 @@ class signUpSecondViewController: UIViewController {
         }
     
     func validateFields() -> [String: String] {
-        var errors = ["Empty":"","nationalID":"", "phone":"","date":"","unChecked":""]
+        var errors = ["Empty":"","nationalID":"", "phone":"","date":""]
         
         // CASE-0 : This case validates submitting form with empty fields
         if nationalID.text == "" && phone.text == "" && date.text == "" {
@@ -185,10 +185,6 @@ class signUpSecondViewController: UIViewController {
         //CASE-4: gender
         //no validation is needed since we're using segmented control that has "Female" as it's default value, thus we're preventing the error from the first place
         
-        //CASE-5: Conditions CheckBox
-//        if checkBoxButton.isSelected == false {
-//            errors["unChecked"] = "You must agree on Terms & Conditions and Privacy Policy"
-//        }
         
         return errors
     }

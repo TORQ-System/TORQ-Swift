@@ -3098,12 +3098,12 @@
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Message (Optional)" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Jhf-ng-NO3">
                                                 <rect key="frame" x="0.0" y="0.0" width="334" height="80"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="80" id="M2D-cc-Cii"/>
-                                                </constraints>
                                                 <color key="textColor" systemColor="labelColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="showBottomBorder" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <outlet property="delegate" destination="3Ww-Zo-G17" id="aHC-uw-oZW"/>
                                                 </connections>
@@ -3113,11 +3113,14 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="14.5" id="PNh-cN-Tsh"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                 <color key="textColor" red="0.7782370448" green="0.25408077239999999" blue="0.32155948880000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
+                                        <constraints>
+                                            <constraint firstItem="Wzr-1p-WVP" firstAttribute="top" secondItem="Jhf-ng-NO3" secondAttribute="bottom" constant="5" id="WGi-0i-hDj"/>
+                                        </constraints>
                                     </stackView>
                                 </subviews>
                             </stackView>
@@ -3262,11 +3265,8 @@
                                         <rect key="frame" x="0.0" y="216.99999999999997" width="334" height="99.666666666666657"/>
                                         <subviews>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Message (Optional)" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="uU5-8z-Iks">
-                                                <rect key="frame" x="0.0" y="0.0" width="334" height="80"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="334" height="80.333333333333329"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="80" id="9lY-9k-BgY"/>
-                                                </constraints>
                                                 <color key="textColor" systemColor="labelColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -3275,11 +3275,11 @@
                                                 </connections>
                                             </textView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error message" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vL2-1O-JLD">
-                                                <rect key="frame" x="0.0" y="84.999999999999943" width="334" height="14.666666666666671"/>
+                                                <rect key="frame" x="0.0" y="85.333333333333314" width="334" height="14.333333333333329"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="14.5" id="TXT-3U-cmT"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                 <color key="textColor" red="0.7782370448" green="0.25408077239999999" blue="0.32155948880000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -3287,9 +3287,8 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ao8-Fz-dKH">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ao8-Fz-dKH">
                                 <rect key="frame" x="285" y="666" width="109" height="48"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="HP8-O4-GxE">
                                         <rect key="frame" x="8" y="0.0" width="90.666666666666671" height="40"/>
@@ -3367,9 +3366,14 @@
                             <constraint firstItem="aou-JH-PH1" firstAttribute="centerY" secondItem="Ibh-vs-XWq" secondAttribute="centerY" id="MHM-U7-f14"/>
                             <constraint firstItem="aou-JH-PH1" firstAttribute="centerX" secondItem="Ibh-vs-XWq" secondAttribute="centerX" id="SRL-Tq-VWb"/>
                             <constraint firstItem="F7C-y1-hvo" firstAttribute="centerX" secondItem="Ibh-vs-XWq" secondAttribute="centerX" id="a2O-sr-xdy"/>
+                            <constraint firstItem="ao8-Fz-dKH" firstAttribute="leading" secondItem="Ibh-vs-XWq" secondAttribute="leading" constant="285" id="fOQ-oV-XoG"/>
+                            <constraint firstItem="ao8-Fz-dKH" firstAttribute="top" secondItem="aou-JH-PH1" secondAttribute="bottom" constant="54.666666666666742" id="pxQ-sU-Sv0"/>
                             <constraint firstItem="aou-JH-PH1" firstAttribute="leading" secondItem="Ibh-vs-XWq" secondAttribute="leading" constant="40" id="r2L-hb-CGJ"/>
+                            <constraint firstItem="aou-JH-PH1" firstAttribute="top" secondItem="F7C-y1-hvo" secondAttribute="bottom" constant="88.666666666666629" id="tmP-3o-dFU"/>
                             <constraint firstItem="Ibh-vs-XWq" firstAttribute="trailing" secondItem="aou-JH-PH1" secondAttribute="trailing" constant="40" id="vFL-13-a37"/>
+                            <constraint firstItem="ao8-Fz-dKH" firstAttribute="trailing" secondItem="UQG-dG-j1E" secondAttribute="trailingMargin" id="wuX-lZ-BLL"/>
                             <constraint firstItem="K0G-0e-IgR" firstAttribute="leading" secondItem="Ibh-vs-XWq" secondAttribute="leading" constant="36" id="ww2-bO-wnI"/>
+                            <constraint firstItem="Ibh-vs-XWq" firstAttribute="bottom" secondItem="ao8-Fz-dKH" secondAttribute="bottom" constant="148" id="zjY-jR-yIa"/>
                         </constraints>
                     </view>
                     <connections>

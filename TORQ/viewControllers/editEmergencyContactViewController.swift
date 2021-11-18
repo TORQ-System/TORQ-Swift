@@ -217,6 +217,8 @@ class editEmergencyContactViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     func configureMsgTextView(){
+        // disable scrolling
+        msgTextView.isScrollEnabled = false
         // Round the corners.
         msgTextView.layer.masksToBounds = true
 
@@ -272,7 +274,7 @@ class editEmergencyContactViewController: UIViewController {
         }
         // CASE: msg greater than 80 characters
         if msgTextView.text!.count >= 135 {
-            errors["msg"] = "message is too long, try to shorten it"
+            errors["msg"] = "message is too long, try shortening it"
         }
         
         return errors
@@ -314,7 +316,13 @@ class editEmergencyContactViewController: UIViewController {
         return errors
         
     }
-    
+    private func textLimit(existingText: String?,
+                           newText: String,
+                           limit: Int) -> Bool {
+        let text = existingText ?? ""
+        let isAtLimit = text.count + newText.count <= limit
+        return isAtLimit
+    }
     // Go to Emergency Contatcs View After successful update
     @objc func saveClicked(_ sender: UITapGestureRecognizer) {
         let errors = validateFields()
@@ -529,7 +537,7 @@ extension editEmergencyContactViewController: UITextViewDelegate{
         if text == "\n"{
             msgTextView.resignFirstResponder()
         }
-        return true
+        return self.textLimit(existingText: textView.text, newText: text, limit: 135)
     }
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text == "" {
@@ -543,7 +551,7 @@ extension editEmergencyContactViewController: UITextViewDelegate{
             
         }
         else if textView.text!.count >= 135 {
-            errorMessage.text = "message is too long, try to shorten it"
+            errorMessage.text = "message is too long, try shortening it"
             // set text color to red
             msgTextView.textColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
             // set border color to red
