@@ -34,8 +34,8 @@ class signUpSecondViewController: UIViewController {
     var userGender: String?
     var userNationalID: String?
     var userPhone: String?
-    var completedFields: Float = 0.625
-    var numberOfCompleted: Int = 5
+    var completedFields: Float = 0.5
+    var numberOfCompleted: Int = 4
     var correctField: [String:Bool] = ["nationalID":false, "phone": false, "date":false,"conditions":false]
     // tap gesture variable
     var tap = UITapGestureRecognizer()
@@ -186,9 +186,9 @@ class signUpSecondViewController: UIViewController {
         //no validation is needed since we're using segmented control that has "Female" as it's default value, thus we're preventing the error from the first place
         
         //CASE-5: Conditions CheckBox
-        if checkBoxButton.isSelected == false {
-            errors["unChecked"] = "You must agree on Terms & Conditions and Privacy Policy"
-        }
+//        if checkBoxButton.isSelected == false {
+//            errors["unChecked"] = "You must agree on Terms & Conditions and Privacy Policy"
+//        }
         
         return errors
     }
@@ -246,21 +246,6 @@ class signUpSecondViewController: UIViewController {
     @IBAction func checkBoxTapped(_ sender:UIButton){
         
 //        let errors = validateFields()
-//
-//        if errors["unChecked"] != "" && correctField["conditions"]!{
-//            completedFields-=0.125
-//            numberOfCompleted-=1
-//            correctField["conditions"]! = false
-//        }
-//        if errors["unChecked"] == "" && !correctField["conditions"]!{
-//            completedFields+=0.125
-//            numberOfCompleted+=1
-//            correctField["conditions"]! = true
-//        }
-//
-//        progressBar.setProgress(completedFields, animated: true)
-//        percentageLabel.text = "\(calculatePercentage())%"
-        
         if sender.isSelected {
             // check box is not selected
             sender.isSelected = false
@@ -269,6 +254,22 @@ class signUpSecondViewController: UIViewController {
             // check box selected
             sender.isSelected = true
         }
+        
+        if checkBoxButton.isSelected == false  && correctField["conditions"]!{
+            completedFields-=0.125
+            numberOfCompleted-=1
+            correctField["conditions"]! = false
+        }
+        if checkBoxButton.isSelected == true && !correctField["conditions"]!{
+            completedFields+=0.125
+            numberOfCompleted+=1
+            correctField["conditions"]! = true
+        }
+
+        progressBar.setProgress(completedFields, animated: true)
+        percentageLabel.text = "\(calculatePercentage())%"
+        
+        
         
     }
     
@@ -328,11 +329,10 @@ class signUpSecondViewController: UIViewController {
             return
         }
         // if conditions checkbox was unchecked
-        guard errors["unChecked"] == "" else {
-            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: errors["unChecked"]! , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+        guard checkBoxButton.isSelected == true else {
+            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "You must agree on Terms & Conditions and Privacy Policy" , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
             return
         }
-        
         progressBar.setProgress(1, animated: true)
         
         // if no error is detected hide the error view

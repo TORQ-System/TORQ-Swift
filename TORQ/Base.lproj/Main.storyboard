@@ -2014,30 +2014,6 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ejo-Os-4Dw">
-                                <rect key="frame" x="40" y="669" width="334" height="33.666666666666629"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8YH-Sp-4jd">
-                                        <rect key="frame" x="0.0" y="0.0" width="38" height="33.666666666666664"/>
-                                        <color key="tintColor" red="0.28627450980000002" green="0.6705882353" blue="0.87450980389999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" image="square" catalog="system"/>
-                                        <state key="selected" image="checkmark.square" catalog="system"/>
-                                        <connections>
-                                            <action selector="checkBoxTapped:" destination="KyV-ma-QH5" eventType="touchUpInside" id="bI9-Ea-RvF"/>
-                                        </connections>
-                                    </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="By signing up, you are accepting our Terms &amp; Conditions, and Privacy Policy" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sah-D9-F8G">
-                                        <rect key="frame" x="38" y="0.0" width="296" height="33.666666666666664"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <color key="textColor" red="0.11764705882352941" green="0.12941176470588234" blue="0.14117647058823529" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="334" id="9Ef-C0-8VM"/>
-                                </constraints>
-                            </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e3p-vs-cM2">
                                 <rect key="frame" x="262" y="739" width="124" height="48"/>
                                 <subviews>
@@ -2078,6 +2054,22 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8YH-Sp-4jd">
+                                <rect key="frame" x="40" y="666" width="38" height="33.666666666666629"/>
+                                <color key="tintColor" red="0.28627450980000002" green="0.6705882353" blue="0.87450980389999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="square" catalog="system"/>
+                                <state key="selected" image="checkmark.square" catalog="system"/>
+                                <connections>
+                                    <action selector="checkBoxTapped:" destination="KyV-ma-QH5" eventType="touchUpInside" id="bI9-Ea-RvF"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="By signing up, you are accepting our Terms &amp; Conditions, and Privacy Policy" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sah-D9-F8G">
+                                <rect key="frame" x="72" y="675" width="305" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="0.11764705882352941" green="0.12941176470588234" blue="0.14117647058823529" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="EcC-VW-9eS"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2086,25 +2078,31 @@
                             <constraint firstItem="27X-sY-ylR" firstAttribute="centerX" secondItem="LJB-WW-e2O" secondAttribute="centerX" id="1Fe-gq-0Fc"/>
                             <constraint firstItem="kgV-3V-FV3" firstAttribute="leading" secondItem="EcC-VW-9eS" secondAttribute="leading" constant="30" id="3LM-69-iF1"/>
                             <constraint firstItem="neB-Ev-T76" firstAttribute="leading" secondItem="EcC-VW-9eS" secondAttribute="leading" constant="40" id="6GX-8F-igX"/>
+                            <constraint firstItem="e3p-vs-cM2" firstAttribute="top" secondItem="sah-D9-F8G" secondAttribute="bottom" constant="30" id="8iR-xA-C6c"/>
+                            <constraint firstItem="8YH-Sp-4jd" firstAttribute="top" secondItem="neB-Ev-T76" secondAttribute="bottom" constant="18.333333333333258" id="9Jc-wU-j5G"/>
                             <constraint firstItem="lkw-d0-m3u" firstAttribute="top" secondItem="27X-sY-ylR" secondAttribute="bottom" constant="5" id="AYm-Or-KnK"/>
+                            <constraint firstItem="sah-D9-F8G" firstAttribute="leading" secondItem="8YH-Sp-4jd" secondAttribute="trailing" constant="-6" id="BBu-R3-a9k"/>
                             <constraint firstItem="neB-Ev-T76" firstAttribute="centerX" secondItem="LJB-WW-e2O" secondAttribute="centerX" id="GMQ-Ey-FZq"/>
                             <constraint firstItem="McA-Di-q8f" firstAttribute="centerX" secondItem="LJB-WW-e2O" secondAttribute="centerX" id="P0U-Vt-7bG"/>
+                            <constraint firstItem="8YH-Sp-4jd" firstAttribute="leading" secondItem="EcC-VW-9eS" secondAttribute="leading" constant="40" id="PLI-SR-sih"/>
+                            <constraint firstItem="sah-D9-F8G" firstAttribute="leading" secondItem="EcC-VW-9eS" secondAttribute="leading" constant="72" id="Pom-or-cgF"/>
+                            <constraint firstItem="EcC-VW-9eS" firstAttribute="trailing" secondItem="sah-D9-F8G" secondAttribute="trailing" constant="37" id="T7A-lf-sff"/>
                             <constraint firstItem="EcC-VW-9eS" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="kgV-3V-FV3" secondAttribute="trailing" symbolic="YES" id="UWZ-3y-Fq4"/>
                             <constraint firstItem="e3p-vs-cM2" firstAttribute="top" secondItem="neB-Ev-T76" secondAttribute="bottom" constant="91.333333333333258" id="Ukc-rT-GVV"/>
                             <constraint firstItem="McA-Di-q8f" firstAttribute="top" secondItem="e3p-vs-cM2" secondAttribute="bottom" constant="17" id="VUr-bI-eb7"/>
                             <constraint firstItem="EcC-VW-9eS" firstAttribute="trailing" secondItem="neB-Ev-T76" secondAttribute="trailing" constant="40" id="XmT-PQ-a2M"/>
+                            <constraint firstItem="sah-D9-F8G" firstAttribute="top" secondItem="neB-Ev-T76" secondAttribute="bottom" constant="27.333333333333258" id="ZIP-VQ-3Ki"/>
                             <constraint firstItem="e3p-vs-cM2" firstAttribute="leading" secondItem="EcC-VW-9eS" secondAttribute="leading" constant="262" id="b0T-Zh-z6B"/>
                             <constraint firstItem="EcC-VW-9eS" firstAttribute="bottom" secondItem="McA-Di-q8f" secondAttribute="bottom" constant="29" id="bd3-tE-TTb"/>
                             <constraint firstItem="lkw-d0-m3u" firstAttribute="centerX" secondItem="LJB-WW-e2O" secondAttribute="centerX" id="cB3-HS-sJ5"/>
                             <constraint firstItem="kgV-3V-FV3" firstAttribute="top" secondItem="LJB-WW-e2O" secondAttribute="top" constant="50" id="cIp-1p-dPN"/>
-                            <constraint firstItem="ejo-Os-4Dw" firstAttribute="top" secondItem="neB-Ev-T76" secondAttribute="bottom" constant="21.333333333333258" id="eXv-VZ-NoI"/>
                             <constraint firstItem="neB-Ev-T76" firstAttribute="centerY" secondItem="LJB-WW-e2O" secondAttribute="centerY" constant="50" id="edN-Pq-ocF"/>
                             <constraint firstItem="EcC-VW-9eS" firstAttribute="trailing" secondItem="e3p-vs-cM2" secondAttribute="trailing" constant="28" id="h9R-v0-7Ix"/>
                             <constraint firstItem="mXh-A2-SU3" firstAttribute="top" secondItem="LJB-WW-e2O" secondAttribute="topMargin" constant="70" id="jHa-mf-WF0"/>
                             <constraint firstItem="mXh-A2-SU3" firstAttribute="centerX" secondItem="LJB-WW-e2O" secondAttribute="centerX" id="kyz-nn-ubV"/>
+                            <constraint firstItem="EcC-VW-9eS" firstAttribute="bottom" secondItem="8YH-Sp-4jd" secondAttribute="bottom" constant="162.33333333333337" id="ok4-BT-hez"/>
                             <constraint firstItem="e3p-vs-cM2" firstAttribute="top" secondItem="LJB-WW-e2O" secondAttribute="top" constant="739" id="qoY-xJ-42H"/>
                             <constraint firstItem="27X-sY-ylR" firstAttribute="top" secondItem="mXh-A2-SU3" secondAttribute="bottom" constant="30" id="tSw-Hf-muH"/>
-                            <constraint firstItem="ejo-Os-4Dw" firstAttribute="leading" secondItem="neB-Ev-T76" secondAttribute="leading" id="xY8-6r-Pc6"/>
                         </constraints>
                     </view>
                     <connections>
