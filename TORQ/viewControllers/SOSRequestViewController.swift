@@ -38,6 +38,7 @@ class SOSRequestViewController: UIViewController {
         contentViewCornerRadius: 15,
         buttonCornerRadius: 7,
         hideWhenBackgroundViewIsTapped: true)
+    var sosRequestID: String?
     
     
 
@@ -183,6 +184,7 @@ class SOSRequestViewController: UIViewController {
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(identifier: "sosDetailsViewController") as! sosDetailsViewController
         vc.SOSRequest = SOS
+        vc.sosId = sosRequestID
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
     }
@@ -230,7 +232,9 @@ class SOSRequestViewController: UIViewController {
                 let sosRequest = SOSRequest(user_id: self.userID!, user_name: "user", status: "0", assignedCenter: self.nearest(), sent: "Yes", longitude: self.longitude!, latitude: self.latitude!, timeDate: "\(month)/\(day)/\(year)   \(hour):\(minutes)")
                 
                 //2- write the child into the node in firebase
-                self.ref.child("SOSRequests").childByAutoId().setValue(["user_id":sosRequest.getUserID(),"status":sosRequest.getStatus(),"assigned_center":sosRequest.getAssignedCenter(),"sent":sosRequest.getSent(),"longitude":sosRequest.getLongitude(),"latitude":sosRequest.getLatitude()])
+                let random = UUID().uuidString
+                self.sosRequestID = random
+                self.ref.child("SOSRequests").child(random).setValue(["user_id":sosRequest.getUserID(),"status":sosRequest.getStatus(),"assigned_center":sosRequest.getAssignedCenter(),"sent":sosRequest.getSent(),"longitude":sosRequest.getLongitude(),"latitude":sosRequest.getLatitude()])
                 
                 self.sosLabel.text = "00:15"
                 self.seeDetails.alpha = 0

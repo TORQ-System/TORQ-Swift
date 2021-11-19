@@ -42,6 +42,7 @@ class sosDetailsViewController: UIViewController {
         contentViewCornerRadius: 15,
         buttonCornerRadius: 7,
         hideWhenBackgroundViewIsTapped: true)
+    var sosId: String?
     
     
     //MARK: - Overriden Functions
@@ -133,13 +134,14 @@ class sosDetailsViewController: UIViewController {
                 for req in snapshot.children{
                     let obj = req as! DataSnapshot
                     let status = obj.childSnapshot(forPath: "status").value as! String
-                    if status == "Processed" {
-                        DispatchQueue.main.asyncAfter(deadline: .now()+2) {
+                    if status == "Processed" && self.sosId == obj.key {
+                        DispatchQueue.main.asyncAfter(deadline: .now()+5) {
                             UIView.animate(withDuration: 1) {
                                 self.check4.alpha = 1.0
                                 self.circle4.backgroundColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
                                 self.label4.textColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
                             }
+                            self.cancel.isEnabled = false
                         }
                     }
 
