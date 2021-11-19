@@ -37,14 +37,15 @@ class viewSOSRequestDetailsViewController: UIViewController {
     @IBOutlet weak var diseasesCollectionView: UICollectionView!
     @IBOutlet weak var medicationsCollectionView: UICollectionView!
     @IBOutlet weak var circle1: UIView!
-    @IBOutlet weak var progress1: UIProgressView!
+    @IBOutlet weak var check1: UIImageView!
+    @IBOutlet weak var label1: UILabel!
     @IBOutlet weak var circle2: UIView!
-    @IBOutlet weak var progress2: UIProgressView!
+    @IBOutlet weak var check2: UIImageView!
+    @IBOutlet weak var label2: UILabel!
     @IBOutlet weak var circle3: UIView!
-    @IBOutlet weak var progress3: UIProgressView!
-    @IBOutlet weak var circle4: UIView!
-    @IBOutlet weak var progress4: UIProgressView!
-    @IBOutlet weak var circle5: UIView!
+    @IBOutlet weak var check3: UIImageView!
+    @IBOutlet weak var label3: UILabel!
+    
     
     
     //MARK: - Variables
@@ -60,12 +61,15 @@ class viewSOSRequestDetailsViewController: UIViewController {
     var medicationArray: [String] = []
     var medicalReport = true
     var requestDetails = false
+    let flag = false
+
     
     //MARK: - Overriden functions
     override func viewDidLoad() {
         super.viewDidLoad()
         layoutViews()
         fetchMedicalReports()
+        subLayoutRequestDetails()
 
     }
     
@@ -166,6 +170,51 @@ class viewSOSRequestDetailsViewController: UIViewController {
         
         //17- diseases view
         addBottomBorder(with: color, andWidth: 1, view: diseasesView)
+        
+        //18- Medical View
+        MedicalInfromationView.isHidden = false
+
+        
+        //19- Request View
+        RequestInformationView.isHidden = true
+    }
+    
+    private func subLayoutRequestDetails(){
+        
+        //1- background view
+        RequestInformationView.backgroundColor = UIColor(red: 0.976, green: 0.988, blue: 0.992, alpha: 1)
+        
+        //1- circle one
+        circle1.layer.cornerRadius = circle1.layer.frame.width/2
+        DispatchQueue.main.asyncAfter(deadline: .now()+2) {
+            UIView.animate(withDuration: 1) {
+                self.check1.alpha = 1.0
+                self.circle1.backgroundColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
+            }
+        }
+        
+        //2- circle two
+        circle2.layer.cornerRadius = circle2.layer.frame.width/2
+        DispatchQueue.main.asyncAfter(deadline: .now()+2) {
+            UIView.animate(withDuration: 3) {
+                self.check2.alpha = 1.0
+                self.circle2.backgroundColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
+            }
+        }
+        
+        //3- circle three
+        circle3.layer.cornerRadius = circle3.layer.frame.width/2
+        if flag {
+            DispatchQueue.main.asyncAfter(deadline: .now()+2) {
+                UIView.animate(withDuration: 5) {
+                    self.check3.alpha = 1.0
+                    self.circle3.backgroundColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
+                }
+            }
+        }
+
+
+        
     }
     
     private func fetchMedicalReports(){
@@ -261,14 +310,14 @@ class viewSOSRequestDetailsViewController: UIViewController {
         medicalReportButton.backgroundColor = UIColor(red: 0.965, green: 0.922, blue: 0.937, alpha: 1)
         requestDetailsButton.backgroundColor = .clear
         MedicalInfromationView.isHidden = false
-        requestDetailsButton.isHidden = true
+        RequestInformationView.isHidden = true
     }
     
     @IBAction func requestDetailsButton(_ sender: Any) {
         requestDetailsButton.backgroundColor = UIColor(red: 0.965, green: 0.922, blue: 0.937, alpha: 1)
         medicalReportButton.backgroundColor = .clear
         MedicalInfromationView.isHidden = true
-        requestDetailsButton.isHidden = false
+        RequestInformationView.isHidden = false
     }
     
 }
