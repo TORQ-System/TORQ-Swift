@@ -15,6 +15,7 @@ class changePasswordViewController: UIViewController{
     
     //MARK: - @IBOutlets
     @IBOutlet weak var currentPassword: UITextField!
+    @IBOutlet weak var currentPasswordError: UILabel!
     @IBOutlet weak var newPassword: UITextField!
     @IBOutlet weak var newPasswordError: UILabel!
     @IBOutlet weak var confirmPassword: UITextField!
@@ -117,6 +118,7 @@ class changePasswordViewController: UIViewController{
     func configureErrors(){
         newPasswordError.alpha = 0
         confirmPasswordError.alpha = 0
+        currentPasswordError.alpha = 0
     }
     
     func validateFields() -> [String: String ]{
@@ -142,7 +144,7 @@ class changePasswordViewController: UIViewController{
         
         if currentPassword.text == newPassword.text{
             errors["new"] = "password should not match the current one"
-            errors["current"] = "password should not match the current one"
+            errors["current"] = "password should not match the new one"
         }
         
         return errors
@@ -167,10 +169,14 @@ class changePasswordViewController: UIViewController{
         
         guard errors["current"] == "" else{
             currentPassword.setBorder(color: "error", image: UIImage(named: "lockError")!)
+            currentPasswordError.text = errors["current"]!
+            currentPasswordError.alpha = 1
             return
         }
         
         currentPassword.setBorder(color: "valid", image: UIImage(named: "lockValid")!)
+        currentPasswordError.alpha = 0
+
     }
     
     @IBAction func newPasswordEditingChanged(_ sender: Any) {
