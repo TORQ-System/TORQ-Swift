@@ -17,6 +17,18 @@ class sosDetailsViewController: UIViewController {
     @IBOutlet weak var cancel: UIButton!
     @IBOutlet weak var liveLocation: UIButton!
     @IBOutlet weak var backgroundView: UIView!
+    @IBOutlet weak var circle1: UIView!
+    @IBOutlet weak var check1: UIImageView!
+    @IBOutlet weak var label1: UILabel!
+    @IBOutlet weak var circle2: UIView!
+    @IBOutlet weak var check2: UIImageView!
+    @IBOutlet weak var label2: UILabel!
+    @IBOutlet weak var circle3: UIView!
+    @IBOutlet weak var check3: UIImageView!
+    @IBOutlet weak var label3: UILabel!
+    @IBOutlet weak var circle4: UIView!
+    @IBOutlet weak var check4: UIImageView!
+    @IBOutlet weak var label4: UILabel!
     
     
     
@@ -73,6 +85,70 @@ class sosDetailsViewController: UIViewController {
         liveLocation.imageEdgeInsets = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
         liveLocation.layer.cornerRadius = liveLocation.layer.frame.width/2
         liveLocation.layer.masksToBounds = true
+        
+        //5- circle one
+        circle1.layer.cornerRadius = circle2.layer.frame.width/2
+        DispatchQueue.main.asyncAfter(deadline: .now()+2) {
+            UIView.animate(withDuration: 1) {
+                self.check1.alpha = 1.0
+                self.circle1.backgroundColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
+                self.label1.textColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
+            }
+        }
+        
+        //6- circle two
+        circle2.layer.cornerRadius = circle2.layer.frame.width/2
+        label2.text = "Your request has been assigned to \(SOSRequest!.getAssignedCenter()) SRCA  center"
+        DispatchQueue.main.asyncAfter(deadline: .now()+4) {
+            UIView.animate(withDuration: 1) {
+                self.check2.alpha = 1.0
+                self.circle2.backgroundColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
+                self.label2.textColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
+            }
+        }
+        
+        
+        //7- circle three
+        circle3.layer.cornerRadius = circle2.layer.frame.width/2
+        DispatchQueue.main.asyncAfter(deadline: .now()+4) {
+            UIView.animate(withDuration: 1) {
+                self.check3.alpha = 1.0
+                self.circle3.backgroundColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
+                self.label3.textColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
+            }
+        }
+        
+        //8- circle four
+        circle4.layer.cornerRadius = circle4.layer.frame.width/2
+        checkProcessedStatus()
+        
+        
+        
+    }
+    
+    private func checkProcessedStatus(){
+        let fetchQueue = DispatchQueue.init(label: "fetchQueue")
+        fetchQueue.sync {
+            self.ref.child("SOSRequests").observe(.value) { snapshot in
+                for req in snapshot.children{
+                    let obj = req as! DataSnapshot
+                    let status = obj.childSnapshot(forPath: "status").value as! String
+                    if status == "Processed" {
+                        DispatchQueue.main.asyncAfter(deadline: .now()+4) {
+                            UIView.animate(withDuration: 1) {
+                                self.check4.alpha = 1.0
+                                self.circle4.backgroundColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
+                                self.label4.textColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
+                            }
+                            self.dismiss(animated: true, completion: nil)
+                        }
+                    }
+
+            }
+            print("out of ref")
+        }
+        
+        }
     }
     
     private func updateSOSRequestsStatus(update: String){

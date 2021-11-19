@@ -107,7 +107,6 @@ class SOSRequestViewController: UIViewController {
                     let obj = requests as! DataSnapshot
                     let user_id = obj.childSnapshot(forPath: "user_id").value as! String
                     let status = obj.childSnapshot(forPath: "status").value as! String
-                    let user_name = obj.childSnapshot(forPath: "user_name").value as! String
                     let sent = obj.childSnapshot(forPath: "sent").value as! String
                     let longitude = obj.childSnapshot(forPath: "longitude").value as! String
                     let latitude = obj.childSnapshot(forPath: "latitude").value as! String
@@ -121,7 +120,7 @@ class SOSRequestViewController: UIViewController {
                     let hour = calendar.component(.hour, from: date)
                     let minutes = calendar.component(.minute, from: date)
                     
-                    let sos = SOSRequest(user_id: user_id, user_name: user_name, status: status, assignedCenter: assigned_center, sent: sent, longitude: longitude, latitude: latitude, timeDate: "\(month)/\(day)/\(year)   \(hour):\(minutes)")
+                    let sos = SOSRequest(user_id: user_id, user_name: "user_name", status: status, assignedCenter: assigned_center, sent: sent, longitude: longitude, latitude: latitude, timeDate: "\(month)/\(day)/\(year)   \(hour):\(minutes)")
                     
 
                     if user_id == self.userID && (status != "processed" && status != "cancelled") {

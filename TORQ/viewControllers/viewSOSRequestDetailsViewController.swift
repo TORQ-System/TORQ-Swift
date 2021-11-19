@@ -62,6 +62,7 @@ class viewSOSRequestDetailsViewController: UIViewController {
     var medicalReport = true
     var requestDetails = false
     let flag = false
+    var medicalReportID: String?
 
     
     //MARK: - Overriden functions
@@ -190,25 +191,28 @@ class viewSOSRequestDetailsViewController: UIViewController {
             UIView.animate(withDuration: 1) {
                 self.check1.alpha = 1.0
                 self.circle1.backgroundColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
+                self.label1.textColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
             }
         }
         
         //2- circle two
         circle2.layer.cornerRadius = circle2.layer.frame.width/2
-        DispatchQueue.main.asyncAfter(deadline: .now()+2) {
-            UIView.animate(withDuration: 3) {
+        DispatchQueue.main.asyncAfter(deadline: .now()+5) {
+            UIView.animate(withDuration: 1) {
                 self.check2.alpha = 1.0
                 self.circle2.backgroundColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
+                self.label2.textColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
             }
         }
         
         //3- circle three
         circle3.layer.cornerRadius = circle3.layer.frame.width/2
         if flag {
-            DispatchQueue.main.asyncAfter(deadline: .now()+2) {
-                UIView.animate(withDuration: 5) {
+            DispatchQueue.main.asyncAfter(deadline: .now()+4) {
+                UIView.animate(withDuration: 1) {
                     self.check3.alpha = 1.0
                     self.circle3.backgroundColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
+                    self.label3.textColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
                 }
             }
         }
@@ -237,6 +241,7 @@ class viewSOSRequestDetailsViewController: UIViewController {
                     if medicalReport.getUserID() == self.sosRequester {
                             self.MedicalReports.append(medicalReport)
                         self.bloodTypeLabel.text = medicalReport.getBloodType()
+                        self.medicalReportID = obj.key
                         
                         //1-translate allergies
                         self.allergiesArray = medicalReport.getAllergies().components(separatedBy: ", ")
@@ -318,6 +323,12 @@ class viewSOSRequestDetailsViewController: UIViewController {
         medicalReportButton.backgroundColor = .clear
         MedicalInfromationView.isHidden = true
         RequestInformationView.isHidden = false
+    }
+    @IBAction func processButton(_ sender: Any) {
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(identifier: "hospitalsViewController") as! hospitalsViewController
+        vc.userMedicalReportID = medicalReportID
+        self.present(vc, animated: true, completion: nil)
     }
     
 }
