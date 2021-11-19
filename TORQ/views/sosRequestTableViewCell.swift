@@ -28,10 +28,16 @@ class sosRequestTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        backView.layer.shadowColor = UIColor.clear.cgColor
-        backView.layer.shadowOffset = CGSize(width: 0, height: 0)
-        backView.layer.shadowOpacity = .zero
-        backView.layer.shadowPath = nil
+        
+        let distanceShadowLayer = CAShapeLayer()
+        distanceShadowLayer.path = UIBezierPath(roundedRect: distanceView.bounds, cornerRadius: distanceView.layer.frame.width/2).cgPath
+        distanceShadowLayer.fillColor = UIColor.white.cgColor
+        distanceShadowLayer.shadowColor = UIColor.darkGray.cgColor
+        distanceShadowLayer.shadowPath = distanceShadowLayer.path
+        distanceShadowLayer.shadowOffset = CGSize(width: 0.0, height: 1.0)
+        distanceShadowLayer.shadowOpacity = 0.15
+        distanceShadowLayer.shadowRadius = 5
+        distanceView.layer.insertSublayer(distanceShadowLayer, at: 0)
         
         self.layer.cornerRadius = 20
         self.layer.masksToBounds = true
@@ -43,11 +49,5 @@ class sosRequestTableViewCell: UITableViewCell {
         backView.layer.shadowOpacity = 0.5
         backView.layer.shadowPath = shadowPath.cgPath
 
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
 }

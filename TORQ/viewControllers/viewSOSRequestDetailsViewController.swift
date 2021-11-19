@@ -22,7 +22,15 @@ class viewSOSRequestDetailsViewController: UIViewController {
     @IBOutlet weak var directionsButton: UIButton!
     @IBOutlet weak var medicalReportButton: UIButton!
     @IBOutlet weak var requestDetailsButton: UIButton!
-    @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var MedicalInfromationView: UIView!
+    @IBOutlet weak var ageView: UIView!
+    @IBOutlet weak var ageLabel: UILabel!
+    @IBOutlet weak var bloodTypeView: UIView!
+    @IBOutlet weak var bloodTypeLabel: UILabel!
+    @IBOutlet weak var allergiesView: UIView!
+    @IBOutlet weak var disabilitiesView: UIView!
+    @IBOutlet weak var diseasesView: UIView!
+    @IBOutlet weak var allergiesCollectionView: UICollectionView!
     
     
     //MARK: - Variables
@@ -30,12 +38,16 @@ class viewSOSRequestDetailsViewController: UIViewController {
     var sosRequestTime: String?
     var sosRequestName: String?
     var sosRequestAge: String?
+    var ref = Database.database().reference()
+    var MedicalReports: [MedicalReport] = []
+    var allergiesArray: [String] = []
 
     
     //MARK: - Overriden functions
     override func viewDidLoad() {
         super.viewDidLoad()
         layoutViews()
+        fetchMedicalReports()
 
     }
     
@@ -97,20 +109,111 @@ class viewSOSRequestDetailsViewController: UIViewController {
         //9- Report Deatils button
         requestDetailsButton.setTitleColor(UIColor(red: 0.788, green: 0.271, blue: 0.341, alpha: 1), for: .normal)
 
-        //10- stack view
-        stackView.layer.borderWidth = 1
-        stackView.layer.borderColor = UIColor.darkGray.cgColor
+        //10- container view
+        containerView.layer.cornerRadius = 20
+        containerView.backgroundColor = .white
+        let shadowPath = UIBezierPath(roundedRect: containerView.bounds, cornerRadius: 20)
+        containerView.layer.masksToBounds = false
+        containerView.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
+        containerView.layer.shadowOffset = CGSize(width: 4, height: 9)
+        containerView.layer.shadowOpacity = 0.5
+        containerView.layer.shadowPath = shadowPath.cgPath
+        
+        //11- background view
+        view.backgroundColor = UIColor(red: 0.976, green: 0.988, blue: 0.992, alpha: 1)
+        
+        //12- age view
+        let color  = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
+        addTopBorder(with: color, andWidth: 1, view: ageView)
+        addBottomBorder(with: color, andWidth: 1, view: ageView)
+        addRightBorder(with: color, andWidth: 1, view: ageView)
+        
+        //13- blood type view
+        addTopBorder(with: color, andWidth: 1, view: bloodTypeView)
+        addBottomBorder(with: color, andWidth: 1, view: bloodTypeView)
+        
+        //14- age label
+        ageLabel.text = sosRequestAge
+        
+        //15- allergies view
+        addBottomBorder(with: color, andWidth: 1, view: allergiesView)
 
-        
-        //11- container view
-        
-        //12- background view
-        
-        
     }
     
     private func fetchMedicalReports(){
-        
+        // getting the user's Medical information
+        let usersQueue = DispatchQueue.init(label: "usersQueue")
+        usersQueue.sync {
+            ref.child("MedicalReport").observe(.value) { snapshot in
+                self.MedicalReports = []
+                for report in snapshot.children{
+                    let obj = report as! DataSnapshot
+                    let allergies = obj.childSnapshot(forPath: "allergies").value as! String
+                    let blood_type = obj.childSnapshot(forPath: "blood_type").value as! String
+                    let chronic_disease = obj.childSnapshot(forPath: "chronic_disease").value as! String
+                    let disabilities = obj.childSnapshot(forPath: "disabilities").value as! String
+                    let prescribed_medication = obj.childSnapshot(forPath: "prescribed_medication").value as! String
+                    let user_id = obj.childSnapshot(forPath: "user_id").value as! String
+
+                    let medicalReport = MedicalReport(userID: user_id, bloodType: blood_type, allergies: allergies, chronic_disease: chronic_disease, disabilities: disabilities, prescribed_medication: prescribed_medication)
+                    
+                    if medicalReport.getUserID() == self.sosRequester {
+                            self.MedicalReports.append(medicalReport)
+                        self.bloodTypeLabel.text = medicalReport.getBloodType()
+                        
+                        //1-translate allergies
+                        self.allergiesArray = medicalReport.getAllergies().components(separatedBy: ", ")
+                        
+                        //2- translate chronic_disease
+                        
+                        //3- transalte disabilities
+                        
+                        //4- translate prescribed_medication
+                        
+                        
+                    }
+                    self.allergiesCollectionView.reloadData()
+                }
+                print("usersInfo: \(self.MedicalReports)")
+            }
+        }
+    }
+    
+    
+    func addTopBorder(with color: UIColor?, andWidth borderWidth: CGFloat, view: UIView) {
+        let border = UIView()
+        border.backgroundColor = color
+        border.autoresizingMask = [.flexibleWidth, .flexibleBottomMargin]
+        border.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: borderWidth)
+        view.addSubview(border)
+        view.sendSubviewToBack(border)
+    }
+
+    func addBottomBorder(with color: UIColor?, andWidth borderWidth: CGFloat, view: UIView) {
+        let border = UIView()
+        border.backgroundColor = color
+        border.autoresizingMask = [.flexibleWidth, .flexibleTopMargin]
+        border.frame = CGRect(x: 0, y: view.frame.size.height - borderWidth, width: view.frame.size.width, height: borderWidth)
+        view.addSubview(border)
+        view.sendSubviewToBack(border)
+    }
+
+    func addLeftBorder(with color: UIColor?, andWidth borderWidth: CGFloat, view: UIView) {
+        let border = UIView()
+        border.backgroundColor = color
+        border.frame = CGRect(x: 0, y: 0, width: borderWidth, height: view.frame.size.height)
+        border.autoresizingMask = [.flexibleHeight, .flexibleRightMargin]
+        view.addSubview(border)
+        view.sendSubviewToBack(border)
+    }
+
+    func addRightBorder(with color: UIColor?, andWidth borderWidth: CGFloat, view: UIView) {
+        let border = UIView()
+        border.backgroundColor = color
+        border.autoresizingMask = [.flexibleHeight, .flexibleLeftMargin]
+        border.frame = CGRect(x: view.frame.size.width - borderWidth, y: 0, width: borderWidth, height: view.frame.size.height)
+        view.addSubview(border)
+        view.sendSubviewToBack(border)
     }
     
     
@@ -121,3 +224,19 @@ class viewSOSRequestDetailsViewController: UIViewController {
 }
 
 //MARK: - extension
+
+extension viewSOSRequestDetailsViewController: UICollectionViewDataSource{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return allergiesArray.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "medicalCell", for: indexPath) as! medicalCollectionViewCell
+        cell.label.text = allergiesArray[indexPath.row]
+        cell.label.textColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
+        cell.backgroundColor = UIColor(red: 0.965, green: 0.922, blue: 0.937, alpha: 1)
+        return cell
+    }
+    
+    
+}

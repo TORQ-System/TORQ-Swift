@@ -175,14 +175,6 @@ class ViewSOSRequestsViewController: UIViewController {
         // clicking on view location view conyroller after clicking on the map
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(identifier: "viewSOSRequestDetailsViewController") as! viewSOSRequestDetailsViewController
-        let array: [SOSRequest]
-        if processed {
-            array = processedRequests
-        }else if cancelled {
-            array = cancelledRequests
-        } else {
-            array = activeRequests
-        }
         vc.sosRequester = sender.userID
         vc.sosRequestName = sender.userName
         vc.sosRequestTime = sender.requestTime
@@ -291,15 +283,6 @@ extension ViewSOSRequestsViewController: UITableViewDataSource{
         }
         
         //2- distance circle view:
-        let distanceShadowLayer = CAShapeLayer()
-        distanceShadowLayer.path = UIBezierPath(roundedRect: cell.distanceView.bounds, cornerRadius: cell.distanceView.layer.frame.width/2).cgPath
-        distanceShadowLayer.fillColor = UIColor.white.cgColor
-        distanceShadowLayer.shadowColor = UIColor.darkGray.cgColor
-        distanceShadowLayer.shadowPath = distanceShadowLayer.path
-        distanceShadowLayer.shadowOffset = CGSize(width: 0.0, height: 1.0)
-        distanceShadowLayer.shadowOpacity = 0.15
-        distanceShadowLayer.shadowRadius = 5
-        cell.distanceView.layer.insertSublayer(distanceShadowLayer, at: 0)
         
         //3- gender circle view:
         let genderShadowLayer = CAShapeLayer()
