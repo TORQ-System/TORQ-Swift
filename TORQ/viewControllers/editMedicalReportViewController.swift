@@ -1,11 +1,17 @@
+//
+//  editMedicalReportViewController.swift
+//  TORQ
+//
+//  Created by a w on 05/11/2021.
+//
+
 import UIKit
 import Firebase
 import FirebaseAuth
 import FirebaseDatabase
 import SCLAlertView
 
-class addMedicalReportViewController: UIViewController {
-    
+class editMedicalReportViewController: UIViewController {
     //MARK: - @IBOutlets
     @IBOutlet weak var bloodTypeTextField: UITextField!
     @IBOutlet weak var chronicDisease: UITextField!
@@ -19,12 +25,11 @@ class addMedicalReportViewController: UIViewController {
     @IBOutlet weak var errorPrescribedMedication: UILabel!
     @IBOutlet weak var buttonView: UIView!
     @IBOutlet weak var roundGradientView: UIView!
-    
-    
-    
     //MARK: - Variables
+    
     var ref = Database.database().reference()
-    var usrID: String?
+    var usrID : String?
+    var mdReport : MedicalReport?
     var userBloodType : String?
     var selectedBloodtype : String?
     var userChronicDisease : String?
@@ -33,19 +38,13 @@ class addMedicalReportViewController: UIViewController {
     var userPrescribedMedication : String?
     var tap = UITapGestureRecognizer()
     
-    //MARK: - Constants
-    let redUIColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
-    let blueUIColor = UIColor( red: 49/255, green: 90/255, blue:149/255, alpha: 1.0 )
-    let alertErrorIcon = UIImage(named: "errorIcon")
-    let alertSuccessIcon = UIImage(named: "successIcon")
-    let apperanceWithoutClose = SCLAlertView.SCLAppearance(
-        showCloseButton: false,
-        contentViewCornerRadius: 15,
-        buttonCornerRadius: 7)
-    let apperance = SCLAlertView.SCLAppearance(
-        contentViewCornerRadius: 15,
-        buttonCornerRadius: 7,
-        hideWhenBackgroundViewIsTapped: true)
+    // varibles to hold previously added info
+    var mrKey: String?
+    var oldBloodType: String?
+    var oldChronicDisease: String?
+    var oldDisability: String?
+    var oldAllergy: String?
+    var oldPrescribedMedication: String?
     
     // picker view variables
     var blood_types = [
@@ -64,15 +63,87 @@ class addMedicalReportViewController: UIViewController {
     var selectedRow = 0
     var pickerView = UIPickerView()
     
+    //MARK: - Constants
+    let redUIColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
+    let blueUIColor = UIColor( red: 49/255, green: 90/255, blue:149/255, alpha: 1.0 )
+    let alertErrorIcon = UIImage(named: "errorIcon")
+    let alertSuccessIcon = UIImage(named: "successIcon")
+    let apperanceWithoutClose = SCLAlertView.SCLAppearance(
+        showCloseButton: false,
+        contentViewCornerRadius: 15,
+        buttonCornerRadius: 7)
+    let apperance = SCLAlertView.SCLAppearance(
+        contentViewCornerRadius: 15,
+        buttonCornerRadius: 7,
+        hideWhenBackgroundViewIsTapped: true)
+    
     //MARK: - Overriden Functions
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureInputs()
+        setUpTextFields()
         configureButtonView()
         configureTapGesture()
         
     }
+    //MARK: - Functions
+    
+    func setUpTextFields(){
+            
+            oldBloodType = mdReport!.getBloodType()
+            oldChronicDisease = mdReport!.getDiseases()
+            oldDisability = mdReport!.getDisabilities()
+            oldAllergy = mdReport!.getAllergies()
+            oldPrescribedMedication = mdReport!.getMedications()
+            
+            if oldBloodType == "-" {
+                bloodTypeTextField.setBorder(color: "default", image: UIImage(named: "bloodDefault")!)
+            }
+            else {
+                bloodTypeTextField.setBorder(color: "valid", image: UIImage(named: "bloodValid")!)
+                bloodTypeTextField.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 )
+                bloodTypeTextField.text = oldBloodType
+            }
+            // set up chronic disease
+            if oldChronicDisease == "-" {
+                chronicDisease.setBorder(color: "default", image: UIImage(named: "bandageDefault")!)
+            }
+            else {
+                chronicDisease.setBorder(color: "valid", image: UIImage(named: "bandageValid")!)
+                chronicDisease.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 )
+                chronicDisease.text = oldChronicDisease
+            }
+            // set up disabilities
+            if oldDisability == "-"{
+                disability.setBorder(color: "default", image: UIImage(named: "disabilityDefault")!)
+            }
+            else {
+                disability.setBorder(color: "valid", image: UIImage(named: "disabilityValid")!)
+                disability.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 )
+                disability.text = oldDisability
+            }
+            // set up allergies
+            if oldAllergy == "-"{
+                allergy.setBorder(color: "default", image: UIImage(named: "heartDefault")!)
+            }
+            else {
+                allergy.setBorder(color: "valid", image: UIImage(named: "heartValid")!)
+                allergy.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 )
+                allergy.text = oldAllergy
+            }
+            // set up Prescribed Medication
+            if oldPrescribedMedication == "-"{
+                prescribedMedication.setBorder(color: "default", image: UIImage(named: "pillDefault")!)
+            }
+            else {
+                prescribedMedication.setBorder(color: "valid", image: UIImage(named: "pillValid")!)
+                prescribedMedication.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 )
+                prescribedMedication.text = oldPrescribedMedication
+            }
+        }
+    
+    // configure inputs function
     func configureInputs(){
         //hide error labels
         errorBloodType.alpha = 0
@@ -81,15 +152,9 @@ class addMedicalReportViewController: UIViewController {
         errorAllergy.alpha = 0
         errorPrescribedMedication.alpha = 0
         
-        // set borders
-        bloodTypeTextField.setBorder(color: "default", image: UIImage(named: "bloodDefault")!)
-        chronicDisease.setBorder(color: "default", image: UIImage(named: "bandageDefault")!)
         chronicDisease.clearsOnBeginEditing = false
-        disability.setBorder(color: "default", image: UIImage(named: "disabilityDefault")!)
         disability.clearsOnBeginEditing = false
-        allergy.setBorder(color: "default", image: UIImage(named: "heartDefault")!)
         allergy.clearsOnBeginEditing = false
-        prescribedMedication.setBorder(color: "default", image: UIImage(named: "pillDefault")!)
         prescribedMedication.clearsOnBeginEditing = false
         
         // set up blood type picker view
@@ -114,25 +179,16 @@ class addMedicalReportViewController: UIViewController {
             gradient.frame = roundGradientView.bounds
             roundGradientView.layer.insertSublayer(gradient, at: 0)
     }
+    
     func configureTapGesture(){
-            tap = UITapGestureRecognizer(target: self, action: #selector(self.addClicked(_:)))
+            tap = UITapGestureRecognizer(target: self, action: #selector(self.saveClicked(_:)))
             tap.numberOfTapsRequired = 1
             tap.numberOfTouchesRequired = 1
             buttonView.addGestureRecognizer(tap)
             buttonView.isUserInteractionEnabled = true
-        }
-    
-    func configureLayout(){
-       
-//        addButton.layer.cornerRadius = 20
-//        addButton.layer.masksToBounds = true
-        
-        // back button
-//        backButton.roundCorners( [.topRight, .bottomRight], radius: 8)
-//        backButton.layer.masksToBounds = true
     }
     
-    
+    // picker functions
     func setUpBloodTypePickerView(){
         pickerView.delegate = self
         pickerView.dataSource = self
@@ -144,15 +200,12 @@ class addMedicalReportViewController: UIViewController {
         bloodTypeTextField.inputView = pickerView
         bloodTypeTextField.inputAccessoryView = toolbar
     }
+    
     @objc func closePicker(){
         bloodTypeTextField.text = blood_types[selectedRow]
         view.endEditing(true)
     }
-    // should go to medical report screen not HOME
-    func goToHomeScreen() {
-        self.dismiss(animated: true, completion: nil)
-    }
-    // should go to medical report screen not HOME
+    
     @IBAction func back(_ sender:Any){
         dismiss(animated: true, completion: nil)
     }
@@ -160,14 +213,22 @@ class addMedicalReportViewController: UIViewController {
     // validate form entries
     func validateFields() -> [String: String] {
         
-        var errors = ["Empty":"","bloodtype":"", "chronicDisease":"","disability":"","allergy":"","prescribedMedication":""]
+        var errors = ["Empty":"","bloodtype":"", "chronicDisease":"","disability":"","allergy":"","prescribedMedication":"","notUpdated":""]
         
+        // CASE: user did not update any of the fields
+        if (bloodTypeTextField.text == oldBloodType || ((bloodTypeTextField.text == "" || bloodTypeTextField.text == "None") && oldBloodType == "-") ) &&
+            (chronicDisease.text == oldChronicDisease || ( chronicDisease.text == "" && oldChronicDisease == "-") ) &&
+            (disability.text == oldDisability || ( disability.text == "" && oldDisability == "-") ) &&
+            (allergy.text == oldAllergy || ( allergy.text == "" && oldAllergy == "-")) &&
+            (prescribedMedication.text == oldPrescribedMedication || ( prescribedMedication.text == "" && oldPrescribedMedication == "-")) {
+            errors["notUpdated"] = "You have not updated any information"
+        }
         // CASE all fields were empty
-        if (bloodTypeTextField.text == "" || bloodTypeTextField.text == "None" || bloodTypeTextField.text == nil ) && chronicDisease.text == "" && disability.text == "" && allergy.text == "" && prescribedMedication.text == "" {
+        if (bloodTypeTextField.text == "" || bloodTypeTextField.text == nil || bloodTypeTextField.text == "None" ) && chronicDisease.text == "" && disability.text == "" && allergy.text == "" && prescribedMedication.text == "" {
             errors["Empty"] = "Please fill one of the fields or return"
         }
-//        // CASE: user selected "Please select option "
-//        if bloodTypeTextField.text == "Please Select" {
+        // CASE: user selected "Please select option "
+//        if bloodTypeTextField.text == "None" {
 //            errors["bloodtype"] = "Please select a valid blood type"
 //        }
         // since there are no chronic disease less than 2 characters
@@ -204,9 +265,19 @@ class addMedicalReportViewController: UIViewController {
         
         return errors
     }
-    // go to medical report screen after success addition
-    @objc func addClicked(_ sender: UITapGestureRecognizer) {
+    func navigateToParentScreen() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    // go to medical report screen after success update
+    @objc func saveClicked(_ sender: UITapGestureRecognizer) {
         let errors = validateFields()
+        
+        // if fields are not updated
+        guard errors["notUpdated"] == "" else {
+            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: errors["notUpdated"]!, color: self.redUIColor, icon: alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+            return
+        }
         
         if errors["bloodtype"] != ""  || errors["chronicDisease"] != "" || errors["chronicDisease"] != "" || errors["disability"] != "" || errors["allergy"] != "" || errors["prescribedMedication"] != "" {
             SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "Please make sure you entered all fields correctly", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
@@ -270,9 +341,8 @@ class addMedicalReportViewController: UIViewController {
         
         //check emptiness of fields and set variables
         
-        
         //CASE: empty Blood Type
-        if bloodTypeTextField.text == nil || bloodTypeTextField.text == "" || bloodTypeTextField.text == "None" {
+        if bloodTypeTextField.text == nil || bloodTypeTextField.text == "" || bloodTypeTextField.text == "None"  {
             // not mandatory then set it to empty
             userBloodType = "-"
         }
@@ -325,17 +395,18 @@ class addMedicalReportViewController: UIViewController {
         ]
         
         //4- push info to database
-        self.ref.child("MedicalReport").childByAutoId().setValue(MedicalReport)
+        self.ref.child("MedicalReport").child(mrKey!).updateChildValues(MedicalReport)
         
         //5- alert of success
         let alertView = SCLAlertView(appearance: self.apperanceWithoutClose)
         
         alertView.addButton("Got it!", backgroundColor: self.blueUIColor){
-            self.goToHomeScreen()
+            self.navigateToParentScreen()
         }
-        alertView.showCustom("Success!", subTitle: "Your medical report has been added successfully", color: self.blueUIColor, icon: self.alertSuccessIcon!, animationStyle: SCLAnimationStyle.topToBottom)
+        alertView.showCustom("Success!", subTitle: "Your medical report has been saved successfully", color: self.blueUIColor, icon: self.alertSuccessIcon!, animationStyle: SCLAnimationStyle.topToBottom)
     }
     
+    // editing changed functions
     @IBAction func bloodTypeDidEnd(_ sender: UITextField) {
         let errors = validateFields()
         if  errors["bloodtype"] != "" {
@@ -422,7 +493,7 @@ class addMedicalReportViewController: UIViewController {
     
 }
 //MARK: - Extensions
-extension addMedicalReportViewController : UIPickerViewDelegate,UIPickerViewDataSource {
+extension editMedicalReportViewController : UIPickerViewDelegate,UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 30))
@@ -442,19 +513,3 @@ extension addMedicalReportViewController : UIPickerViewDelegate,UIPickerViewData
         bloodTypeTextField.text = blood_types[row]
     }
 }
-
-extension addMedicalReportViewController: UITextFieldDelegate{
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true;
-    }
-}
-extension UIButton {
-    func roundCorners(_ corners:UIRectCorner, radius: CGFloat) {
-    let path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
-    let mask = CAShapeLayer()
-    mask.path = path.cgPath
-    self.layer.mask = mask
-  }
-}
-
