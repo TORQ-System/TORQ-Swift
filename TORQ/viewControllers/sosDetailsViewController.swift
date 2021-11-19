@@ -87,7 +87,7 @@ class sosDetailsViewController: UIViewController {
         liveLocation.layer.masksToBounds = true
         
         //5- circle one
-        circle1.layer.cornerRadius = circle2.layer.frame.width/2
+        circle1.layer.cornerRadius = circle1.layer.frame.width/2
         DispatchQueue.main.asyncAfter(deadline: .now()+2) {
             UIView.animate(withDuration: 1) {
                 self.check1.alpha = 1.0
@@ -99,7 +99,7 @@ class sosDetailsViewController: UIViewController {
         //6- circle two
         circle2.layer.cornerRadius = circle2.layer.frame.width/2
         label2.text = "Your request has been assigned to \(SOSRequest!.getAssignedCenter()) SRCA  center"
-        DispatchQueue.main.asyncAfter(deadline: .now()+4) {
+        DispatchQueue.main.asyncAfter(deadline: .now()+3) {
             UIView.animate(withDuration: 1) {
                 self.check2.alpha = 1.0
                 self.circle2.backgroundColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
@@ -134,13 +134,12 @@ class sosDetailsViewController: UIViewController {
                     let obj = req as! DataSnapshot
                     let status = obj.childSnapshot(forPath: "status").value as! String
                     if status == "Processed" {
-                        DispatchQueue.main.asyncAfter(deadline: .now()+4) {
+                        DispatchQueue.main.asyncAfter(deadline: .now()+2) {
                             UIView.animate(withDuration: 1) {
                                 self.check4.alpha = 1.0
                                 self.circle4.backgroundColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
                                 self.label4.textColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
                             }
-                            self.dismiss(animated: true, completion: nil)
                         }
                     }
 
@@ -178,7 +177,7 @@ class sosDetailsViewController: UIViewController {
         let alertView = SCLAlertView(appearance: self.apperance)
         alertView.addButton("Yes, I'm sure", backgroundColor: self.redUIColor){
             // update status to cancel
-            self.updateSOSRequestsStatus(update: "cancelled")
+            self.updateSOSRequestsStatus(update: "Cancelled")
             self.dismiss(animated: true, completion: nil)
         }
         alertView.showCustom("Warning", subTitle: "Once you confirm the cancellation your SOS Request will be canceled, Are you sure ?", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Cancel", circleIconImage: UIImage(named: "warning"), animationStyle: SCLAnimationStyle.topToBottom)

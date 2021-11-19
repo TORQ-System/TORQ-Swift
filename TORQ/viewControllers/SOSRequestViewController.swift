@@ -123,7 +123,7 @@ class SOSRequestViewController: UIViewController {
                     let sos = SOSRequest(user_id: user_id, user_name: "user_name", status: status, assignedCenter: assigned_center, sent: sent, longitude: longitude, latitude: latitude, timeDate: "\(month)/\(day)/\(year)   \(hour):\(minutes)")
                     
 
-                    if user_id == self.userID && (status != "processed" && status != "cancelled") {
+                    if user_id == self.userID && (status != "Processed" && status != "Cancelled") {
                         self.flag = true
                         //update UI
                         if ( (self.secondsRemaining == 0) || (self.secondsRemaining != 15) ) {
@@ -196,7 +196,7 @@ class SOSRequestViewController: UIViewController {
                 // set flag to false
                 self.flag = false
                 // update status to cancel
-                self.updateSOSRequestsStatus(update: "cancelled")
+                self.updateSOSRequestsStatus(update: "Cancelled")
                 self.dismiss(animated: true, completion: nil)
             }
             alertView.showCustom("Warning", subTitle: "once you get out of this screen your SOS request will be canceled, please wait until the timer finished, so we send your request properly", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Ok, I'll wait", circleIconImage: UIImage(named: "warning"), animationStyle: SCLAnimationStyle.topToBottom)
