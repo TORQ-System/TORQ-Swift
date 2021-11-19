@@ -142,6 +142,7 @@ class changePasswordViewController: UIViewController{
         
         if currentPassword.text == newPassword.text{
             errors["new"] = "password should not match the current one"
+            errors["current"] = "password should not match the current one"
         }
         
         return errors
