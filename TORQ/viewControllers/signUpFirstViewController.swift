@@ -142,12 +142,15 @@ class signUpFirstViewController: UIViewController {
         else if !password.text!.isValidPassword{
             error["password"] = "Password should not be less than 6 characters"
         }
+        else if confirmPassword.text != nil && confirmPassword.text != "" && (confirmPassword.text != password.text) {
+            error["password"] = "passwords do not match"
+        }
         // confirm password checking
         if confirmPassword.text == nil || confirmPassword.text == ""{
             error["confirmPass"] = "Confirm Password cannot be empty"
         }
         else if confirmPassword.text != password.text!{
-            error["confirmPass"] = "Passwords does not match"
+            error["confirmPass"] = "Passwords do not match"
         }
         
         return error
@@ -211,6 +214,7 @@ class signUpFirstViewController: UIViewController {
         guard errors["fullName"] == "" else {
             //handle the error
             errorFullName.text = errors["fullName"]!
+            fullName.setBorder(color: "error", image: UIImage(named: "personError")!)
             errorFullName.alpha = 1
            
             return
@@ -219,6 +223,7 @@ class signUpFirstViewController: UIViewController {
         guard errors["confirmPass"] == "" else {
             //handle the error
             errorConfirmPassword.text = errors["confirmPass"]
+            confirmPassword.setBorder(color: "error", image: UIImage(named: "lockError")!)
             errorConfirmPassword.alpha = 1
             return
         }
@@ -226,6 +231,7 @@ class signUpFirstViewController: UIViewController {
         guard errors["email"] == "" else {
             //handle the error
             errorEmail.text = errors["email"]
+            email.setBorder(color: "error", image: UIImage(named: "emailError")!)
             errorEmail.alpha = 1
             return
         }
@@ -233,6 +239,7 @@ class signUpFirstViewController: UIViewController {
         guard errors["password"] == "" else {
             //handle the error
             errorPassword.text = errors["password"]
+            password.setBorder(color: "error", image: UIImage(named: "lockError")!)
             errorPassword.alpha = 1
             return
         }
