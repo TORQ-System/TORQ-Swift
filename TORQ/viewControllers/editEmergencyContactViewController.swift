@@ -1,46 +1,64 @@
+//
+//  editEmergencyContactViewController.swift
+//  TORQ
+//
+//  Created by a w on 04/11/2021.
+//
+
 import UIKit
 import Firebase
 import FirebaseAuth
 import FirebaseDatabase
 import SCLAlertView
 
-class addEmergencyContactViewController: UIViewController {
-    
-    
+class editEmergencyContactViewController: UIViewController {
+   
     //MARK: - @IBOutlets
     @IBOutlet weak var emergencyContactFullName: UITextField!
     @IBOutlet weak var emergencyContactPhoneNumber: UITextField!
+    @IBOutlet weak var relationTextField: UITextField!
     @IBOutlet weak var errorFullName: UILabel!
     @IBOutlet weak var errorPhoneNumber: UILabel!
     @IBOutlet weak var errorRelationship: UILabel!
     @IBOutlet weak var errorMessage: UILabel!
-    @IBOutlet weak var relationTextField: UITextField!
     @IBOutlet weak var buttonView: UIView!
     @IBOutlet weak var roundGradientView: UIView!
     @IBOutlet weak var msgTextView: UITextView!
     
     //MARK: - Variables
-    
     // DB reference
     var ref = Database.database().reference()
+    
     // current user varibles
     var usrID = Auth.auth().currentUser?.uid
     var usrName : String?
-    var currentUserPhone : String?
-    // array
+    var currentUserPhone: String?
+    
+    // arrays
     var usersArray: [userInfo] = []
-    // get passed emergency contacts array
-    var emergencyContactArray: [emergencyContact] = []
+    
     // emergency contact varibles
     var fullName: String?
     var phoneNumber: String?
     var emergencyMessage: String?
     var selectedRelationship: String?
     var relationship: String?
-    var recieverID : String?
+    var newRecieverID : String?
     
-    // tap gesture variable
-     var tap = UITapGestureRecognizer()
+    // to hold passed array and emergency contact
+//    var passedReceiverID : String?
+    var emContact: emergencyContact?
+    var emergencyContactArray: [emergencyContact] = []
+    
+   // tap gesture variable
+    var tap = UITapGestureRecognizer()
+    
+    // varibles to hold previously added info
+    var ecKey: String?
+    var oldFullName: String?
+    var oldPhoneNumber: String?
+    var oldRelationship: String?
+    var oldMsg: String?
     
     // picker view variables
     var relationships = [
@@ -57,7 +75,7 @@ class addEmergencyContactViewController: UIViewController {
     ]
     var selectedRow = 0
     var pickerView = UIPickerView()
-   
+    
     //MARK: - Constants
     let screenWidth = UIScreen.main.bounds.width-10
     let screenHeight = UIScreen.main.bounds.height/2
@@ -73,22 +91,23 @@ class addEmergencyContactViewController: UIViewController {
         contentViewCornerRadius: 15,
         buttonCornerRadius: 7,
         hideWhenBackgroundViewIsTapped: true)
-    
-    
+   
     //MARK: - Overriden Functions
     override func viewDidLoad() {
         super.viewDidLoad()
-       
-        getUserInfo()
+        
         configureInputs()
+        getEmergencyContactInfo()
+        getUserInfo()
         configureButtonView()
         configureTapGesture()
-        
     
     }
+    
     //MARK: - Functions
     
     func configureInputs(){
+       
         // hide the error message and add the border
         errorFullName.alpha = 0
         errorPhoneNumber.alpha = 0
@@ -96,13 +115,13 @@ class addEmergencyContactViewController: UIViewController {
         errorMessage.alpha = 0
         
         // Full Name border
-        emergencyContactFullName.setBorder(color: "default", image: UIImage(named: "personDefault")!)
+        emergencyContactFullName.setBorder(color: "valid", image: UIImage(named: "personValid")!)
         emergencyContactFullName.clearsOnBeginEditing = false
         // phone border
-        emergencyContactPhoneNumber.setBorder(color: "default", image: UIImage(named: "phoneDefault")!)
+        emergencyContactPhoneNumber.setBorder(color: "valid", image: UIImage(named: "phoneValid")!)
         emergencyContactPhoneNumber.clearsOnBeginEditing = false
         // relationship border
-        relationTextField.setBorder(color: "default", image: UIImage(named: "relationshipDefault")!)
+        relationTextField.setBorder(color: "valid", image: UIImage(named: "relationshipValid")!)
         // picker view
         setUpRelationshipPickerView()
         // msg text view
@@ -128,12 +147,57 @@ class addEmergencyContactViewController: UIViewController {
             roundGradientView.layer.insertSublayer(gradient, at: 0)
     }
     func configureTapGesture(){
-            tap = UITapGestureRecognizer(target: self, action: #selector(self.addClicked(_:)))
+            tap = UITapGestureRecognizer(target: self, action: #selector(self.saveClicked(_:)))
             tap.numberOfTapsRequired = 1
             tap.numberOfTouchesRequired = 1
             buttonView.addGestureRecognizer(tap)
             buttonView.isUserInteractionEnabled = true
         }
+    
+    // get emergency contact information and set up text fields
+    func getEmergencyContactInfo(){
+        
+        self.ref.child("EmergencyContact").observeSingleEvent(of: .value, with: { snapshot in
+                    for EC in snapshot.children{
+                        let obj = EC as! DataSnapshot
+                        let sender = obj.childSnapshot(forPath: "sender").value as! String
+                        let phone = obj.childSnapshot(forPath: "phone").value as! String
+                        if sender == self.usrID && phone == self.emContact!.getPhoneNumber(){
+                            // need the key in order to update the information later
+                            self.ecKey = obj.key
+                        }
+                    }
+        })
+                    self.oldFullName = emContact!.getName()
+                    self.oldPhoneNumber = emContact!.getPhoneNumber()
+                    self.oldRelationship = emContact!.getRelation()
+                    self.oldMsg = emContact!.getMsg()
+                    // set up text fields
+                    self.emergencyContactFullName.text = self.oldFullName
+                    self.emergencyContactPhoneNumber.text = self.oldPhoneNumber
+                    self.relationTextField.text = self.oldRelationship
+                    self.msgTextView.text = self.oldMsg
+
+    }
+    // getting current user name & phone in order to set up default msg and to validate phone number
+    func getUserInfo(){
+        ref.child("User").observe(.value) { snapshot in
+            for user in snapshot.children{
+                let obj = user as! DataSnapshot
+                let userID = obj.key
+                let phone = obj.childSnapshot(forPath:  "phone").value as! String
+                let fullName = obj.childSnapshot(forPath:  "fullName").value as! String
+                let user = userInfo(userID: userID, phone: phone)
+            
+                self.usersArray.append(user)
+                
+                if userID == self.usrID {
+                    self.currentUserPhone = phone
+                    self.usrName = fullName
+                }
+            }
+        }
+    }
     func setUpRelationshipPickerView(){
         pickerView.delegate = self
         pickerView.dataSource = self
@@ -149,6 +213,9 @@ class addEmergencyContactViewController: UIViewController {
         relationTextField.text = relationships[selectedRow]
         view.endEditing(true)
     }
+    @IBAction func backButton(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
     func configureMsgTextView(){
         // disable scrolling
         msgTextView.isScrollEnabled = false
@@ -161,52 +228,29 @@ class addEmergencyContactViewController: UIViewController {
         // Set the thickness of the border.
         msgTextView.layer.borderWidth = 1.5
 
-        // Set the border color to gray.
-        msgTextView.layer.borderColor = UIColor( red: 163/255, green: 161/255, blue:161/255, alpha: 1.0 ).cgColor
+        // Set the border color to blue.
+        msgTextView.layer.borderColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 ).cgColor
         
         // set up placeholder
         msgTextView.text = "Message (Optional)"
-        msgTextView.textColor = UIColor(red: 0, green: 0, blue: 0.0980392, alpha: 0.22)
-        
+        // blue text  color
+        msgTextView.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 )
         //  set up padding
         msgTextView.textContainerInset = UIEdgeInsets(top: 10,left: 25,bottom: 10,right: 5);
-    }
-    // getting user info from User node in DB and append it to usersArray
-    func getUserInfo(){
-        ref.child("User").observe(.value) { snapshot in
-            for user in snapshot.children{
-                let obj = user as! DataSnapshot
-                let userID = obj.key
-                let phone = obj.childSnapshot(forPath:  "phone").value as! String
-                let fullName = obj.childSnapshot(forPath:  "fullName").value as! String
-                let user = userInfo(userID: userID, phone: phone)
-            
-                self.usersArray.append(user)
-//                print("Users Array:\(self.usersArray)")
-                
-                if userID == self.usrID {
-                    self.currentUserPhone = phone
-                    self.usrName = fullName
-                }
-                 
-            }
-        }
-    }
-    
-    
-    // should go to emergency contacts screen
-    @IBAction func back(_ sender:Any){
-        dismiss(animated: true, completion: nil)
     }
     
     // validate form entries
     func validateFields() -> [String: String] {
         
-        var errors = ["Empty":"","fullName":"", "phone":"","relationship":"","msg":""]
+        var errors = ["Empty":"","fullName":"", "phone":"","relationship":"","msg":"","notUpdated":""]
         
         // CASE: empty fields
         if emergencyContactFullName.text?.trimWhiteSpace() == "" && emergencyContactPhoneNumber.text == "" && selectedRow == 0 {
             errors["Empty"] = "Empty Fields"
+        }
+        // CASE: user did not update any of the fields
+        if emergencyContactFullName.text == oldFullName && emergencyContactPhoneNumber.text == oldPhoneNumber && relationTextField.text == oldRelationship && msgTextView.text == oldMsg {
+            errors["notUpdated"] = "You have not updated any information"
         }
         
         //CASE: empty or invalid FULL NAME
@@ -225,23 +269,23 @@ class addEmergencyContactViewController: UIViewController {
             errors["phone"] = "Invalid phone number"
         }
         // CASE: relationship not selected
-        if selectedRow == 0 {
+        if selectedRow == 0 && relationTextField.text != oldRelationship {
             errors["relationship"] = "Relationship cannot be empty"
         }
-        // CASE: msg greater than 135 characters
+        // CASE: msg greater than 80 characters
         if msgTextView.text!.count >= 135 {
             errors["msg"] = "message is too long, try shortening it"
         }
         
         return errors
     }
-    
     func validateEmergencyPhoneNumber()-> [String: String]{
         var errors = ["phoneMatch":"","phoneDNE":"","phoneExists":""]
         
         // CASE1: Emergency phone match current user phone
         for user in usersArray {
             if user.getUserID() == usrID {
+                currentUserPhone = user.getPhone()
                 if emergencyContactPhoneNumber.text == currentUserPhone {
                     errors["phoneMatch"] = "Emergency phone cannot be the same as yours"
                 }
@@ -251,25 +295,24 @@ class addEmergencyContactViewController: UIViewController {
         // CASE2: checking if emergency contact number exists in user table in the database
         for user in usersArray {
             if user.getPhone() == emergencyContactPhoneNumber.text && user.getPhone() != currentUserPhone {
-                recieverID = user.getUserID()
-                print("recieverID: \(recieverID!)")
+                newRecieverID = user.getUserID()
+                print("recieverID: \(newRecieverID!)")
             }
         }
         
-        if recieverID == "" || recieverID == nil {
+        if newRecieverID == "" || newRecieverID == nil {
             errors["phoneDNE"] = "The phone number must be registered in TORQ"
         }
     
         // CASE3: check if user have added phone number before (to ensure there are no duplicates)
         for ec in emergencyContactArray {
-                if ec.getSenderID() == usrID && ec.getPhoneNumber() == emergencyContactPhoneNumber.text  {
-                    errors["phoneExists"] = "Phone number have been already added"
-                    recieverID = ""
+            if emergencyContactPhoneNumber.text != oldPhoneNumber {
+            if ec.getSenderID() == usrID && ec.getPhoneNumber() == emergencyContactPhoneNumber.text {
+                errors["phoneExists"] = "Phone number have been already added"
+                newRecieverID = ""
             }
-          
+          }
         }
-
-        
         return errors
         
     }
@@ -280,14 +323,18 @@ class addEmergencyContactViewController: UIViewController {
         let isAtLimit = text.count + newText.count <= limit
         return isAtLimit
     }
-    // Go to Emergency Contatcs View After successful addition
-    @objc func addClicked(_ sender: UITapGestureRecognizer) {
-        
+    // Go to Emergency Contatcs View After successful update
+    @objc func saveClicked(_ sender: UITapGestureRecognizer) {
         let errors = validateFields()
         let phone_errors = validateEmergencyPhoneNumber()
         
-        if(errors["fullName"] != "" || errors["phone"] != "" || errors["relationship"] != "" || errors["msg"] != "" ) {
-            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "Make sure you entered all fields correctly" , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+//        if(errors["fullName"] != "" || errors["phone"] != "" || errors["relationship"] != "" || errors["msg"] != "" || errors["Empty"] != "") {
+//            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "Make sure you entered all fields correctly" , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+//        }
+        // if fields are not updated
+        guard errors["notUpdated"] == "" else {
+            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "You have not updated any information yet!", color: self.redUIColor, icon: alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+            return
         }
         
         // if fields are empty
@@ -344,7 +391,6 @@ class addEmergencyContactViewController: UIViewController {
             SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: phone_errors["phoneExists"]! , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
             return
         }
-      
         // relationship error
         guard errors["relationship"] == "" else {
             //handle the error
@@ -364,7 +410,7 @@ class addEmergencyContactViewController: UIViewController {
         }
         
         // if msg is empty, then set up TORQ Default msg
-        if msgTextView.text?.trimWhiteSpace() == "" || msgTextView.text?.trimWhiteSpace() == nil || msgTextView.text == "Message (Optional)" {
+        if msgTextView.text?.trimWhiteSpace() == "" || msgTextView.text == nil || msgTextView.text == "Message (Optional)" {
             msgTextView.text = "\(usrName!) had a Car Accident, you are receiving this because \(usrName!) has listed you as an emergency contact"
         }
         
@@ -388,11 +434,11 @@ class addEmergencyContactViewController: UIViewController {
             "msg": emergencyMessage!,
             "sender": usrID!,
             "sent": "No",
-            "reciever": recieverID!,
+            "reciever": newRecieverID!,
         ]
         
         //4- push info to database
-        self.ref.child("EmergencyContact").childByAutoId().setValue(emergencyContact)
+        self.ref.child("EmergencyContact").child(ecKey!).updateChildValues(emergencyContact)
         
         //5- alert of success
         let alertView = SCLAlertView(appearance: self.apperanceWithoutClose)
@@ -400,7 +446,8 @@ class addEmergencyContactViewController: UIViewController {
         alertView.addButton("Got it!", backgroundColor: self.blueUIColor){
             self.dismiss(animated: true, completion: nil)
         }
-        alertView.showCustom("Success!", subTitle: "Your emergency contact has been added successfully", color: self.blueUIColor, icon: self.alertSuccessIcon!, animationStyle: SCLAnimationStyle.topToBottom)
+        alertView.showCustom("Success!", subTitle: "Your emergency contact has been updated successfully", color: self.blueUIColor, icon: self.alertSuccessIcon!, animationStyle: SCLAnimationStyle.topToBottom)
+        
     }
     
     // Editing changed functions
@@ -450,9 +497,10 @@ class addEmergencyContactViewController: UIViewController {
     }
     
     
-}
+    } // editEmergencyContactViewCont
+                                                              
 //MARK: - Extensions
-extension addEmergencyContactViewController : UIPickerViewDelegate,UIPickerViewDataSource {
+extension editEmergencyContactViewController : UIPickerViewDelegate,UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 30))
@@ -472,14 +520,7 @@ extension addEmergencyContactViewController : UIPickerViewDelegate,UIPickerViewD
         relationTextField.text = relationships[row]
     }
 }
-
-extension addEmergencyContactViewController: UITextFieldDelegate{
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true;
-    }
-}
-extension addEmergencyContactViewController: UITextViewDelegate{
+extension editEmergencyContactViewController: UITextViewDelegate{
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         if msgTextView.text == "Message (Optional)" {
@@ -525,21 +566,4 @@ extension addEmergencyContactViewController: UITextViewDelegate{
             errorMessage.alpha = 0
         }
     }
-}
-struct userInfo {
-    
-    var userID: String
-    var phone: String
-    
-    init(userID: String , phone: String){
-        self.userID = userID
-        self.phone = phone
-    }
-    func getUserID()-> String{
-        return userID
-    }
-    func getPhone()-> String{
-        return phone
-    }
-    
 }
