@@ -11,13 +11,16 @@ class signUpSecondViewController: UIViewController {
     @IBOutlet weak var gender: UISegmentedControl!
     @IBOutlet weak var nationalID: UITextField!
     @IBOutlet weak var phone: UITextField!
-    @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var errorNationalID: UILabel!
     @IBOutlet weak var errorPhone: UILabel!
     @IBOutlet weak var errorDOB: UILabel!
     @IBOutlet weak var progressBar: UIProgressView!
     @IBOutlet weak var textFiledsStackView: UIStackView!
     @IBOutlet weak var percentageLabel: UILabel!
+    @IBOutlet weak var buttonView: UIView!
+    @IBOutlet weak var roundGradientView: UIView!
+    @IBOutlet weak var conditionsLabel: UILabel!
+    @IBOutlet weak var checkBoxButton : UIButton!
     
     
     //MARK: - Variables
@@ -31,9 +34,13 @@ class signUpSecondViewController: UIViewController {
     var userGender: String?
     var userNationalID: String?
     var userPhone: String?
-    var completedFields: Float = 0.625
-    var numberOfCompleted: Int = 5
-    var correctField: [String:Bool] = ["nationalID":false, "phone": false, "date":false]
+    var completedFields: Float = 0.5
+    var numberOfCompleted: Int = 4
+    var correctField: [String:Bool] = ["nationalID":false, "phone": false, "date":false,"conditions":false]
+    // tap gesture variable
+    var tap = UITapGestureRecognizer()
+    // chcck var
+    var isChecked : Bool?
     
     //MARK: - Constants
     let redUIColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
@@ -56,6 +63,17 @@ class signUpSecondViewController: UIViewController {
         percentageLabel.text = "\(calculatePercentage())%"
         progressBar.setProgress(completedFields, animated: true)
         
+        configureInputs()
+        configureButtonView()
+        configureTapGesture()
+    }
+    
+    //MARK: - Functions
+    func calculatePercentage() -> Int{
+        let percentage = Int((Float(numberOfCompleted)/8.0) * 100)
+        return percentage
+    }
+    func configureInputs(){
         // hide the error message and add the border
         errorNationalID.alpha = 0
         errorPhone.alpha = 0
@@ -69,51 +87,70 @@ class signUpSecondViewController: UIViewController {
         // phone border
         phone.setBorder(color: "default", image: UIImage(named: "phoneDefault")!)
         phone.clearsOnBeginEditing = false
+        // date
         setupDatePickerView()
-//        configureKeyboard()
+        // gender
+        gender.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16.0)], for: UIControl.State.normal)
+        
+        // conditions label
+        let stringValue = "By signing up, you are accepting our Terms & Conditions, and Privacy Policy"
+
+        let attributedString: NSMutableAttributedString = NSMutableAttributedString(string: stringValue)
+        attributedString.setColorForText(textForAttribute: "Terms & Conditions", withColor: UIColor(red: 73/255, green: 171/255, blue:223/255, alpha: 1.0))
+        attributedString.setColorForText(textForAttribute: "Privacy Policy", withColor: UIColor(red: 73/255, green: 171/255, blue:223/255, alpha: 1.0))
+        
+        conditionsLabel.attributedText = attributedString
+        
+        conditionsLabel.isUserInteractionEnabled = true
+        let tapgesture = UITapGestureRecognizer(target: self, action: #selector(tappedOnLabel(_ :)))
+        tapgesture.numberOfTapsRequired = 1
+        conditionsLabel.addGestureRecognizer(tapgesture)
         
     }
-    
-    //MARK: - Functions
-    func calculatePercentage() -> Int{
-        let percentage = Int((Float(numberOfCompleted)/8.0) * 100)
-        return percentage
+    @objc func tappedOnLabel(_ gesture: UITapGestureRecognizer) {
+        guard let text = self.conditionsLabel.text else { return }
+        let termsAndConditionRange = (text as NSString).range(of: "Terms & Conditions")
+        let privacyPolicyRange = (text as NSString).range(of: "Privacy Policy")
+        if gesture.didTapAttributedTextInLabel(label: self.conditionsLabel, inRange: privacyPolicyRange) {
+            print("user tapped on privacy policy text")
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "privacyPolicyViewController") as! privacyPolicyViewController
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true, completion: nil)
+        } else if gesture.didTapAttributedTextInLabel(label: self.conditionsLabel, inRange: termsAndConditionRange){
+            print("user tapped on terms and conditions text")
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "termsAndConditionsViewController") as! termsAndConditionsViewController
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true, completion: nil)
+        }
     }
-    
-//    func configureKeyboard() {
-//        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-//        self.view!.addGestureRecognizer(tap)
-//        
-//        
-//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardwillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-//        
-//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-//    }
-//    
-//    @objc func hideKeyboard(){
-//        self.view.endEditing(true)
-//        
-//    }
-//    
-//    @objc func keyboardwillShow(notification: NSNotification){
-//        
-//        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue{
-//            let keyboardHieght = keyboardFrame.cgRectValue.height
-//            let bottomSpace = self.view.frame.height - (self.textFiledsStackView.frame.origin.y + textFiledsStackView.frame.height)
-//            self.view.frame.origin.y -= keyboardHieght - bottomSpace
-//            
-//        }
-//        
-//    }
-//    
-//    @objc func keyboardWillHide(){
-//        self.view.frame.origin.y = 0
-//    }
-//    
-//    deinit {
-//        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-//        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-//    }
+    func configureButtonView(){
+            roundGradientView.layer.cornerRadius = 20
+            roundGradientView.layer.shouldRasterize = true
+            roundGradientView.layer.rasterizationScale = UIScreen.main.scale
+            
+            let gradient: CAGradientLayer = CAGradientLayer()
+            
+            gradient.cornerRadius = 20
+            gradient.colors = [
+                UIColor(red: 0.887, green: 0.436, blue: 0.501, alpha: 1).cgColor,
+                UIColor(red: 0.75, green: 0.191, blue: 0.272, alpha: 1).cgColor
+            ]
+            
+            gradient.locations = [0, 1]
+            gradient.startPoint = CGPoint(x: 0, y: 0)
+            gradient.endPoint = CGPoint(x: 1, y: 1)
+            gradient.frame = roundGradientView.bounds
+            roundGradientView.layer.insertSublayer(gradient, at: 0)
+    }
+    func configureTapGesture(){
+            tap = UITapGestureRecognizer(target: self, action: #selector(self.signUpClicked(_:)))
+            tap.numberOfTapsRequired = 1
+            tap.numberOfTouchesRequired = 1
+            buttonView.addGestureRecognizer(tap)
+            buttonView.isUserInteractionEnabled = true
+        }
     
     func validateFields() -> [String: String] {
         var errors = ["Empty":"","nationalID":"", "phone":"","date":""]
@@ -148,6 +185,7 @@ class signUpSecondViewController: UIViewController {
         //CASE-4: gender
         //no validation is needed since we're using segmented control that has "Female" as it's default value, thus we're preventing the error from the first place
         
+        
         return errors
     }
     
@@ -161,7 +199,6 @@ class signUpSecondViewController: UIViewController {
         toolbar.sizeToFit()
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(chooseDate))
         toolbar.setItems([doneButton], animated: true)
-        doneButton.tintColor = UIColor(red: 0.974, green: 0.666, blue: 0.341, alpha: 1)
         date.inputView = datePicker
         date.inputAccessoryView = toolbar
         datePicker.datePickerMode = .date
@@ -202,7 +239,37 @@ class signUpSecondViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func goToHomeScreen(_ sender: Any) {
+    @IBAction func checkBoxTapped(_ sender:UIButton){
+        
+//        let errors = validateFields()
+        if sender.isSelected {
+            // check box is not selected
+            sender.isSelected = false
+            
+        } else {
+            // check box selected
+            sender.isSelected = true
+        }
+        
+        if checkBoxButton.isSelected == false  && correctField["conditions"]!{
+            completedFields-=0.125
+            numberOfCompleted-=1
+            correctField["conditions"]! = false
+        }
+        if checkBoxButton.isSelected == true && !correctField["conditions"]!{
+            completedFields+=0.125
+            numberOfCompleted+=1
+            correctField["conditions"]! = true
+        }
+
+        progressBar.setProgress(completedFields, animated: true)
+        percentageLabel.text = "\(calculatePercentage())%"
+        
+        
+        
+    }
+    
+    @objc func signUpClicked(_ sender: UITapGestureRecognizer) {
         
         let errors = validateFields()
         
@@ -257,7 +324,11 @@ class signUpSecondViewController: UIViewController {
             errorPhone.alpha = 1
             return
         }
-        
+        // if conditions checkbox was unchecked
+        guard checkBoxButton.isSelected == true else {
+            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "You must agree on Terms & Conditions and Privacy Policy" , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+            return
+        }
         progressBar.setProgress(1, animated: true)
         
         // if no error is detected hide the error view
@@ -413,6 +484,7 @@ class signUpSecondViewController: UIViewController {
         }
         
     }
+    
 }
 
 //MARK: - Extensions
@@ -425,4 +497,49 @@ extension signUpSecondViewController: UITextFieldDelegate{
         textField.resignFirstResponder()
         return true;
     }
+}
+extension NSMutableAttributedString {
+
+    func setColorForText(textForAttribute: String, withColor color: UIColor) {
+        let range: NSRange = self.mutableString.range(of: textForAttribute, options: .caseInsensitive)
+
+        // Swift 4.2 and above
+        self.addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: range)
+
+        // Swift 4.1 and below
+        self.addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: range)
+    }
+
+}
+extension UITapGestureRecognizer {
+    
+    func didTapAttributedTextInLabel(label: UILabel, inRange targetRange: NSRange) -> Bool {
+        // Create instances of NSLayoutManager, NSTextContainer and NSTextStorage
+        let layoutManager = NSLayoutManager()
+        let textContainer = NSTextContainer(size: CGSize.zero)
+        let textStorage = NSTextStorage(attributedString: label.attributedText!)
+        
+        // Configure layoutManager and textStorage
+        layoutManager.addTextContainer(textContainer)
+        textStorage.addLayoutManager(layoutManager)
+        
+        // Configure textContainer
+        textContainer.lineFragmentPadding = 0.0
+        textContainer.lineBreakMode = label.lineBreakMode
+        textContainer.maximumNumberOfLines = label.numberOfLines
+        let labelSize = label.bounds.size
+        textContainer.size = labelSize
+        
+        // Find the tapped character location and compare it to the specified range
+        let locationOfTouchInLabel = self.location(in: label)
+        let textBoundingBox = layoutManager.usedRect(for: textContainer)
+        let textContainerOffset = CGPoint(x: (labelSize.width - textBoundingBox.size.width) * 0.5 - textBoundingBox.origin.x,
+                                          y: (labelSize.height - textBoundingBox.size.height) * 0.5 - textBoundingBox.origin.y);
+        let locationOfTouchInTextContainer = CGPoint(x: locationOfTouchInLabel.x - textContainerOffset.x,
+                                                     y: locationOfTouchInLabel.y - textContainerOffset.y);
+        var indexOfCharacter = layoutManager.characterIndex(for: locationOfTouchInTextContainer, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+        indexOfCharacter = indexOfCharacter + 4
+        return NSLocationInRange(indexOfCharacter, targetRange)
+    }
+    
 }
