@@ -284,30 +284,6 @@ extension ViewSOSRequestsViewController: UITableViewDataSource{
             array = activeRequests
         }
         
-        //2- distance circle view:
-        
-        //3- gender circle view:
-        let genderShadowLayer = CAShapeLayer()
-        genderShadowLayer.path = UIBezierPath(roundedRect: cell.genderView.bounds, cornerRadius: cell.genderView.layer.frame.width/2).cgPath
-        genderShadowLayer.fillColor = UIColor.white.cgColor
-        genderShadowLayer.shadowColor = UIColor.darkGray.cgColor
-        genderShadowLayer.shadowPath = genderShadowLayer.path
-        genderShadowLayer.shadowOffset = CGSize(width: 0.0, height: 1.0)
-        genderShadowLayer.shadowOpacity = 0.15
-        genderShadowLayer.shadowRadius = 5.0
-        cell.genderView.layer.insertSublayer(genderShadowLayer, at: 0)
-        
-        //4- age circle view:
-        let ageShadowLayer = CAShapeLayer()
-        ageShadowLayer.path = UIBezierPath(roundedRect: cell.ageView.bounds, cornerRadius: cell.ageView.layer.frame.width/2).cgPath
-        ageShadowLayer.fillColor = UIColor.white.cgColor
-        ageShadowLayer.shadowColor = UIColor.darkGray.cgColor
-        ageShadowLayer.shadowPath = ageShadowLayer.path
-        ageShadowLayer.shadowOffset = CGSize(width: 0.0, height: 1.0)
-        ageShadowLayer.shadowOpacity = 0.15
-        ageShadowLayer.shadowRadius = 5.0
-        cell.ageView.layer.insertSublayer(ageShadowLayer, at: 0)
-        
         //5- map view:
         cell.mapView.layer.cornerRadius = 20
 //        cell.mapView.layer.maskedCorners = [.layerMaxXMaxYCorner,.layerMaxXMinYCorner]
@@ -322,22 +298,6 @@ extension ViewSOSRequestsViewController: UITableViewDataSource{
         tap.long = Double(array[indexPath.row].getLongitude())!
         cell.mapView.addGestureRecognizer(tap)
         
-        //6- view details button:
-        cell.viewDetailsButton.backgroundColor = nil
-        cell.viewDetailsButton.layoutIfNeeded()
-        let gradientLayerr = CAGradientLayer()
-        gradientLayerr.colors = [UIColor(red: 0.879, green: 0.462, blue: 0.524, alpha: 1).cgColor,UIColor(red: 0.757, green: 0.204, blue: 0.286, alpha: 1).cgColor]
-        gradientLayerr.startPoint = CGPoint(x: 0, y: 0)
-        gradientLayerr.endPoint = CGPoint(x: 1, y: 0)
-        gradientLayerr.frame = cell.viewDetailsButton.bounds
-        gradientLayerr.cornerRadius = cell.viewDetailsButton.frame.height/2
-        gradientLayerr.shadowColor = UIColor.darkGray.cgColor
-        gradientLayerr.shadowOffset = CGSize(width: 2.5, height: 2.5)
-        gradientLayerr.shadowRadius = 5.0
-        gradientLayerr.shadowOpacity = 0.3
-        gradientLayerr.masksToBounds = false
-        cell.viewDetailsButton.layer.insertSublayer(gradientLayerr, at: 0)
-        cell.viewDetailsButton.contentVerticalAlignment = .center
         
         //7- status label:
         cell.status.textColor = UIColor(red: 0.286, green: 0.671, blue: 0.875, alpha: 1)
@@ -352,7 +312,6 @@ extension ViewSOSRequestsViewController: UITableViewDataSource{
         //8- occuredAt label:
         cell.occuredAt.textColor = UIColor(red: 0.286, green: 0.671, blue: 0.875, alpha: 1)
         let domainRange = array[indexPath.row].getTimeDate().range(of: " ")!
-        let date = array[indexPath.row].getTimeDate()[...domainRange.lowerBound]
         let time = array[indexPath.row].getTimeDate()[domainRange.lowerBound...]
         cell.occuredAt.text = "\(time)"
 
@@ -381,12 +340,11 @@ extension ViewSOSRequestsViewController: UITableViewDataSource{
         //12- age label:
         cell.ageLabel.textColor = UIColor(red: 0.286, green: 0.671, blue: 0.875, alpha: 1)
         let calendar = Calendar.current
-        let components = calendar.dateComponents([.year, .month, .day, .hour], from: Date(String(date)))
+        let components = calendar.dateComponents([.year, .month, .day, .hour], from: Date(String(userObject!.first!.getDateOfBirth())))
         let now = calendar.dateComponents([.year, .month, .day], from: Date())
         let ageComponents = calendar.dateComponents([.year], from: components, to: now)
         let age = ageComponents.year!
         cell.ageLabel.text = "\(age)"
-        print(date)
         
         //13- name label:
         cell.name.text = "\(String(describing: userObject!.first!.getFullName()))"

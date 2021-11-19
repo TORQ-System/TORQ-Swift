@@ -29,6 +29,7 @@ class sosRequestTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         
+        //2- distance circle view:
         let distanceShadowLayer = CAShapeLayer()
         distanceShadowLayer.path = UIBezierPath(roundedRect: distanceView.bounds, cornerRadius: distanceView.layer.frame.width/2).cgPath
         distanceShadowLayer.fillColor = UIColor.white.cgColor
@@ -38,6 +39,45 @@ class sosRequestTableViewCell: UITableViewCell {
         distanceShadowLayer.shadowOpacity = 0.15
         distanceShadowLayer.shadowRadius = 5
         distanceView.layer.insertSublayer(distanceShadowLayer, at: 0)
+        
+        //3- gender circle view:
+        let genderShadowLayer = CAShapeLayer()
+        genderShadowLayer.path = UIBezierPath(roundedRect: genderView.bounds, cornerRadius: genderView.layer.frame.width/2).cgPath
+        genderShadowLayer.fillColor = UIColor.white.cgColor
+        genderShadowLayer.shadowColor = UIColor.darkGray.cgColor
+        genderShadowLayer.shadowPath = genderShadowLayer.path
+        genderShadowLayer.shadowOffset = CGSize(width: 0.0, height: 1.0)
+        genderShadowLayer.shadowOpacity = 0.15
+        genderShadowLayer.shadowRadius = 5.0
+        genderView.layer.insertSublayer(genderShadowLayer, at: 0)
+        
+        //4- age circle view:
+        let ageShadowLayer = CAShapeLayer()
+        ageShadowLayer.path = UIBezierPath(roundedRect: ageView.bounds, cornerRadius: ageView.layer.frame.width/2).cgPath
+        ageShadowLayer.fillColor = UIColor.white.cgColor
+        ageShadowLayer.shadowColor = UIColor.darkGray.cgColor
+        ageShadowLayer.shadowPath = ageShadowLayer.path
+        ageShadowLayer.shadowOffset = CGSize(width: 0.0, height: 1.0)
+        ageShadowLayer.shadowOpacity = 0.15
+        ageShadowLayer.shadowRadius = 5.0
+        ageView.layer.insertSublayer(ageShadowLayer, at: 0)
+        
+        //6- view details button:
+        viewDetailsButton.backgroundColor = nil
+        viewDetailsButton.layoutIfNeeded()
+        let gradientLayerr = CAGradientLayer()
+        gradientLayerr.colors = [UIColor(red: 0.879, green: 0.462, blue: 0.524, alpha: 1).cgColor,UIColor(red: 0.757, green: 0.204, blue: 0.286, alpha: 1).cgColor]
+        gradientLayerr.startPoint = CGPoint(x: 0, y: 0)
+        gradientLayerr.endPoint = CGPoint(x: 1, y: 0)
+        gradientLayerr.frame = viewDetailsButton.bounds
+        gradientLayerr.cornerRadius = viewDetailsButton.frame.height/2
+        gradientLayerr.shadowColor = UIColor.darkGray.cgColor
+        gradientLayerr.shadowOffset = CGSize(width: 2.5, height: 2.5)
+        gradientLayerr.shadowRadius = 5.0
+        gradientLayerr.shadowOpacity = 0.3
+        gradientLayerr.masksToBounds = false
+        viewDetailsButton.layer.insertSublayer(gradientLayerr, at: 0)
+        viewDetailsButton.contentVerticalAlignment = .center
         
         self.layer.cornerRadius = 20
         self.layer.masksToBounds = true

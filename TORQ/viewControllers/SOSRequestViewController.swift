@@ -234,7 +234,7 @@ class SOSRequestViewController: UIViewController {
                 //2- write the child into the node in firebase
                 let random = UUID().uuidString
                 self.sosRequestID = random
-                self.ref.child("SOSRequests").child(random).setValue(["user_id":sosRequest.getUserID(),"status":sosRequest.getStatus(),"assigned_center":sosRequest.getAssignedCenter(),"sent":sosRequest.getSent(),"longitude":sosRequest.getLongitude(),"latitude":sosRequest.getLatitude()])
+                self.ref.child("SOSRequests").child(random).setValue(["user_id":sosRequest.getUserID(),"status":sosRequest.getStatus(),"assigned_center":sosRequest.getAssignedCenter(),"sent":sosRequest.getSent(),"longitude":sosRequest.getLongitude(),"latitude":sosRequest.getLatitude(),"time_date":sosRequest.getTimeDate()])
                 
                 self.sosLabel.text = "00:15"
                 self.seeDetails.alpha = 0
