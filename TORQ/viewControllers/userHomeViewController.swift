@@ -29,11 +29,12 @@ class userHomeViewController: UIViewController {
     var userID: String?
     let locationManager = CLLocationManager()
     let ref = Database.database().reference()
-    let services = ["My Medical Information","My Emergency Contact","SOS Emergency Request","My Accidents History"]
+    let services = ["Medical Information","Emergency Contact","View Accidents History","SOS Request"]
     let center = UNUserNotificationCenter.current()
     var user: User? = nil
     var location: [String: String] = ["lon":"","lat":""]
     var sensor: Sensor?
+    
     
     //MARK: - Constants
     let redUIColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
@@ -139,6 +140,7 @@ class userHomeViewController: UIViewController {
                 let longitude = obj.childSnapshot(forPath: "longitude").value as! String
                 let time = obj.childSnapshot(forPath:  "time").value as! String
                 let sensorID = obj.key
+//                print("S\(String(describing: self.userID!))")
                 if sensorID == "S\(String(describing: self.userID!))" {
                     self.vib.text = "\(vib) Hz"
                     if y == "1023" {
@@ -158,8 +160,12 @@ class userHomeViewController: UIViewController {
                     
                     
                     self.coordinate.text = "\(lonn), \(latt)"
+//                    let newDate = date.replacingOccurrences(of: ":", with: "/")
                     self.sensor = Sensor(vib: vib, x: x, y: y, z: z, date: date, latitude: latitude, longitude: latitude, time: time)
+                }else{
+//                    print("no sensor")
                 }
+                
             }
         }
     }
@@ -170,8 +176,15 @@ class userHomeViewController: UIViewController {
             ref.child("User").observe(.value) { snapshot in
                 for user in snapshot.children{
                     let obj = user as! DataSnapshot
+                    let dateOfBirth = obj.childSnapshot(forPath: "dateOfBirth").value as! String
+                    let email = obj.childSnapshot(forPath: "email").value as! String
                     let fullName = obj.childSnapshot(forPath: "fullName").value as! String
+                    let gender = obj.childSnapshot(forPath: "gender").value as! String
+                    let nationalID = obj.childSnapshot(forPath: "nationalID").value as! String
+                    let password = obj.childSnapshot(forPath: "password").value as! String
+                    let phone = obj.childSnapshot(forPath:  "phone").value as! String
                     if obj.key == self.userID {
+                        self.user = User(dateOfBirth: dateOfBirth,          email: email, fullName: fullName, gender:        gender, nationalID: nationalID, password:      password, phone: phone)
                             self.userFullName.text = fullName
                     }
                 }
@@ -207,9 +220,6 @@ class userHomeViewController: UIViewController {
         medicalReportContainer.layer.cornerRadius = 20
         medicalReportContainer.layer.masksToBounds = true
         medicalReportContainer.backgroundColor = UIColor(red: 0.83921569, green: 0.33333333, blue: 0.42352941, alpha: 1)
-        
-        
-        
         medicalReportContainer.layer.shadowColor = UIColor(red: 0.83921569, green: 0.33333333, blue: 0.42352941, alpha: 1).cgColor
         medicalReportContainer.layer.shadowOffset = CGSize(width: 0, height: 30)
         medicalReportContainer.layer.shadowOpacity = 0.35
@@ -302,6 +312,8 @@ extension userHomeViewController: CLLocationManagerDelegate{
         let day = calendar.component(.day, from: date)
         let month = calendar.component(.month, from: date)
         let year = calendar.component(.year, from: date)
+        location["lon"] = String(describing: longitude!)
+        location["lat"] = String(describing: latitude!)
         ref.child("Sensor").child("S\(userID!)/longitude").setValue((String(describing: longitude!)))
         ref.child("Sensor").child("S\(userID!)/latitude").setValue((String(describing: latitude!)))
         ref.child("Sensor").child("S\(userID!)/time").setValue("\(hour):\(minutes):\(seconds)")
@@ -330,19 +342,13 @@ extension userHomeViewController: UICollectionViewDelegate{
             viewVC.userID = userID
             vc = viewVC
             break
-        case 2:
-//            let viewVC = storyboard.instantiateViewController(identifier: "ViewEmergencyContactViewController") as! ViewEmergencyContactViewController
-//            viewVC.modalPresentationStyle = .fullScreen
-//            viewVC.userID = userID
-//            vc = viewVC
-            break
         case 3:
-            let viewVC = storyboard.instantiateViewController(identifier: "AccidentsHistory") as! AccidentHistoryViewController
+            let viewVC = storyboard.instantiateViewController(identifier: "SOSRequestViewController") as! SOSRequestViewController
             viewVC.modalPresentationStyle = .fullScreen
-            viewVC.userID = userID
+            viewVC.longitude = location["lon"]
+            viewVC.latitude = location["lat"]
             vc = viewVC
             break
-
         default:
             print("unKnown")
         }
@@ -367,7 +373,7 @@ extension userHomeViewController: UICollectionViewDataSource{
         cell.layer.shadowColor = UIColor(red: 0.659, green: 0.835, blue: 0.906, alpha: 1).cgColor
         cell.layer.shadowOffset = CGSize(width: 15, height: 5)  //Here you control x and y
         cell.layer.shadowOpacity = 0.35
-        cell.layer.shadowRadius = 10 //Here your control your blur
+        cell.layer.shadowRadius = 10
         cell.layer.masksToBounds =  false
         cell.serviceLabel.text = services[indexPath.row]
         switch indexPath.row {
@@ -376,9 +382,9 @@ extension userHomeViewController: UICollectionViewDataSource{
         case 1:
             cell.serviceImage.image = UIImage(imageLiteralResourceName: "telephone")
         case 2:
-            cell.serviceImage.image = UIImage(imageLiteralResourceName: "sos")
+            cell.serviceImage.image = UIImage(imageLiteralResourceName: "clock")
         case 3:
-            cell.serviceImage.image = UIImage(imageLiteralResourceName: "history")
+            cell.serviceImage.image = UIImage(imageLiteralResourceName: "sos")
         default:
             print("unknown")
         }

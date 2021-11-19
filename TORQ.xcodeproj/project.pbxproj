@@ -41,6 +41,13 @@
 		BEE76D28272D2BEC001390D2 /* ViewEmergencyContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE76D27272D2BEC001390D2 /* ViewEmergencyContactViewController.swift */; };
 		BEE76D2A272D2C52001390D2 /* ECCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE76D29272D2C52001390D2 /* ECCollectionViewCell.swift */; };
 		BEE76D2C272D3139001390D2 /* addEmergencyContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE76D2B272D3139001390D2 /* addEmergencyContactViewController.swift */; };
+		BEF2304527483F680068B55A /* SOSRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF2304427483F680068B55A /* SOSRequestViewController.swift */; };
+		BEF2304727483FB00068B55A /* sosDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF2304627483FB00068B55A /* sosDetailsViewController.swift */; };
+		BEF230492748418E0068B55A /* SOSRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF230482748418E0068B55A /* SOSRequest.swift */; };
+		BEF2304B274846D80068B55A /* ViewSOSRequestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF2304A274846D80068B55A /* ViewSOSRequestsViewController.swift */; };
+		BEF2304D274847060068B55A /* viewSOSRequestDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF2304C274847060068B55A /* viewSOSRequestDetailsViewController.swift */; };
+		BEF2304F274847710068B55A /* medicalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF2304E274847710068B55A /* medicalCollectionViewCell.swift */; };
+		BEF23051274847BB0068B55A /* sosRequestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF23050274847BB0068B55A /* sosRequestTableViewCell.swift */; };
 		BEF974DE2707146300325281 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF974DD2707146300325281 /* AppDelegate.swift */; };
 		BEF974E02707146300325281 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF974DF2707146300325281 /* SceneDelegate.swift */; };
 		BEF974E52707146300325281 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEF974E32707146300325281 /* Main.storyboard */; };
@@ -118,6 +125,13 @@
 		BEE76D27272D2BEC001390D2 /* ViewEmergencyContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewEmergencyContactViewController.swift; sourceTree = "<group>"; };
 		BEE76D29272D2C52001390D2 /* ECCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECCollectionViewCell.swift; sourceTree = "<group>"; };
 		BEE76D2B272D3139001390D2 /* addEmergencyContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addEmergencyContactViewController.swift; sourceTree = "<group>"; };
+		BEF2304427483F680068B55A /* SOSRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SOSRequestViewController.swift; sourceTree = "<group>"; };
+		BEF2304627483FB00068B55A /* sosDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sosDetailsViewController.swift; sourceTree = "<group>"; };
+		BEF230482748418E0068B55A /* SOSRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SOSRequest.swift; sourceTree = "<group>"; };
+		BEF2304A274846D80068B55A /* ViewSOSRequestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewSOSRequestsViewController.swift; sourceTree = "<group>"; };
+		BEF2304C274847060068B55A /* viewSOSRequestDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewSOSRequestDetailsViewController.swift; sourceTree = "<group>"; };
+		BEF2304E274847710068B55A /* medicalCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = medicalCollectionViewCell.swift; sourceTree = "<group>"; };
+		BEF23050274847BB0068B55A /* sosRequestTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sosRequestTableViewCell.swift; sourceTree = "<group>"; };
 		BEF974DA2707146300325281 /* TORQ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TORQ.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEF974DD2707146300325281 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BEF974DF2707146300325281 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -200,6 +214,8 @@
 				BEE76D29272D2C52001390D2 /* ECCollectionViewCell.swift */,
 				BED1085F273EB52F0099EE15 /* profileTableViewCell.swift */,
 				BED10863274148650099EE15 /* AccidentsCollectionViewCell.swift */,
+				BEF2304E274847710068B55A /* medicalCollectionViewCell.swift */,
+				BEF23050274847BB0068B55A /* sosRequestTableViewCell.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -213,6 +229,7 @@
 				BE9CDAE62729D78200CDD4B4 /* MedicalReport.swift */,
 				BE9CDAE82729F66A00CDD4B4 /* User.swift */,
 				BE64405B272C6F2B0051662F /* Sensor.swift */,
+				BEF230482748418E0068B55A /* SOSRequest.swift */,
 			);
 			path = modules;
 			sourceTree = "<group>";
@@ -290,6 +307,8 @@
 				BEF975132707293600325281 /* signUpSecondViewController.swift */,
 				BEF97538270AE07400325281 /* loginViewController.swift */,
 				BEF9753C270AE0E500325281 /* paramedicHomeViewController.swift */,
+				BEF2304A274846D80068B55A /* ViewSOSRequestsViewController.swift */,
+				BEF2304C274847060068B55A /* viewSOSRequestDetailsViewController.swift */,
 				BEF9753A270AE0D100325281 /* userHomeViewController.swift */,
 				BE34F69E270F31A00093C633 /* requestsViewController.swift */,
 				BE34F6A5270F327A0093C633 /* viewLocationViewController.swift */,
@@ -310,6 +329,8 @@
 				BE04B6D1272DA7B700EEE3EE /* requestReportViewController.swift */,
 				BE04B6D3272DAA0600EEE3EE /* hospitalsViewController.swift */,
 				BED10861274148040099EE15 /* AccidentHistoryViewController.swift */,
+				BEF2304427483F680068B55A /* SOSRequestViewController.swift */,
+				BEF2304627483FB00068B55A /* sosDetailsViewController.swift */,
 			);
 			path = viewControllers;
 			sourceTree = "<group>";
@@ -573,6 +594,7 @@
 				BEC34A2327284BCB001E99E5 /* resetPasswordViewController.swift in Sources */,
 				BE9CDAE92729F66A00CDD4B4 /* User.swift in Sources */,
 				BE34F6A2270F31FB0093C633 /* Request.swift in Sources */,
+				BEF230492748418E0068B55A /* SOSRequest.swift in Sources */,
 				BEDC3C18272653610026948E /* servicesCollectionViewCell.swift in Sources */,
 				BE04B6D2272DA7B700EEE3EE /* requestReportViewController.swift in Sources */,
 				BED10862274148040099EE15 /* AccidentHistoryViewController.swift in Sources */,
@@ -584,13 +606,16 @@
 				BE34F6AB27118A800093C633 /* onboardingScreen1ViewController.swift in Sources */,
 				BE34F69D270F30B70093C633 /* requestCollectionViewCell.swift in Sources */,
 				BE34F6AF27118A9E0093C633 /* onboardingScreen3ViewController.swift in Sources */,
+				BEF2304727483FB00068B55A /* sosDetailsViewController.swift in Sources */,
 				BEC34A252728710C001E99E5 /* emergencyContact.swift in Sources */,
 				BE04B6D4272DAA0600EEE3EE /* hospitalsViewController.swift in Sources */,
 				BEDC3C1A272681AE0026948E /* tabBarController.swift in Sources */,
+				BEF23051274847BB0068B55A /* sosRequestTableViewCell.swift in Sources */,
 				BEDC3C20272682510026948E /* AccidentsViewController.swift in Sources */,
 				BEE76D28272D2BEC001390D2 /* ViewEmergencyContactViewController.swift in Sources */,
 				BEF9753D270AE0E500325281 /* paramedicHomeViewController.swift in Sources */,
 				BEF97539270AE07400325281 /* loginViewController.swift in Sources */,
+				BEF2304F274847710068B55A /* medicalCollectionViewCell.swift in Sources */,
 				BEC34A2127284A85001E99E5 /* viewControllerExtension.swift in Sources */,
 				BEC34A1F27281B0D001E99E5 /* textFieldExtension.swift in Sources */,
 				BEF974DE2707146300325281 /* AppDelegate.swift in Sources */,
@@ -598,8 +623,11 @@
 				BEF974E02707146300325281 /* SceneDelegate.swift in Sources */,
 				BEF9753B270AE0D100325281 /* userHomeViewController.swift in Sources */,
 				BEDC3C1E272682160026948E /* profileViewController.swift in Sources */,
+				BEF2304B274846D80068B55A /* ViewSOSRequestsViewController.swift in Sources */,
 				BE34F6A6270F327A0093C633 /* viewLocationViewController.swift in Sources */,
 				BE34F69F270F31A00093C633 /* requestsViewController.swift in Sources */,
+				BEF2304527483F680068B55A /* SOSRequestViewController.swift in Sources */,
+				BEF2304D274847060068B55A /* viewSOSRequestDetailsViewController.swift in Sources */,
 				BEF975122707292C00325281 /* signUpFirstViewController.swift in Sources */,
 				BE9CDAE72729D78200CDD4B4 /* MedicalReport.swift in Sources */,
 				BEE76D2C272D3139001390D2 /* addEmergencyContactViewController.swift in Sources */,
@@ -782,13 +810,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3XY36RL6YG;
+				DEVELOPMENT_TEAM = Q839S77BZ7;
 				INFOPLIST_FILE = TORQ/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Alsyfih.torq;
+				PRODUCT_BUNDLE_IDENTIFIER = Alsulayfih.torq;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -802,13 +830,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3XY36RL6YG;
+				DEVELOPMENT_TEAM = Q839S77BZ7;
 				INFOPLIST_FILE = TORQ/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Alsyfih.torq;
+				PRODUCT_BUNDLE_IDENTIFIER = Alsulayfih.torq;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

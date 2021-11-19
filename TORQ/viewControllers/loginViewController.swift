@@ -94,10 +94,11 @@ class loginViewController: UIViewController {
     
     func goToParamedicHome(){
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "requestsViewController") as! requestsViewController
-        vc.loggedInCenterEmail = email.text
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true, completion: nil)
+        let tb = storyboard.instantiateViewController(identifier: "paramedicHome") as! UITabBarController
+        let vcs = tb.viewControllers!
+        let viewSOS = vcs[2] as! ViewSOSRequestsViewController
+        viewSOS.modalPresentationStyle = .fullScreen
+        present(tb, animated: true, completion: nil)
     }
     
     func goToResetPassword(){
