@@ -23,6 +23,7 @@ class viewSOSRequestDetailsViewController: UIViewController {
     @IBOutlet weak var medicalReportButton: UIButton!
     @IBOutlet weak var requestDetailsButton: UIButton!
     @IBOutlet weak var MedicalInfromationView: UIView!
+    @IBOutlet weak var RequestInformationView: UIView!
     @IBOutlet weak var ageView: UIView!
     @IBOutlet weak var ageLabel: UILabel!
     @IBOutlet weak var bloodTypeView: UIView!
@@ -30,18 +31,35 @@ class viewSOSRequestDetailsViewController: UIViewController {
     @IBOutlet weak var allergiesView: UIView!
     @IBOutlet weak var disabilitiesView: UIView!
     @IBOutlet weak var diseasesView: UIView!
+    @IBOutlet weak var medicationView: UIView!
     @IBOutlet weak var allergiesCollectionView: UICollectionView!
+    @IBOutlet weak var disabilitiesColletionView: UICollectionView!
+    @IBOutlet weak var diseasesCollectionView: UICollectionView!
+    @IBOutlet weak var medicationsCollectionView: UICollectionView!
+    @IBOutlet weak var circle1: UIView!
+    @IBOutlet weak var progress1: UIProgressView!
+    @IBOutlet weak var circle2: UIView!
+    @IBOutlet weak var progress2: UIProgressView!
+    @IBOutlet weak var circle3: UIView!
+    @IBOutlet weak var progress3: UIProgressView!
+    @IBOutlet weak var circle4: UIView!
+    @IBOutlet weak var progress4: UIProgressView!
+    @IBOutlet weak var circle5: UIView!
     
     
     //MARK: - Variables
     var sosRequester: String?
     var sosRequestTime: String?
     var sosRequestName: String?
-    var sosRequestAge: String?
+    var sosRequestAge: Int?
     var ref = Database.database().reference()
     var MedicalReports: [MedicalReport] = []
     var allergiesArray: [String] = []
-
+    var disabilitiesArray: [String] = []
+    var diseasesArray: [String] = []
+    var medicationArray: [String] = []
+    var medicalReport = true
+    var requestDetails = false
     
     //MARK: - Overriden functions
     override func viewDidLoad() {
@@ -104,10 +122,15 @@ class viewSOSRequestDetailsViewController: UIViewController {
         directionsButton.setTitleColor(UIColor(red: 0.286, green: 0.671, blue: 0.875, alpha: 1), for: .normal)
         
         //8- Medical Report button
-        medicalReportButton.setTitleColor(UIColor(red: 0.788, green: 0.271, blue: 0.341, alpha: 1), for: .normal)
+        let buttonColor = UIColor(red: 0.788, green: 0.271, blue: 0.341, alpha: 1)
+        medicalReportButton.setTitleColor(buttonColor, for: .normal)
+        medicalReportButton.layer.cornerRadius = 10
+        medicalReportButton.backgroundColor = UIColor(red: 0.965, green: 0.922, blue: 0.937, alpha: 1)
         
         //9- Report Deatils button
-        requestDetailsButton.setTitleColor(UIColor(red: 0.788, green: 0.271, blue: 0.341, alpha: 1), for: .normal)
+        requestDetailsButton.setTitleColor(buttonColor, for: .normal)
+        requestDetailsButton.layer.cornerRadius = 10
+
 
         //10- container view
         containerView.layer.cornerRadius = 20
@@ -133,11 +156,16 @@ class viewSOSRequestDetailsViewController: UIViewController {
         addBottomBorder(with: color, andWidth: 1, view: bloodTypeView)
         
         //14- age label
-        ageLabel.text = sosRequestAge
+        ageLabel.text = "\(sosRequestAge!)"
         
         //15- allergies view
         addBottomBorder(with: color, andWidth: 1, view: allergiesView)
-
+        
+        //16- disabilities view
+        addBottomBorder(with: color, andWidth: 1, view: disabilitiesView)
+        
+        //17- diseases view
+        addBottomBorder(with: color, andWidth: 1, view: diseasesView)
     }
     
     private func fetchMedicalReports(){
@@ -165,14 +193,20 @@ class viewSOSRequestDetailsViewController: UIViewController {
                         self.allergiesArray = medicalReport.getAllergies().components(separatedBy: ", ")
                         
                         //2- translate chronic_disease
+                        self.diseasesArray = medicalReport.getDiseases().components(separatedBy: ", ")
                         
                         //3- transalte disabilities
+                        self.disabilitiesArray = medicalReport.getDisabilities().components(separatedBy: ", ")
                         
                         //4- translate prescribed_medication
+                        self.medicationArray = medicalReport.getMedications().components(separatedBy: ", ")
                         
                         
                     }
                     self.allergiesCollectionView.reloadData()
+                    self.disabilitiesColletionView.reloadData()
+                    self.diseasesCollectionView.reloadData()
+                    self.medicationsCollectionView.reloadData()
                 }
                 print("usersInfo: \(self.MedicalReports)")
             }
@@ -197,7 +231,7 @@ class viewSOSRequestDetailsViewController: UIViewController {
         view.addSubview(border)
         view.sendSubviewToBack(border)
     }
-
+    
     func addLeftBorder(with color: UIColor?, andWidth borderWidth: CGFloat, view: UIView) {
         let border = UIView()
         border.backgroundColor = color
@@ -221,22 +255,88 @@ class viewSOSRequestDetailsViewController: UIViewController {
     @IBAction func backButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
+    
+    
+    @IBAction func medicalReportButton(_ sender: Any) {
+        medicalReportButton.backgroundColor = UIColor(red: 0.965, green: 0.922, blue: 0.937, alpha: 1)
+        requestDetailsButton.backgroundColor = .clear
+        MedicalInfromationView.isHidden = false
+        requestDetailsButton.isHidden = true
+    }
+    
+    @IBAction func requestDetailsButton(_ sender: Any) {
+        requestDetailsButton.backgroundColor = UIColor(red: 0.965, green: 0.922, blue: 0.937, alpha: 1)
+        medicalReportButton.backgroundColor = .clear
+        MedicalInfromationView.isHidden = true
+        requestDetailsButton.isHidden = false
+    }
+    
 }
 
 //MARK: - extension
 
 extension viewSOSRequestDetailsViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return allergiesArray.count
+        var count = 0
+        switch collectionView {
+        case allergiesCollectionView:
+            count = allergiesArray.count
+        case disabilitiesColletionView:
+            count = disabilitiesArray.count
+        case diseasesCollectionView:
+            count = diseasesArray.count
+        case medicationsCollectionView:
+            count = medicationArray.count
+        default:
+            print("unknown")
+        }
+        return count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "medicalCell", for: indexPath) as! medicalCollectionViewCell
-        cell.label.text = allergiesArray[indexPath.row]
-        cell.label.textColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
-        cell.backgroundColor = UIColor(red: 0.965, green: 0.922, blue: 0.937, alpha: 1)
+        switch collectionView {
+        case allergiesCollectionView:
+            cell.label.text = allergiesArray[indexPath.row]
+            cell.label.textColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
+            cell.layer.cornerRadius = 10
+            cell.contentView.layer.cornerRadius = 10
+            cell.backgroundColor = UIColor(red: 0.965, green: 0.922, blue: 0.937, alpha: 1)
+            return cell
+        case disabilitiesColletionView:
+            cell.label.text = disabilitiesArray[indexPath.row]
+            cell.label.textColor = UIColor(red: 0.286, green: 0.671, blue: 0.875, alpha: 1)
+            cell.layer.cornerRadius = 10
+            cell.contentView.layer.cornerRadius = 10
+            cell.backgroundColor = UIColor(red: 0.906, green: 0.957, blue: 0.98, alpha: 1)
+            return cell
+        case diseasesCollectionView:
+            cell.label.text = diseasesArray[indexPath.row]
+            cell.label.textColor = UIColor(red: 0.622, green: 0.742, blue: 0.423, alpha: 1)
+            cell.layer.cornerRadius = 10
+            cell.contentView.layer.cornerRadius = 10
+            cell.backgroundColor = UIColor(red: 0.941, green: 0.965, blue: 0.937, alpha: 1)
+            return cell
+        case medicationsCollectionView:
+            cell.label.text = allergiesArray[indexPath.row]
+            cell.label.textColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
+            cell.layer.cornerRadius = 10
+            cell.contentView.layer.cornerRadius = 10
+            cell.backgroundColor = UIColor(red: 0.965, green: 0.922, blue: 0.937, alpha: 1)
+            return cell
+        default:
+            print("unknown")
+        }
         return cell
     }
-    
-    
 }
+
+public func collectionView(_ collectionView: UICollectionView,layout collectionViewLayout: UICollectionViewLayout,minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    return 2.5
+    }
+
+    public func collectionView(_ collectionView: UICollectionView,
+                               layout collectionViewLayout: UICollectionViewLayout,
+                               minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 2.5
+    }

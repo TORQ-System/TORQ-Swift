@@ -178,6 +178,7 @@ class ViewSOSRequestsViewController: UIViewController {
         vc.sosRequester = sender.userID
         vc.sosRequestName = sender.userName
         vc.sosRequestTime = sender.requestTime
+        vc.sosRequestAge = sender.requesterAge
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
     }
@@ -191,6 +192,7 @@ class ViewSOSRequestsViewController: UIViewController {
         var userName: String?
         var requestTime: String?
         var userID: String?
+        var requesterAge: Int?
         
     }
     
@@ -393,6 +395,7 @@ extension ViewSOSRequestsViewController: UITableViewDataSource{
         let buttonTap = viewSOSRequestsDetails(target: self, action: #selector(viewDetails(sender:)))
         buttonTap.userID = array[indexPath.row].getUserID()
         buttonTap.userName = userObject!.first!.getFullName()
+        buttonTap.requesterAge = age
         buttonTap.requestTime = String(time)
         cell.viewDetailsButton.addGestureRecognizer(buttonTap)
         return cell
