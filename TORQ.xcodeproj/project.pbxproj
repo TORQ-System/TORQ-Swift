@@ -52,6 +52,9 @@
 		BEF23055274856B80068B55A /* termsAndConditionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF23054274856B80068B55A /* termsAndConditionsViewController.swift */; };
 		BEF230572748599C0068B55A /* editMedicalReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF230562748599C0068B55A /* editMedicalReportViewController.swift */; };
 		BEF23059274864ED0068B55A /* editEmergencyContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF23058274864ED0068B55A /* editEmergencyContactViewController.swift */; };
+		BEF2305B27486BF50068B55A /* notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF2305A27486BF50068B55A /* notification.swift */; };
+		BEF2305D27486C1F0068B55A /* notificationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF2305C27486C1F0068B55A /* notificationCollectionViewCell.swift */; };
+		BEF2305F27486CA10068B55A /* filterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF2305E27486CA10068B55A /* filterCollectionViewCell.swift */; };
 		BEF974DE2707146300325281 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF974DD2707146300325281 /* AppDelegate.swift */; };
 		BEF974E02707146300325281 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF974DF2707146300325281 /* SceneDelegate.swift */; };
 		BEF974E52707146300325281 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEF974E32707146300325281 /* Main.storyboard */; };
@@ -140,6 +143,9 @@
 		BEF23054274856B80068B55A /* termsAndConditionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = termsAndConditionsViewController.swift; sourceTree = "<group>"; };
 		BEF230562748599C0068B55A /* editMedicalReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editMedicalReportViewController.swift; sourceTree = "<group>"; };
 		BEF23058274864ED0068B55A /* editEmergencyContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editEmergencyContactViewController.swift; sourceTree = "<group>"; };
+		BEF2305A27486BF50068B55A /* notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = notification.swift; sourceTree = "<group>"; };
+		BEF2305C27486C1F0068B55A /* notificationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = notificationCollectionViewCell.swift; sourceTree = "<group>"; };
+		BEF2305E27486CA10068B55A /* filterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = filterCollectionViewCell.swift; sourceTree = "<group>"; };
 		BEF974DA2707146300325281 /* TORQ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TORQ.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEF974DD2707146300325281 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BEF974DF2707146300325281 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -224,6 +230,8 @@
 				BED10863274148650099EE15 /* AccidentsCollectionViewCell.swift */,
 				BEF2304E274847710068B55A /* medicalCollectionViewCell.swift */,
 				BEF23050274847BB0068B55A /* sosRequestTableViewCell.swift */,
+				BEF2305C27486C1F0068B55A /* notificationCollectionViewCell.swift */,
+				BEF2305E27486CA10068B55A /* filterCollectionViewCell.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -238,6 +246,7 @@
 				BE9CDAE82729F66A00CDD4B4 /* User.swift */,
 				BE64405B272C6F2B0051662F /* Sensor.swift */,
 				BEF230482748418E0068B55A /* SOSRequest.swift */,
+				BEF2305A27486BF50068B55A /* notification.swift */,
 			);
 			path = modules;
 			sourceTree = "<group>";
@@ -627,6 +636,7 @@
 				BEDC3C1A272681AE0026948E /* tabBarController.swift in Sources */,
 				BEF23051274847BB0068B55A /* sosRequestTableViewCell.swift in Sources */,
 				BEDC3C20272682510026948E /* AccidentsViewController.swift in Sources */,
+				BEF2305B27486BF50068B55A /* notification.swift in Sources */,
 				BEE76D28272D2BEC001390D2 /* ViewEmergencyContactViewController.swift in Sources */,
 				BEF9753D270AE0E500325281 /* paramedicHomeViewController.swift in Sources */,
 				BEF97539270AE07400325281 /* loginViewController.swift in Sources */,
@@ -638,6 +648,7 @@
 				BEF974E02707146300325281 /* SceneDelegate.swift in Sources */,
 				BEF9753B270AE0D100325281 /* userHomeViewController.swift in Sources */,
 				BEDC3C1E272682160026948E /* profileViewController.swift in Sources */,
+				BEF2305F27486CA10068B55A /* filterCollectionViewCell.swift in Sources */,
 				BEF2304B274846D80068B55A /* ViewSOSRequestsViewController.swift in Sources */,
 				BE34F6A6270F327A0093C633 /* viewLocationViewController.swift in Sources */,
 				BE34F69F270F31A00093C633 /* requestsViewController.swift in Sources */,
@@ -647,6 +658,7 @@
 				BE9CDAE72729D78200CDD4B4 /* MedicalReport.swift in Sources */,
 				BEE76D2C272D3139001390D2 /* addEmergencyContactViewController.swift in Sources */,
 				BE34F6A9271182FA0093C633 /* launchViewController.swift in Sources */,
+				BEF2305D27486C1F0068B55A /* notificationCollectionViewCell.swift in Sources */,
 				BEF23055274856B80068B55A /* termsAndConditionsViewController.swift in Sources */,
 				BE9CDAE527297FD100CDD4B4 /* viewMedicalReportViewController.swift in Sources */,
 			);
