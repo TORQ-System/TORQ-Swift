@@ -130,11 +130,13 @@ class changePasswordViewController: UIViewController{
             errors["new"] = "  "
         } else if !newPassword.text!.isValidPassword{
             errors["new"] = "password should be 6 characters or more"
+        } else if confirmPassword.text != nil && confirmPassword.text != "" && (confirmPassword.text != newPassword.text) {
+            errors["new"] = "passwords do not match"
         }
         
         if confirmPassword.text == nil || confirmPassword.text == ""{
             errors["confirm"] = "  "
-        } else if confirmPassword.text != newPassword.text!{
+        } else if confirmPassword.text != newPassword.text{
             errors["confirm"] = "passwords do not match"
         }
         
