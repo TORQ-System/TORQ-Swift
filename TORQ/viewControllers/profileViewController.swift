@@ -25,8 +25,8 @@ class profileViewController: UIViewController {
     var userID = Auth.auth().currentUser?.uid
     let ref = Database.database().reference()
     var user: User?
-    var services = ["Terms and conditions","Settings","Edit Account","Sensor Information","Change passowrd","Logout"]
-    var servicesImages = ["terms and conditions","settings","edit account","sensor information","change password","logout"]
+    var services = ["Terms and conditions","Privacy and Policies","Edit Account","Change passowrd","Logout"]
+    var servicesImages = ["terms","privacy","edit account","change password","logout"]
     let redUIColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
     let alertIcon = UIImage(named: "errorIcon")
     let apperance = SCLAlertView.SCLAppearance(
@@ -57,11 +57,6 @@ class profileViewController: UIViewController {
         tableView.layer.cornerRadius = 20
         tableView.layer.masksToBounds = true
         tableView.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMinYCorner]
-        
-        
-        
-        
-
     }
     
     
@@ -143,36 +138,30 @@ extension profileViewController: UITableViewDataSource{
 extension profileViewController: UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-//        let vc = UIViewController()
-//        vc.presentationStyle = .fullScreen
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        var vc = UIViewController()
         switch indexPath.row {
         case 0:
             //terms and conditions
-            //let TermsVC = storyboard.instantiateViewController(identifier: "termsAndConditionsViewController") as! termsAndConditionsViewController
-            //vc = TermsVC
+            let TermsVC = storyboard.instantiateViewController(identifier: "termsAndConditionsViewController") as! termsAndConditionsViewController
+            vc = TermsVC
             break
         case 1:
-            //settings
-            //let settingsVC = storyboard.instantiateViewController(identifier: "settingsViewController") as! settingsViewController
-            //vc = settingsVC
+            //plicies and privacy
+            let PrivacyVC = storyboard.instantiateViewController(identifier: "privacyPolicyViewController") as! privacyPolicyViewController
+            vc = PrivacyVC
             break
         case 2:
             //edit Account
-            //let editVC = storyboard.instantiateViewController(identifier: "editAccountViewController") as! editAccountViewController
-            //vc = editVC
+            let editVC = storyboard.instantiateViewController(identifier: "editAccountViewController") as! editAccountViewController
+            vc = editVC
             break
         case 3:
-            //sensor Information
-            //let sensorVC = storyboard.instantiateViewController(identifier: "SensorViewController") as! SensorViewController
-            //vc = sensorVC
+            //change password
+            let changePassVC = storyboard.instantiateViewController(identifier: "changePasswordViewController") as! changePasswordViewController
+            vc = changePassVC
             break
         case 4:
-            //change password
-            //let changePassVC = storyboard.instantiateViewController(identifier: "changePasswordViewController") as! changePasswordViewController
-            //vc = changePassVC
-            break
-        case 5:
             //logout
             do {
                 try Auth.auth().signOut()
@@ -186,7 +175,9 @@ extension profileViewController: UITableViewDelegate{
         default:
             print("unknown")
         }
-//        self.present(vc, animated: true, completion: nil)
+        tableView.deselectRow(at: indexPath, animated: true)
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
     }
     
 }
