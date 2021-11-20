@@ -31,6 +31,8 @@ class editAccountViewController: UIViewController {
     var ref = Database.database().reference()
     var user: User?
     var tap = UITapGestureRecognizer()
+    var users: [User] = []
+    
     
     //MARK: - Constants
     let datePicker = UIDatePicker()
@@ -51,6 +53,7 @@ class editAccountViewController: UIViewController {
         formatter.timeStyle = .none
         formatter.dateFormat = "MMM d, yyyy"
         
+        fetchUsers()
         fetchUserData()
         
         configureTapGesture()
@@ -61,6 +64,28 @@ class editAccountViewController: UIViewController {
         
     }
     //MARK: - Functions
+    func fetchUsers() {
+        ref.child("User").observe(.value) { [self]snapshot in
+            for user in snapshot.children{
+                let obj = user as! DataSnapshot
+                let dateOfBirth = obj.childSnapshot(forPath: "dateOfBirth").value as! String
+                let email = obj.childSnapshot(forPath: "email").value as! String
+                let fullName = obj.childSnapshot(forPath: "fullName").value as! String
+                let gender = obj.childSnapshot(forPath: "gender").value as! String
+                let nationalID = obj.childSnapshot(forPath: "nationalID").value as! String
+                let password = obj.childSnapshot(forPath: "password").value as! String
+                let phone = obj.childSnapshot(forPath:  "phone").value as! String
+                
+                let compareUser = User(dateOfBirth: dateOfBirth, email: email, fullName: fullName, gender: gender, nationalID: nationalID, password:password, phone: phone)
+                if Auth.auth().currentUser?.uid == obj.key {
+                    print("current user")
+                } else{
+                users.append(compareUser)
+                }
+            }
+        }
+    }
+    
     func configureTapGesture(){
         tap = UITapGestureRecognizer(target: self, action: #selector(self.saveClicked(_:)))
         tap.numberOfTapsRequired = 1
@@ -105,10 +130,10 @@ class editAccountViewController: UIViewController {
         emailError.alpha = 0
         phoneNumberError.alpha = 0
         birthdateError.alpha = 0
-
+        
         nationalID.isUserInteractionEnabled = false
     }
-
+    
     func configureSegmentControl(){
         gender.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.white, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16.0)], for: UIControl.State.normal)
     }
@@ -202,7 +227,7 @@ class editAccountViewController: UIViewController {
             } else {
                 Auth.auth().currentUser?.updateEmail(to: updatedUser["email"]!, completion: { error in
                     if error != nil {
-                        SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "An error occured while updating your information", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+                        SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "The email entered is already in use", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
                     } else{
                         self.ref.child("User").child(userID!).updateChildValues(["fullName": updatedUser["fullName"]!, "email": updatedUser["email"]!, "phone": updatedUser["phoneNumber"]!, "gender": updatedUser["gender"]!, "dateOfBirth": updatedUser["birthDate"]! ]){
                             (error : Error?, ref: DatabaseReference) in
@@ -237,7 +262,6 @@ class editAccountViewController: UIViewController {
             let phone = value?["phone"] as? String ?? "Uknown"
             
             self.user = User(dateOfBirth: birthDate, email: email, fullName: fullName, gender: gender, nationalID: nationalID, password:password, phone: phone)
-            
             self.datePicker.date = Date(birthDate)
             self.fullName.text = fullName
             self.email.text = email
@@ -247,6 +271,15 @@ class editAccountViewController: UIViewController {
             self.phoneNumber.text = phone
         })
         
+    }
+    
+    func validatePhoneNumber() -> Bool{
+        for user in users {
+            if user.getPhone() == phoneNumber.text {
+                return false
+            }
+        }
+        return true
     }
     
     func selectGender(gender:String) -> Int{
@@ -299,10 +332,15 @@ class editAccountViewController: UIViewController {
             errors["phoneNumber"] = "Phone number cannot be empty"
         } else if !phoneNumber.text!.isValidPhone {
             errors["phoneNumber"] = "Invalid phone number"
+        } else if !validatePhoneNumber(){
+            errors["phoneNumber"] = "Phone number already in use"
         }
         
         return errors
     }
+    
+
+    
     
     //MARK: - @IBActions
     @IBAction func backButtonPressed(_ sender: Any) {
@@ -333,7 +371,7 @@ class editAccountViewController: UIViewController {
         }
         phoneNumber.setBorder(color: "valid", image: UIImage(named: "phoneValid")!)
         phoneNumberError.alpha = 0
-
+        
     }
     
     @IBAction func emailEditingChanged(_ sender: Any) {

@@ -92,7 +92,7 @@ class changePasswordViewController: UIViewController{
         
         user?.reauthenticate(with: credential, completion: { (result, error)  in
             if error != nil  {
-                SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "An error occured while authenticating your information", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+                SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "The password you entered does not match your current password", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
                 return
             } else{
                 user?.updatePassword(to: self.newPassword.text!, completion: { error in
@@ -150,6 +150,8 @@ class changePasswordViewController: UIViewController{
     
     func updateUserPassword(){
         let userID = Auth.auth().currentUser?.uid
+        let alertView = SCLAlertView(appearance: self.apperanceWithoutClose)
+
         
         ref.child("User").child(userID!).updateChildValues(["password": newPassword.text!]){
             (error, ref) in
@@ -157,8 +159,12 @@ class changePasswordViewController: UIViewController{
                 SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "An error ocuured, please try again later", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
                 return
             }
-            SCLAlertView(appearance: self.apperance).showCustom("Success!", subTitle: "We have updated your information", color: self.blueUIColor, icon: self.alertSuccessIcon!, closeButtonTitle: "Okay", animationStyle: SCLAnimationStyle.topToBottom)
         }
+        
+        alertView.addButton("Got it!", backgroundColor: self.blueUIColor){
+            self.dismiss(animated: true, completion: nil)
+        }
+        alertView.showCustom("Success!", subTitle: "Your password has been updated successfully", color: self.blueUIColor, icon: self.alertSuccessIcon!, animationStyle: SCLAnimationStyle.topToBottom)
     }
     
     //MARK: - @IBActions
