@@ -319,7 +319,7 @@ class signUpSecondViewController: UIViewController {
         let natID_error = validateNationalID()
         
         // if fields are empty
-        if errors["Empty"] != "" || errors["nationalID"] != "" || errors["date"] != "" || errors["phone"] != "" {
+        if errors["Empty"] != "" || errors["nationalID"] != "" || errors["date"] != "" || errors["phone"] != "" || phone_error["phoneExists"] != "" || natID_error["idExists"] != "" {
             SCLAlertView(appearance: self.apperance).showCustom("Invalid Credentials", subTitle: "Please make sure you entered all fields correctly", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
         }
         
