@@ -39,6 +39,8 @@ class signUpSecondViewController: UIViewController {
     var correctField: [String:Bool] = ["nationalID":false, "phone": false, "date":false,"conditions":false]
     // tap gesture variable
     var tap = UITapGestureRecognizer()
+    // arrays
+    var usersArray : [User] = []
     // chcck var
     var isChecked : Bool?
     
@@ -62,7 +64,7 @@ class signUpSecondViewController: UIViewController {
         
         percentageLabel.text = "\(calculatePercentage())%"
         progressBar.setProgress(completedFields, animated: true)
-        
+        fillUsersArray()
         configureInputs()
         configureButtonView()
         configureTapGesture()
@@ -151,7 +153,22 @@ class signUpSecondViewController: UIViewController {
             buttonView.addGestureRecognizer(tap)
             buttonView.isUserInteractionEnabled = true
         }
-    
+    func fillUsersArray(){
+        ref.child("User").observe(.value) { snapshot in
+            for user in snapshot.children{
+                let obj = user as! DataSnapshot
+                let dateOfBirth = obj.childSnapshot(forPath: "dateOfBirth").value as! String
+                let email = obj.childSnapshot(forPath: "email").value as! String
+                let fullName = obj.childSnapshot(forPath: "fullName").value as! String
+                let gender = obj.childSnapshot(forPath: "gender").value as! String
+                let nationalID = obj.childSnapshot(forPath: "nationalID").value as! String
+                let password = obj.childSnapshot(forPath: "password").value as! String
+                let phone = obj.childSnapshot(forPath:  "phone").value as! String
+                let user = User(dateOfBirth: dateOfBirth, email: email, fullName: fullName, gender: gender, nationalID: nationalID, password: password, phone: phone)
+                self.usersArray.append(user)
+            }
+        }
+    }
     func validateFields() -> [String: String] {
         var errors = ["Empty":"","nationalID":"", "phone":"","date":""]
         
@@ -187,6 +204,32 @@ class signUpSecondViewController: UIViewController {
         
         
         return errors
+    }
+    func validatePhone() -> [String: String] {
+        var error = ["phoneExists":""]
+
+        for user in usersArray {
+            if phone.text != nil && phone.text != "" {
+                if user.getPhone() == phone.text {
+                    error["phoneExists"] = "Phone number already in use"
+                }
+            }
+        }
+
+        return error
+    }
+    func validateNationalID() -> [String: String] {
+        var error = ["idExists":""]
+
+        for user in usersArray {
+            if nationalID.text != nil && nationalID.text != "" {
+                if user.getNationalID() == nationalID.text {
+                    error["idExists"] = "National ID already in use"
+                }
+            }
+        }
+
+        return error
     }
     
     func setupDatePickerView(){
@@ -272,6 +315,8 @@ class signUpSecondViewController: UIViewController {
     @objc func signUpClicked(_ sender: UITapGestureRecognizer) {
         
         let errors = validateFields()
+        let phone_error = validatePhone()
+        let natID_error = validateNationalID()
         
         // if fields are empty
         if errors["Empty"] != "" || errors["nationalID"] != "" || errors["date"] != "" || errors["phone"] != "" {
@@ -308,6 +353,12 @@ class signUpSecondViewController: UIViewController {
             errorNationalID.alpha = 1
             return
         }
+        guard natID_error["idExists"] == "" else {
+                   errorNationalID.text = natID_error["idExists"]!
+                   nationalID.setBorder(color: "error", image: UIImage(named: "idError")!)
+                   errorNationalID.alpha = 1
+                   return
+               }
         // if Date of Birth has an error
         guard errors["date"] == "" else {
             //handle the error
@@ -324,6 +375,13 @@ class signUpSecondViewController: UIViewController {
             errorPhone.alpha = 1
             return
         }
+        guard phone_error["phoneExists"] == "" else {
+                  //handle the error
+                  errorPhone.text = phone_error["phoneExists"]!
+                  phone.setBorder(color: "error", image: UIImage(named: "phoneError")!)
+                  errorPhone.alpha = 1
+                  return
+              }
         // if conditions checkbox was unchecked
         guard checkBoxButton.isSelected == true else {
             SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "You must agree on Terms & Conditions and Privacy Policy" , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
@@ -401,14 +459,15 @@ class signUpSecondViewController: UIViewController {
     
     @IBAction func nationalIdEditingChanged(_ sender: UITextField) {
         let errors = validateFields()
+        let natID_error = validateNationalID()
         
-        if errors["nationalID"] == "" && !correctField["nationalID"]!{
+        if errors["nationalID"] == "" && natID_error["idExists"] == "" && !correctField["nationalID"]!{
             completedFields+=0.125
             numberOfCompleted+=1
             correctField["nationalID"]! = true
         }
         
-        if errors["nationalID"] != "" && correctField["nationalID"]!{
+        if (errors["nationalID"] != "" || natID_error["idExists"] != "") && correctField["nationalID"]!{
             completedFields-=0.125
             numberOfCompleted-=1
             correctField["nationalID"]! = false
@@ -422,6 +481,10 @@ class signUpSecondViewController: UIViewController {
             nationalID.setBorder(color: "error", image: UIImage(named: "idError")!)
             errorNationalID.text = errors["nationalID"]!
             errorNationalID.alpha = 1
+        }else if natID_error["idExists"] != "" {
+            errorNationalID.text = natID_error["idExists"]!
+            nationalID.setBorder(color: "error", image: UIImage(named: "idError")!)
+            errorNationalID.alpha = 1
         }
         else {
             nationalID.setBorder(color: "valid", image: UIImage(named: "idValid")!)
@@ -433,14 +496,15 @@ class signUpSecondViewController: UIViewController {
     
     @IBAction func phoneEditingChanged(_ sender: UITextField) {
         let errors = validateFields()
+        let phone_error = validatePhone()
         
-        if errors["phone"] == "" && !correctField["phone"]!{
+        if errors["phone"] == "" && phone_error["phoneExists"] == "" && !correctField["phone"]!{
             completedFields+=0.125
             numberOfCompleted+=1
             correctField["phone"]! = true
         }
         
-        if errors["phone"] != "" && correctField["date"]!{
+        if (errors["phone"] != "" || phone_error["phoneExists"] != "") && correctField["phone"]!{
             completedFields-=0.125
             numberOfCompleted-=1
             correctField["phone"]! = false
@@ -453,6 +517,10 @@ class signUpSecondViewController: UIViewController {
         if  errors["phone"] != "" {
             phone.setBorder(color: "error", image: UIImage(named: "phoneError")!)
             errorPhone.text = errors["phone"]!
+            errorPhone.alpha = 1
+        } else if phone_error["phoneExists"] != "" {
+            errorPhone.text = phone_error["phoneExists"]!
+            phone.setBorder(color: "error", image: UIImage(named: "phoneError")!)
             errorPhone.alpha = 1
         }
         else {

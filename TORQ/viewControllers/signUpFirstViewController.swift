@@ -131,7 +131,7 @@ class signUpFirstViewController: UIViewController {
             error["email"] = "Please enter a valid email address"
         }
         else if !email.text!.isValidDomain{
-            error["email"] = "Please enter a valid user email that does not contain the domain @srca.org.sa"
+            error["email"] = "Email should not contain the domain @srca.org.sa"
         }
         
         //CASE-4: This case validate if the user enters empty or nil or an invalid password that has not fulfilled the conditions ( Not less than 8 charecters & has capital letter &  ).
@@ -142,12 +142,15 @@ class signUpFirstViewController: UIViewController {
         else if !password.text!.isValidPassword{
             error["password"] = "Password should not be less than 6 characters"
         }
+        else if confirmPassword.text != nil && confirmPassword.text != "" && (confirmPassword.text != password.text) {
+                    error["password"] = "passwords do not match"
+                }
         // confirm password checking
         if confirmPassword.text == nil || confirmPassword.text == ""{
             error["confirmPass"] = "Confirm Password cannot be empty"
         }
         else if confirmPassword.text != password.text!{
-            error["confirmPass"] = "Passwords does not match"
+            error["confirmPass"] = "Passwords do not match"
         }
         
         return error
