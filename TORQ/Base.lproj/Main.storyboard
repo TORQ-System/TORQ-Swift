@@ -2134,7 +2134,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vts-ri-kFQ">
-                                                    <rect key="frame" x="15" y="20" width="344" height="45"/>
+                                                    <rect key="frame" x="10" y="20" width="354" height="45"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fV8-FE-TTA">
                                                             <rect key="frame" x="10" y="15" width="30" height="15"/>
@@ -2146,13 +2146,13 @@
                                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="bold"/>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7OP-wI-Eez">
-                                                            <rect key="frame" x="50" y="10" width="244" height="25"/>
+                                                            <rect key="frame" x="50" y="10" width="254" height="25"/>
                                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                             <color key="textColor" red="0.27500000000000002" green="0.53700000000000003" blue="0.68627450980000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dzb-E7-Afz">
-                                                            <rect key="frame" x="304" y="10" width="30" height="25"/>
+                                                            <rect key="frame" x="314" y="10" width="30" height="25"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="30" id="Vqy-8i-VhO"/>
                                                                 <constraint firstAttribute="height" constant="30" id="gpd-3h-5tq"/>
@@ -2177,10 +2177,10 @@
                                                 </view>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="Vts-ri-kFQ" firstAttribute="leading" secondItem="EUn-ld-Hcg" secondAttribute="leading" constant="15" id="8zU-Zy-RwB"/>
+                                                <constraint firstItem="Vts-ri-kFQ" firstAttribute="leading" secondItem="EUn-ld-Hcg" secondAttribute="leading" constant="10" id="8zU-Zy-RwB"/>
                                                 <constraint firstAttribute="bottom" secondItem="Vts-ri-kFQ" secondAttribute="bottom" constant="5" id="LUQ-4Q-2Mi"/>
                                                 <constraint firstItem="Vts-ri-kFQ" firstAttribute="top" secondItem="EUn-ld-Hcg" secondAttribute="top" constant="20" id="PdZ-Ob-gxc"/>
-                                                <constraint firstAttribute="trailing" secondItem="Vts-ri-kFQ" secondAttribute="trailing" constant="15" id="icL-Z7-YYl"/>
+                                                <constraint firstAttribute="trailing" secondItem="Vts-ri-kFQ" secondAttribute="trailing" constant="10" id="icL-Z7-YYl"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.89851015810000001" green="0.9486290812" blue="0.97255355119999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>

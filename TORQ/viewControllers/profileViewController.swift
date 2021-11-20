@@ -127,6 +127,7 @@ extension profileViewController: UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: "profileCell") as! profileTableViewCell
         cell.serviceLabel.text = services[indexPath.row]
         cell.serviceImage.image = UIImage(named: servicesImages[indexPath.row])
+        cell.selectionStyle = UITableViewCell.SelectionStyle.none
         return cell
     }
 
