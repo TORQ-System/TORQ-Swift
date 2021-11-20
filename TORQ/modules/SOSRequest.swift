@@ -16,7 +16,7 @@ struct SOSRequest {
     var latitude: String
     var timeDate: String
 
-    init(user_id: String, user_name: String, status: String, assignedCenter: String, sent: String, longitude: String, latitude: String, timeDate:String) {
+    init(user_id: String, status: String, assignedCenter: String, sent: String, longitude: String, latitude: String, timeDate:String) {
         self.user_id = user_id
         self.status = status
         self.assignedCenter = assignedCenter

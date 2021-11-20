@@ -50,6 +50,7 @@ class SOSRequestViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        secondsRemaining = 15
         checkSOSRequests()
     }
     
@@ -112,18 +113,11 @@ class SOSRequestViewController: UIViewController {
                     let longitude = obj.childSnapshot(forPath: "longitude").value as! String
                     let latitude = obj.childSnapshot(forPath: "latitude").value as! String
                     let assigned_center = obj.childSnapshot(forPath: "assigned_center").value as! String
-                    
-                    let date = Date()
-                    let calendar = Calendar.current
-                    let day = calendar.component(.day, from: date)
-                    let month = calendar.component(.month, from: date)
-                    let year = calendar.component(.year, from: date)
-                    let hour = calendar.component(.hour, from: date)
-                    let minutes = calendar.component(.minute, from: date)
-                    
-                    let sos = SOSRequest(user_id: user_id, user_name: "user_name", status: status, assignedCenter: assigned_center, sent: sent, longitude: longitude, latitude: latitude, timeDate: "\(month)/\(day)/\(year)   \(hour):\(minutes)")
-                    
+                    let time_date = obj.childSnapshot(forPath: "time_date").value as! String
 
+                    let sos = SOSRequest(user_id: user_id,status: status, assignedCenter: assigned_center, sent: sent, longitude: longitude, latitude: latitude, timeDate: time_date)
+                    
+                    
                     if user_id == self.userID && (status != "Processed" && status != "Cancelled") {
                         self.flag = true
                         //update UI
@@ -215,7 +209,7 @@ class SOSRequestViewController: UIViewController {
             checkSOSRequests()
         }
         if flag {
-            SCLAlertView(appearance: self.apperance).showCustom("Oh no!", subTitle: "you have an active request, please chat with your assigned paramedic or cancel your request", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+            SCLAlertView(appearance: self.apperance).showCustom("Oh no!", subTitle: "you have an active request, please click on see details button below to see the details", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
         }else{
             let alertView = SCLAlertView(appearance: self.apperance)
             alertView.addButton("Yes, I'm sure", backgroundColor: self.redUIColor){
@@ -229,7 +223,9 @@ class SOSRequestViewController: UIViewController {
                 let year = calendar.component(.year, from: date)
                 let hour = calendar.component(.hour, from: date)
                 let minutes = calendar.component(.minute, from: date)
-                let sosRequest = SOSRequest(user_id: self.userID!, user_name: "user", status: "0", assignedCenter: self.nearest(), sent: "Yes", longitude: self.longitude!, latitude: self.latitude!, timeDate: "\(month)/\(day)/\(year)   \(hour):\(minutes)")
+                let seconds = calendar.component(.second, from: date)
+                
+                let sosRequest = SOSRequest(user_id: self.userID!, status: "0", assignedCenter: self.nearest(), sent: "Yes", longitude: self.longitude!, latitude: self.latitude!, timeDate: "\(month)/\(day)/\(year)   \(hour):\(minutes):\(seconds)")
                 
                 //2- write the child into the node in firebase
                 let random = UUID().uuidString

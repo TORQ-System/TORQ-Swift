@@ -65,7 +65,7 @@ class ViewSOSRequestsViewController: UIViewController {
                     let time_date = obj.childSnapshot(forPath: "time_date").value as! String
                     let user_id = obj.childSnapshot(forPath: "user_id").value as! String
                     if assigned_center == self.center!["name"] as! String {
-                        let sosRequest = SOSRequest(user_id: user_id, user_name: "User", status: status, assignedCenter: assigned_center, sent: sent, longitude: longitude, latitude: latitude,timeDate: time_date)
+                        let sosRequest = SOSRequest(user_id: user_id,status: status, assignedCenter: assigned_center, sent: sent, longitude: longitude, latitude: latitude,timeDate: time_date)
                         self.allSosRequests.append(sosRequest)
                         switch status {
                         case "Cancelled":
