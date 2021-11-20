@@ -131,8 +131,13 @@ class sosDetailsViewController: UIViewController {
         fetchQueue.sync {
             self.ref.child("SOSRequests").observe(.value) { snapshot in
                 for req in snapshot.children{
+                    
                     let obj = req as! DataSnapshot
                     let status = obj.childSnapshot(forPath: "status").value as! String
+                    print("condtion result:\(status == "Processed" && self.sosId == obj.key)")
+                    print("self.sosId: \(self.sosId)")
+                    print("obj.key: \(obj.key)")
+                    
                     if status == "Processed" && self.sosId == obj.key {
                         DispatchQueue.main.asyncAfter(deadline: .now()+2) {
                             UIView.animate(withDuration: 1) {
@@ -143,7 +148,6 @@ class sosDetailsViewController: UIViewController {
                             self.cancel.isEnabled = false
                         }
                     }
-
             }
             print("out of ref")
         }

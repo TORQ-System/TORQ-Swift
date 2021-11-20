@@ -49,17 +49,17 @@ class SOSRequestViewController: UIViewController {
         checkSOSRequests()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        checkSOSRequests()
-    }
-    
     override func viewWillDisappear(_ animated: Bool) {
+        secondsRemaining = 15
         flag = false
     }
     
     //MARK: - Functions
     
     private func layoutSubviews(){
+        
+        self.sosLabel.text = "SOS"
+        
         //1- asteriskContainer view
         asteriskContainer.layer.cornerRadius = asteriskContainer.layer.frame.height/2
         asteriskContainer.layer.masksToBounds = true
@@ -121,32 +121,37 @@ class SOSRequestViewController: UIViewController {
                     if user_id == self.userID && (status != "Processed" && status != "Cancelled") {
                         self.flag = true
                         //update UI
-                        if ( (self.secondsRemaining == 0) || (self.secondsRemaining != 15) ) {
+                        if (self.secondsRemaining == 0) {
+                            print("first if")
                             self.SOS = sos
                             self.sosLabel.text = "SOS Sent!"
                             self.seeDetails.alpha = 1
                             self.seeDetails.isEnabled = true
                         }
                         else if self.secondsRemaining == 15 && (status == "1") {
+                            print("second if")
                             self.SOS = sos
                             self.sosLabel.text = "SOS Sent!"
                             self.seeDetails.alpha = 1
                             self.seeDetails.isEnabled = true
                         }else if ( (self.secondsRemaining == 15) && (status == "0") ){
+                            print("third if")
                             self.SOS = sos
                             self.sosLabel.text = "00:15"
                             self.seeDetails.alpha = 0
                             self.seeDetails.isEnabled = false
                         }
-                        
                         print("flag in checkSOSRequests \(self.flag)")
+                        self.sosRequestID = obj.key
+                        break
                     }else{
+                        print("else")
                         self.flag = false
                         self.sosLabel.text = "SOS"
                         self.seeDetails.alpha = 0
                         self.seeDetails.isEnabled = false
                     }
-                }
+                }// for
             })
             print("flag out checkSOSRequests")
         }
@@ -178,6 +183,7 @@ class SOSRequestViewController: UIViewController {
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(identifier: "sosDetailsViewController") as! sosDetailsViewController
         vc.SOSRequest = SOS
+        print("go to details: \(String(describing: sosRequestID))")
         vc.sosId = sosRequestID
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
