@@ -1,8 +1,15 @@
+//
+//  selectHealthCareCenterViewController.swift
+//  TORQ
+//
+//  Created by Noura Alsulayfih on 20/11/2021.
+//
+
 import UIKit
 import FirebaseDatabase
 import SCLAlertView
 
-class hospitalsViewController: UIViewController ,UITableViewDelegate ,UITableViewDataSource, UIAlertViewDelegate{
+class selectHealthCareCenterViewController: UIViewController ,UITableViewDelegate ,UITableViewDataSource, UIAlertViewDelegate{
     
     //MARK: - @IBOutlet
     @IBOutlet weak var tableList: UITableView!
@@ -13,9 +20,7 @@ class hospitalsViewController: UIViewController ,UITableViewDelegate ,UITableVie
     //MARK: - Variables
     var selhealth = "None"
     var numb = -1
-    var userMedicalReportID : String!
-    var RequestID : String!
-
+    var sosRequestUserID : String!
     var text:String = ""
     var rowDefaultSelected: Int = 0
     var ref = Database.database().reference()
@@ -56,7 +61,6 @@ class hospitalsViewController: UIViewController ,UITableViewDelegate ,UITableVie
         super.viewDidLoad()
         tableList.dataSource = self
         tableList.delegate = self
-        
         configureView()
     }
     
@@ -73,12 +77,12 @@ class hospitalsViewController: UIViewController ,UITableViewDelegate ,UITableVie
         Confirm.layer.cornerRadius = 15
     }
     
-    func goToViewRequests(){
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "viewRequests") as! requestsViewController
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true, completion: nil)
-    }
+//    func goToViewRequests(){
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        let vc = storyboard.instantiateViewController(withIdentifier: "viewRequests") as! requestsViewController
+//        vc.modalPresentationStyle = .fullScreen
+//        present(vc, animated: true, completion: nil)
+//    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return hospitallist.count
@@ -122,28 +126,34 @@ class hospitalsViewController: UIViewController ,UITableViewDelegate ,UITableVie
             SCLAlertView(appearance: self.apperance).showCustom("Select a Hospital", subTitle: "You must select a hospital to process the request or cancel." , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
         }
         else {
-            ref.child("Request").queryOrdered(byChild:"user_id").observe(.childAdded, with: {(snapshot) in
+            ref.child("SOSRequests").observeSingleEvent(of: .childAdded, with: { snapshot in
                 if let dec = snapshot.value as? [String :Any]{
-                    if (dec["request_id"] as? String == self.RequestID && dec["status"]as! String == "0"){
+                    
+                    if (dec["user_id"] as? String == self.sosRequestUserID && dec["status"]as! String == "1"){
+                        
                         let snapshotKey = snapshot.key
-                        self.ref.child("Request").child(snapshotKey).updateChildValues(["status": "1"])
-                        self.ref.child("ProcessingRequest").child(self.selhealth).childByAutoId().setValue(["Rquest_id":dec["request_id"] as! String? ,"User_id": self.userMedicalReportID])
+                        self.ref.child("SOSRequests").child(snapshotKey).updateChildValues(["status": "Processed"])
+                        self.ref.child("ProcessingRequest").child(self.selhealth).childByAutoId().setValue(["Rquest_id":snapshotKey ,"User_id": self.sosRequestUserID])
                         
                         let alertView = SCLAlertView(appearance: self.apperanceWithoutClose)
                         
                         alertView.addButton("Okay", backgroundColor: self.blueUIColor){
-                            let presentingView = self.presentingViewController
-                            self.dismiss(animated: false) {
-                                presentingView?.dismiss(animated: true)
-                            }
+//                            let presentingView = self.presentingViewController
+//                            self.dismiss(animated: false) {
+//                                presentingView?.dismiss(animated: true)
+//                            }
+                            self.dismiss(animated: true, completion: nil)
                         }
                         alertView.showCustom("Confirmed!", subTitle: "The request has been send to the health care cenetr.", color: self.blueUIColor, icon: self.alertSuccessIcon!, animationStyle: SCLAnimationStyle.topToBottom)
-                    }
                 }
+                    
+            }
+                
             })
-        }
     }
 }
+}
+
 
 
 

@@ -268,7 +268,7 @@ class SOSRequestViewController: UIViewController {
                 }
 
             }
-            alertView.showCustom("Warning", subTitle: "Are you sure you need SOS Help?", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Cancel", circleIconImage: UIImage(named: "warning"), animationStyle: SCLAnimationStyle.topToBottom)
+            alertView.showCustom("Warning", subTitle: "Are you sure you need SOS help?", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Cancel", circleIconImage: UIImage(named: "warning"), animationStyle: SCLAnimationStyle.topToBottom)
         }
     }
     

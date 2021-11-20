@@ -19,6 +19,7 @@ class AccidentsCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var date: UILabel!
     @IBOutlet weak var map: MKMapView!
     @IBOutlet weak var line: UIImageView!
+
     
     override func layoutSubviews() {
         

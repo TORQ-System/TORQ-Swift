@@ -161,6 +161,13 @@ class ViewSOSRequestsViewController: UIViewController {
         cancelButton.backgroundColor = UIColor(red: 0.667, green: 0.667, blue: 0.667, alpha: 0.30)
     }
     
+    func goToLoginScreen(){
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "loginViewController") as! loginViewController
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true, completion: nil)
+    }
+    
     @objc func goToLocation (sender:CustomTapGestureRecognizer) {
         // clicking on view location view conyroller after clicking on the map
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
@@ -228,6 +235,14 @@ class ViewSOSRequestsViewController: UIViewController {
     }
     
     @IBAction func logoutButton(_ sender: Any) {
+        do {
+            try Auth.auth().signOut()
+            let userDefault = UserDefaults.standard
+            userDefault.setValue(false, forKey: "isUserSignedIn")
+            goToLoginScreen()
+        } catch let error {
+            print (error.localizedDescription)
+        }
     }
     
     

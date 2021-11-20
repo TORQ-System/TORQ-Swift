@@ -376,24 +376,28 @@ extension requestsViewController: UICollectionViewDataSource{
             cell.gender.text = myRequests[indexPath.row].getGender()
             cell.status.text = "Active"
 
-            cell.viewbutten.tag = indexPath.row
-            cell.viewbutten.addTarget(self, action: #selector(viewbutten(sender: )), for: .touchUpInside)
-            let gradient: CAGradientLayer = CAGradientLayer()
+            cell.viewDetailsButton.tag = indexPath.row
+            cell.viewDetailsButton.addTarget(self, action: #selector(viewbutten(sender: )), for: .touchUpInside)
             
-            gradient.colors = [
-                UIColor(red: 0.887, green: 0.436, blue: 0.501, alpha: 1).cgColor,
-                UIColor(red: 0.75, green: 0.191, blue: 0.272, alpha: 1).cgColor
-            ]
             
-            gradient.locations = [0, 1]
-            gradient.startPoint = CGPoint(x: 0, y: 0)
-            gradient.endPoint = CGPoint(x: 1, y: 1)
-            gradient.frame = cell.viewbutten.layer.frame
             
-            cell.viewbutten.layer.insertSublayer(gradient, at: 0)
-            cell.viewbutten.layer.shadowOpacity = 0.3
-            cell.viewbutten.layer.shadowOffset = CGSize(width: 5, height: 5)
-            cell.viewbutten.layer.shadowRadius = 10
+            
+//            let gradient: CAGradientLayer = CAGradientLayer()
+//
+//            gradient.colors = [
+//                UIColor(red: 0.887, green: 0.436, blue: 0.501, alpha: 1).cgColor,
+//                UIColor(red: 0.75, green: 0.191, blue: 0.272, alpha: 1).cgColor
+//            ]
+//
+//            gradient.locations = [0, 1]
+//            gradient.startPoint = CGPoint(x: 0, y: 0)
+//            gradient.endPoint = CGPoint(x: 1, y: 1)
+//            gradient.frame = cell.viewbutten.layer.frame
+//
+//            cell.viewbutten.layer.insertSublayer(gradient, at: 0)
+//            cell.viewbutten.layer.shadowOpacity = 0.3
+//            cell.viewbutten.layer.shadowOffset = CGSize(width: 5, height: 5)
+//            cell.viewbutten.layer.shadowRadius = 10
             let lat = Double(myRequests[indexPath.row].getLatitude())!
             let long = Double(myRequests[indexPath.row].getLongitude())!
 
@@ -461,9 +465,9 @@ extension requestsViewController: UICollectionViewDataSource{
             //Display the result in km
             print(String(format: "The distance to my buddy is %.01fkm", distance))
            // cell.dateTime.text = myRequests[indexPath.row].getDateTime()
-         cell.distance.text =  String(format: " %.01fkm", distance)
-          cell.gender.text = prossed[indexPath.row].getGender()
-           cell.status.text = "Procced"
+            cell.distance.text =  String(format: " %.01fkm", distance)
+            cell.gender.text = prossed[indexPath.row].getGender()
+            cell.status.text = "Procced"
             let lat = Double(prossed[indexPath.row].getLatitude())!
             let long = Double(prossed[indexPath.row].getLongitude())!
             let pin = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(lat), longitude: CLLocationDegrees(long)))
@@ -507,8 +511,8 @@ extension requestsViewController: UICollectionViewDataSource{
             tap.lat = lat
             tap.long = long
             cell.map.addGestureRecognizer(tap)
-            cell.viewbutten.tag = indexPath.row
-            cell.viewbutten.addTarget(self, action: #selector(viewbutten(sender: )), for: .touchUpInside)
+            cell.viewDetailsButton.tag = indexPath.row
+            cell.viewDetailsButton.addTarget(self, action: #selector(viewbutten(sender: )), for: .touchUpInside)
         default:
             break
         }

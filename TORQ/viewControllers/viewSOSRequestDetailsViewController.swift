@@ -326,8 +326,8 @@ class viewSOSRequestDetailsViewController: UIViewController {
     }
     @IBAction func processButton(_ sender: Any) {
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(identifier: "hospitalsViewController") as! hospitalsViewController
-        vc.userMedicalReportID = medicalReportID
+        let vc = storyboard.instantiateViewController(identifier: "selectHealthCareCenterViewController") as! selectHealthCareCenterViewController
+        vc.sosRequestUserID = self.sosRequester
         self.present(vc, animated: true, completion: nil)
     }
     
