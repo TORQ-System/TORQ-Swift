@@ -19,6 +19,7 @@ class ViewSOSRequestsViewController: UIViewController {
     @IBOutlet weak var processedButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var activeButton: UIButton!
+    @IBOutlet weak var noLabel: UILabel!
     
     //MARK: - Varibales
     var loggedInCenterEmail = Auth.auth().currentUser?.email
@@ -284,6 +285,19 @@ extension ViewSOSRequestsViewController: UITableViewDataSource{
         // if "cancelled" option is selected
         else if cancelled {
             count = cancelledRequests.count
+        }
+        
+        if count == 0 {
+            self.noLabel.alpha = 1
+            if active {
+                self.noLabel.text = "There are not any Active SOS request"
+            }else if processed {
+                self.noLabel.text = "There are not any Processed SOS request"
+            }else{
+                self.noLabel.text = "There are not any Cancelled SOS request"
+            }
+        }else{
+            self.noLabel.alpha = 0
         }
         return count
     }
