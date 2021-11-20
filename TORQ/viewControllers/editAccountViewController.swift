@@ -271,20 +271,20 @@ class editAccountViewController: UIViewController {
         var errors = ["fullName": "", "nationalID": "", "phoneNumber": "", "birthDate": "", "email": ""]
         
         if fullName.text == nil || fullName.text == "" {
-            errors["fullName"] = "cannot be empty"
+            errors["fullName"] = "Full Name cannot be empty"
         }
         else if !fullName.text!.isValidName{
-            errors["fullName"] = "cannot have charachters"
+            errors["fullName"] = "Full Name should contain two words, and no numbers"
         } else if fullName.text!.count <= 2{
-            errors["fullName"] = "must be grater than two charachters "
+            errors["fullName"] = "Full Name must be greater than two characters"
         }
         
         if email.text == nil || email.text == ""{
-            errors["email"] = "cannot be empty"
+            errors["email"] = "Email cannot be empty"
         }  else if !email.text!.trimWhiteSpace().isValidEmail {
-            errors["email"] = "invalid email address"
+            errors["email"] = "Please enter a valid email address"
         } else if !email.text!.trimWhiteSpace().isValidDomain{
-            errors["email"] = "restricted domain"
+            errors["email"] = "Email should not contain the domain @srca.org.sa"
         }
         
         if nationalID.text == nil || nationalID.text == "" || !nationalID.text!.isValidNationalID{
@@ -292,13 +292,13 @@ class editAccountViewController: UIViewController {
         }
         
         if birthDate.text == nil || birthDate.text == "" {
-            errors["birthDate"] = "cannot be empty"
+            errors["birthDate"] = "Date of Birth cannot be empty"
         }
         
         if phoneNumber.text == nil || phoneNumber.text == "" {
             errors["phoneNumber"] = "Phone number cannot be empty"
         } else if !phoneNumber.text!.isValidPhone {
-            errors["phoneNumber"] = "invalid phone number"
+            errors["phoneNumber"] = "Invalid phone number"
         }
         
         return errors
