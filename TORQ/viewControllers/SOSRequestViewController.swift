@@ -50,7 +50,6 @@ class SOSRequestViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        secondsRemaining = 15
         checkSOSRequests()
     }
     
@@ -115,9 +114,10 @@ class SOSRequestViewController: UIViewController {
                     let assigned_center = obj.childSnapshot(forPath: "assigned_center").value as! String
                     let time_date = obj.childSnapshot(forPath: "time_date").value as! String
 
+
                     let sos = SOSRequest(user_id: user_id,status: status, assignedCenter: assigned_center, sent: sent, longitude: longitude, latitude: latitude, timeDate: time_date)
                     
-                    
+
                     if user_id == self.userID && (status != "Processed" && status != "Cancelled") {
                         self.flag = true
                         //update UI
@@ -188,14 +188,14 @@ class SOSRequestViewController: UIViewController {
     @IBAction func backButton(_ sender: Any) {
         if secondsRemaining > 0 && secondsRemaining != 15{
             let alertView = SCLAlertView(appearance: self.apperance)
-            alertView.addButton("Yes, I’m sure", backgroundColor: self.redUIColor){
+            alertView.addButton("Yes, I'm sure", backgroundColor: self.redUIColor){
                 // set flag to false
                 self.flag = false
                 // update status to cancel
                 self.updateSOSRequestsStatus(update: "Cancelled")
                 self.dismiss(animated: true, completion: nil)
             }
-            alertView.showCustom("Warning", subTitle: "Once you exit this screen, your SOS request will be canceled. Are you sure you want to cancel your request?", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "No, I’ll wait", circleIconImage: UIImage(named: "warning"), animationStyle: SCLAnimationStyle.topToBottom)
+            alertView.showCustom("Warning", subTitle: "once you get out of this screen your SOS request will be canceled, please wait until the timer finished, so we send your request properly", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Ok, I'll wait", circleIconImage: UIImage(named: "warning"), animationStyle: SCLAnimationStyle.topToBottom)
         }else{
             dismiss(animated: true, completion: nil)
         }
@@ -209,7 +209,7 @@ class SOSRequestViewController: UIViewController {
             checkSOSRequests()
         }
         if flag {
-            SCLAlertView(appearance: self.apperance).showCustom("Oh no!", subTitle: "you have an active request, please click on see details button below to see the details", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+            SCLAlertView(appearance: self.apperance).showCustom("Oh no!", subTitle: "you have an active request, please click on see details button to see the progress", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
         }else{
             let alertView = SCLAlertView(appearance: self.apperance)
             alertView.addButton("Yes, I'm sure", backgroundColor: self.redUIColor){
@@ -224,7 +224,7 @@ class SOSRequestViewController: UIViewController {
                 let hour = calendar.component(.hour, from: date)
                 let minutes = calendar.component(.minute, from: date)
                 let seconds = calendar.component(.second, from: date)
-                
+
                 let sosRequest = SOSRequest(user_id: self.userID!, status: "0", assignedCenter: self.nearest(), sent: "Yes", longitude: self.longitude!, latitude: self.latitude!, timeDate: "\(month)/\(day)/\(year)   \(hour):\(minutes):\(seconds)")
                 
                 //2- write the child into the node in firebase
@@ -264,17 +264,15 @@ class SOSRequestViewController: UIViewController {
                 }
 
             }
-            alertView.showCustom("Warning", subTitle: "Are you sure you need SOS help?", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Cancel", circleIconImage: UIImage(named: "warning"), animationStyle: SCLAnimationStyle.topToBottom)
+            alertView.showCustom("Warning", subTitle: "Are you sure you need SOS Help?", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Cancel", circleIconImage: UIImage(named: "warning"), animationStyle: SCLAnimationStyle.topToBottom)
         }
     }
     
     
     @IBAction func sosDetails(_ sender: Any) {
         //upadte the status to 1
-        self.updateSOSRequestsStatus(update: "1")
         goToDetails()
     }
     
     
 }
-

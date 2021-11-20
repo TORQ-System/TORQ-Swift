@@ -50,7 +50,6 @@ class sosDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setLayout()
-
     }
     
     
@@ -135,7 +134,7 @@ class sosDetailsViewController: UIViewController {
                     let obj = req as! DataSnapshot
                     let status = obj.childSnapshot(forPath: "status").value as! String
                     if status == "Processed" && self.sosId == obj.key {
-                        DispatchQueue.main.asyncAfter(deadline: .now()+5) {
+                        DispatchQueue.main.asyncAfter(deadline: .now()+2) {
                             UIView.animate(withDuration: 1) {
                                 self.check4.alpha = 1.0
                                 self.circle4.backgroundColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
@@ -182,7 +181,7 @@ class sosDetailsViewController: UIViewController {
             self.updateSOSRequestsStatus(update: "Cancelled")
             self.dismiss(animated: true, completion: nil)
         }
-        alertView.showCustom("Warning", subTitle: "Once you confirm the cancellation your SOS request will be canceled, are you sure ?", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Cancel", circleIconImage: UIImage(named: "warning"), animationStyle: SCLAnimationStyle.topToBottom)
+        alertView.showCustom("Warning", subTitle: "Once you confirm the cancellation your SOS Request will be canceled, Are you sure ?", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Cancel", circleIconImage: UIImage(named: "warning"), animationStyle: SCLAnimationStyle.topToBottom)
     }
     
     @IBAction func seeLiveLocation(_ sender: Any) {
