@@ -194,14 +194,14 @@ class SOSRequestViewController: UIViewController {
     @IBAction func backButton(_ sender: Any) {
         if secondsRemaining > 0 && secondsRemaining != 15{
             let alertView = SCLAlertView(appearance: self.apperance)
-            alertView.addButton("Yes, I'm sure", backgroundColor: self.redUIColor){
+            alertView.addButton("Yes, I’m sure", backgroundColor: self.redUIColor){
                 // set flag to false
                 self.flag = false
                 // update status to cancel
                 self.updateSOSRequestsStatus(update: "Cancelled")
                 self.dismiss(animated: true, completion: nil)
             }
-            alertView.showCustom("Warning", subTitle: "once you get out of this screen your SOS request will be canceled, please wait until the timer finished, so we send your request properly", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Ok, I'll wait", circleIconImage: UIImage(named: "warning"), animationStyle: SCLAnimationStyle.topToBottom)
+            alertView.showCustom("Warning", subTitle: "Once you exit this screen, your SOS request will be canceled. Are you sure you want to cancel your request?", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "No, I’ll wait", circleIconImage: UIImage(named: "warning"), animationStyle: SCLAnimationStyle.topToBottom)
         }else{
             dismiss(animated: true, completion: nil)
         }

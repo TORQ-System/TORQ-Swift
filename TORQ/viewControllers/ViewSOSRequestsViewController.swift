@@ -68,13 +68,13 @@ class ViewSOSRequestsViewController: UIViewController {
                         let sosRequest = SOSRequest(user_id: user_id, user_name: "User", status: status, assignedCenter: assigned_center, sent: sent, longitude: longitude, latitude: latitude,timeDate: time_date)
                         self.allSosRequests.append(sosRequest)
                         switch status {
-                        case "cancelled":
+                        case "Cancelled":
                             self.cancelledRequests.append(sosRequest)
                             break
                         case "1":
                             self.activeRequests.append(sosRequest)
                             break
-                        case "processed":
+                        case "Processed":
                             self.processedRequests.append(sosRequest)
                             break
                         default:
@@ -186,6 +186,13 @@ class ViewSOSRequestsViewController: UIViewController {
         vc.sosRequestName = sender.userName
         vc.sosRequestTime = sender.requestTime
         vc.sosRequestAge = sender.requesterAge
+        if processed {
+            vc.sosRequestStatus = "Processed"
+        }else if active {
+            vc.sosRequestStatus = "Active"
+        }else{
+            vc.sosRequestStatus = "Cancelled"
+        }
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
     }

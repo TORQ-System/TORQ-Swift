@@ -138,10 +138,6 @@ class selectHealthCareCenterViewController: UIViewController ,UITableViewDelegat
                         let alertView = SCLAlertView(appearance: self.apperanceWithoutClose)
                         
                         alertView.addButton("Okay", backgroundColor: self.blueUIColor){
-//                            let presentingView = self.presentingViewController
-//                            self.dismiss(animated: false) {
-//                                presentingView?.dismiss(animated: true)
-//                            }
                             self.dismiss(animated: true, completion: nil)
                         }
                         alertView.showCustom("Confirmed!", subTitle: "The request has been send to the health care cenetr.", color: self.blueUIColor, icon: self.alertSuccessIcon!, animationStyle: SCLAnimationStyle.topToBottom)

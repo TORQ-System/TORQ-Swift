@@ -182,7 +182,7 @@ class sosDetailsViewController: UIViewController {
             self.updateSOSRequestsStatus(update: "Cancelled")
             self.dismiss(animated: true, completion: nil)
         }
-        alertView.showCustom("Warning", subTitle: "Once you confirm the cancellation your SOS Request will be canceled, Are you sure ?", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Cancel", circleIconImage: UIImage(named: "warning"), animationStyle: SCLAnimationStyle.topToBottom)
+        alertView.showCustom("Warning", subTitle: "Once you confirm the cancellation your SOS request will be canceled, are you sure ?", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Cancel", circleIconImage: UIImage(named: "warning"), animationStyle: SCLAnimationStyle.topToBottom)
     }
     
     @IBAction func seeLiveLocation(_ sender: Any) {

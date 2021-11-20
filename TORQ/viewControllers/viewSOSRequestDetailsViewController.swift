@@ -49,6 +49,7 @@ class viewSOSRequestDetailsViewController: UIViewController {
     
     
     //MARK: - Variables
+    var sosRequestStatus: String?
     var sosRequester: String?
     var sosRequestTime: String?
     var sosRequestName: String?
@@ -59,19 +60,21 @@ class viewSOSRequestDetailsViewController: UIViewController {
     var disabilitiesArray: [String] = []
     var diseasesArray: [String] = []
     var medicationArray: [String] = []
-    var medicalReport = true
-    var requestDetails = false
-    let flag = false
+    var medicalReport = false
+    var requestDetails = true
     var medicalReportID: String?
 
     
     //MARK: - Overriden functions
     override func viewDidLoad() {
         super.viewDidLoad()
-        layoutViews()
         fetchMedicalReports()
+        layoutViews()
         subLayoutRequestDetails()
-
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.fetchSOSRequests()
     }
     
     //MARK: - functions
@@ -118,6 +121,11 @@ class viewSOSRequestDetailsViewController: UIViewController {
         processButton.backgroundColor = UIColor(red: 0.286, green: 0.671, blue: 0.875, alpha: 0.1)
         processButton.tintColor = UIColor(red: 0.286, green: 0.671, blue: 0.875, alpha: 1)
         processButton.setTitleColor(UIColor(red: 0.286, green: 0.671, blue: 0.875, alpha: 1), for: .normal)
+        if sosRequestStatus == "Processed" || sosRequestStatus == "Cancelled" {
+            processButton.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.1)
+            processButton.tintColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.1)
+            processButton.setTitleColor(UIColor(red: 0, green: 0, blue: 0, alpha: 0.1), for: .normal)
+        }
         
         //7- directions button
         directionsButton.layer.cornerRadius = 10
@@ -130,11 +138,11 @@ class viewSOSRequestDetailsViewController: UIViewController {
         let buttonColor = UIColor(red: 0.788, green: 0.271, blue: 0.341, alpha: 1)
         medicalReportButton.setTitleColor(buttonColor, for: .normal)
         medicalReportButton.layer.cornerRadius = 10
-        medicalReportButton.backgroundColor = UIColor(red: 0.965, green: 0.922, blue: 0.937, alpha: 1)
         
         //9- Report Deatils button
         requestDetailsButton.setTitleColor(buttonColor, for: .normal)
         requestDetailsButton.layer.cornerRadius = 10
+        requestDetailsButton.backgroundColor = UIColor(red: 0.965, green: 0.922, blue: 0.937, alpha: 1)
 
 
         //10- container view
@@ -173,11 +181,11 @@ class viewSOSRequestDetailsViewController: UIViewController {
         addBottomBorder(with: color, andWidth: 1, view: diseasesView)
         
         //18- Medical View
-        MedicalInfromationView.isHidden = false
+        MedicalInfromationView.isHidden = true
 
         
         //19- Request View
-        RequestInformationView.isHidden = true
+        RequestInformationView.isHidden = false
     }
     
     private func subLayoutRequestDetails(){
@@ -185,40 +193,52 @@ class viewSOSRequestDetailsViewController: UIViewController {
         //1- background view
         RequestInformationView.backgroundColor = UIColor(red: 0.976, green: 0.988, blue: 0.992, alpha: 1)
         
-        //1- circle one
-        circle1.layer.cornerRadius = circle1.layer.frame.width/2
-        DispatchQueue.main.asyncAfter(deadline: .now()+2) {
-            UIView.animate(withDuration: 1) {
-                self.check1.alpha = 1.0
-                self.circle1.backgroundColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
-                self.label1.textColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
-            }
-        }
-        
-        //2- circle two
-        circle2.layer.cornerRadius = circle2.layer.frame.width/2
-        DispatchQueue.main.asyncAfter(deadline: .now()+5) {
-            UIView.animate(withDuration: 1) {
-                self.check2.alpha = 1.0
-                self.circle2.backgroundColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
-                self.label2.textColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
-            }
-        }
-        
-        //3- circle three
-        circle3.layer.cornerRadius = circle3.layer.frame.width/2
-        if flag {
-            DispatchQueue.main.asyncAfter(deadline: .now()+4) {
+        if self.sosRequestStatus == "Cancelled" {
+            
+            //1- circle one
+            circle1.layer.cornerRadius = circle1.layer.frame.width/2
+            self.check1.alpha = 1.0
+            self.circle1.backgroundColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
+            self.label1.textColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
+            
+            //2- circle two
+            circle2.layer.cornerRadius = circle2.layer.frame.width/2
+            self.check2.alpha = 1.0
+            self.circle2.backgroundColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
+            self.label2.textColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
+            
+            //3- circle three
+            circle3.layer.cornerRadius = circle3.layer.frame.width/2
+            self.check3.alpha = 1.0
+            self.circle3.backgroundColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
+            self.label3.textColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
+            self.label3.text = "This SOS Request has been Cancelled"
+            
+        } else if self.sosRequestStatus == "Processed" || self.sosRequestStatus == "Active" {
+            //1- circle one
+            circle1.layer.cornerRadius = circle1.layer.frame.width/2
+            DispatchQueue.main.asyncAfter(deadline: .now()+2) {
                 UIView.animate(withDuration: 1) {
-                    self.check3.alpha = 1.0
-                    self.circle3.backgroundColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
-                    self.label3.textColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
+                    self.check1.alpha = 1.0
+                    self.circle1.backgroundColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
+                    self.label1.textColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
                 }
             }
+            
+            //2- circle two
+            circle2.layer.cornerRadius = circle2.layer.frame.width/2
+            DispatchQueue.main.asyncAfter(deadline: .now()+3) {
+                UIView.animate(withDuration: 1) {
+                    self.check2.alpha = 1.0
+                    self.circle2.backgroundColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
+                    self.label2.textColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
+                }
+            }
+            
+            //3- circle three
+            circle3.layer.cornerRadius = circle3.layer.frame.width/2
+            self.label3.text = "This SOS Request has been processed"
         }
-
-
-        
     }
     
     private func fetchMedicalReports(){
@@ -244,16 +264,16 @@ class viewSOSRequestDetailsViewController: UIViewController {
                         self.medicalReportID = obj.key
                         
                         //1-translate allergies
-                        self.allergiesArray = medicalReport.getAllergies().components(separatedBy: ", ")
+                        self.allergiesArray = medicalReport.getAllergies().components(separatedBy: ",")
                         
                         //2- translate chronic_disease
-                        self.diseasesArray = medicalReport.getDiseases().components(separatedBy: ", ")
+                        self.diseasesArray = medicalReport.getDiseases().components(separatedBy: ",")
                         
                         //3- transalte disabilities
-                        self.disabilitiesArray = medicalReport.getDisabilities().components(separatedBy: ", ")
+                        self.disabilitiesArray = medicalReport.getDisabilities().components(separatedBy: ",")
                         
                         //4- translate prescribed_medication
-                        self.medicationArray = medicalReport.getMedications().components(separatedBy: ", ")
+                        self.medicationArray = medicalReport.getMedications().components(separatedBy: ",")
                         
                         
                     }
@@ -261,6 +281,30 @@ class viewSOSRequestDetailsViewController: UIViewController {
                     self.disabilitiesColletionView.reloadData()
                     self.diseasesCollectionView.reloadData()
                     self.medicationsCollectionView.reloadData()
+                }
+                print("usersInfo: \(self.MedicalReports)")
+            }
+        }
+    }
+    
+    private func fetchSOSRequests(){
+        // getting the user's SOS request's status
+        let usersQueue = DispatchQueue.init(label: "usersQueue")
+        usersQueue.sync {
+            ref.child("SOSRequests").observe(.value) { snapshot in
+                for req in snapshot.children{
+                    let obj = req as! DataSnapshot
+                    let status = obj.childSnapshot(forPath: "status").value as! String
+                    
+                    if status == "Processed"{
+                        DispatchQueue.main.asyncAfter(deadline: .now()+2) {
+                            UIView.animate(withDuration: 1) {
+                                self.check3.alpha = 1.0
+                                self.circle3.backgroundColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
+                                self.label3.textColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
+                            }
+                        }
+                    }
                 }
                 print("usersInfo: \(self.MedicalReports)")
             }
