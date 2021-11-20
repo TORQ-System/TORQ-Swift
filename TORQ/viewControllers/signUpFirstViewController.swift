@@ -27,6 +27,7 @@ class signUpFirstViewController: UIViewController {
     var correctField: [String:Bool] = ["fullName":false, "email": false, "password":false, "confirmPass": false]
     // tap gesture variable
      var tap = UITapGestureRecognizer()
+    // 
     
     //MARK: - Constants
     let redUIColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
@@ -131,7 +132,7 @@ class signUpFirstViewController: UIViewController {
             error["email"] = "Please enter a valid email address"
         }
         else if !email.text!.isValidDomain{
-            error["email"] = "Please enter a valid user email that does not contain the domain @srca.org.sa"
+            error["email"] = "Email should not contain the domain @srca.org.sa"
         }
         
         //CASE-4: This case validate if the user enters empty or nil or an invalid password that has not fulfilled the conditions ( Not less than 8 charecters & has capital letter &  ).
