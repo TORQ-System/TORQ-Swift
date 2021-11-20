@@ -227,6 +227,11 @@ class ViewSOSRequestsViewController: UIViewController {
         cancelButton.backgroundColor = UIColor(red: 0.667, green: 0.667, blue: 0.667, alpha: 1)
     }
     
+    @IBAction func logoutButton(_ sender: Any) {
+    }
+    
+    
+    
 }
 
 //MARK: - UITableViewDelegate
