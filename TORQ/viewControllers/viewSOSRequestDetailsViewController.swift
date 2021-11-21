@@ -81,9 +81,9 @@ class viewSOSRequestDetailsViewController: UIViewController {
     private func layoutViews(){
         
         //1- back button
-        backButton.backgroundColor = UIColor(red: 0.784, green: 0.267, blue: 0.337, alpha: 0.17)
-        backButton.layer.cornerRadius = 10
-        backButton.layer.maskedCorners = [.layerMaxXMaxYCorner,.layerMaxXMinYCorner]
+//        backButton.backgroundColor = UIColor(red: 0.784, green: 0.267, blue: 0.337, alpha: 0.17)
+//        backButton.layer.cornerRadius = 10
+//        backButton.layer.maskedCorners = [.layerMaxXMaxYCorner,.layerMaxXMinYCorner]
         
         //2- profile container
         profileContainer.layer.cornerRadius = profileContainer.layer.frame.width/2

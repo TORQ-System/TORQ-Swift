@@ -21,7 +21,7 @@ class requestReportViewController: UIViewController {
     @IBOutlet weak var Gender: UILabel!
     @IBOutlet weak var backgroundView: UIView!
     
-    @IBOutlet weak var map: MKMapView!
+    
     //MARK: - Variables
     var userMedicalReportID : String!
     var long : Double!
@@ -34,6 +34,7 @@ class requestReportViewController: UIViewController {
     // MARK: - Overriden Functions
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         contetnt()
         if (statusid == "1"){
             
@@ -110,28 +111,22 @@ class requestReportViewController: UIViewController {
     
     func contetnt(){
         //location
-        map.layer.cornerRadius = map.frame.size.height / 2
-       
-        map.layer.shadowOpacity = 0.3
-        map.layer.shadowOffset = CGSize(width: 5, height: 5)
-map.layer.shadowRadius = 10
         let pin = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(lang), longitude: CLLocationDegrees(long)))
         
         let annotation = MKPointAnnotation()
         annotation.coordinate = pin.coordinate
         annotation.title = ""
-        let coordinateRegion = MKCoordinateRegion(center: pin.coordinate, latitudinalMeters: 12000, longitudinalMeters: 12000)
-        map.setRegion(coordinateRegion, animated: true)
-        map.addAnnotation(annotation)
         // if user taps on map
         
         let tap = CustomTapGestureRecognizer(target: self, action: #selector(goToLocation(sender:)))
         tap.lang = lang
         tap.long = long
-        map.addGestureRecognizer(tap)
         location_report.addTarget(self, action: #selector(findloc(sender: )), for: .touchUpInside)
-
-        data_timeRE.text = time
+        
+        let domainRange = time!.range(of: " ")!
+        let date = time![..<domainRange.lowerBound]
+        let newDate = date.replacingOccurrences(of: ":", with: "/", options: .literal, range: nil)
+        data_timeRE.text = String(newDate)
     
         
         
@@ -142,8 +137,6 @@ map.layer.shadowRadius = 10
                 let Gender1 = dec["gender"] as! String
                 let NID = dec["nationalID"] as! String
 
-
-             //   let firstName = fullName.components(separatedBy: " ").first
                 self.namerequest.text = "\(fullName)"
                 self.name_report.text = "\(NID)"
                 self.Gender.text = "\(Gender1)"
@@ -157,7 +150,6 @@ map.layer.shadowRadius = 10
             var try2 = "Not set"
             var  try3 = "Not set"
             var try4 = "Not set"
-            
             
             if let dec = snapshot.value as? [String :Any]
             {
@@ -175,9 +167,6 @@ map.layer.shadowRadius = 10
                     if dec["prescribed_medication"] as! String != "-"{
                         try4 = dec["prescribed_medication"] as! String}
                     
-                    
-                    
-                    //  let lname = dec["lastName"] as! String
                     self.blood.text = try1
                     self.disease.text = try3
                     self.algeer0.text = try2
@@ -187,10 +176,6 @@ map.layer.shadowRadius = 10
                     print("1-\(try3)")
                     print("1-\(try4)")
                 }
-                
-                //  self.name_report.text = Fname+" "+lname
-                //   self.namerequest.text = "\(Fname)'s Request"
-                //o
             }
             
         })
@@ -238,10 +223,6 @@ extension requestReportViewController: MKMapViewDelegate{
         }else{
             pin?.annotation = annotation
         }
-
-        
-        
-        
         return pin
     }
 

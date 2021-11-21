@@ -1174,15 +1174,12 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SfR-iQ-9ri">
-                                <rect key="frame" x="20" y="44" width="25" height="29"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="SfR-iQ-9ri" secondAttribute="height" multiplier="19:22" id="0hE-Je-31Q"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <color key="tintColor" red="0.21176470589999999" green="0.20392156859999999" blue="0.3411764706" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <state key="normal">
-                                    <color key="titleColor" red="0.21176470589999999" green="0.20392156859999999" blue="0.3411764706" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                    <imageReference key="image" image="arrow.backward" catalog="system" symbolScale="medium"/>
+                                <rect key="frame" x="20" y="50" width="56.5" height="22"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <color key="tintColor" red="0.59858280419999998" green="0.15238550310000001" blue="0.2196014225" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <state key="normal" title=" back">
+                                    <color key="titleColor" red="0.59858280419999998" green="0.15238550310000001" blue="0.2196014225" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <imageReference key="image" image="chevron.left" catalog="system" symbolScale="medium"/>
                                 </state>
                                 <connections>
                                     <action selector="backButton:" destination="prp-jc-ZhY" eventType="touchUpInside" id="c8J-fi-p46"/>
@@ -1193,11 +1190,12 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="SfR-iQ-9ri" firstAttribute="leading" secondItem="E7B-Xa-oTR" secondAttribute="leading" constant="20" id="41G-N4-aeX"/>
-                            <constraint firstItem="SfR-iQ-9ri" firstAttribute="top" secondItem="E7B-Xa-oTR" secondAttribute="top" id="C6U-kQ-w6K"/>
+                            <constraint firstItem="SfR-iQ-9ri" firstAttribute="top" secondItem="J54-u5-J6I" secondAttribute="top" constant="50" id="C6U-kQ-w6K"/>
                             <constraint firstItem="2yL-pa-lN9" firstAttribute="top" secondItem="J54-u5-J6I" secondAttribute="top" id="HT4-4W-Jh2"/>
                             <constraint firstAttribute="bottom" secondItem="2yL-pa-lN9" secondAttribute="bottom" id="S9D-Sg-EM0"/>
                             <constraint firstItem="2yL-pa-lN9" firstAttribute="leading" secondItem="J54-u5-J6I" secondAttribute="leading" id="dFK-O8-O2u"/>
                             <constraint firstAttribute="trailing" secondItem="2yL-pa-lN9" secondAttribute="trailing" id="icJ-ff-rAF"/>
+                            <constraint firstItem="E7B-Xa-oTR" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="SfR-iQ-9ri" secondAttribute="trailing" symbolic="YES" id="zGP-fJ-wao"/>
                         </constraints>
                     </view>
                     <connections>
@@ -2450,16 +2448,16 @@
                                                 <rect key="frame" x="0.0" y="110" width="354" height="30"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Filtered by:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OUI-KQ-X4i">
-                                                        <rect key="frame" x="0.0" y="0.0" width="103.5" height="30"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="107.5" height="30"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="nsF-jP-Rkj">
-                                                        <rect key="frame" x="103.5" y="0.0" width="250.5" height="30"/>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="nsF-jP-Rkj">
+                                                        <rect key="frame" x="107.5" y="0.0" width="246.5" height="30"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lFV-kV-nh0">
-                                                                <rect key="frame" x="0.0" y="0.0" width="53" height="30"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="54.5" height="30"/>
                                                                 <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <state key="normal" title="Active">
                                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2469,7 +2467,7 @@
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9S4-vY-s2Y">
-                                                                <rect key="frame" x="63" y="0.0" width="89.5" height="30"/>
+                                                                <rect key="frame" x="59.5" y="0.0" width="93" height="30"/>
                                                                 <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <state key="normal" title="Processed">
                                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2479,7 +2477,7 @@
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5KK-X2-bna">
-                                                                <rect key="frame" x="162.5" y="0.0" width="88" height="30"/>
+                                                                <rect key="frame" x="157.5" y="0.0" width="89" height="30"/>
                                                                 <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <state key="normal" title="Cancelled">
                                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2556,8 +2554,8 @@
                                                                     <color key="textColor" red="0.090263523159999998" green="0.14351689819999999" blue="0.35296022890000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="33p-bf-DjS">
-                                                                    <rect key="frame" x="0.0" y="39.5" width="232.5" height="14.5"/>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="33p-bf-DjS">
+                                                                    <rect key="frame" x="0.0" y="39.5" width="227.5" height="14.5"/>
                                                                     <subviews>
                                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="EiF-QV-3aI">
                                                                             <rect key="frame" x="0.0" y="0.0" width="85" height="14.5"/>
@@ -2577,7 +2575,7 @@
                                                                             </subviews>
                                                                         </stackView>
                                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="lyk-Td-LMi">
-                                                                            <rect key="frame" x="100" y="0.0" width="132.5" height="14.5"/>
+                                                                            <rect key="frame" x="95" y="0.0" width="132.5" height="14.5"/>
                                                                             <subviews>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Occured at:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UVU-1V-BK5">
                                                                                     <rect key="frame" x="0.0" y="0.0" width="68" height="14.5"/>
@@ -3221,14 +3219,12 @@
                                         </subviews>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YQK-AP-EQn">
-                                        <rect key="frame" x="0.0" y="50" width="70" height="40"/>
-                                        <color key="backgroundColor" red="0.59858280419999998" green="0.15238550310000001" blue="0.2196014225" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="70" id="3ez-do-f7C"/>
-                                            <constraint firstAttribute="height" constant="40" id="WnZ-eV-NHA"/>
-                                        </constraints>
+                                        <rect key="frame" x="20" y="50" width="56.5" height="22"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="tintColor" red="0.59858280419999998" green="0.15238550310000001" blue="0.2196014225" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                        <state key="normal" image="chevron.left" catalog="system"/>
+                                        <state key="normal" title=" back" image="chevron.left" catalog="system">
+                                            <color key="titleColor" red="0.59858280419999998" green="0.15238550310000001" blue="0.2196014225" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </state>
                                         <connections>
                                             <action selector="backButton:" destination="YJk-LH-2Yo" eventType="touchUpInside" id="TvI-Bu-QvN"/>
                                         </connections>
@@ -3318,7 +3314,8 @@
                                     <constraint firstAttribute="width" secondItem="Z2D-MQ-Yrl" secondAttribute="height" multiplier="69:58" id="ms4-Ln-joj"/>
                                     <constraint firstItem="opg-8F-Dq8" firstAttribute="top" secondItem="kQN-dj-Cv9" secondAttribute="bottom" constant="20" id="sr6-VZ-6cO"/>
                                     <constraint firstAttribute="trailing" secondItem="6de-5i-Qnr" secondAttribute="trailing" constant="20" id="uhm-kP-okU"/>
-                                    <constraint firstItem="YQK-AP-EQn" firstAttribute="leading" secondItem="Z2D-MQ-Yrl" secondAttribute="leading" id="zz2-MN-kEb"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="YQK-AP-EQn" secondAttribute="trailing" constant="20" symbolic="YES" id="z1P-bK-dk5"/>
+                                    <constraint firstItem="YQK-AP-EQn" firstAttribute="leading" secondItem="Z2D-MQ-Yrl" secondAttribute="leading" constant="20" id="zz2-MN-kEb"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HlJ-rK-U5N">
@@ -3334,13 +3331,13 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="60" translatesAutoresizingMaskIntoConstraints="NO" id="sbA-Ag-Jmg">
-                                        <rect key="frame" x="10" y="120" width="334" height="220"/>
+                                        <rect key="frame" x="10" y="120" width="334" height="170"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="pdc-sQ-cSb">
-                                                <rect key="frame" x="0.0" y="0.0" width="334" height="50"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="334" height="0.0"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="klU-uk-Cgv">
-                                                        <rect key="frame" x="0.0" y="0.0" width="30" height="50"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="30" height="0.0"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DNF-89-xO6">
                                                                 <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
@@ -3370,7 +3367,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YiQ-5d-jkq">
-                                                        <rect key="frame" x="40" y="0.0" width="294" height="50"/>
+                                                        <rect key="frame" x="40" y="0.0" width="294" height="0.0"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Noura Alsulayfih’s request has been assigned to your center" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Byo-Ph-Som">
                                                                 <rect key="frame" x="0.0" y="0.0" width="294" height="36"/>
@@ -3389,7 +3386,7 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Xi9-vV-8MV">
-                                                <rect key="frame" x="0.0" y="110" width="334" height="25"/>
+                                                <rect key="frame" x="0.0" y="60" width="334" height="25"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="48r-Sn-7Md">
                                                         <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
@@ -3421,7 +3418,7 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="0zL-Lc-gBT">
-                                                <rect key="frame" x="0.0" y="195" width="334" height="25"/>
+                                                <rect key="frame" x="0.0" y="145" width="334" height="25"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B0p-XA-aJo">
                                                         <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
@@ -6387,16 +6384,16 @@ We may request access or permission to and track location-based information from
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oUX-C0-542">
                                 <rect key="frame" x="20" y="236" width="374" height="660"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Assigned Requests!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QYi-V3-e8u">
-                                        <rect key="frame" x="81" y="318" width="212.5" height="24"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Active Requests!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QYi-V3-e8u">
+                                        <rect key="frame" x="94.5" y="318" width="185" height="24"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
-                                        <color key="textColor" red="0.98999999999999999" green="0.45540000000000003" blue="0.48213" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="textColor" white="0.5" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Processed Requests!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z4o-tl-RrO">
                                         <rect key="frame" x="80" y="318" width="224" height="24"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
-                                        <color key="textColor" red="0.98999999999999999" green="0.45540000000000003" blue="0.48213" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="textColor" white="0.5" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="fMH-fI-ngM">
@@ -6599,7 +6596,7 @@ We may request access or permission to and track location-based information from
                                     </collectionView>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="3Y6-JE-bfw">
                                         <rect key="frame" x="19" y="14" width="323" height="34"/>
-                                        <color key="backgroundColor" red="1" green="0.81176470590000005" blue="0.84313725490000002" alpha="0.62749486249999997" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="backgroundColor" red="1" green="0.81176470590000005" blue="0.84313725490000002" alpha="0.46554413848561671" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="33" id="xXY-Sh-8WU"/>
                                         </constraints>
@@ -6608,7 +6605,7 @@ We may request access or permission to and track location-based information from
                                             <segment title="Processed      "/>
                                         </segments>
                                         <color key="tintColor" systemColor="tertiarySystemBackgroundColor"/>
-                                        <color key="selectedSegmentTintColor" red="0.83921568629999999" green="0.33333333329999998" blue="0.42352941179999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="selectedSegmentTintColor" red="0.72783231739999998" green="0.23010128739999999" blue="0.3333318233" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <connections>
                                             <action selector="segment:" destination="ZO9-hy-LlZ" eventType="valueChanged" id="93S-0k-6iR"/>
                                         </connections>
@@ -6706,12 +6703,6 @@ We may request access or permission to and track location-based information from
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <mapView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" showsCompass="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Ts-38-rod">
-                                        <rect key="frame" x="255" y="117" width="99" height="98"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="98" id="6Hm-10-pHY"/>
-                                        </constraints>
-                                    </mapView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12/03/2000 ," textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OTa-zV-OL7">
                                         <rect key="frame" x="59" y="166" width="175" height="23"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="19"/>
@@ -6721,15 +6712,10 @@ We may request access or permission to and track location-based information from
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="6Ts-38-rod" firstAttribute="leading" secondItem="mns-9q-Wnb" secondAttribute="trailing" constant="21" id="9dW-SU-H84"/>
                                     <constraint firstItem="OTa-zV-OL7" firstAttribute="top" secondItem="mns-9q-Wnb" secondAttribute="bottom" constant="3.5" id="Hqp-xI-9wd"/>
-                                    <constraint firstItem="6Ts-38-rod" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="OTa-zV-OL7" secondAttribute="trailing" constant="8" symbolic="YES" id="S8U-kx-kYQ"/>
                                     <constraint firstItem="OTa-zV-OL7" firstAttribute="leading" secondItem="1y6-i8-Tyz" secondAttribute="leading" constant="59" id="T12-hE-sdK"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="mns-9q-Wnb" secondAttribute="trailing" constant="20" symbolic="YES" id="cbL-wh-q3C"/>
-                                    <constraint firstAttribute="trailing" secondItem="6Ts-38-rod" secondAttribute="trailing" constant="60" id="dFO-N1-Ukm"/>
-                                    <constraint firstItem="6Ts-38-rod" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="mns-9q-Wnb" secondAttribute="trailing" constant="8" symbolic="YES" id="df9-fg-UgM"/>
                                     <constraint firstAttribute="bottom" secondItem="OTa-zV-OL7" secondAttribute="bottom" constant="99" id="fW2-Np-KkR"/>
-                                    <constraint firstAttribute="bottom" secondItem="6Ts-38-rod" secondAttribute="bottom" constant="73" id="g44-N3-NfJ"/>
                                     <constraint firstItem="OTa-zV-OL7" firstAttribute="leading" secondItem="mns-9q-Wnb" secondAttribute="leading" id="tdp-7c-YLH"/>
                                     <constraint firstItem="OTa-zV-OL7" firstAttribute="trailing" secondItem="mns-9q-Wnb" secondAttribute="trailing" id="yDk-Hh-yc3"/>
                                 </constraints>
@@ -6937,7 +6923,7 @@ We may request access or permission to and track location-based information from
                                 <viewLayoutGuide key="frameLayoutGuide" id="ZrC-Z5-liS"/>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="94x-wC-ZdG">
-                                <rect key="frame" x="27" y="54" width="52.5" height="20"/>
+                                <rect key="frame" x="20" y="50" width="52.5" height="20"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title=" back" image="chevron.left" catalog="system">
@@ -6949,7 +6935,7 @@ We may request access or permission to and track location-based information from
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wt6-Hk-vDu">
                                 <rect key="frame" x="55" y="789" width="309" height="46"/>
-                                <color key="backgroundColor" red="0.1012948528" green="0.14810189600000001" blue="0.3411944509" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.090263523159999998" green="0.14351689819999999" blue="0.35296022890000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Process"/>
@@ -6980,13 +6966,13 @@ We may request access or permission to and track location-based information from
                             <constraint firstItem="A0Q-eA-Opj" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="94x-wC-ZdG" secondAttribute="trailing" symbolic="YES" id="AKP-GX-oqp"/>
                             <constraint firstItem="Qoa-lp-Qow" firstAttribute="leading" secondItem="A0Q-eA-Opj" secondAttribute="leading" constant="35" id="I6W-Ht-YbZ"/>
                             <constraint firstItem="wt6-Hk-vDu" firstAttribute="top" secondItem="Qoa-lp-Qow" secondAttribute="bottom" constant="45" id="IMg-Pg-XGu"/>
-                            <constraint firstItem="94x-wC-ZdG" firstAttribute="leading" secondItem="A0Q-eA-Opj" secondAttribute="leading" constant="27" id="IuK-ZW-h4R"/>
+                            <constraint firstItem="94x-wC-ZdG" firstAttribute="leading" secondItem="A0Q-eA-Opj" secondAttribute="leading" constant="20" id="IuK-ZW-h4R"/>
                             <constraint firstItem="Qoa-lp-Qow" firstAttribute="top" secondItem="gEe-bh-F6p" secondAttribute="bottom" constant="21" id="PqC-DO-JL2"/>
                             <constraint firstItem="1y6-i8-Tyz" firstAttribute="centerX" secondItem="Qoa-lp-Qow" secondAttribute="centerX" id="X1v-0x-W3F"/>
                             <constraint firstItem="1y6-i8-Tyz" firstAttribute="leading" secondItem="cQw-9z-K8i" secondAttribute="leading" id="Y0b-7K-bpW"/>
                             <constraint firstItem="gEe-bh-F6p" firstAttribute="leading" secondItem="A0Q-eA-Opj" secondAttribute="leading" constant="91" id="cjn-pC-WrF"/>
                             <constraint firstAttribute="bottom" secondItem="1y6-i8-Tyz" secondAttribute="bottom" constant="608" id="grM-Sh-XJH"/>
-                            <constraint firstItem="94x-wC-ZdG" firstAttribute="top" secondItem="A0Q-eA-Opj" secondAttribute="top" constant="10" id="ktI-it-0cd"/>
+                            <constraint firstItem="94x-wC-ZdG" firstAttribute="top" secondItem="cQw-9z-K8i" secondAttribute="top" constant="50" id="ktI-it-0cd"/>
                             <constraint firstItem="1y6-i8-Tyz" firstAttribute="top" secondItem="cQw-9z-K8i" secondAttribute="top" id="pDb-xQ-JDE"/>
                             <constraint firstItem="A0Q-eA-Opj" firstAttribute="bottom" secondItem="wt6-Hk-vDu" secondAttribute="bottom" constant="27" id="rjE-12-Hhw"/>
                             <constraint firstItem="gEe-bh-F6p" firstAttribute="top" secondItem="A0Q-eA-Opj" secondAttribute="top" constant="134.5" id="vMi-00-Vy2"/>
@@ -7004,7 +6990,6 @@ We may request access or permission to and track location-based information from
                         <outlet property="data_timeRE" destination="OTa-zV-OL7" id="bz0-oC-4QB"/>
                         <outlet property="disease" destination="fzc-DG-atF" id="CMK-xY-1zO"/>
                         <outlet property="location_report" destination="Deg-qc-8cc" id="Y7k-fs-Uwd"/>
-                        <outlet property="map" destination="6Ts-38-rod" id="XYb-Kx-MHV"/>
                         <outlet property="medation" destination="iiL-Ez-22M" id="x2Q-vw-H0X"/>
                         <outlet property="medation0" destination="HrP-3N-9Nt" id="osW-Sb-Ty4"/>
                         <outlet property="name_report" destination="jDh-gV-wI5" id="a37-J6-gLZ"/>
@@ -7085,7 +7070,7 @@ We may request access or permission to and track location-based information from
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ohc-43-dvC">
                                         <rect key="frame" x="20" y="524" width="334" height="38"/>
-                                        <color key="backgroundColor" red="0.90393638610000004" green="0.28463447089999999" blue="0.4156844616" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="backgroundColor" red="0.72783231739999998" green="0.23010128739999999" blue="0.3333318233" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="38" id="1ds-Di-wjE"/>
                                         </constraints>
@@ -7211,7 +7196,7 @@ We may request access or permission to and track location-based information from
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fft-s7-Z9A">
                                         <rect key="frame" x="20" y="524" width="334" height="38"/>
-                                        <color key="backgroundColor" red="0.90393638610000004" green="0.28463447089999999" blue="0.4156844616" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="backgroundColor" red="0.72783231739999998" green="0.23010128739999999" blue="0.3333318233" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="38" id="5Ol-FN-u3T"/>
                                         </constraints>
@@ -7273,7 +7258,6 @@ We may request access or permission to and track location-based information from
     <resources>
         <image name="BlueRectangle" width="21" height="558"/>
         <image name="age" width="90" height="90"/>
-        <image name="arrow.backward" catalog="system" width="128" height="98"/>
         <image name="arrow.left" catalog="system" width="128" height="98"/>
         <image name="bell.fill" catalog="system" width="128" height="124"/>
         <image name="bloodType" width="62" height="80"/>
@@ -7311,8 +7295,8 @@ We may request access or permission to and track location-based information from
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="phone.fill" catalog="system" width="128" height="114"/>
         <image name="placeholder" width="120" height="120"/>
-        <image name="plus" catalog="system" width="128" height="113"/>
         <image name="plus" width="117" height="112"/>
+        <image name="plus" catalog="system" width="128" height="113"/>
         <image name="privacy" width="80" height="90"/>
         <image name="pulse" width="300" height="214"/>
         <image name="rec" width="277" height="280"/>
