@@ -21,11 +21,11 @@ class viewLocationViewController: UIViewController {
     
     //MARK: - Functions
     func setPinUsingMKPlacemark(location: CLLocationCoordinate2D) {
-        let pin = MKPlacemark(coordinate: location)
+        let pin = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(latitude), longitude: CLLocationDegrees(longitude)))
         let annotation = MKPointAnnotation()
         annotation.coordinate = pin.coordinate
-        annotation.title = "Accident Location"
-        let coordinateRegion = MKCoordinateRegion(center: pin.coordinate, latitudinalMeters: 800, longitudinalMeters: 800)
+        annotation.title = "Accident"
+        let coordinateRegion = MKCoordinateRegion(center: pin.coordinate, latitudinalMeters: 12000, longitudinalMeters: 12000)
         map.setRegion(coordinateRegion, animated: true)
         map.addAnnotation(annotation)
     }
@@ -40,6 +40,26 @@ class viewLocationViewController: UIViewController {
     @IBAction func backButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
-    
-    
 }
+
+
+//MARK: - Map View Delegate Extension
+extension viewLocationViewController: MKMapViewDelegate{
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard !(annotation is MKUserLocation)else{
+            return nil
+        }
+        var pin = mapView.dequeueReusableAnnotationView(withIdentifier: "accidentPin")
+        if pin == nil {
+            pin = MKAnnotationView(annotation: annotation, reuseIdentifier: "accidentPin")
+            pin?.canShowCallout = true
+            pin?.image = UIImage(named: "Vector-1")
+        }else{
+            pin?.annotation = annotation
+        }
+        return pin
+    }
+}
+
+

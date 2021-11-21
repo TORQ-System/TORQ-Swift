@@ -15,7 +15,7 @@ class hospitalsViewController: UIViewController ,UITableViewDelegate ,UITableVie
     var numb = -1
     var userMedicalReportID : String!
     var RequestID : String!
-
+    
     var text:String = ""
     var rowDefaultSelected: Int = 0
     var ref = Database.database().reference()
@@ -69,8 +69,40 @@ class hospitalsViewController: UIViewController ,UITableViewDelegate ,UITableVie
         listUIView.layer.shadowRadius = 25
         listUIView.layer.shouldRasterize = true
         listUIView.layer.rasterizationScale = UIScreen.main.scale
+        
+        // 1- cancel button view
         Cancel.layer.cornerRadius = 15
+        Cancel.layer.masksToBounds = true
+        let gradientLayerr = CAGradientLayer()
+        gradientLayerr.frame = Cancel.frame
+        gradientLayerr.colors = [UIColor(red: 0.879, green: 0.462, blue: 0.524, alpha: 1).cgColor,UIColor(red: 0.757, green: 0.204, blue: 0.286, alpha: 1).cgColor]
+        gradientLayerr.startPoint = CGPoint(x: 0, y: 0)
+        gradientLayerr.endPoint = CGPoint(x: 1, y: 0)
+        gradientLayerr.transform = CATransform3DMakeAffineTransform(CGAffineTransform(a: 0.99, b: 0.98, c: -0.75, d: 1.6, tx: 0.38, ty: -0.77))
+        gradientLayerr.bounds = Cancel.bounds.insetBy(dx: -0.5*Cancel.bounds.size.width, dy: -0.5*Cancel.bounds.size.height)
+        gradientLayerr.position = Cancel.center
+        Cancel.layer.addSublayer(gradientLayerr)
+        Cancel.layer.insertSublayer(gradientLayerr, at: 0)
+        
+
+
+        
+        //2- confirm button view
         Confirm.layer.cornerRadius = 15
+        Confirm.layer.masksToBounds = true
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = Confirm.frame
+        gradientLayer.colors =  [
+            UIColor(red: 0.102, green: 0.157, blue: 0.345, alpha: 1).cgColor,
+            UIColor(red: 0.192, green: 0.353, blue: 0.584, alpha: 1).cgColor]
+        gradientLayer.startPoint = CGPoint(x: 0.25, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 0.75, y: 0.5)
+        gradientLayer.transform = CATransform3DMakeAffineTransform(CGAffineTransform(a: 0.99, b: 0.98, c: -0.75, d: 1.6, tx: 0.38, ty: -0.77))
+        gradientLayer.bounds = Confirm.bounds.insetBy(dx: -0.5*Confirm.bounds.size.width, dy: -0.5*Confirm.bounds.size.height)
+        gradientLayer.position = Confirm.center
+        Confirm.layer.addSublayer(gradientLayer)
+        Confirm.layer.insertSublayer(gradientLayer, at: 0)
+        
     }
     
     func goToViewRequests(){
@@ -122,15 +154,21 @@ class hospitalsViewController: UIViewController ,UITableViewDelegate ,UITableVie
             SCLAlertView(appearance: self.apperance).showCustom("Select a Hospital", subTitle: "You must select a hospital to process the request or cancel." , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
         }
         else {
-            ref.child("Request").queryOrdered(byChild:"user_id").observe(.childAdded, with: {(snapshot) in
-                if let dec = snapshot.value as? [String :Any]{
-                    if (dec["request_id"] as? String == self.RequestID && dec["status"]as! String == "0"){
-                        let snapshotKey = snapshot.key
+            ref.child("Request").observeSingleEvent(of: .value, with: { snapshot in
+                for req in snapshot.children{
+                    let obj = req as! DataSnapshot
+                    print(obj)
+                    
+                    let status = obj.childSnapshot(forPath: "status").value as! String
+                    let request_id = obj.childSnapshot(forPath: "request_id").value as! String
+                    
+                    if (request_id == self.RequestID && status == "0"){
+                        print("inside if")
+                        let snapshotKey = obj.key
                         self.ref.child("Request").child(snapshotKey).updateChildValues(["status": "1"])
-                        self.ref.child("ProcessingRequest").child(self.selhealth).childByAutoId().setValue(["Rquest_id":dec["request_id"] as! String? ,"User_id": self.userMedicalReportID])
+                        self.ref.child("ProcessingRequest").child(self.selhealth).childByAutoId().setValue(["Rquest_id":request_id ,"User_id": self.userMedicalReportID])
                         
                         let alertView = SCLAlertView(appearance: self.apperanceWithoutClose)
-                        
                         alertView.addButton("Okay", backgroundColor: self.blueUIColor){
                             let presentingView = self.presentingViewController
                             self.dismiss(animated: false) {
@@ -144,7 +182,6 @@ class hospitalsViewController: UIViewController ,UITableViewDelegate ,UITableVie
         }
     }
 }
-
 
 
 
