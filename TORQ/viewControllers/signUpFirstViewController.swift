@@ -6,7 +6,6 @@ class signUpFirstViewController: UIViewController {
     //MARK: - @IBOutlets
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var password: UITextField!
-    @IBOutlet weak var nextbutton: UIButton!
     @IBOutlet weak var errorEmail: UILabel!
     @IBOutlet weak var errorPassword: UILabel!
     @IBOutlet weak var confirmPassword: UITextField!
@@ -16,6 +15,8 @@ class signUpFirstViewController: UIViewController {
     @IBOutlet weak var progressBar: UIProgressView!
     @IBOutlet weak var textFieldsStackView: UIStackView!
     @IBOutlet weak var percentageLabel: UILabel!
+    @IBOutlet weak var buttonView: UIView!
+    @IBOutlet weak var roundGradientView: UIView!
     
     //MARK: - Variables
     var userFullName: String?
@@ -24,6 +25,8 @@ class signUpFirstViewController: UIViewController {
     var completedFields: Float = 0.0
     var numberOfCompleted: Int = 0
     var correctField: [String:Bool] = ["fullName":false, "email": false, "password":false, "confirmPass": false]
+    // tap gesture variable
+     var tap = UITapGestureRecognizer()
     
     //MARK: - Constants
     let redUIColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
@@ -39,7 +42,19 @@ class signUpFirstViewController: UIViewController {
         
         progressBar.setProgress(0, animated: true)
         percentageLabel.text = "\(calculatePercentage())%"
-
+        
+        configureInputs()
+        configureButtonView()
+        configureTapGesture()
+        
+    }
+    
+    //MARK: - Functions
+    func calculatePercentage() -> Int{
+        let percentage = Int((Float(numberOfCompleted)/8.0) * 100)
+        return percentage
+    }
+    func configureInputs(){
         // hide the error message and add the border
         errorFullName.alpha = 0
         errorConfirmPassword.alpha = 0
@@ -48,61 +63,44 @@ class signUpFirstViewController: UIViewController {
         
         // First name border
         fullName.setBorder(color: "default", image: UIImage(named: "personDefault")!)
+        fullName.clearsOnBeginEditing = false
         
         // Last name border
         confirmPassword.setBorder(color: "default", image: UIImage(named: "lockDefault")!)
         
         // email border
         email.setBorder(color: "default", image: UIImage(named: "emailDefault")!)
+        email.clearsOnBeginEditing = false
         
         // password border
         password.setBorder(color: "default", image: UIImage(named: "lockDefault")!)
-        
-        configureKeyboard()
     }
-    
-    //MARK: - Functions
-    func calculatePercentage() -> Int{
-        let percentage = Int((Float(numberOfCompleted)/8.0) * 100)
-        return percentage
-    }
-    
-    func configureKeyboard(){
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-        self.view!.addGestureRecognizer(tap)
-        
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardwillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    @objc func hideKeyboard(){
-        self.view.endEditing(true)
-        
-    }
-    
-    @objc func keyboardwillShow(notification: NSNotification){
-        
-        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue{
-            let keyboardHieght = keyboardFrame.cgRectValue.height
-            let bottomSpace = self.view.frame.height - (self.textFieldsStackView.frame.origin.y + textFieldsStackView.frame.height)
-            self.view.frame.origin.y -= keyboardHieght - bottomSpace
+    func configureButtonView(){
+            roundGradientView.layer.cornerRadius = 20
+            roundGradientView.layer.shouldRasterize = true
+            roundGradientView.layer.rasterizationScale = UIScreen.main.scale
             
+            let gradient: CAGradientLayer = CAGradientLayer()
+            
+            gradient.cornerRadius = 20
+            gradient.colors = [
+                UIColor(red: 0.887, green: 0.436, blue: 0.501, alpha: 1).cgColor,
+                UIColor(red: 0.75, green: 0.191, blue: 0.272, alpha: 1).cgColor
+            ]
+            
+            gradient.locations = [0, 1]
+            gradient.startPoint = CGPoint(x: 0, y: 0)
+            gradient.endPoint = CGPoint(x: 1, y: 1)
+            gradient.frame = roundGradientView.bounds
+            roundGradientView.layer.insertSublayer(gradient, at: 0)
+    }
+    func configureTapGesture(){
+            tap = UITapGestureRecognizer(target: self, action: #selector(self.nextClicked(_:)))
+            tap.numberOfTapsRequired = 1
+            tap.numberOfTouchesRequired = 1
+            buttonView.addGestureRecognizer(tap)
+            buttonView.isUserInteractionEnabled = true
         }
-        
-    }
-    
-    @objc func keyboardWillHide(){
-        self.view.frame.origin.y = 0
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    
     func validateFields() -> [String: String ]{
         var error: [String: String ] = ["Empty": "","fullName": "" ,"confirmPass": "" ,"email": "", "password":""]
         
@@ -133,7 +131,7 @@ class signUpFirstViewController: UIViewController {
             error["email"] = "Please enter a valid email address"
         }
         else if !email.text!.isValidDomain{
-            error["email"] = "Please enter a valid user email that does not contain the domain @srca.org.sa"
+            error["email"] = "Email should not contain the domain @srca.org.sa"
         }
         
         //CASE-4: This case validate if the user enters empty or nil or an invalid password that has not fulfilled the conditions ( Not less than 8 charecters & has capital letter &  ).
@@ -144,12 +142,15 @@ class signUpFirstViewController: UIViewController {
         else if !password.text!.isValidPassword{
             error["password"] = "Password should not be less than 6 characters"
         }
+        else if confirmPassword.text != nil && confirmPassword.text != "" && (confirmPassword.text != password.text) {
+                    error["password"] = "passwords do not match"
+                }
         // confirm password checking
         if confirmPassword.text == nil || confirmPassword.text == ""{
             error["confirmPass"] = "Confirm Password cannot be empty"
         }
         else if confirmPassword.text != password.text!{
-            error["confirmPass"] = "Passwords does not match"
+            error["confirmPass"] = "Passwords do not match"
         }
         
         return error
@@ -174,9 +175,7 @@ class signUpFirstViewController: UIViewController {
     }
     
     
-    
-    @IBAction func goToSecondScreen(_ sender: Any) {
-        
+    @objc func nextClicked(_ sender: UITapGestureRecognizer) {
         //1- validation of the fields
         let errors = validateFields()
  
@@ -275,7 +274,7 @@ class signUpFirstViewController: UIViewController {
             correctField["fullName"]! = false
         }
         
-        
+
         progressBar.setProgress(completedFields, animated: true)
         percentageLabel.text = "\(calculatePercentage())%"
         
@@ -294,7 +293,7 @@ class signUpFirstViewController: UIViewController {
     }
     
     @IBAction func lastNameEditingChanged(_ sender: UITextField) {
-        confirmPassword.isSecureTextEntry = true
+//        confirmPassword.isSecureTextEntry = true
         let errors = validateFields()
         
         if errors["confirmPass"] == "" && !correctField["confirmPass"]!{

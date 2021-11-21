@@ -2,7 +2,7 @@
 //  textFieldExtension.swift
 //  TORQ
 //
-//  Created by Dalal  on 08/03/1443 AH.
+//  Created by Dalal on 08/03/1443 AH.
 //
 
 import Foundation
@@ -10,44 +10,67 @@ import UIKit
 
 extension UITextField{
     
-    func setBorder(color: String, image: UIImage){
-        // colors
-        let red = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 ).cgColor
-        let blue = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 ).cgColor
-        let gray = UIColor( red: 163/255, green: 161/255, blue:161/255, alpha: 1.0 ).cgColor
+    enum ShouldChangeCursor {
+        case incrementCursor
+        case preserveCursor
+    }
+    
+    func preserveCursorPosition(withChanges mutatingFunction: (UITextPosition?) -> (ShouldChangeCursor)) {
+        var cursorPosition: UITextPosition? = nil
+        if let selectedRange = self.selectedTextRange {
+            let offset = self.offset(from: self.beginningOfDocument, to: selectedRange.start)
+            cursorPosition = self.position(from: self.beginningOfDocument, offset: offset)
+        }
         
-        // initialization
+        let shouldChangeCursor = mutatingFunction(cursorPosition)
+        
+        if var cursorPosition = cursorPosition {
+            
+            if shouldChangeCursor == .incrementCursor {
+                cursorPosition = self.position(from: cursorPosition, offset: 1) ?? cursorPosition
+            }
+            
+            if let range = self.textRange(from: cursorPosition, to: cursorPosition) {
+                self.selectedTextRange = range
+            }
+        }
+        
+    }
+    func setBorder(color: String, image: UIImage){
+        let red = UIColor(red: 200/255, green: 68/255, blue:86/255, alpha: 1.0)
+        let blue = UIColor(red: 73/255, green: 171/255, blue:223/255, alpha: 1.0)
+        let gray = UIColor(red: 163/255, green: 161/255, blue:161/255, alpha: 1.0)
         let border = CALayer()
-        let borderWidth = CGFloat(2.0)
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 28, height: 20))
         let attributedText = NSMutableAttributedString(attributedString: self.attributedText!)
-       
-        if(color == "error"){
-            border.borderColor = red
-            attributedText.setAttributes([NSAttributedString.Key.foregroundColor : UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )], range: NSMakeRange(0, attributedText.length))
+        var switchedColor: UIColor?
+        
+        switch color {
+        case "error":
+            switchedColor = red
+            break
+        case "valid":
+            switchedColor = blue
+            break
+        default:
+            switchedColor = gray
         }
         
-        if(color == "default"){
-            border.borderColor = gray
-            attributedText.setAttributes([NSAttributedString.Key.foregroundColor : UIColor( red: 163/255, green: 161/255, blue:161/255, alpha: 1.0 )], range: NSMakeRange(0, attributedText.length))
-        }
-        
-        if(color == "valid"){
-            border.borderColor = blue
-            attributedText.setAttributes([NSAttributedString.Key.foregroundColor : UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 )], range: NSMakeRange(0, attributedText.length))
-        }
-        
-        border.frame = CGRect(origin: CGPoint(x: 0,y :self.frame.size.height - borderWidth), size: CGSize(width: self.frame.size.width, height: self.frame.size.height))
-        border.borderWidth = borderWidth
-        
+        attributedText.setAttributes([NSAttributedString.Key.foregroundColor : switchedColor!], range: NSMakeRange(0, attributedText.length))
+        border.borderColor = switchedColor?.cgColor
+        border.frame = CGRect(origin: CGPoint(x: 0,y :self.frame.size.height - 2.0), size: CGSize(width: self.frame.size.width, height: self.frame.size.height))
+        border.borderWidth = 2.0
         imageView.image = image
+        
+        self.preserveCursorPosition(withChanges: { _ in
+            self.attributedText = attributedText
+            return .preserveCursor
+        })
         
         self.layer.addSublayer(border)
         self.layer.masksToBounds = true
         self.leftView = imageView
         self.leftViewMode = .always
-        self.attributedText = attributedText
-    
     }
     
 }

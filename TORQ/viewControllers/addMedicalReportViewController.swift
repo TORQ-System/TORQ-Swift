@@ -17,8 +17,10 @@ class addMedicalReportViewController: UIViewController {
     @IBOutlet weak var errorDisability: UILabel!
     @IBOutlet weak var errorAllergy: UILabel!
     @IBOutlet weak var errorPrescribedMedication: UILabel!
-    @IBOutlet weak var addButton: UIButton!
-    @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var buttonView: UIView!
+    @IBOutlet weak var roundGradientView: UIView!
+    
+    
     
     //MARK: - Variables
     var ref = Database.database().reference()
@@ -29,6 +31,7 @@ class addMedicalReportViewController: UIViewController {
     var userDisability : String?
     var userAllergy : String?
     var userPrescribedMedication : String?
+    var tap = UITapGestureRecognizer()
     
     //MARK: - Constants
     let redUIColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
@@ -46,7 +49,7 @@ class addMedicalReportViewController: UIViewController {
     
     // picker view variables
     var blood_types = [
-        "Please Select",
+        "None",
         "A+",
         "A-",
         "B+",
@@ -65,6 +68,12 @@ class addMedicalReportViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureInputs()
+        configureButtonView()
+        configureTapGesture()
+        
+    }
+    func configureInputs(){
         //hide error labels
         errorBloodType.alpha = 0
         errorChronicDisease.alpha = 0
@@ -75,53 +84,61 @@ class addMedicalReportViewController: UIViewController {
         // set borders
         bloodTypeTextField.setBorder(color: "default", image: UIImage(named: "bloodDefault")!)
         chronicDisease.setBorder(color: "default", image: UIImage(named: "bandageDefault")!)
+        chronicDisease.clearsOnBeginEditing = false
         disability.setBorder(color: "default", image: UIImage(named: "disabilityDefault")!)
+        disability.clearsOnBeginEditing = false
         allergy.setBorder(color: "default", image: UIImage(named: "heartDefault")!)
+        allergy.clearsOnBeginEditing = false
         prescribedMedication.setBorder(color: "default", image: UIImage(named: "pillDefault")!)
+        prescribedMedication.clearsOnBeginEditing = false
         
         // set up blood type picker view
         setUpBloodTypePickerView()
-        configureKeyboard()
     }
-    
-    //MARK: - Overriden Functions
-    
-    func configureKeyboard(){
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-        self.view!.addGestureRecognizer(tap)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardwillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    @objc func hideKeyboard(){
-        self.view.endEditing(true)
-    }
-    
-    @objc func keyboardwillShow(notification: NSNotification){
-        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue{
-            let keyboardHieght = keyboardFrame.cgRectValue.height
-            let bottomSpace = self.view.frame.height - (self.addButton.frame.origin.y + addButton.frame.height + 20)
-            self.view.frame.origin.y -= keyboardHieght - bottomSpace
+    func configureButtonView(){
+            roundGradientView.layer.cornerRadius = 20
+            roundGradientView.layer.shouldRasterize = true
+            roundGradientView.layer.rasterizationScale = UIScreen.main.scale
             
+            let gradient: CAGradientLayer = CAGradientLayer()
+            
+            gradient.cornerRadius = 20
+            gradient.colors = [
+                UIColor(red: 0.887, green: 0.436, blue: 0.501, alpha: 1).cgColor,
+                UIColor(red: 0.75, green: 0.191, blue: 0.272, alpha: 1).cgColor
+            ]
+            
+            gradient.locations = [0, 1]
+            gradient.startPoint = CGPoint(x: 0, y: 0)
+            gradient.endPoint = CGPoint(x: 1, y: 1)
+            gradient.frame = roundGradientView.bounds
+            roundGradientView.layer.insertSublayer(gradient, at: 0)
+    }
+    func configureTapGesture(){
+            tap = UITapGestureRecognizer(target: self, action: #selector(self.addClicked(_:)))
+            tap.numberOfTapsRequired = 1
+            tap.numberOfTouchesRequired = 1
+            buttonView.addGestureRecognizer(tap)
+            buttonView.isUserInteractionEnabled = true
         }
+    
+    func configureLayout(){
+       
+//        addButton.layer.cornerRadius = 20
+//        addButton.layer.masksToBounds = true
         
+        // back button
+//        backButton.roundCorners( [.topRight, .bottomRight], radius: 8)
+//        backButton.layer.masksToBounds = true
     }
     
-    @objc func keyboardWillHide(){
-        self.view.frame.origin.y = 0
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
     
     func setUpBloodTypePickerView(){
         pickerView.delegate = self
         pickerView.dataSource = self
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
-        let btnDone = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(closePicker))
+        let btnDone = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(closePicker))
         toolbar.setItems([btnDone], animated: true)
         
         bloodTypeTextField.inputView = pickerView
@@ -143,80 +160,52 @@ class addMedicalReportViewController: UIViewController {
     // validate form entries
     func validateFields() -> [String: String] {
         
-        var errors = ["Empty":"","bloodtype":"", "chronicDisease":"","disability":"","allergy":"","prescribedMedication":"","emptyCD":"","emptyDisability":"","emptyallergy":"","emptyPM":""]
+        var errors = ["Empty":"","bloodtype":"", "chronicDisease":"","disability":"","allergy":"","prescribedMedication":""]
+        
         // CASE all fields were empty
-        if (bloodTypeTextField.text == "" || bloodTypeTextField.text == "Please Select" || bloodTypeTextField.text == nil ) && chronicDisease.text == "" && disability.text == "" && allergy.text == "" && prescribedMedication.text == "" {
+        if (bloodTypeTextField.text == "" || bloodTypeTextField.text == "None" || bloodTypeTextField.text == nil ) && chronicDisease.text == "" && disability.text == "" && allergy.text == "" && prescribedMedication.text == "" {
             errors["Empty"] = "Please fill one of the fields or return"
         }
-        // CASE: user selected "Please select option "
-        if bloodTypeTextField.text == "Please Select" {
-            errors["bloodtype"] = "Please select a valid blood type"
-        }
-        //        // CASE: Chronic dieses contain numbers or any unvalid characters
-        //        if !chronicDisease.text!.isValidWord {
-        //            errors["chronicDisease"] = "Disease cannot contain numbers or special characters"
-        //        }
+//        // CASE: user selected "Please select option "
+//        if bloodTypeTextField.text == "Please Select" {
+//            errors["bloodtype"] = "Please select a valid blood type"
+//        }
         // since there are no chronic disease less than 2 characters
         if chronicDisease.text!.count == 1 {
             errors["chronicDisease"] = "Chronic Disease must be greater than two characters"
         }
-        else if !chronicDisease.text!.isValidSequence && chronicDisease.text != "" {
+        else if chronicDisease.text != "" && !chronicDisease.text!.trimWhiteSpace().isValidSequence {
             errors["chronicDisease"] = "Please seperate each disease with comma"
         }
-        // just for changing border to its default color
-        else if chronicDisease.text == nil || chronicDisease.text == "" {
-            errors["emptyCD"] = "Empty Chronic Disease"
-        }
         
-        //        // CASE: Disability contain numbers or any unvalid characters
-        //        if !disability.text!.isValidWord {
-        //            errors["disability"] = "Disabilities cannot contain numbers"
-        //        }
         // since there are no Disability less than 2 characters
         if disability.text!.count == 1{
             errors["disability"] = "Disabilities must be greater than two characters"
         }
-        else if !disability.text!.isValidSequence && disability.text != "" {
+        else if disability.text != "" && !disability.text!.trimWhiteSpace().isValidSequence {
             errors["disability"] = "Please seperate each disability with comma"
         }
-        else if disability.text == nil || disability.text == ""{
-            errors["emptyDisability"] = "Empty Disability"
-        }
-        
-        //        // CASE: Allergy contain numbers or any unvalid characters
-        //        if !allergy.text!.isValidWord {
-        //            errors["allergy"] = "Allergies cannot contain numbers"
-        //        }
+
         // since there are no allergies less than 2 characters
         if allergy.text!.count == 1{
             errors["allergy"] = "Allergies must be greater than two characters"
         }
-        else if !allergy.text!.isValidSequence && allergy.text != "" {
+        else if allergy.text != "" && !allergy.text!.trimWhiteSpace().isValidSequence {
             errors["allergy"] = "Please seperate each allergy with comma"
         }
-        else if allergy.text == nil || allergy.text == ""{
-            errors["emptyallergy"] = "Empty Allergy"
-        }
         
-        //        // CASE: prescribed Medication contain numbers or any unvalid characters
-        //        if !prescribedMedication.text!.isValidWord {
-        //            errors["prescribedMedication"] = "Prescribed medication cannot contain numbers"
-        //        }
         // since there are no prescribed Medications less than 2 characters
         if prescribedMedication.text!.count == 1{
             errors["prescribedMedication"] = "Medication must be greater than two characters"
         }
-        else if !prescribedMedication.text!.isValidSequence && prescribedMedication.text != "" {
+        else if prescribedMedication.text != "" && !prescribedMedication.text!.trimWhiteSpace().isValidSequence {
             errors["prescribedMedication"] = "Please seperate each medication with comma"
-        }
-        else if prescribedMedication.text == nil || prescribedMedication.text == "" {
-            errors["emptyPM"] = "Empty Prescribed Medication"
         }
         
         return errors
     }
     // go to medical report screen after success addition
-    @IBAction func goToMedicalReportScreen(_ sender: Any) {
+    @objc func addClicked(_ sender: UITapGestureRecognizer) {
         let errors = validateFields()
         
         if errors["bloodtype"] != ""  || errors["chronicDisease"] != "" || errors["chronicDisease"] != "" || errors["disability"] != "" || errors["allergy"] != "" || errors["prescribedMedication"] != "" {
@@ -232,7 +221,7 @@ class addMedicalReportViewController: UIViewController {
             return
         }
         guard errors["Empty"] == "" else {
-            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "Please make sure you entered all fields correctly", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: errors["Empty"]!, color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
             return
         }
         // if Chronic Disease has an error
@@ -283,7 +272,7 @@ class addMedicalReportViewController: UIViewController {
         
         
         //CASE: empty Blood Type
-        if bloodTypeTextField.text == nil || bloodTypeTextField.text == ""  {
+        if bloodTypeTextField.text == nil || bloodTypeTextField.text == "" || bloodTypeTextField.text == "None" {
             // not mandatory then set it to empty
             userBloodType = "-"
         }
@@ -325,7 +314,6 @@ class addMedicalReportViewController: UIViewController {
             userPrescribedMedication = prescribedMedication.text!.trimWhiteSpace()
         }
         
-        
         //3- create user medical report info
         let MedicalReport: [String: Any] = [
             "user_id": usrID!,
@@ -345,7 +333,7 @@ class addMedicalReportViewController: UIViewController {
         alertView.addButton("Got it!", backgroundColor: self.blueUIColor){
             self.goToHomeScreen()
         }
-        alertView.showCustom("Medical Report is Updated!", subTitle: "You can delete it anytime from your medical report page.", color: self.blueUIColor, icon: self.alertSuccessIcon!, animationStyle: SCLAnimationStyle.topToBottom)
+        alertView.showCustom("Success!", subTitle: "Your medical report has been added successfully", color: self.blueUIColor, icon: self.alertSuccessIcon!, animationStyle: SCLAnimationStyle.topToBottom)
     }
     
     @IBAction func bloodTypeDidEnd(_ sender: UITextField) {
@@ -369,7 +357,7 @@ class addMedicalReportViewController: UIViewController {
             errorChronicDisease.text = errors["chronicDisease"]!
             errorChronicDisease.alpha = 1
         }
-        else if errors["emptyCD"] != ""{
+        else if chronicDisease.text == nil || chronicDisease.text == ""{
             chronicDisease.setBorder(color: "default", image: UIImage(named: "bandageDefault")!)
             errorChronicDisease.alpha = 0
         }
@@ -387,7 +375,7 @@ class addMedicalReportViewController: UIViewController {
             errorDisability.text = errors["disability"]!
             errorDisability.alpha = 1
         }
-        else if errors["emptyDisability"] != "" {
+        else if disability.text == nil || disability.text == "" {
             disability.setBorder(color: "default", image: UIImage(named: "disabilityDefault")!)
             errorDisability.alpha = 0
         }
@@ -404,7 +392,7 @@ class addMedicalReportViewController: UIViewController {
             allergy.setBorder(color: "error", image: UIImage(named: "heartError")!)
             errorAllergy.text = errors["allergy"]!
             errorAllergy.alpha = 1
-        } else if errors["emptyallergy"] != "" {
+        } else if allergy.text == nil || allergy.text == "" {
             allergy.setBorder(color: "default", image: UIImage(named: "heartDefault")!)
             errorAllergy.alpha = 0
         }
@@ -421,7 +409,7 @@ class addMedicalReportViewController: UIViewController {
             prescribedMedication.setBorder(color: "error", image: UIImage(named: "pillError")!)
             errorPrescribedMedication.text = errors["prescribedMedication"]!
             errorPrescribedMedication.alpha = 1
-        } else if errors["emptyPM"] != ""{
+        } else if prescribedMedication.text == nil || prescribedMedication.text == "" {
             prescribedMedication.setBorder(color: "default", image: UIImage(named: "pillDefault")!)
             errorPrescribedMedication.alpha = 0
         }
@@ -460,5 +448,13 @@ extension addMedicalReportViewController: UITextFieldDelegate{
         textField.resignFirstResponder()
         return true;
     }
+}
+extension UIButton {
+    func roundCorners(_ corners:UIRectCorner, radius: CGFloat) {
+    let path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+    let mask = CAShapeLayer()
+    mask.path = path.cgPath
+    self.layer.mask = mask
+  }
 }
 

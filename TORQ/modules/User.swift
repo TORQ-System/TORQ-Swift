@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct User {
+struct User: Hashable {
     var dateOfBirth: String
     var email: String
     var fullName: String

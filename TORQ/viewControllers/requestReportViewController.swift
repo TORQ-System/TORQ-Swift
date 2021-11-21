@@ -1,6 +1,7 @@
 import UIKit
 import FirebaseDatabase
-
+import MapKit
+import CoreLocation
 class requestReportViewController: UIViewController {
     
     //MARK: - @IBOutlet
@@ -18,65 +19,120 @@ class requestReportViewController: UIViewController {
     @IBOutlet weak var prosseing0: UIButton!
     @IBOutlet weak var scroolview: UIScrollView!
     @IBOutlet weak var Gender: UILabel!
+    @IBOutlet weak var backgroundView: UIView!
     
+    @IBOutlet weak var map: MKMapView!
     //MARK: - Variables
     var userMedicalReportID : String!
     var long : Double!
     var lang : Double!
     var time : String!
+    var Requestid : String!
+    var statusid : String!
     var ref = Database.database().reference()
     
     // MARK: - Overriden Functions
     override func viewDidLoad() {
         super.viewDidLoad()
         contetnt()
+        if (statusid == "1"){
+            
+           print("try")
+                self.prosseing0.alpha = 0
+            
+        }
         configureView()
+        configureGradient()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+
+        print(statusid as Any)
+        if (statusid == "1"){
+           
+                self.prosseing0.alpha = 0
+            
+        }
+        
+                                                                     
+                                                                     }
     
     
     //MARK: - Functions
     func configureView(){
-        scroolview.layer.cornerRadius = 20
-        scroolview.layer.shadowColor = UIColor.black.cgColor
-        scroolview.layer.shadowOpacity = 1
-        scroolview.layer.shadowOffset = CGSize(width: 0, height: 5)
-        scroolview.layer.shadowRadius = 10
-        scroolview.layer.shouldRasterize = true
-        prosseing0.layer.cornerRadius = 15
-        prosseing0.layer.masksToBounds = true
+      scroolview.layer.cornerRadius = 20
+//        scroolview.layer.shadowColor = UIColor.black.cgColor
+//        scroolview.layer.shadowOpacity = 1
+//        scroolview.layer.shadowOffset = CGSize(width: 0, height: 5)
+//        scroolview.layer.shadowRadius = 10
+//        scroolview.layer.shouldRasterize = true
+              prosseing0.layer.cornerRadius = 15
+//        prosseing0.layer.masksToBounds = true
         location_report.backgroundColor = .white
         location_report.layer.cornerRadius = 25
     }
+    @objc func goToLocation (sender:CustomTapGestureRecognizer) {
+           let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+           let vc = storyboard.instantiateViewController(identifier: "viewLocationViewController") as! viewLocationViewController
+           vc.latitude = sender.lang
+           vc.longitude = sender.long
+           vc.modalPresentationStyle = .fullScreen
+           self.present(vc, animated: true, completion: nil)
+       }
+
+    // create a custom class for UITapGestureRecognizer
+    class CustomTapGestureRecognizer: UITapGestureRecognizer {
+        var long: Double?
+        var lang: Double?
+    }
+    //MARK: - Functions
+      func configureGradient() {
+          backgroundView.layer.cornerRadius = 40
+                  backgroundView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+                  backgroundView.layer.shouldRasterize = true
+                  backgroundView.layer.rasterizationScale = UIScreen.main.scale
+                  
+                  let gradient: CAGradientLayer = CAGradientLayer()
+                  
+                  gradient.colors = [
+                      UIColor(red: 0.887, green: 0.436, blue: 0.501, alpha: 1).cgColor,
+                      UIColor(red: 0.75, green: 0.191, blue: 0.272, alpha: 1).cgColor
+                  ]
+                  
+                  gradient.locations = [0, 1]
+                  gradient.startPoint = CGPoint(x: 0, y: 0)
+                  gradient.endPoint = CGPoint(x: 1, y: 1)
+                  gradient.frame = backgroundView.layer.frame
+                  
+                  backgroundView.layer.insertSublayer(gradient, at: 0)
+          
+      }
     
     func contetnt(){
         //location
+        map.layer.cornerRadius = map.frame.size.height / 2
+       
+        map.layer.shadowOpacity = 0.3
+        map.layer.shadowOffset = CGSize(width: 5, height: 5)
+map.layer.shadowRadius = 10
+        let pin = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(lang), longitude: CLLocationDegrees(long)))
+        
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = pin.coordinate
+        annotation.title = ""
+        let coordinateRegion = MKCoordinateRegion(center: pin.coordinate, latitudinalMeters: 12000, longitudinalMeters: 12000)
+        map.setRegion(coordinateRegion, animated: true)
+        map.addAnnotation(annotation)
+        // if user taps on map
+        
+        let tap = CustomTapGestureRecognizer(target: self, action: #selector(goToLocation(sender:)))
+        tap.lang = lang
+        tap.long = long
+        map.addGestureRecognizer(tap)
         location_report.addTarget(self, action: #selector(findloc(sender: )), for: .touchUpInside)
-        // time format
-//        let find = time.firstIndex(of: "+") ?? time.endIndex
-//        let find2 = time[..<find]
-//        let start = find2.index(find2.startIndex, offsetBy: 0)
-//        let end = find2.index(find2.startIndex, offsetBy: 10)
-//        let range = start...end
-//
-//        let newString = String(find2[range])
-//        let start1 = find2.index(find2.startIndex, offsetBy: 10)
-//        let end1 = find2.index(find2.startIndex, offsetBy:18)
-//        let range1 = start1...end1
-//        let newString1 = String(find2[range1])
+
         data_timeRE.text = time
-        ///
-        //        ref.child("User").child(UID!).observe(.value, with: {(snapshot) in
-        //                   if let dec = snapshot.value as? [String :Any]
-        //                   {
-        //                    let Fname = dec["firstName"] as! String
-        //                       let lname = dec["lastName"] as! String
-        //                       print("hi\(Fname)")
-        //                       self.name_report.text = Fname+" "+lname
-        //                       self.namerequest.text = "\(Fname)'s Request"
-        //
-        //                   }
-        //
-        //               })
+    
         
         
         ref.child("User").child(userMedicalReportID!).observe(.value, with: {(snapshot) in
@@ -131,6 +187,7 @@ class requestReportViewController: UIViewController {
                     print("1-\(try3)")
                     print("1-\(try4)")
                 }
+                
                 //  self.name_report.text = Fname+" "+lname
                 //   self.namerequest.text = "\(Fname)'s Request"
                 //o
@@ -160,8 +217,33 @@ class requestReportViewController: UIViewController {
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(identifier: "hospitalsViewController") as! hospitalsViewController
         vc.userMedicalReportID = String(userMedicalReportID)
+        vc.RequestID = String(Requestid)
         self.present(vc, animated: true, completion: nil)
     }
     
+    
+}
+//MARK: - Map View Delegate Extension
+extension requestReportViewController: MKMapViewDelegate{
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard !(annotation is MKUserLocation)else{
+            return nil
+        }
+        var pin = mapView.dequeueReusableAnnotationView(withIdentifier: "accidentPin")
+        if pin == nil {
+            pin = MKAnnotationView(annotation: annotation, reuseIdentifier: "accidentPin")
+            pin?.canShowCallout = true
+            pin?.image = UIImage(named: "Vector")
+        }else{
+            pin?.annotation = annotation
+        }
+
+        
+        
+        
+        return pin
+    }
+
     
 }

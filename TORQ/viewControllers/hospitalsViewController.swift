@@ -14,6 +14,8 @@ class hospitalsViewController: UIViewController ,UITableViewDelegate ,UITableVie
     var selhealth = "None"
     var numb = -1
     var userMedicalReportID : String!
+    var RequestID : String!
+
     var text:String = ""
     var rowDefaultSelected: Int = 0
     var ref = Database.database().reference()
@@ -114,6 +116,7 @@ class hospitalsViewController: UIViewController ,UITableViewDelegate ,UITableVie
     }
     
     @IBAction func confirmPressed(_ sender: Any) {
+        print("pressed")
         if selhealth == "None"{
             print(selhealth)
             SCLAlertView(appearance: self.apperance).showCustom("Select a Hospital", subTitle: "You must select a hospital to process the request or cancel." , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
@@ -121,10 +124,10 @@ class hospitalsViewController: UIViewController ,UITableViewDelegate ,UITableVie
         else {
             ref.child("Request").queryOrdered(byChild:"user_id").observe(.childAdded, with: {(snapshot) in
                 if let dec = snapshot.value as? [String :Any]{
-                    if (dec["user_id"] as! String == self.userMedicalReportID!){
+                    if (dec["request_id"] as? String == self.RequestID && dec["status"]as! String == "0"){
                         let snapshotKey = snapshot.key
                         self.ref.child("Request").child(snapshotKey).updateChildValues(["status": "1"])
-                        self.ref.child("processingRequest").childByAutoId().setValue(["healthcare":self.selhealth,"Rquest_id":dec["request_id"] as! String])
+                        self.ref.child("ProcessingRequest").child(self.selhealth).childByAutoId().setValue(["Rquest_id":dec["request_id"] as! String? ,"User_id": self.userMedicalReportID])
                         
                         let alertView = SCLAlertView(appearance: self.apperanceWithoutClose)
                         

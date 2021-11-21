@@ -10,27 +10,38 @@ class addEmergencyContactViewController: UIViewController {
     //MARK: - @IBOutlets
     @IBOutlet weak var emergencyContactFullName: UITextField!
     @IBOutlet weak var emergencyContactPhoneNumber: UITextField!
-    @IBOutlet weak var message: UITextField!
     @IBOutlet weak var errorFullName: UILabel!
     @IBOutlet weak var errorPhoneNumber: UILabel!
     @IBOutlet weak var errorRelationship: UILabel!
     @IBOutlet weak var errorMessage: UILabel!
     @IBOutlet weak var relationTextField: UITextField!
-    @IBOutlet weak var addButton: UIButton!
+    @IBOutlet weak var buttonView: UIView!
+    @IBOutlet weak var roundGradientView: UIView!
+    @IBOutlet weak var msgTextView: UITextView!
     
     //MARK: - Variables
+    
+    // DB reference
     var ref = Database.database().reference()
+    // current user varibles
     var usrID = Auth.auth().currentUser?.uid
     var usrName : String?
-    var userInfo: User?
-    var eContact = [emergencyContact]()
+    var currentUserPhone : String?
+    // array
+    var usersArray: [userInfo] = []
+    // get passed emergency contacts array
+    var emergencyContactArray: [emergencyContact] = []
+    // emergency contact varibles
     var fullName: String?
     var phoneNumber: String?
     var emergencyMessage: String?
     var selectedRelationship: String?
     var relationship: String?
     var recieverID : String?
-    var phoneNumExists : String?
+    
+    // tap gesture variable
+     var tap = UITapGestureRecognizer()
+    
     // picker view variables
     var relationships = [
         "Please Select",
@@ -46,8 +57,7 @@ class addEmergencyContactViewController: UIViewController {
     ]
     var selectedRow = 0
     var pickerView = UIPickerView()
-    var phoneMatch : String?
-    
+   
     //MARK: - Constants
     let screenWidth = UIScreen.main.bounds.width-10
     let screenHeight = UIScreen.main.bounds.height/2
@@ -65,14 +75,20 @@ class addEmergencyContactViewController: UIViewController {
         hideWhenBackgroundViewIsTapped: true)
     
     
-    
     //MARK: - Overriden Functions
     override func viewDidLoad() {
         super.viewDidLoad()
+       
+        getUserInfo()
+        configureInputs()
+        configureButtonView()
+        configureTapGesture()
         
-        getUserName()
-        
-        
+    
+    }
+    //MARK: - Functions
+    
+    func configureInputs(){
         // hide the error message and add the border
         errorFullName.alpha = 0
         errorPhoneNumber.alpha = 0
@@ -81,59 +97,49 @@ class addEmergencyContactViewController: UIViewController {
         
         // Full Name border
         emergencyContactFullName.setBorder(color: "default", image: UIImage(named: "personDefault")!)
+        emergencyContactFullName.clearsOnBeginEditing = false
         // phone border
         emergencyContactPhoneNumber.setBorder(color: "default", image: UIImage(named: "phoneDefault")!)
+        emergencyContactPhoneNumber.clearsOnBeginEditing = false
         // relationship border
         relationTextField.setBorder(color: "default", image: UIImage(named: "relationshipDefault")!)
-        
         // picker view
         setUpRelationshipPickerView()
-        
-        // message border
-        message.setBorder(color: "default", image: UIImage(named: "messageDefault")!)
-        configureKeyboardNotification()
+        // msg text view
+        configureMsgTextView()
     }
-    //MARK: - Functions
-    
-    
-    func configureKeyboardNotification(){
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-        self.view!.addGestureRecognizer(tap)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardwillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    @objc func hideKeyboard(){
-        self.view.endEditing(true)
-        
-    }
-    
-    @objc func keyboardwillShow(notification: NSNotification){
-        
-        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue{
-            let keyboardHieght = keyboardFrame.cgRectValue.height
-            let bottomSpace = self.view.frame.height - (addButton.frame.origin.y + addButton.frame.height)
-            self.view.frame.origin.y -= keyboardHieght - bottomSpace
+    func configureButtonView(){
+            roundGradientView.layer.cornerRadius = 20
+            roundGradientView.layer.shouldRasterize = true
+            roundGradientView.layer.rasterizationScale = UIScreen.main.scale
             
+            let gradient: CAGradientLayer = CAGradientLayer()
+            
+            gradient.cornerRadius = 20
+            gradient.colors = [
+                UIColor(red: 0.887, green: 0.436, blue: 0.501, alpha: 1).cgColor,
+                UIColor(red: 0.75, green: 0.191, blue: 0.272, alpha: 1).cgColor
+            ]
+            
+            gradient.locations = [0, 1]
+            gradient.startPoint = CGPoint(x: 0, y: 0)
+            gradient.endPoint = CGPoint(x: 1, y: 1)
+            gradient.frame = roundGradientView.bounds
+            roundGradientView.layer.insertSublayer(gradient, at: 0)
+    }
+    func configureTapGesture(){
+            tap = UITapGestureRecognizer(target: self, action: #selector(self.addClicked(_:)))
+            tap.numberOfTapsRequired = 1
+            tap.numberOfTouchesRequired = 1
+            buttonView.addGestureRecognizer(tap)
+            buttonView.isUserInteractionEnabled = true
         }
-        
-    }
-    
-    @objc func keyboardWillHide(){
-        self.view.frame.origin.y = 0
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
     func setUpRelationshipPickerView(){
         pickerView.delegate = self
         pickerView.dataSource = self
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
-        let btnDone = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(closePicker))
+        let btnDone = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(closePicker))
         toolbar.setItems([btnDone], animated: true)
         
         relationTextField.inputView = pickerView
@@ -143,21 +149,50 @@ class addEmergencyContactViewController: UIViewController {
         relationTextField.text = relationships[selectedRow]
         view.endEditing(true)
     }
-    
-    // getting current user name
-    func getUserName(){
-        ref.child("User").child(usrID!).observeSingleEvent(of: .value , with: { snapshot in
-            
-            guard let dictionary = snapshot.value as? [String:Any] else {
-                return
-            }
-            let user = User(dateOfBirth: dictionary["dateOfBirth"] as! String, email: dictionary["email"] as! String, fullName: dictionary["fullName"] as! String, gender: dictionary["phone"] as! String, nationalID: dictionary["nationalID"] as! String, password: dictionary["password"] as! String, phone: dictionary["phone"] as! String)
-            self.userInfo = user
-            self.usrName = user.fullName
-            self.phoneMatch = user.phone
-        })
-        //        print(usrName as Any)
+    func configureMsgTextView(){
+        // disable scrolling
+        msgTextView.isScrollEnabled = false
+        // Round the corners.
+        msgTextView.layer.masksToBounds = true
+
+        // Set the size of the roundness.
+        msgTextView.layer.cornerRadius = 10
+
+        // Set the thickness of the border.
+        msgTextView.layer.borderWidth = 1.5
+
+        // Set the border color to gray.
+        msgTextView.layer.borderColor = UIColor( red: 163/255, green: 161/255, blue:161/255, alpha: 1.0 ).cgColor
+        
+        // set up placeholder
+        msgTextView.text = "Message (Optional)"
+        msgTextView.textColor = UIColor(red: 0, green: 0, blue: 0.0980392, alpha: 0.22)
+        
+        //  set up padding
+        msgTextView.textContainerInset = UIEdgeInsets(top: 10,left: 25,bottom: 10,right: 5);
     }
+    // getting user info from User node in DB and append it to usersArray
+    func getUserInfo(){
+        ref.child("User").observe(.value) { snapshot in
+            for user in snapshot.children{
+                let obj = user as! DataSnapshot
+                let userID = obj.key
+                let phone = obj.childSnapshot(forPath:  "phone").value as! String
+                let fullName = obj.childSnapshot(forPath:  "fullName").value as! String
+                let user = userInfo(userID: userID, phone: phone)
+            
+                self.usersArray.append(user)
+//                print("Users Array:\(self.usersArray)")
+                
+                if userID == self.usrID {
+                    self.currentUserPhone = phone
+                    self.usrName = fullName
+                }
+                 
+            }
+        }
+    }
+    
     
     // should go to emergency contacts screen
     @IBAction func back(_ sender:Any){
@@ -167,22 +202,19 @@ class addEmergencyContactViewController: UIViewController {
     // validate form entries
     func validateFields() -> [String: String] {
         
-        var errors = ["Empty":"","fullName":"", "phone":"","relationship":"","msg":"","phoneDNE":"","phoneExists":"","phoneMatch":""]
+        var errors = ["Empty":"","fullName":"", "phone":"","relationship":"","msg":""]
         
         // CASE: empty fields
-        if emergencyContactFullName.text == "" && emergencyContactPhoneNumber.text == "" && selectedRow == 0 {
+        if emergencyContactFullName.text?.trimWhiteSpace() == "" && emergencyContactPhoneNumber.text == "" && selectedRow == 0 {
             errors["Empty"] = "Empty Fields"
         }
         
         //CASE: empty or invalid FULL NAME
-        if emergencyContactFullName.text == nil || emergencyContactFullName.text == "" {
+        if emergencyContactFullName.text?.trimWhiteSpace() == nil || emergencyContactFullName.text == "" {
             errors["fullName"] = "Full Name cannot be empty"
         }
-        else if !emergencyContactFullName.text!.isValidName{
+        else if !emergencyContactFullName.text!.trimWhiteSpace().isValidName{
             errors["fullName"] = "Full Name should contain two words, and no numbers"
-        }
-        else if emergencyContactFullName.text!.count <= 2{
-            errors["fullName"] = "Full Name must be greater than two characters"
         }
         
         // CASE: empty or invalid PHONE NUMBER
@@ -196,75 +228,65 @@ class addEmergencyContactViewController: UIViewController {
         if selectedRow == 0 {
             errors["relationship"] = "Relationship cannot be empty"
         }
-        // CASE: msg greater than 80 characters
-        if message.text!.count >= 80 {
-            errors["msg"] = "message is too long, try to shorten it"
+        // CASE: msg greater than 135 characters
+        if msgTextView.text!.count >= 135 {
+            errors["msg"] = "message is too long, try shortening it"
         }
         
-        // Emergency phone match current user phone
-        if phoneMatch == emergencyContactPhoneNumber.text {
-            errors["phoneMatch"] = "Emergency phone cannot be the same as yours"
-        }
-        
-        // check of emergency contact number exists in user table in the database and retrieve its info
-        ref.child("User").queryOrdered(byChild: "phone").queryEqual(toValue: emergencyContactPhoneNumber.text).observeSingleEvent(of: .value , with: { snapshot in
-            guard let dictionary = snapshot.value as? [String:Any] else { return }
-            dictionary.forEach({ (key , value) in
-                self.recieverID = key
-                //                 print("Key \(key), value \(value)")
-            })
-        })
-        if recieverID == "" || recieverID == nil {
-            errors["phoneDNE"] = "The phone number must be registered in TORQ"
-        }
-        ref.child("EmergencyContact").observe(.value) { snapshot in
-            for contact in snapshot.children{
-                let obj = contact as! DataSnapshot
-                let relation = obj.childSnapshot(forPath: "relation").value as! String
-                let contactId = 0
-                let name = obj.childSnapshot(forPath: "name").value as! String
-                let phone = obj.childSnapshot(forPath: "phone").value as! String
-                let senderID = obj.childSnapshot(forPath: "sender").value as! String
-                let receiverID = obj.childSnapshot(forPath: "reciever").value as! String
-                let sent = obj.childSnapshot(forPath: "sent").value as! String
-                let msg = obj.childSnapshot(forPath: "msg").value as! String
-                //create a EC object
-                let emergencyContact = emergencyContact(name: name, phone_number: phone, senderID:senderID, recieverID: receiverID, sent: sent, contactID: contactId, msg: msg, relation: relation)
-                //                            print(emergencyContact.getPhoneNumber())
-                //                            print(emergencyContact.getSenderID())
-                
-                if (emergencyContact.getSenderID()) == self.usrID && (emergencyContact.getPhoneNumber() == self.emergencyContactPhoneNumber.text){
-                    self.phoneNumExists = emergencyContact.getPhoneNumber()
-                    //                                print(emergencyContact.getPhoneNumber())
-                    //                                print(emergencyContact.getSenderID())
-                    errors["phoneExists"] = "Phone number have been already added"
-                }
-                
-            }
-        }
-        if phoneNumExists != nil {
-            errors["phoneExists"] = "Phone number have been already added"
-        }
         return errors
     }
     
+    func validateEmergencyPhoneNumber()-> [String: String]{
+        var errors = ["phoneMatch":"","phoneDNE":"","phoneExists":""]
+        
+        // CASE1: Emergency phone match current user phone
+        for user in usersArray {
+            if user.getUserID() == usrID {
+                if emergencyContactPhoneNumber.text == currentUserPhone {
+                    errors["phoneMatch"] = "Emergency phone cannot be the same as yours"
+                }
+            }
+        }
+        
+        // CASE2: checking if emergency contact number exists in user table in the database
+        for user in usersArray {
+            if user.getPhone() == emergencyContactPhoneNumber.text && user.getPhone() != currentUserPhone {
+                recieverID = user.getUserID()
+                print("recieverID: \(recieverID!)")
+            }
+        }
+        
+        if recieverID == "" || recieverID == nil {
+            errors["phoneDNE"] = "The phone number must be registered in TORQ"
+        }
     
-    func goToHomeScreen() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "userHomeViewController") as! userHomeViewController
-        vc.userEmail = Auth.auth().currentUser?.email
-        vc.userID = usrID
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true, completion: nil)
+        // CASE3: check if user have added phone number before (to ensure there are no duplicates)
+        for ec in emergencyContactArray {
+                if ec.getSenderID() == usrID && ec.getPhoneNumber() == emergencyContactPhoneNumber.text  {
+                    errors["phoneExists"] = "Phone number have been already added"
+                    recieverID = ""
+            }
+          
+        }
+
+        
+        return errors
+        
     }
-    
-    
-    // Go to Emergency Contatcs View After successfull addition
-    @IBAction func goToEmergencyContactsScreen(_ sender: Any) {
+    private func textLimit(existingText: String?,
+                           newText: String,
+                           limit: Int) -> Bool {
+        let text = existingText ?? ""
+        let isAtLimit = text.count + newText.count <= limit
+        return isAtLimit
+    }
+    // Go to Emergency Contatcs View After successful addition
+    @objc func addClicked(_ sender: UITapGestureRecognizer) {
         
         let errors = validateFields()
+        let phone_errors = validateEmergencyPhoneNumber()
         
-        if(errors["fullName"] != "" || errors["phone"] != "" || errors["relationship"] != "" || errors["msg"] != "") {
+        if(errors["fullName"] != "" || errors["phone"] != "" || errors["relationship"] != "" || errors["msg"] != "" ) {
             SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "Make sure you entered all fields correctly" , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
         }
         
@@ -288,8 +310,6 @@ class addEmergencyContactViewController: UIViewController {
             
             relationTextField.setBorder(color: "error", image: UIImage(named: "relationshipError")!)
             
-            // show alert
-            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "Make sure you entered all fields correctly" , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
             return
         }
         
@@ -309,16 +329,22 @@ class addEmergencyContactViewController: UIViewController {
             errorPhoneNumber.alpha = 1
             return
         }
+        // chack if phone number equals current user number
+        guard phone_errors["phoneMatch"] == "" else {
+            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: phone_errors["phoneMatch"]! , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+            return
+        }
         // phone number is not registered in TORQ
-        guard errors["phoneDNE"] == "" else {
-            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: errors["phoneDNE"]! , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+        guard phone_errors["phoneDNE"] == "" else {
+            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: phone_errors["phoneDNE"]! , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
             return
         }
         // Phone has been added before
-        guard errors["phoneExists"] == "" else {
-            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: errors["phoneExists"]! , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
+        guard phone_errors["phoneExists"] == "" else {
+            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: phone_errors["phoneExists"]! , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
             return
         }
+      
         // relationship error
         guard errors["relationship"] == "" else {
             //handle the error
@@ -329,21 +355,18 @@ class addEmergencyContactViewController: UIViewController {
         }
         guard errors["msg"] == "" else {
             errorMessage.text = errors["msg"]
-            message.setBorder(color: "error", image: UIImage(named: "messageError")!)
+            // set text color to red
+            msgTextView.textColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
+            // set border color to red
+            msgTextView.layer.borderColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 ).cgColor
             errorMessage.alpha = 1
-            return
-        }
-        // chack if phone number equals current user number
-        guard errors["phoneMatch"] == "" else {
-            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: errors["phoneMatch"]! , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
             return
         }
         
         // if msg is empty, then set up TORQ Default msg
-        if message.text == "" || message.text == nil {
-            message.text = "\(usrName!) had a Car Accident, you are receiving this because \(usrName!) has listed you as an emergency contact"
+        if msgTextView.text?.trimWhiteSpace() == "" || msgTextView.text?.trimWhiteSpace() == nil || msgTextView.text == "Message (Optional)" {
+            msgTextView.text = "\(usrName!) had a Car Accident, you are receiving this because \(usrName!) has listed you as an emergency contact"
         }
-        
         
         // if no error is detected hide the error view
         errorFullName.alpha = 0
@@ -352,14 +375,12 @@ class addEmergencyContactViewController: UIViewController {
         errorMessage.alpha = 0
         
         //2- caching information
-        //2- caching information
         fullName = emergencyContactFullName.text!.trimWhiteSpace()
         phoneNumber = emergencyContactPhoneNumber.text
         relationship = relationTextField.text
-        emergencyMessage = message.text!.trimWhiteSpace()
+        emergencyMessage = msgTextView.text!.trimWhiteSpace()
         
-        //3- create user info
-        
+        //3- create Emergency Contact info
         let emergencyContact: [String: Any] = [
             "name": fullName!,
             "phone": phoneNumber!,
@@ -379,9 +400,8 @@ class addEmergencyContactViewController: UIViewController {
         alertView.addButton("Got it!", backgroundColor: self.blueUIColor){
             self.dismiss(animated: true, completion: nil)
         }
-        alertView.showCustom("Emergency Contact Added!", subTitle: "You can delete it anytime from your emergeny contacts list.", color: self.blueUIColor, icon: self.alertSuccessIcon!, animationStyle: SCLAnimationStyle.topToBottom)
-        
-    }//Go to home screen
+        alertView.showCustom("Success!", subTitle: "Your emergency contact has been added successfully", color: self.blueUIColor, icon: self.alertSuccessIcon!, animationStyle: SCLAnimationStyle.topToBottom)
+    }
     
     // Editing changed functions
     @IBAction func fullNameEditingChanged(_ sender: UITextField) {
@@ -429,18 +449,6 @@ class addEmergencyContactViewController: UIViewController {
         }
     }
     
-    @IBAction func msgEditingChanged(_ sender: UITextField) {
-        let errors = validateFields()
-        if  errors["msg"] != "" {
-            message.setBorder(color: "error", image: UIImage(named: "messageError")!)
-            errorMessage.text = errors["msg"]!
-            errorMessage.alpha = 1
-        }
-        else {
-            message.setBorder(color: "valid", image: UIImage(named: "messageValid")!)
-            errorMessage.alpha = 0
-        }
-    }
     
 }
 //MARK: - Extensions
@@ -463,9 +471,6 @@ extension addEmergencyContactViewController : UIPickerViewDelegate,UIPickerViewD
         selectedRow = row
         relationTextField.text = relationships[row]
     }
-    //    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-    //        return 60
-    //    }
 }
 
 extension addEmergencyContactViewController: UITextFieldDelegate{
@@ -473,4 +478,68 @@ extension addEmergencyContactViewController: UITextFieldDelegate{
         textField.resignFirstResponder()
         return true;
     }
+}
+extension addEmergencyContactViewController: UITextViewDelegate{
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if msgTextView.text == "Message (Optional)" {
+            msgTextView.text = ""
+            // blue text  color
+            msgTextView.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 )
+            // blue border
+            msgTextView.layer.borderColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 ).cgColor
+            // hide error view
+            errorMessage.alpha = 0
+        }
+    }
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n"{
+            msgTextView.resignFirstResponder()
+        }
+        return self.textLimit(existingText: textView.text, newText: text, limit: 135)
+    }
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text == "" {
+            msgTextView.text = "Message (Optional)"
+            // gray placeholder text color
+            msgTextView.textColor = UIColor(red: 0, green: 0, blue: 0.0980392, alpha: 0.22)
+            // gray border color
+            msgTextView.layer.borderColor = UIColor( red: 163/255, green: 161/255, blue:161/255, alpha: 1.0 ).cgColor
+            // hide error view
+            errorMessage.alpha = 0
+            
+        }
+        else if textView.text!.count >= 135 {
+            errorMessage.text = "message is too long, try shortening it"
+            // set text color to red
+            msgTextView.textColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
+            // set border color to red
+            msgTextView.layer.borderColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 ).cgColor
+            errorMessage.alpha = 1
+        } else {
+            // blue text  color
+            msgTextView.textColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 )
+            // blue border
+            msgTextView.layer.borderColor = UIColor( red: 73/255, green: 171/255, blue:223/255, alpha: 1.0 ).cgColor
+            // hide error view
+            errorMessage.alpha = 0
+        }
+    }
+}
+struct userInfo {
+    
+    var userID: String
+    var phone: String
+    
+    init(userID: String , phone: String){
+        self.userID = userID
+        self.phone = phone
+    }
+    func getUserID()-> String{
+        return userID
+    }
+    func getPhone()-> String{
+        return phone
+    }
+    
 }
