@@ -54,7 +54,7 @@ extension viewLocationViewController: MKMapViewDelegate{
         if pin == nil {
             pin = MKAnnotationView(annotation: annotation, reuseIdentifier: "accidentPin")
             pin?.canShowCallout = true
-            pin?.image = UIImage(named: "Vector")
+            pin?.image = UIImage(named: "Vector-1")
         }else{
             pin?.annotation = annotation
         }
