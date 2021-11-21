@@ -10,6 +10,7 @@ import Firebase
 
 class viewSOSRequestDetailsViewController: UIViewController {
     
+    
     //MARK: - @IBOutlets
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var profileContainer: UIView!
@@ -146,14 +147,25 @@ class viewSOSRequestDetailsViewController: UIViewController {
 
 
         //10- container view
-        containerView.layer.cornerRadius = 20
-        containerView.backgroundColor = .white
-        let shadowPath = UIBezierPath(roundedRect: containerView.bounds, cornerRadius: 20)
+//        containerView.layer.cornerRadius = 20
+//        containerView.backgroundColor = .white
+//        containerView.layer.shadowPath = UIBezierPath(rect: CGRect(x: 0,
+//        y: containerView.bounds.maxY - containerView.layer.shadowRadius,width: containerView.bounds.width,height: containerView.layer.shadowRadius)).cgPath
+//        containerView.layer.masksToBounds = false
+//        containerView.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
+//        containerView.layer.shadowOffset = CGSize(width: 0, height: 2)
+//        containerView.layer.shadowOpacity = 0.5
+        let shadowPath = UIBezierPath()
+        shadowPath.move(to: CGPoint(x: containerView.bounds.origin.x, y: containerView.frame.size.height))
+        shadowPath.addLine(to: CGPoint(x: containerView.bounds.width / 2, y: containerView.bounds.height + 7.0))
+        shadowPath.addLine(to: CGPoint(x: containerView.bounds.width, y: containerView.bounds.height))
+        shadowPath.close()
+
+        containerView.layer.shadowColor = UIColor.darkGray.cgColor
+        containerView.layer.shadowOpacity = 0.3
         containerView.layer.masksToBounds = false
-        containerView.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
-        containerView.layer.shadowOffset = CGSize(width: 4, height: 9)
-        containerView.layer.shadowOpacity = 0.5
         containerView.layer.shadowPath = shadowPath.cgPath
+        containerView.layer.shadowRadius = 5
         
         //11- background view
         view.backgroundColor = UIColor(red: 0.976, green: 0.988, blue: 0.992, alpha: 1)
