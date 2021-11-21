@@ -125,6 +125,7 @@ class viewSOSRequestDetailsViewController: UIViewController {
             processButton.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.1)
             processButton.tintColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.1)
             processButton.setTitleColor(UIColor(red: 0, green: 0, blue: 0, alpha: 0.1), for: .normal)
+            processButton.isEnabled = false
         }
         
         //7- directions button
