@@ -58,7 +58,7 @@
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bmU-wd-X5O">
                                 <rect key="frame" x="364" y="44" width="30" height="30"/>
-                                <color key="tintColor" red="0.98999999999999999" green="0.45540000000000003" blue="0.48213" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="tintColor" red="0.72783231739999998" green="0.23010128739999999" blue="0.3333318233" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Skip"/>
                                 <connections>
                                     <action selector="skipButton:" destination="SDP-wL-iBq" eventType="touchUpInside" id="fQt-2L-4Zk"/>
@@ -187,7 +187,7 @@
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZTM-GJ-a4x">
                                 <rect key="frame" x="364" y="44" width="30" height="30"/>
-                                <color key="tintColor" red="0.98999999999999999" green="0.45540000000000003" blue="0.48213" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="tintColor" red="0.72783231739999998" green="0.23010128739999999" blue="0.3333318233" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Skip"/>
                                 <connections>
                                     <action selector="skipButton:" destination="4hz-mf-602" eventType="touchUpInside" id="NQF-O1-qEy"/>
@@ -195,7 +195,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yEV-SQ-srG">
                                 <rect key="frame" x="20" y="44" width="12.5" height="22"/>
-                                <color key="tintColor" red="0.98999999999999999" green="0.45540000000000003" blue="0.48213" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="tintColor" red="0.72783231739999998" green="0.23010128739999999" blue="0.3333318233" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" image="chevron.backward" catalog="system"/>
                                 <connections>
                                     <action selector="backButton:" destination="4hz-mf-602" eventType="touchUpInside" id="xnh-1d-tzR"/>
@@ -317,7 +317,7 @@
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pUb-fw-2di">
                                 <rect key="frame" x="20" y="44" width="12.5" height="22"/>
-                                <color key="tintColor" red="0.98999999999999999" green="0.45540000000000003" blue="0.48213" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="tintColor" red="0.72783231739999998" green="0.23010128739999999" blue="0.3333318233" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" image="chevron.backward" catalog="system"/>
                                 <connections>
                                     <action selector="backbutton:" destination="qhE-UJ-tdX" eventType="touchUpInside" id="fiN-6K-5pq"/>
@@ -767,9 +767,11 @@
                                 </connections>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="StS-BY-8yo">
-                                <rect key="frame" x="20" y="50" width="20" height="22"/>
-                                <color key="tintColor" red="0.83749955890000005" green="0.33231014009999998" blue="0.42352765799999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <state key="normal" image="arrow.left" catalog="system"/>
+                                <rect key="frame" x="20" y="50" width="56.5" height="22"/>
+                                <color key="tintColor" red="0.72783231739999998" green="0.23010128739999999" blue="0.3333318233" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <state key="normal" title=" back" image="chevron.left" catalog="system">
+                                    <color key="titleColor" red="0.72783231739999998" green="0.23010128739999999" blue="0.3333318233" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </state>
                                 <connections>
                                     <action selector="backToHomeView:" destination="hb7-G3-Xng" eventType="touchUpInside" id="HH9-Fb-Ca3"/>
                                 </connections>
@@ -846,9 +848,9 @@
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="une-RP-Nbp">
                                 <rect key="frame" x="30" y="50" width="61.5" height="22"/>
-                                <color key="tintColor" red="0.83749955890000005" green="0.33231014009999998" blue="0.42352765799999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="tintColor" red="0.72783231739999998" green="0.23010128739999999" blue="0.3333318233" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="  back" image="chevron.left" catalog="system">
-                                    <color key="titleColor" red="0.83749955890000005" green="0.33231014009999998" blue="0.42352765799999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <color key="titleColor" red="0.72783231739999998" green="0.23010128739999999" blue="0.3333318233" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
                                 <connections>
                                     <action selector="backToHome:" destination="8as-oH-KCZ" eventType="touchUpInside" id="cJo-Z7-QG9"/>
@@ -1218,7 +1220,7 @@
                                 <rect key="frame" x="30" y="50" width="56.5" height="22"/>
                                 <color key="tintColor" red="0.90393638610000004" green="0.28463447089999999" blue="0.4156844616" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title=" back" image="chevron.left" catalog="system">
-                                    <color key="titleColor" red="0.90393638610000004" green="0.28463447089999999" blue="0.4156844616" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <color key="titleColor" red="0.72783231739999998" green="0.23010128739999999" blue="0.3333318233" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
                                 <connections>
                                     <action selector="backButton:" destination="8Ij-De-dei" eventType="touchUpInside" id="ex8-ck-xls"/>
@@ -3680,7 +3682,7 @@
                                 <rect key="frame" x="30" y="50" width="61.5" height="22"/>
                                 <color key="tintColor" red="0.83749955890000005" green="0.33231014009999998" blue="0.42352765799999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="  back" image="chevron.backward" catalog="system">
-                                    <color key="titleColor" red="0.82942956690000003" green="0.19109097119999999" blue="0.3019521832" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <color key="titleColor" red="0.72783231739999998" green="0.23010128739999999" blue="0.3333318233" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
                                 <connections>
                                     <action selector="back:" destination="Uxl-Sz-zuK" eventType="touchUpInside" id="nSD-OM-nfN"/>
@@ -4153,7 +4155,7 @@ Conditions</string>
                                 <rect key="frame" x="27" y="65" width="62" height="22"/>
                                 <color key="tintColor" red="0.83921568629999999" green="0.33333333329999998" blue="0.42352941179999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="  back" image="chevron.left" catalog="system">
-                                    <color key="titleColor" red="0.83921568629999999" green="0.33333333329999998" blue="0.42352941179999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <color key="titleColor" red="0.72783231739999998" green="0.23010128739999999" blue="0.3333318233" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
                                 <connections>
                                     <action selector="back:" destination="xQw-Hb-Um6" eventType="touchUpInside" id="9EM-dz-hPd"/>
@@ -4242,7 +4244,7 @@ We may request access or permission to and track location-based information from
                                 <rect key="frame" x="20" y="59" width="62" height="22"/>
                                 <color key="tintColor" red="0.83921568629999999" green="0.33333333329999998" blue="0.42352941179999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="  back" image="chevron.left" catalog="system">
-                                    <color key="titleColor" red="0.83921568629999999" green="0.33333333329999998" blue="0.42352941179999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <color key="titleColor" red="0.72783231739999998" green="0.23010128739999999" blue="0.3333318233" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
                                 <connections>
                                     <action selector="back:" destination="c0x-Kp-Hd5" eventType="touchUpInside" id="B5x-c4-bJf"/>
@@ -4290,7 +4292,7 @@ We may request access or permission to and track location-based information from
                                 <rect key="frame" x="30" y="57" width="61.5" height="22"/>
                                 <color key="tintColor" red="0.7782370448" green="0.25408077239999999" blue="0.32155948880000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="  back" image="chevron.left" catalog="system">
-                                    <color key="titleColor" red="0.90393638610000004" green="0.28463447089999999" blue="0.4156844616" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <color key="titleColor" red="0.72783231739999998" green="0.23010128739999999" blue="0.3333318233" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
                                 <connections>
                                     <action selector="back:" destination="Gqe-oL-Wuj" eventType="touchUpInside" id="wV3-bk-LCh"/>
@@ -4757,7 +4759,7 @@ We may request access or permission to and track location-based information from
                                 <rect key="frame" x="31" y="57" width="61.5" height="22"/>
                                 <color key="tintColor" red="0.7782370448" green="0.25408077239999999" blue="0.32155948880000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="  back" image="chevron.left" catalog="system">
-                                    <color key="titleColor" red="0.90393638610000004" green="0.28463447089999999" blue="0.4156844616" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <color key="titleColor" red="0.72783231739999998" green="0.23010128739999999" blue="0.3333318233" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
                                 <connections>
                                     <action selector="back:" destination="hFl-OA-ueX" eventType="touchUpInside" id="zR2-hy-0R1"/>
@@ -4856,7 +4858,7 @@ We may request access or permission to and track location-based information from
                                 <rect key="frame" x="36" y="59.5" width="56.5" height="22"/>
                                 <color key="tintColor" red="0.7782370448" green="0.25408077239999999" blue="0.32155948880000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title=" back" image="chevron.left" catalog="system">
-                                    <color key="titleColor" red="0.90393638610000004" green="0.28463447089999999" blue="0.4156844616" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <color key="titleColor" red="0.72783231739999998" green="0.23010128739999999" blue="0.3333318233" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
                                 <connections>
                                     <action selector="backButton:" destination="uWc-5y-Ihk" eventType="touchUpInside" id="QMj-nA-1I0"/>
@@ -5086,7 +5088,7 @@ We may request access or permission to and track location-based information from
                                 <rect key="frame" x="30" y="50" width="56.5" height="22"/>
                                 <color key="tintColor" red="0.7782370448" green="0.25408077239999999" blue="0.32155948880000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title=" back" image="chevron.left" catalog="system">
-                                    <color key="titleColor" red="0.90393638610000004" green="0.28463447089999999" blue="0.4156844616" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <color key="titleColor" red="0.72783231739999998" green="0.23010128739999999" blue="0.3333318233" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
                                 <connections>
                                     <action selector="back:" destination="oWW-9L-QH3" eventType="touchUpInside" id="ZNJ-oj-5UR"/>
@@ -5591,7 +5593,7 @@ We may request access or permission to and track location-based information from
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="tintColor" red="0.90393638610000004" green="0.28463447089999999" blue="0.4156844616" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="  back" image="chevron.left" catalog="system">
-                                    <color key="titleColor" red="0.90393638610000004" green="0.28463447089999999" blue="0.4156844616" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <color key="titleColor" red="0.72783231739999998" green="0.23010128739999999" blue="0.3333318233" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="semibold"/>
                                 </state>
                                 <connections>
@@ -5850,7 +5852,7 @@ We may request access or permission to and track location-based information from
                                 <rect key="frame" x="30" y="50" width="61.5" height="22"/>
                                 <color key="tintColor" red="0.77647058820000003" green="0.25490196079999999" blue="0.32156862749999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="  back" image="chevron.left" catalog="system">
-                                    <color key="titleColor" red="0.77647058820000003" green="0.25490196079999999" blue="0.32156862749999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <color key="titleColor" red="0.72783231739999998" green="0.23010128739999999" blue="0.3333318233" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
                                 <connections>
                                     <action selector="backButtonPressed:" destination="GlU-3K-RCW" eventType="touchUpInside" id="DdZ-Nj-chM"/>
@@ -6151,7 +6153,7 @@ We may request access or permission to and track location-based information from
                                 <rect key="frame" x="30" y="50" width="61.5" height="22"/>
                                 <color key="tintColor" red="0.83749955890000005" green="0.33231014009999998" blue="0.42352765799999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="  back" image="chevron.left" catalog="system">
-                                    <color key="titleColor" red="0.83749955890000005" green="0.33231014009999998" blue="0.42352765799999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <color key="titleColor" red="0.72783231739999998" green="0.23010128739999999" blue="0.3333318233" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
                                 <connections>
                                     <action selector="backButtonPressed:" destination="GlU-3K-RCW" eventType="touchUpInside" id="S8r-4K-tfY"/>
@@ -7258,7 +7260,6 @@ We may request access or permission to and track location-based information from
     <resources>
         <image name="BlueRectangle" width="21" height="558"/>
         <image name="age" width="90" height="90"/>
-        <image name="arrow.left" catalog="system" width="128" height="98"/>
         <image name="bell.fill" catalog="system" width="128" height="124"/>
         <image name="bloodType" width="62" height="80"/>
         <image name="cancel" width="120" height="120"/>
