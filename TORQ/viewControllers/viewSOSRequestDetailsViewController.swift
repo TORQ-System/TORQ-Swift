@@ -10,7 +10,6 @@ import Firebase
 
 class viewSOSRequestDetailsViewController: UIViewController {
     
-    
     //MARK: - @IBOutlets
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var profileContainer: UIView!
