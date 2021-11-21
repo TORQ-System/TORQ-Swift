@@ -122,29 +122,34 @@ class hospitalsViewController: UIViewController ,UITableViewDelegate ,UITableVie
             SCLAlertView(appearance: self.apperance).showCustom("Select a Hospital", subTitle: "You must select a hospital to process the request or cancel." , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
         }
         else {
-            ref.child("Request").queryOrdered(byChild:"user_id").observe(.childAdded, with: {(snapshot) in
-                if let dec = snapshot.value as? [String :Any]{
-                    if (dec["request_id"] as? String == self.RequestID && dec["status"]as! String == "0"){
-                        let snapshotKey = snapshot.key
+            ref.child("Request").observeSingleEvent(of: .value, with: { snapshot in
+                for req in snapshot.children{
+                    let obj = req as! DataSnapshot
+                    print(obj)
+
+                    let status = obj.childSnapshot(forPath: "status").value as! String
+                    let request_id = obj.childSnapshot(forPath: "request_id").value as! String
+
+                    if (request_id == self.RequestID && status == "0"){
+                        print("inside if")
+                        let snapshotKey = obj.key
                         self.ref.child("Request").child(snapshotKey).updateChildValues(["status": "1"])
-                        self.ref.child("ProcessingRequest").child(self.selhealth).childByAutoId().setValue(["Rquest_id":dec["request_id"] as! String? ,"User_id": self.userMedicalReportID])
-                        
+                        self.ref.child("ProcessingRequest").child(self.selhealth).childByAutoId().setValue(["Rquest_id":request_id ,"User_id": self.userMedicalReportID])
+                            
                         let alertView = SCLAlertView(appearance: self.apperanceWithoutClose)
-                        
                         alertView.addButton("Okay", backgroundColor: self.blueUIColor){
                             let presentingView = self.presentingViewController
                             self.dismiss(animated: false) {
                                 presentingView?.dismiss(animated: true)
                             }
                         }
-                        alertView.showCustom("Confirmed!", subTitle: "The request has been send to the health care cenetr.", color: self.blueUIColor, icon: self.alertSuccessIcon!, animationStyle: SCLAnimationStyle.topToBottom)
-                    }
+                    alertView.showCustom("Confirmed!", subTitle: "The request has been send to the health care cenetr.", color: self.blueUIColor, icon: self.alertSuccessIcon!, animationStyle: SCLAnimationStyle.topToBottom)
                 }
-            })
+            }
+        })
         }
     }
 }
-
 
 
 
