@@ -65,7 +65,7 @@ class notificationCenterViewController: UIViewController {
     func getNotifications() {
         let notificationsQueue = DispatchQueue.init(label: "notificationsQueue")
         notificationsQueue.sync {
-            ref.child("Notification").observe(.value) { snapshot in
+            ref.child("Notification").queryOrdered(byChild: "time").observe(.value) { snapshot in
                 self.allNotifications = []
                 self.emergencyNotifications = []
                 self.wellbeingNotifications = []
@@ -158,8 +158,9 @@ extension notificationCenterViewController: UICollectionViewDataSource{
             
             notificationCell.configureCellView()
             
-            let notifications: [notification]
+            var notifications: [notification]
             
+
             if all {
                 notifications = allNotifications
             } else if emergency {
@@ -167,6 +168,9 @@ extension notificationCenterViewController: UICollectionViewDataSource{
             } else{
                 notifications = wellbeingNotifications
             }
+            
+            notifications.sort(by: {$0.date > $1.date})
+
             
             notificationCell.title.text = notifications[indexPath.row].getTitle()
             notificationCell.details.text = notifications[indexPath.row].getBody()
@@ -177,33 +181,19 @@ extension notificationCenterViewController: UICollectionViewDataSource{
         }
         
         let colors = [UIColor(red: 21.0/255.0, green: 143.0/255.0, blue: 211.0/255.0, alpha: 0.65),
-                      UIColor(red: 120.0/255.0, green: 120.0/255.0, blue: 120.0/255.0, alpha: 0.7),
+                      UIColor(red: 120.0/255.0, green: 120.0/255.0, blue: 120.0/255.0, alpha: 0.75),
                       UIColor(red: 106.0/255.0, green: 61.0/255.0, blue: 142.0/255.0, alpha: 0.7)]
         
         let backgroundView = UIView()
         let filterCell = collectionView.dequeueReusableCell(withReuseIdentifier: "filterCell", for: indexPath) as! filterCollectionViewCell
-        var color = colors[0]
+   
         
         filterCell.layer.cornerRadius = 15
         filterCell.layer.masksToBounds = true
         filterCell.filterLabel.text = filterBy[indexPath.row]
-        
-        switch indexPath.row {
-        case 0:
-            color = colors[0]
-            break
-        case 1:
-            color = colors[1]
-            break
-        case 2:
-            color = colors[2]
-            break
-        default:
-            color = .yellow
-        }
-        
-        backgroundView.backgroundColor = color.withAlphaComponent(0.95)
-        filterCell.backgroundColor = color
+        filterCell.backgroundColor = colors[1]
+
+        backgroundView.backgroundColor = colors[0].withAlphaComponent(1)
         filterCell.selectedBackgroundView = backgroundView
         
         return filterCell
