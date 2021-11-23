@@ -14,108 +14,84 @@ extension UIViewController {
     func registerToNotifications(userID: String) {
         let ref = Database.database().reference()
         let sendRequestQueue = DispatchQueue.init(label: "sendRequestQueue")
+        
         sendRequestQueue.sync {
-            ref.child("Request").observe(.value) { snapshot in
-                for request in snapshot.children{
-                    let obj = request as! DataSnapshot
-                    let latitude = obj.childSnapshot(forPath: "latitude").value as! String
-                    let longitude = obj.childSnapshot(forPath: "longitude").value as! String
-                    let request_id = obj.childSnapshot(forPath: "request_id").value as! String
-                    let rotation = obj.childSnapshot(forPath: "rotation").value as! String
-                    let sensor_id = obj.childSnapshot(forPath: "sensor_id").value as! String
-                    let status = obj.childSnapshot(forPath: "status").value as! String
-                    let time_stamp = obj.childSnapshot(forPath: "time_stamp").value as! String
-                    let user_id = obj.childSnapshot(forPath: "user_id").value as! String
-                    let vib = obj.childSnapshot(forPath: "vib").value as! String
+            ref.child("Request").observe(.childAdded, with: { snapshot in
+                let obj = snapshot 
+                let latitude = obj.childSnapshot(forPath: "latitude").value as! String
+                let longitude = obj.childSnapshot(forPath: "longitude").value as! String
+                let request_id = obj.childSnapshot(forPath: "request_id").value as! String
+                let rotation = obj.childSnapshot(forPath: "rotation").value as! String
+                let sensor_id = obj.childSnapshot(forPath: "sensor_id").value as! String
+                let status = obj.childSnapshot(forPath: "status").value as! String
+                let time_stamp = obj.childSnapshot(forPath: "time_stamp").value as! String
+                let user_id = obj.childSnapshot(forPath: "user_id").value as! String
+                let vib = obj.childSnapshot(forPath: "vib").value as! String
+                
+                let userRequest = Request(user_id: user_id, sensor_id: sensor_id, request_id: request_id, dateTime: time_stamp, longitude: longitude, latitude: latitude, vib: vib, rotation: rotation, status: status)
+                
+                
+                if (userRequest.getUserID()) == userID && (userRequest.getStatus() == "0"){
+                    var center = UNUserNotificationCenter.current()
+                    center = UNUserNotificationCenter.current()
                     
-                    let userRequest = Request(user_id: user_id, sensor_id: sensor_id, request_id: request_id, dateTime: time_stamp, longitude: longitude, latitude: latitude, vib: vib, rotation: rotation, status: status)
+                    let content = UNMutableNotificationContent()
+                    content.title = "Are you okay?"
+                    content.subtitle =  "We detcted an impact on your veichle"
+                    content.body = "Swipe down to reply or we will send an ambulance request in 60 seconds"
+                    content.sound = .default
+                    content.categoryIdentifier = "ACTIONS"
+                    content.userInfo = ["userID":userID, "requestID":request_id]
                     
-                    if (userRequest.getUserID()) == userID && (userRequest.getStatus() == "0"){
-                        var center = UNUserNotificationCenter.current()
-                        center = UNUserNotificationCenter.current()
-                        //Assign contents
-                        let content = UNMutableNotificationContent()
-                        content.title = "Are you okay?"
-                        content.subtitle =  "We detcted an impact on your veichle"
-                        content.body = "Swipe down to reply or we will send an ambulance request in 60 seconds"
-                        content.sound = .default
-                        content.categoryIdentifier = "ACTIONS"
-                        content.userInfo = ["userID":userID, "requestID":request_id]
-                        
-                        //Create actions
-                        let okayAction = UNNotificationAction(identifier: "OKAY_ACTION", title: "I'm okay", options: UNNotificationActionOptions.init(rawValue: 0))
-                        let requestAction = UNNotificationAction(identifier: "REQUEST_ACTION", title: "No, send request", options: UNNotificationActionOptions.init(rawValue: 0))
-                        
-                        let actionCategory = UNNotificationCategory(identifier: "ACTIONS", actions: [okayAction, requestAction], intentIdentifiers: [], hiddenPreviewsBodyPlaceholder: "", options: .customDismissAction) //it will get dismissed
-                        
-                        center.setNotificationCategories([actionCategory])
-                        
-                        //Notification request
-                        let uuid = UUID().uuidString
-                        let request = UNNotificationRequest(identifier: uuid, content: content, trigger: nil)
-                        
-                        //Update the database if user does not respond
-                        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(60)) {
-                            print("code after 60 seconds")
-                            self.lateUpdateEmergencyContacts(userID: userID)
-                        }
-                        
-                        
-                        
-                        // register to the notification center
-                        center.getNotificationSettings { setting in
-                            if setting.authorizationStatus == .authorized{
+                    let okayAction = UNNotificationAction(identifier: "OKAY_ACTION", title: "I'm okay", options: UNNotificationActionOptions.init(rawValue: 0))
+                    let requestAction = UNNotificationAction(identifier: "REQUEST_ACTION", title: "No, send request", options: UNNotificationActionOptions.init(rawValue: 0))
+                    
+                    let actionCategory = UNNotificationCategory(identifier: "ACTIONS", actions: [okayAction, requestAction], intentIdentifiers: [], hiddenPreviewsBodyPlaceholder: "", options: .customDismissAction) //it will get dismissed
+                    
+                    center.setNotificationCategories([actionCategory])
+                    
+                    let uuid = UUID().uuidString
+                    let request = UNNotificationRequest(identifier: uuid, content: content, trigger: nil)
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(60)) {
+                        print("code after 60 seconds")
+                        self.lateUpdateEmergencyContacts(userID: userID)
+                    }
+                    
+                    let date = Date()
+                    let calendar = Calendar.current
+                    let hour = calendar.component(.hour, from: date)
+                    let minutes = calendar.component(.minute, from: date)
+                    let seconds = calendar.component(.second, from: date)
+                    let day = calendar.component(.day, from: date)
+                    let month = calendar.component(.month, from: date)
+                    let year = calendar.component(.year, from: date)
+                    
+                    center.getNotificationSettings { setting in
+                        if setting.authorizationStatus == .authorized{
+                            center.add(request) { error in
+                                guard error == nil else{
+                                    print(error!.localizedDescription)
+                                    return
+                                }
+                                ref.child("Notification").childByAutoId().setValue(["title":content.title, "subtitle":content.subtitle, "body":content.body, "date": "\(day)-\(month)-\(year)", "time": "\(hour):\(minutes):\(seconds)", "type": "wellbeing", "sender":userID, "receiver": userID])
+                            }
+                        } else {
+                            center.requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+                                guard success else{
+                                    return
+                                }
                                 center.add(request) { error in
                                     guard error == nil else{
-                                        print(error!.localizedDescription)
                                         return
                                     }
-
-                                    let date = Date()
-                                    let calendar = Calendar.current
-                                    let hour = calendar.component(.hour, from: date)
-                                    let minutes = calendar.component(.minute, from: date)
-                                    let seconds = calendar.component(.second, from: date)
-                                    let day = calendar.component(.day, from: date)
-                                    let month = calendar.component(.month, from: date)
-                                    let year = calendar.component(.year, from: date)
-                                    
                                     ref.child("Notification").childByAutoId().setValue(["title":content.title, "subtitle":content.subtitle, "body":content.body, "date": "\(day)-\(month)-\(year)", "time": "\(hour):\(minutes):\(seconds)", "type": "wellbeing", "sender":userID, "receiver": userID])
-                                    
-                                    NSLog("sent");
-                                }
-                            } else {
-                                center.requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
-                                    guard success else{
-                                        print("The user has not authorized")
-                                        return
-                                    }
-                                    center.add(request) { error in
-                                        guard error == nil else{
-                                            print(error!.localizedDescription)
-                                            return
-                                        }
-                                        
-
-                                        let date = Date()
-                                        let calendar = Calendar.current
-                                        let hour = calendar.component(.hour, from: date)
-                                        let minutes = calendar.component(.minute, from: date)
-                                        let seconds = calendar.component(.second, from: date)
-                                        let day = calendar.component(.day, from: date)
-                                        let month = calendar.component(.month, from: date)
-                                        let year = calendar.component(.year, from: date)
-                                        
-                                        ref.child("Notification").childByAutoId().setValue(["title":content.title, "subtitle":content.subtitle, "body":content.body, "date": "\(day)-\(month)-\(year)", "time": "\(hour):\(minutes):\(seconds)", "type": "wellbeing", "sender":userID, "receiver": userID])
-                                        
-                                        NSLog("sent");
-                                    }
                                 }
                             }
                         }
                     }
                 }
-            }
+            })
         }
     }
     
@@ -276,7 +252,6 @@ extension UIViewController {
                 for contact in snapshot.children{
                     let obj = contact as! DataSnapshot
                     let relation = obj.childSnapshot(forPath: "relation").value as! String
-                    //let contactId = obj.childSnapshot(forPath: "contactID").value as! Int
                     let name = obj.childSnapshot(forPath: "name").value as! String
                     let phone = obj.childSnapshot(forPath: "phone").value as! String
                     let senderID = obj.childSnapshot(forPath: "sender").value as! String

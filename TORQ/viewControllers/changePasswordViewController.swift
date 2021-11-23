@@ -90,13 +90,16 @@ class changePasswordViewController: UIViewController{
         
         credential = EmailAuthProvider.credential(withEmail: email!, password: currentPassword.text!)
         
+        self.view.showBlurLoader()
         user?.reauthenticate(with: credential, completion: { (result, error)  in
             if error != nil  {
+                self.view.removeBlurLoader()
                 SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "The password you entered does not match your current password", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
                 return
             } else{
                 user?.updatePassword(to: self.newPassword.text!, completion: { error in
                     if error != nil {
+                        self.view.removeBlurLoader()
                         SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "An error occured while updating your information", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
                         return
                     } else{
@@ -152,15 +155,17 @@ class changePasswordViewController: UIViewController{
         let userID = Auth.auth().currentUser?.uid
         let alertView = SCLAlertView(appearance: self.apperanceWithoutClose)
 
-        
+     
         ref.child("User").child(userID!).updateChildValues(["password": newPassword.text!]){
             (error, ref) in
             guard error == nil else {
+                self.view.removeBlurLoader()
                 SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "An error ocuured, please try again later", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
                 return
             }
         }
         
+        self.view.removeBlurLoader()
         alertView.addButton("Got it!", backgroundColor: self.blueUIColor){
             self.dismiss(animated: true, completion: nil)
         }
