@@ -62,9 +62,32 @@ class notificationCenterViewController: UIViewController {
         
     }
     
+    //    func getNotificationSub() -> String{
+    //        var fetchedUser: User
+    //
+    //        ref.child("User").observeSingleEvent(of: .value) { snapshot in
+    //            for user in snapshot.children{
+    //                let obj = user as! DataSnapshot
+    //                let dateOfBirth = obj.childSnapshot(forPath: "dateOfBirth").value as! String
+    //                let email = obj.childSnapshot(forPath: "email").value as! String
+    //                let fullName = obj.childSnapshot(forPath: "fullName").value as! String
+    //                let gender = obj.childSnapshot(forPath: "gender").value as! String
+    //                let nationalID = obj.childSnapshot(forPath: "nationalID").value as! String
+    //                let password = obj.childSnapshot(forPath: "password").value as! String
+    //                let phone = obj.childSnapshot(forPath:  "phone").value as! String
+    //                if obj.key == self.userID {
+    //                    fetchedUser = User(dateOfBirth: dateOfBirth,          email: email, fullName: fullName, gender:        gender, nationalID: nationalID, password:      password, phone: phone)
+    //                        self.userFullName.text = fullName
+    //                }
+    //            }
+    //        }
+    //
+    //        return "\(fetchedUser.getFullName()) had a car accident"
+    //    }
+    
     func getNotifications() {
         let notificationsQueue = DispatchQueue.init(label: "notificationsQueue")
-        
+        let userNameQueue = DispatchQueue.init(label: "userNameQueue")
         notificationsQueue.sync {
             ref.child("Notification").queryOrdered(byChild: "time").observe(.value) { snapshot in
                 self.allNotifications = []
@@ -81,6 +104,8 @@ class notificationCenterViewController: UIViewController {
                     let title = obj.childSnapshot(forPath: "title").value as! String
                     let type = obj.childSnapshot(forPath:  "type").value as! String
                     let request_id = obj.childSnapshot(forPath:  "request_id").value as! String
+                    
+               
                     
                     let alert = notification(title: title, subtitle: subtitle, body:body, date: date, time: time, type: type, sender: sender, receiver: receiver, request_id: request_id, notification_id: obj.key)
                     
@@ -159,10 +184,10 @@ extension notificationCenterViewController: UICollectionViewDataSource{
             let notificationCell = collectionView.dequeueReusableCell(withReuseIdentifier: "notificationCell", for: indexPath) as! notificationCollectionViewCell
             
             notificationCell.configureCellView()
+            notificationCell.configureButton()
             
             var notifications: [notification]
             
-
             if all {
                 notifications = allNotifications
             } else if emergency {
@@ -172,7 +197,7 @@ extension notificationCenterViewController: UICollectionViewDataSource{
             }
             
             notifications.sort(by: {$0.date > $1.date})
-
+            
             
             notificationCell.title.text = notifications[indexPath.row].getTitle()
             notificationCell.details.text = notifications[indexPath.row].getBody()
@@ -188,13 +213,13 @@ extension notificationCenterViewController: UICollectionViewDataSource{
         
         let backgroundView = UIView()
         let filterCell = collectionView.dequeueReusableCell(withReuseIdentifier: "filterCell", for: indexPath) as! filterCollectionViewCell
-   
+        
         
         filterCell.layer.cornerRadius = 15
         filterCell.layer.masksToBounds = true
         filterCell.filterLabel.text = filterBy[indexPath.row]
         filterCell.backgroundColor = colors[1]
-
+        
         backgroundView.backgroundColor = colors[0].withAlphaComponent(1)
         filterCell.selectedBackgroundView = backgroundView
         
@@ -205,7 +230,7 @@ extension notificationCenterViewController: UICollectionViewDataSource{
 extension notificationCenterViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard collectionView == filterCollectionView else{
-            return CGSize(width: collectionView.frame.width/1.1, height: 160)
+            return CGSize(width: collectionView.frame.width/1.05, height: 130)
         }
         return CGSize(width: filterBy[indexPath.item].size(withAttributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18)]).width+25, height: 30)
     }
