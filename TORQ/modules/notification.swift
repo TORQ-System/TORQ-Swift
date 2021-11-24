@@ -17,9 +17,11 @@ struct notification {
     var type: String
     var sender: String
     var receiver: String
-
+    var request_id: String
+    var notification_id: String
     
-    init(title: String, subtitle: String, body:String, date: String, time: String, type: String, sender: String, receiver: String) {
+    
+    init(title: String, subtitle: String, body:String, date: String, time: String, type: String, sender: String, receiver: String, request_id: String, notification_id:String) {
         self.title = title
         self.subtitle = subtitle
         self.body = body
@@ -28,7 +30,8 @@ struct notification {
         self.sender = sender
         self.receiver = receiver
         self.time = time
-    
+        self.request_id = request_id
+        self.notification_id = notification_id
 }
     
     func getTitle()-> String{
@@ -61,6 +64,14 @@ struct notification {
     
     func getTime()-> String{
         return time
+    }
+    
+    func getRequestID()-> String{
+        return request_id
+    }
+    
+    func getNotificationID()-> String{
+        return notification_id
     }
     
 }

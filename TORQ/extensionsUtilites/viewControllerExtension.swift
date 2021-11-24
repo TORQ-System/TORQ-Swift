@@ -17,7 +17,7 @@ extension UIViewController {
         
         sendRequestQueue.sync {
             ref.child("Request").observe(.childAdded, with: { snapshot in
-                let obj = snapshot 
+                let obj = snapshot
                 let latitude = obj.childSnapshot(forPath: "latitude").value as! String
                 let longitude = obj.childSnapshot(forPath: "longitude").value as! String
                 let request_id = obj.childSnapshot(forPath: "request_id").value as! String
@@ -37,7 +37,7 @@ extension UIViewController {
                     
                     let content = UNMutableNotificationContent()
                     content.title = "Are you okay?"
-                    content.subtitle =  "We detcted an impact on your veichle"
+                    content.subtitle =  "We detcted an impact on your vehicle"
                     content.body = "Swipe down to reply or we will send an ambulance request in 60 seconds"
                     content.sound = .default
                     content.categoryIdentifier = "ACTIONS"
@@ -46,7 +46,7 @@ extension UIViewController {
                     let okayAction = UNNotificationAction(identifier: "OKAY_ACTION", title: "I'm okay", options: UNNotificationActionOptions.init(rawValue: 0))
                     let requestAction = UNNotificationAction(identifier: "REQUEST_ACTION", title: "No, send request", options: UNNotificationActionOptions.init(rawValue: 0))
                     
-                    let actionCategory = UNNotificationCategory(identifier: "ACTIONS", actions: [okayAction, requestAction], intentIdentifiers: [], hiddenPreviewsBodyPlaceholder: "", options: .customDismissAction) //it will get dismissed
+                    let actionCategory = UNNotificationCategory(identifier: "ACTIONS", actions: [okayAction, requestAction], intentIdentifiers: [], hiddenPreviewsBodyPlaceholder: "", options: .customDismissAction)
                     
                     center.setNotificationCategories([actionCategory])
                     
@@ -54,7 +54,6 @@ extension UIViewController {
                     let request = UNNotificationRequest(identifier: uuid, content: content, trigger: nil)
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(60)) {
-                        print("code after 60 seconds")
                         self.lateUpdateEmergencyContacts(userID: userID)
                     }
                     
@@ -74,7 +73,8 @@ extension UIViewController {
                                     print(error!.localizedDescription)
                                     return
                                 }
-                                ref.child("Notification").childByAutoId().setValue(["title":content.title, "subtitle":content.subtitle, "body":content.body, "date": "\(day)-\(month)-\(year)", "time": "\(hour):\(minutes):\(seconds)", "type": "wellbeing", "sender":userID, "receiver": userID])
+                                
+                                ref.child("Notification").childByAutoId().setValue(["title":content.title, "subtitle":content.subtitle, "body":content.body, "date": "\(day)-\(month)-\(year)", "time": "\(hour):\(minutes):\(seconds)", "type": "wellbeing", "sender":userID, "receiver": userID, "request_id": userRequest.getRequestID()])
                             }
                         } else {
                             center.requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
@@ -85,7 +85,7 @@ extension UIViewController {
                                     guard error == nil else{
                                         return
                                     }
-                                    ref.child("Notification").childByAutoId().setValue(["title":content.title, "subtitle":content.subtitle, "body":content.body, "date": "\(day)-\(month)-\(year)", "time": "\(hour):\(minutes):\(seconds)", "type": "wellbeing", "sender":userID, "receiver": userID])
+                                    ref.child("Notification").childByAutoId().setValue(["title":content.title, "subtitle":content.subtitle, "body":content.body, "date": "\(day)-\(month)-\(year)", "time": "\(hour):\(minutes):\(seconds)", "type": "wellbeing", "sender":userID, "receiver": userID, "request_id": userRequest.getRequestID()])
                                 }
                             }
                         }
@@ -105,7 +105,6 @@ extension UIViewController {
                 for contact in snapshot.children{
                     let obj = contact as! DataSnapshot
                     let relation = obj.childSnapshot(forPath: "relation").value as! String
-                    //let contactId = obj.childSnapshot(forPath: "contactID").value as! Int
                     let name = obj.childSnapshot(forPath: "name").value as! String
                     let phone = obj.childSnapshot(forPath: "phone").value as! String
                     let senderID = obj.childSnapshot(forPath: "sender").value as! String
@@ -117,7 +116,7 @@ extension UIViewController {
                     let emergencyContact = emergencyContact(name: name, phone_number: phone, senderID:senderID, recieverID: receiverID, sent: sent, contactID: 1, msg: msg, relation: relation)
                     
                     if (emergencyContact.getReciverID()) == userID && ((emergencyContact.getSent() == "Late") || (emergencyContact.getSent() == "Immediate")){
-                        //show me notification
+                        
                         var center = UNUserNotificationCenter.current()
                         center = UNUserNotificationCenter.current()
                         center.requestAuthorization(options: [.alert,.sound]) { grantedPermisssion, error in
@@ -127,7 +126,6 @@ extension UIViewController {
                             }
                             
                             let content = UNMutableNotificationContent()
-                            //content.categoryIdentifier = "ACTIONS"
                             content.title = "Hello, \(name)"
                             content.body = msg
                             content.userInfo = ["userID":userID]
@@ -147,16 +145,11 @@ extension UIViewController {
                                 let month = calendar.component(.month, from: date)
                                 let year = calendar.component(.year, from: date)
                                 
-                                ref.child("Notification").childByAutoId().setValue(["title":content.title, "subtitle": "none", "body":content.body, "date": "\(day)-\(month)-\(year)", "time": "\(hour):\(minutes):\(seconds)", "type": "emergency", "sender":senderID, "receiver": receiverID])
-                                
-                                
+                                ref.child("Notification").childByAutoId().setValue(["title":content.title, "subtitle": "none", "body":content.body, "date": "\(day)-\(month)-\(year)", "time": "\(hour):\(minutes):\(seconds)", "type": "emergency", "sender":senderID, "receiver": receiverID, "request_id": "NA"])
                             }
                         }
-                        
                         self.getAccidentLocation(senderID: emergencyContact.getSenderID())
-                        
                     }
-                    
                 }
             }
         }

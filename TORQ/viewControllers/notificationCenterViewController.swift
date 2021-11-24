@@ -64,6 +64,7 @@ class notificationCenterViewController: UIViewController {
     
     func getNotifications() {
         let notificationsQueue = DispatchQueue.init(label: "notificationsQueue")
+        
         notificationsQueue.sync {
             ref.child("Notification").queryOrdered(byChild: "time").observe(.value) { snapshot in
                 self.allNotifications = []
@@ -79,8 +80,9 @@ class notificationCenterViewController: UIViewController {
                     let time = obj.childSnapshot(forPath: "time").value as! String
                     let title = obj.childSnapshot(forPath: "title").value as! String
                     let type = obj.childSnapshot(forPath:  "type").value as! String
+                    let request_id = obj.childSnapshot(forPath:  "request_id").value as! String
                     
-                    let alert = notification(title: title, subtitle: subtitle, body:body, date: date, time: time, type: type, sender: sender, receiver: receiver)
+                    let alert = notification(title: title, subtitle: subtitle, body:body, date: date, time: time, type: type, sender: sender, receiver: receiver, request_id: request_id, notification_id: obj.key)
                     
                     if (alert.getReceiver() == Auth.auth().currentUser?.uid){
                         
