@@ -74,6 +74,8 @@
 		BEF97539270AE07400325281 /* loginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF97538270AE07400325281 /* loginViewController.swift */; };
 		BEF9753B270AE0D100325281 /* userHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9753A270AE0D100325281 /* userHomeViewController.swift */; };
 		BEF9753D270AE0E500325281 /* paramedicHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9753C270AE0E500325281 /* paramedicHomeViewController.swift */; };
+		F5547542274EE016005E4368 /* ViewSOSHistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5547541274EE016005E4368 /* ViewSOSHistoryController.swift */; };
+		F5547544274EE953005E4368 /* SOSHistoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5547543274EE953005E4368 /* SOSHistoryCollectionViewCell.swift */; };
 		FC4BF75E181535F7BB4C96B1 /* Pods_TORQTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D35DF5D9259C289028E18D8 /* Pods_TORQTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -175,6 +177,8 @@
 		BEF97538270AE07400325281 /* loginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginViewController.swift; sourceTree = "<group>"; };
 		BEF9753A270AE0D100325281 /* userHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userHomeViewController.swift; sourceTree = "<group>"; };
 		BEF9753C270AE0E500325281 /* paramedicHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = paramedicHomeViewController.swift; sourceTree = "<group>"; };
+		F5547541274EE016005E4368 /* ViewSOSHistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewSOSHistoryController.swift; sourceTree = "<group>"; };
+		F5547543274EE953005E4368 /* SOSHistoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SOSHistoryCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -234,6 +238,7 @@
 				BE34F69C270F30B70093C633 /* requestCollectionViewCell.swift */,
 				BEDC3C172726535F0026948E /* servicesCollectionViewCell.swift */,
 				BEE76D29272D2C52001390D2 /* ECCollectionViewCell.swift */,
+				F5547543274EE953005E4368 /* SOSHistoryCollectionViewCell.swift */,
 				BED1085F273EB52F0099EE15 /* profileTableViewCell.swift */,
 				BED10863274148650099EE15 /* AccidentsCollectionViewCell.swift */,
 				BEF2304E274847710068B55A /* medicalCollectionViewCell.swift */,
@@ -364,6 +369,7 @@
 				BEF23060274873690068B55A /* changePasswordViewController.swift */,
 				BEF23062274899060068B55A /* editAccountViewController.swift */,
 				BE82A5662748DD0300C4C2B5 /* selectHealthCareCenterViewController.swift */,
+				F5547541274EE016005E4368 /* ViewSOSHistoryController.swift */,
 			);
 			path = viewControllers;
 			sourceTree = "<group>";
@@ -625,6 +631,7 @@
 				BE82A5672748DD0300C4C2B5 /* selectHealthCareCenterViewController.swift in Sources */,
 				BEF9751827076C0800325281 /* stringExtension.swift in Sources */,
 				BE34F6A4270F32260093C633 /* SRCACenters.swift in Sources */,
+				F5547542274EE016005E4368 /* ViewSOSHistoryController.swift in Sources */,
 				BEE76D2A272D2C52001390D2 /* ECCollectionViewCell.swift in Sources */,
 				BEC34A2327284BCB001E99E5 /* resetPasswordViewController.swift in Sources */,
 				BE9CDAE92729F66A00CDD4B4 /* User.swift in Sources */,
@@ -649,6 +656,7 @@
 				BE04B6D4272DAA0600EEE3EE /* hospitalsViewController.swift in Sources */,
 				BEDC3C1A272681AE0026948E /* tabBarController.swift in Sources */,
 				BEF23051274847BB0068B55A /* sosRequestTableViewCell.swift in Sources */,
+				F5547544274EE953005E4368 /* SOSHistoryCollectionViewCell.swift in Sources */,
 				BEDC3C20272682510026948E /* AccidentsViewController.swift in Sources */,
 				BEF2305B27486BF50068B55A /* notification.swift in Sources */,
 				BEE76D28272D2BEC001390D2 /* ViewEmergencyContactViewController.swift in Sources */,
