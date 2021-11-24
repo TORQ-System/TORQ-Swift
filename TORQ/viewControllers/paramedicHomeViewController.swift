@@ -1,5 +1,7 @@
 import UIKit
 import FirebaseAuth
+import FirebaseDatabase
+import CoreLocation
 
 class paramedicHomeViewController: UIViewController {
     
@@ -8,11 +10,16 @@ class paramedicHomeViewController: UIViewController {
     
     //MARK: - Variables
     var loggedinEmail: String!
+    var location: [String: String] = ["lon":"","lat":""]
     
+    //MARK: - Constants
+    let locationManager = CLLocationManager()
+    let ref = Database.database().reference()
     
     //MARK: - Overriden funtions
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureLocationManager()
     }
     
     //MARK: - Functions
@@ -56,6 +63,64 @@ class paramedicHomeViewController: UIViewController {
         }
     }
     
+    func configureLocationManager(){
+        locationManager.delegate = self
+        locationManager.allowsBackgroundLocationUpdates = true
+        locationManager.showsBackgroundLocationIndicator = true
+        guard CLLocationManager.locationServicesEnabled() else {
+            self.showALert(message: "the location services isn't enabled")
+            return
+        }
+        locationManager.requestAlwaysAuthorization()
+    }
+    
 
 
+}
+
+//MARK: - CLLocationManagerDelegate Extensions
+
+extension paramedicHomeViewController: CLLocationManagerDelegate{
+    
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        let status = CLLocationManager.authorizationStatus()
+        switch status {
+        case .authorizedAlways:
+            print("authorizedAlways")
+            locationManager.startUpdatingLocation()
+        case .authorizedWhenInUse:
+            print("authorizedWhenInUse")
+            locationManager.startUpdatingLocation()
+        case .denied:
+            print("denied")
+             showALert(message: "Location access is needed to get your current location")
+        case .notDetermined:
+            print("notDetermined")
+        case .restricted:
+            print("restricted")
+            showALert(message: "Location access is needed to get your current location")
+        default:
+            print("unknown")
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let longitude = locations.last?.coordinate.longitude
+        let latitude = locations.last?.coordinate.latitude
+        let date = Date()
+        let calendar = Calendar.current
+        let hour = calendar.component(.hour, from: date)
+        let minutes = calendar.component(.minute, from: date)
+        let seconds = calendar.component(.second, from: date)
+        let day = calendar.component(.day, from: date)
+        let month = calendar.component(.month, from: date)
+        let year = calendar.component(.year, from: date)
+        location["lon"] = String(describing: longitude!)
+        location["lat"] = String(describing: latitude!)
+        ref.child("Paramedic").child("S\(loggedinEmail!)/longitude").setValue((String(describing: longitude!)))
+        ref.child("Paramedic").child("S\(loggedinEmail!)/latitude").setValue((String(describing: latitude!)))
+        ref.child("Paramedic").child("S\(loggedinEmail!)/time").setValue("\(hour):\(minutes):\(seconds)")
+        ref.child("Paramedic").child("S\(loggedinEmail!)/date").setValue("\(year):\(month):\(day)")
+    }
+    
 }
