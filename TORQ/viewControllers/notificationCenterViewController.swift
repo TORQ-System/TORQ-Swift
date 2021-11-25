@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import SwipeCellKit
 
 class notificationCenterViewController: UIViewController {
     
@@ -25,6 +26,8 @@ class notificationCenterViewController: UIViewController {
     var all = true
     var emergency = false
     var wellbeing = false
+    var usesTallCells = true
+    
     
     //MARK: - Constants
     let filterBy = ["All", "From Contacts", "From TORQ"]
@@ -62,32 +65,8 @@ class notificationCenterViewController: UIViewController {
         
     }
     
-    //    func getNotificationSub() -> String{
-    //        var fetchedUser: User
-    //
-    //        ref.child("User").observeSingleEvent(of: .value) { snapshot in
-    //            for user in snapshot.children{
-    //                let obj = user as! DataSnapshot
-    //                let dateOfBirth = obj.childSnapshot(forPath: "dateOfBirth").value as! String
-    //                let email = obj.childSnapshot(forPath: "email").value as! String
-    //                let fullName = obj.childSnapshot(forPath: "fullName").value as! String
-    //                let gender = obj.childSnapshot(forPath: "gender").value as! String
-    //                let nationalID = obj.childSnapshot(forPath: "nationalID").value as! String
-    //                let password = obj.childSnapshot(forPath: "password").value as! String
-    //                let phone = obj.childSnapshot(forPath:  "phone").value as! String
-    //                if obj.key == self.userID {
-    //                    fetchedUser = User(dateOfBirth: dateOfBirth,          email: email, fullName: fullName, gender:        gender, nationalID: nationalID, password:      password, phone: phone)
-    //                        self.userFullName.text = fullName
-    //                }
-    //            }
-    //        }
-    //
-    //        return "\(fetchedUser.getFullName()) had a car accident"
-    //    }
-    
     func getNotifications() {
         let notificationsQueue = DispatchQueue.init(label: "notificationsQueue")
-        let userNameQueue = DispatchQueue.init(label: "userNameQueue")
         notificationsQueue.sync {
             ref.child("Notification").queryOrdered(byChild: "time").observe(.value) { snapshot in
                 self.allNotifications = []
@@ -105,12 +84,10 @@ class notificationCenterViewController: UIViewController {
                     let type = obj.childSnapshot(forPath:  "type").value as! String
                     let request_id = obj.childSnapshot(forPath:  "request_id").value as! String
                     
-               
                     
                     let alert = notification(title: title, subtitle: subtitle, body:body, date: date, time: time, type: type, sender: sender, receiver: receiver, request_id: request_id, notification_id: obj.key)
                     
                     if (alert.getReceiver() == Auth.auth().currentUser?.uid){
-                        
                         self.allNotifications.append(alert)
                         
                         switch alert.getType() {
@@ -135,6 +112,22 @@ class notificationCenterViewController: UIViewController {
 extension notificationCenterViewController: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard collectionView == filterCollectionView else{
+            let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(identifier: "notificationDetailsViewController") as! notificationDetailsViewController
+            let notifications: [notification]
+            
+            if all {
+                notifications = allNotifications
+            } else if emergency {
+                notifications = emergencyNotifications
+            } else{
+                notifications = wellbeingNotifications
+            }
+            
+            vc.notificationDetails = notifications[indexPath.row]
+            
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
             return
         }
         
@@ -183,6 +176,8 @@ extension notificationCenterViewController: UICollectionViewDataSource{
         guard collectionView == filterCollectionView else{
             let notificationCell = collectionView.dequeueReusableCell(withReuseIdentifier: "notificationCell", for: indexPath) as! notificationCollectionViewCell
             
+            notificationCell.delegate = self
+            
             notificationCell.configureCellView()
             notificationCell.configureButton()
             
@@ -207,9 +202,8 @@ extension notificationCenterViewController: UICollectionViewDataSource{
             return notificationCell
         }
         
-        let colors = [UIColor(red: 21.0/255.0, green: 143.0/255.0, blue: 211.0/255.0, alpha: 0.65),
-                      UIColor(red: 120.0/255.0, green: 120.0/255.0, blue: 120.0/255.0, alpha: 0.75),
-                      UIColor(red: 106.0/255.0, green: 61.0/255.0, blue: 142.0/255.0, alpha: 0.7)]
+        let colors = [UIColor(red: 49.0/255.0, green: 90.0/255.0, blue: 149.0/255.0, alpha: 1.0),
+                      UIColor(red: 120.0/255.0, green: 120.0/255.0, blue: 120.0/255.0, alpha: 0.75),]
         
         let backgroundView = UIView()
         let filterCell = collectionView.dequeueReusableCell(withReuseIdentifier: "filterCell", for: indexPath) as! filterCollectionViewCell
@@ -225,6 +219,7 @@ extension notificationCenterViewController: UICollectionViewDataSource{
         
         return filterCell
     }
+    
 }
 
 extension notificationCenterViewController: UICollectionViewDelegateFlowLayout{
@@ -236,18 +231,47 @@ extension notificationCenterViewController: UICollectionViewDelegateFlowLayout{
     }
 }
 
-extension UICollectionViewCell {
-    func configureCellView() {
-        let radius: CGFloat = 25
-        contentView.layer.cornerRadius = radius
-        contentView.layer.borderColor = UIColor.clear.cgColor
-        contentView.layer.masksToBounds = true
-        layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOffset = CGSize(width: 5, height: 5)
-        layer.shadowRadius = 25
-        layer.shadowOpacity = 0.25
-        layer.masksToBounds = false
-        layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: radius).cgPath
-        layer.cornerRadius = radius
+extension notificationCenterViewController: SwipeCollectionViewCellDelegate{
+    func collectionView(_ collectionView: UICollectionView, editActionsForItemAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+        guard orientation == .right else { return nil }
+        
+        let deleteAction = SwipeAction(style: .destructive, title: nil) { action, indexPath in
+            var notifications: [notification]
+            
+            if self.all {
+                notifications = self.allNotifications
+            } else if self.emergency {
+                notifications = self.emergencyNotifications
+            } else{
+                notifications = self.wellbeingNotifications
+            }
+            
+            self.ref.child("Notification").child(notifications[indexPath.row].getNotificationID()).removeValue()
+            action.fulfill(with: .delete)
+            
+        }
+        
+        deleteAction.backgroundColor = .clear.withAlphaComponent(0)
+        
+        return [deleteAction]
     }
+    
+    func visibleRect(for collectionView: UICollectionView) -> CGRect? {
+        return collectionView.safeAreaLayoutGuide.layoutFrame
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, editActionsOptionsForItemAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
+        var options = SwipeOptions()
+        options.expansionStyle = .destructive
+        options.transitionStyle = .border
+        options.backgroundColor = .clear
+                return options
+    }
+    
+    
+    
 }
+
+
+

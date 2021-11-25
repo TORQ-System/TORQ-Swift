@@ -23,5 +23,7 @@ target 'TORQ' do
   pod 'Firebase/Auth'
   pod 'SCLAlertView'
   pod 'IQKeyboardManagerSwift'
+# Latest release in CocoaPods
+pod 'SwipeCellKit'
 
 end

@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import SwipeCellKit
 
-class notificationCollectionViewCell: UICollectionViewCell {
+class notificationCollectionViewCell: SwipeCollectionViewCell {
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var time: UILabel!
     @IBOutlet weak var date: UILabel!
@@ -28,5 +29,23 @@ class notificationCollectionViewCell: UICollectionViewCell {
         gradientLayer.masksToBounds = true
         button.layer.insertSublayer(gradientLayer, at: 0)
         button.contentVerticalAlignment = .center
+    }
+    
+    func configureCellView() {
+        let radius: CGFloat = 25
+        
+        self.contentView.layer.cornerRadius = radius
+        self.contentView.layer.borderColor = UIColor.clear.cgColor
+        self.contentView.layer.backgroundColor = UIColor.white.cgColor
+        self.contentView.layer.masksToBounds = true
+        
+        self.layer.shadowColor = UIColor.black.cgColor
+        self.layer.shadowOffset = CGSize(width: 0, height: 3)
+        self.layer.shadowRadius = 15
+        self.layer.shadowOpacity = 0.25
+        self.layer.masksToBounds = false
+        self.layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: radius).cgPath
+        
+        self.layer.cornerRadius = radius
     }
 }

@@ -153,6 +153,8 @@ extension UIViewController {
                 }
             }
         }
+        
+        
     }
     
     func updateEmergencyContacts(userID: String){

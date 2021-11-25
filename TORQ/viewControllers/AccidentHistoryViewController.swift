@@ -166,7 +166,7 @@ class AccidentHistoryViewController: UIViewController {
             cell.map.addAnnotation(annotation)
 
             // if user taps on map
-            
+    
             let tap = CustomTapGestureRecognizer(target: self, action: #selector(goToLocation(sender:)))
             tap.lat = lat
             tap.long = long
@@ -181,6 +181,7 @@ class AccidentHistoryViewController: UIViewController {
                     cell.status.text = "Canceled"
                     cell.status.textColor = UIColor(red: 0.784, green: 0.267, blue: 0.337, alpha: 1)
                 }
+            
             // date formatting
             var date: String
             var alteredDate: String
@@ -227,9 +228,6 @@ extension AccidentHistoryViewController: UICollectionViewDelegateFlowLayout{
                 pin?.annotation = annotation
             }
 
-            
-            
-            
             return pin
         }
 
