@@ -15,6 +15,19 @@ class notificationDetailsViewController: UIViewController {
     //MARK: - @IBOutlets
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var detailsView: UIView!
+    @IBOutlet weak var requestStatus: UIView!
+    @IBOutlet weak var activeRequest: UIButton!
+    @IBOutlet weak var cancelledRequest: UIButton!
+    @IBOutlet weak var processedRequest: UIButton!
+    @IBOutlet weak var date: UILabel!
+    @IBOutlet weak var time: UILabel!
+    @IBOutlet weak var subtitle: UILabel!
+    @IBOutlet weak var notificationTitle: UILabel!
+    @IBOutlet weak var body: UILabel!
+    @IBOutlet weak var viewLocationButtonView: UIView!
+    @IBOutlet weak var cancelButton: UIView!
+    @IBOutlet weak var roundView: UIView!
+    @IBOutlet weak var from: UILabel!
     
     //MARK: - Variables
     var notificationDetails: notification!
@@ -27,9 +40,29 @@ class notificationDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         getRequest()
-        print(notificationDetails!)
-        // Do any additional setup after loading the view.
         configureDetailsView()
+        
+        if(notificationDetails.getType() == "emergency"){
+            self.ref.child("User").getData(completion:{error, snapshot in
+                guard error == nil else { return }
+                for user in snapshot.children{
+                    let obj = user as! DataSnapshot
+                    let dateOfBirth = obj.childSnapshot(forPath: "dateOfBirth").value as! String
+                    let email = obj.childSnapshot(forPath: "email").value as! String
+                    let fullName = obj.childSnapshot(forPath: "fullName").value as! String
+                    let gender = obj.childSnapshot(forPath: "gender").value as! String
+                    let nationalID = obj.childSnapshot(forPath: "nationalID").value as! String
+                    let password = obj.childSnapshot(forPath: "password").value as! String
+                    let phone = obj.childSnapshot(forPath:  "phone").value as! String
+                    if obj.key == self.notificationDetails.getSender() {
+                        print(fullName)
+                        DispatchQueue.main.async() {
+                            self.from.text = fullName
+                        }
+                    }
+                }
+            })
+        }
     }
     
     //MARK: - Functions
@@ -50,13 +83,43 @@ class notificationDetailsViewController: UIViewController {
         detailsView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         detailsView.layer.shouldRasterize = true
         detailsView.layer.rasterizationScale = UIScreen.main.scale
-        
-        
         detailsView.layer.shadowColor = UIColor.black.cgColor
         detailsView.layer.shadowOffset = CGSize(width: 0, height: -30)
         detailsView.layer.shadowRadius = 40
         detailsView.layer.shadowOpacity = 0.4
         detailsView.layer.masksToBounds = false
+        
+        notificationTitle.text = notificationDetails.getTitle()
+        body.text = notificationDetails.getBody()
+        
+        if notificationDetails.getType() == "emergency"{
+            subtitle.isHidden = true
+            //            updateFrom()
+            
+        } else {
+            from.text = "TORQ"
+            subtitle.text = notificationDetails.getSubtitle()
+        }
+        
+        date.text = notificationDetails.getDate()
+        time.text = notificationDetails.getTime()
+        
+    }
+    
+    func configureRequestStatus(){
+        detailsView.layer.cornerRadius = 70
+        detailsView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        detailsView.layer.shouldRasterize = true
+        detailsView.layer.rasterizationScale = UIScreen.main.scale
+        detailsView.layer.shadowColor = UIColor.black.cgColor
+        detailsView.layer.shadowOffset = CGSize(width: 0, height: -30)
+        detailsView.layer.shadowRadius = 40
+        detailsView.layer.shadowOpacity = 0.4
+        detailsView.layer.masksToBounds = false
+    }
+    
+    func updateFrom(){
+        
     }
     
     func getRequest(){
@@ -79,17 +142,24 @@ class notificationDetailsViewController: UIViewController {
                     print(request)
                     self.assignedRequest = Request(user_id: user_id, sensor_id: sensor_id, request_id: request_id, dateTime: time_stamp, longitude: longitude, latitude: latitude, vib: vib, rotation: rotation, status: status)
                     self.configureMapView()
+                    self.configureRequestStatus()
+                    
                 }
                 if (self.notificationDetails.getType() == "emergency" && self.notificationDetails.getSender() == request.getUserID() && request.getStatus() == "0" ){
                     print(request)
                     self.assignedRequest = Request(user_id: user_id, sensor_id: sensor_id, request_id: request_id, dateTime: time_stamp, longitude: longitude, latitude: latitude, vib: vib, rotation: rotation, status: status)
                     self.configureMapView()
+                    self.configureRequestStatus()
+                    
                 }
             }
         }
     }
     
     //MARK: - @IBActions
+    @IBAction func backPressed(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
     
     
 }
@@ -99,7 +169,6 @@ extension notificationDetailsViewController: MKMapViewDelegate{
         guard !(annotation is MKUserLocation)else{
             return nil
         }
-        
         var pin = mapView.dequeueReusableAnnotationView(withIdentifier: "requestPin")
         if pin == nil {
             pin = MKAnnotationView(annotation: annotation, reuseIdentifier: "requestPin")
