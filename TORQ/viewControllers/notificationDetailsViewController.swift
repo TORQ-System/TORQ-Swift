@@ -32,6 +32,8 @@ class notificationDetailsViewController: UIViewController {
     //MARK: - Variables
     var notificationDetails: notification!
     var assignedRequest: Request!
+    var cancelTap = UITapGestureRecognizer()
+    var locationTap = UITapGestureRecognizer()
     
     //MARK: - Constants
     let ref = Database.database().reference()
@@ -41,19 +43,15 @@ class notificationDetailsViewController: UIViewController {
         super.viewDidLoad()
         getRequest()
         configureDetailsView()
+        configureButtonsView()
+        configureTapGesture()
         
         if(notificationDetails.getType() == "emergency"){
             self.ref.child("User").getData(completion:{error, snapshot in
                 guard error == nil else { return }
                 for user in snapshot.children{
                     let obj = user as! DataSnapshot
-                    let dateOfBirth = obj.childSnapshot(forPath: "dateOfBirth").value as! String
-                    let email = obj.childSnapshot(forPath: "email").value as! String
                     let fullName = obj.childSnapshot(forPath: "fullName").value as! String
-                    let gender = obj.childSnapshot(forPath: "gender").value as! String
-                    let nationalID = obj.childSnapshot(forPath: "nationalID").value as! String
-                    let password = obj.childSnapshot(forPath: "password").value as! String
-                    let phone = obj.childSnapshot(forPath:  "phone").value as! String
                     if obj.key == self.notificationDetails.getSender() {
                         print(fullName)
                         DispatchQueue.main.async() {
@@ -66,16 +64,71 @@ class notificationDetailsViewController: UIViewController {
     }
     
     //MARK: - Functions
+    func configureTapGesture(){
+        /* When the user taps cancel */
+        cancelTap = UITapGestureRecognizer(target: self, action: #selector(self.cancelPressed(_:)))
+        cancelTap.numberOfTapsRequired = 1
+        cancelTap.numberOfTouchesRequired = 1
+        cancelButton.addGestureRecognizer(cancelTap)
+        cancelButton.isUserInteractionEnabled = true
+        
+        /* When the user taps view location */
+        locationTap = UITapGestureRecognizer(target: self, action: #selector(self.locationPressed(_:)))
+        locationTap.numberOfTapsRequired = 1
+        locationTap.numberOfTouchesRequired = 1
+        viewLocationButtonView.addGestureRecognizer(locationTap)
+        viewLocationButtonView.isUserInteractionEnabled = true
+    }
+    
+    func configureButtonsView(){
+        /* Adjust the view location button's UI */
+        viewLocationButtonView.layer.cornerRadius = 15
+        viewLocationButtonView.layer.masksToBounds = true
+        viewLocationButtonView.layer.shouldRasterize = true
+        viewLocationButtonView.layer.rasterizationScale = UIScreen.main.scale
+        viewLocationButtonView.layer.shadowColor = UIColor.black.cgColor
+        viewLocationButtonView.layer.shadowOffset = CGSize(width: 1, height: 2)
+        viewLocationButtonView.layer.shadowRadius = 5
+        viewLocationButtonView.layer.shadowOpacity = 0.25
+        viewLocationButtonView.layer.masksToBounds = false
+        
+ 
+        
+        /* Adjust the cancel button's UI */
+        roundView.layer.cornerRadius = 20
+        roundView.layer.shouldRasterize = true
+        roundView.layer.rasterizationScale = UIScreen.main.scale
+        
+        let gradient: CAGradientLayer = CAGradientLayer()
+        gradient.cornerRadius = 20
+        gradient.colors = [UIColor(red: 0.887, green: 0.436, blue: 0.501, alpha: 1).cgColor,
+                           UIColor(red: 0.75, green: 0.191, blue: 0.272, alpha: 1).cgColor]
+        gradient.locations = [0, 1]
+        gradient.startPoint = CGPoint(x: 0, y: 0)
+        gradient.endPoint = CGPoint(x: 1, y: 1)
+        gradient.frame = roundView.bounds
+        roundView.layer.insertSublayer(gradient, at: 0)
+    }
+    
+    
     func configureMapView(){
-        let pin = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(Double(assignedRequest.getLatitude())!), longitude: CLLocationDegrees(Double(assignedRequest.getLongitude())!)))
+        let pin = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(Double(assignedRequest.getLatitude())!),
+                                                                 longitude: CLLocationDegrees(Double(assignedRequest.getLongitude())!)))
         let annotation = MKPointAnnotation()
         annotation.coordinate = pin.coordinate
         annotation.title = "Accident"
         annotation.subtitle = "\(notificationDetails.getType())"
-        
         let coordinateRegion = MKCoordinateRegion(center: pin.coordinate, latitudinalMeters: 800, longitudinalMeters: 800)
         mapView.setRegion(coordinateRegion, animated: true)
         mapView.addAnnotation(annotation)
+    }
+    
+    @objc func cancelPressed(_ sender: UITapGestureRecognizer) {
+        print("cancel")
+    }
+    
+    @objc func locationPressed(_ sender: UITapGestureRecognizer) {
+        print("location")
     }
     
     func configureDetailsView(){
@@ -89,12 +142,12 @@ class notificationDetailsViewController: UIViewController {
         detailsView.layer.shadowOpacity = 0.4
         detailsView.layer.masksToBounds = false
         
+        
         notificationTitle.text = notificationDetails.getTitle()
         body.text = notificationDetails.getBody()
         
         if notificationDetails.getType() == "emergency"{
             subtitle.isHidden = true
-            //            updateFrom()
             
         } else {
             from.text = "TORQ"
@@ -107,19 +160,15 @@ class notificationDetailsViewController: UIViewController {
     }
     
     func configureRequestStatus(){
-        detailsView.layer.cornerRadius = 70
-        detailsView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-        detailsView.layer.shouldRasterize = true
-        detailsView.layer.rasterizationScale = UIScreen.main.scale
-        detailsView.layer.shadowColor = UIColor.black.cgColor
-        detailsView.layer.shadowOffset = CGSize(width: 0, height: -30)
-        detailsView.layer.shadowRadius = 40
-        detailsView.layer.shadowOpacity = 0.4
-        detailsView.layer.masksToBounds = false
-    }
-    
-    func updateFrom(){
-        
+        /* Set all status' gray color and basic config */
+        //        cancelledRequest.layer.cornerRadius = 30
+        //        detailsView.layer.shouldRasterize = true
+        //        detailsView.layer.rasterizationScale = UIScreen.main.scale
+        //        detailsView.layer.shadowColor = UIColor.black.cgColor
+        //        detailsView.layer.shadowOffset = CGSize(width: 0, height: -30)
+        //        detailsView.layer.shadowRadius = 40
+        //        detailsView.layer.shadowOpacity = 0.4
+        //        detailsView.layer.masksToBounds = false
     }
     
     func getRequest(){
@@ -160,8 +209,6 @@ class notificationDetailsViewController: UIViewController {
     @IBAction func backPressed(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
-    
-    
 }
 //MARK: - Extensions
 extension notificationDetailsViewController: MKMapViewDelegate{
