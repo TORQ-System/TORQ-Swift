@@ -2404,13 +2404,30 @@
                         <color key="selectedImageTintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="ZO9-hy-LlZ" kind="relationship" relationship="viewControllers" id="tf8-8v-BGx"/>
-                        <segue destination="Llq-F7-kSW" kind="relationship" relationship="viewControllers" id="Ct5-Nm-bIG"/>
+                        <segue destination="JE0-US-gZQ" kind="relationship" relationship="viewControllers" id="F3Z-9D-n6D"/>
+                        <segue destination="ZO9-hy-LlZ" kind="relationship" relationship="viewControllers" id="kBU-Dt-lN7"/>
+                        <segue destination="Llq-F7-kSW" kind="relationship" relationship="viewControllers" id="Cdm-xo-CtU"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ipo-s7-TUx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-4023" y="3484"/>
+        </scene>
+        <!--home-->
+        <scene sceneID="Kdo-Az-Nhh">
+            <objects>
+                <viewController id="JE0-US-gZQ" customClass="paramedicHomeViewController" customModule="TORQ" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="S2I-Ua-B45">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="jWO-Yu-f23"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="home" image="house" catalog="system" id="qQh-ML-Wa3"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="48A-YC-pLL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-4023" y="4178"/>
         </scene>
         <!--SOS-->
         <scene sceneID="BYv-bl-unE">
@@ -7284,6 +7301,7 @@ We may request access or permission to and track location-based information from
         <image name="gradientStar" width="163" height="167"/>
         <image name="gradientStethoscope" width="233" height="234"/>
         <image name="hand.raised" catalog="system" width="128" height="128"/>
+        <image name="house" catalog="system" width="128" height="106"/>
         <image name="house.fill" catalog="system" width="128" height="106"/>
         <image name="illustration1" width="1529" height="1021"/>
         <image name="illustration2" width="942" height="851"/>
