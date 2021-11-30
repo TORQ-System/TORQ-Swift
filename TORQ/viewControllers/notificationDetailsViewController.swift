@@ -16,9 +16,9 @@ class notificationDetailsViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var detailsView: UIView!
     @IBOutlet weak var requestStatus: UIView!
-    @IBOutlet weak var activeRequest: UIButton!
-    @IBOutlet weak var cancelledRequest: UIButton!
-    @IBOutlet weak var processedRequest: UIButton!
+    @IBOutlet weak var canceledRequest: UIView!
+    @IBOutlet weak var activeRequest: UIView!
+    @IBOutlet weak var processedRequest: UIView!
     @IBOutlet weak var date: UILabel!
     @IBOutlet weak var time: UILabel!
     @IBOutlet weak var subtitle: UILabel!
@@ -34,6 +34,7 @@ class notificationDetailsViewController: UIViewController {
     var assignedRequest: Request!
     var cancelTap = UITapGestureRecognizer()
     var locationTap = UITapGestureRecognizer()
+    var requestChanged = -1
     
     //MARK: - Constants
     let ref = Database.database().reference()
@@ -41,6 +42,7 @@ class notificationDetailsViewController: UIViewController {
     //MARK: - Overriden functions
     override func viewDidLoad() {
         super.viewDidLoad()
+        requestChanged = -1
         getRequest()
         configureDetailsView()
         configureButtonsView()
@@ -92,14 +94,11 @@ class notificationDetailsViewController: UIViewController {
         viewLocationButtonView.layer.shadowOpacity = 0.25
         viewLocationButtonView.layer.masksToBounds = false
         
- 
-        
         /* Adjust the cancel button's UI */
+        let gradient: CAGradientLayer = CAGradientLayer()
         roundView.layer.cornerRadius = 20
         roundView.layer.shouldRasterize = true
         roundView.layer.rasterizationScale = UIScreen.main.scale
-        
-        let gradient: CAGradientLayer = CAGradientLayer()
         gradient.cornerRadius = 20
         gradient.colors = [UIColor(red: 0.887, green: 0.436, blue: 0.501, alpha: 1).cgColor,
                            UIColor(red: 0.75, green: 0.191, blue: 0.272, alpha: 1).cgColor]
@@ -160,16 +159,77 @@ class notificationDetailsViewController: UIViewController {
     }
     
     func configureRequestStatus(){
-        /* Set all status' gray color and basic config */
-        //        cancelledRequest.layer.cornerRadius = 30
-        //        detailsView.layer.shouldRasterize = true
-        //        detailsView.layer.rasterizationScale = UIScreen.main.scale
-        //        detailsView.layer.shadowColor = UIColor.black.cgColor
-        //        detailsView.layer.shadowOffset = CGSize(width: 0, height: -30)
-        //        detailsView.layer.shadowRadius = 40
-        //        detailsView.layer.shadowOpacity = 0.4
-        //        detailsView.layer.masksToBounds = false
+        /* Set requests radius */
+        canceledRequest.layer.cornerRadius = canceledRequest.frame.height/2
+        activeRequest.layer.cornerRadius = activeRequest.frame.height/2
+        processedRequest.layer.cornerRadius = processedRequest.frame.height/2
+        
+        /* Set status color and dropshadow */
+        switch assignedRequest.getStatus() {
+        case "0":
+            setBackgroundColor(requestView: activeRequest, type: "blue")
+            setBackgroundColor(requestView: canceledRequest, type: "gray")
+            setBackgroundColor(requestView: processedRequest, type: "gray")
+            break
+        case "1":
+            setBackgroundColor(requestView: processedRequest, type: "red")
+            setBackgroundColor(requestView: activeRequest, type: "gray")
+            setBackgroundColor(requestView: canceledRequest, type: "gray")
+            break
+        case "2":
+            setBackgroundColor(requestView: canceledRequest, type: "yellow")
+            setBackgroundColor(requestView: activeRequest, type: "gray")
+            setBackgroundColor(requestView: processedRequest, type: "gray")
+            break
+        default:
+            break
+        }
     }
+    func setBackgroundColor(requestView: UIView, type: String){
+        let gradient = CAGradientLayer()
+        let color: [CGColor]?
+        let shadowColor: CGColor?
+        
+        if(type == "red"){
+            color = [UIColor(red: 0.871, green: 0.408, blue: 0.471, alpha: 1).cgColor,
+                     UIColor(red: 0.754, green: 0.149, blue: 0.231, alpha: 1).cgColor]
+            shadowColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 0.8).cgColor
+        } else if(type == "blue"){
+            color = [UIColor(red: 0.446, green: 0.667, blue: 0.812, alpha: 1).cgColor,
+                     UIColor(red: 0.192, green: 0.353, blue: 0.584, alpha: 1).cgColor]
+            shadowColor = UIColor(red: 0.318, green: 0.506, blue: 0.698, alpha: 0.8).cgColor
+        } else if type == "yellow"{
+            color = [UIColor(red: 1, green: 0.587, blue: 0, alpha: 1).cgColor,
+                     UIColor(red: 0.988, green: 0.762, blue: 0.442, alpha: 1).cgColor]
+            shadowColor = UIColor(red: 0.988, green: 0.741, blue: 0.384, alpha: 0.7).cgColor
+        } else{
+            color = [UIColor.gray.cgColor, UIColor.gray.cgColor]
+            shadowColor = UIColor.clear.cgColor
+        }
+        
+        requestView.backgroundColor = nil
+        gradient.colors = color!
+        gradient.startPoint = CGPoint(x: 0, y: 0)
+        gradient.endPoint = CGPoint(x: 1, y: 0)
+        gradient.frame = requestView.bounds
+        gradient.cornerRadius = requestView.frame.height/2
+        requestView.layer.shadowColor = shadowColor!
+        requestView.layer.shadowOffset = CGSize(width: 0, height: 0)
+        requestView.layer.shadowRadius = 15
+        requestView.layer.shadowOpacity = 1
+        requestView.layer.masksToBounds = false
+        guard requestChanged == 0 else {
+            requestView
+            requestView.layer.sublayers?[0].removeFromSuperlayer()
+            requestView.layer.insertSublayer(gradient, at: 0)
+            requestView.setNeedsDisplay()
+            return
+        }
+        requestView.layer.insertSublayer(gradient, at: 0)
+
+ 
+    }
+    
     
     func getRequest(){
         ref.child("Request").observe(.value) { snapshot in
@@ -192,14 +252,14 @@ class notificationDetailsViewController: UIViewController {
                     self.assignedRequest = Request(user_id: user_id, sensor_id: sensor_id, request_id: request_id, dateTime: time_stamp, longitude: longitude, latitude: latitude, vib: vib, rotation: rotation, status: status)
                     self.configureMapView()
                     self.configureRequestStatus()
-                    
+                    self.requestChanged+=1
                 }
                 if (self.notificationDetails.getType() == "emergency" && self.notificationDetails.getSender() == request.getUserID() && request.getStatus() == "0" ){
                     print(request)
                     self.assignedRequest = Request(user_id: user_id, sensor_id: sensor_id, request_id: request_id, dateTime: time_stamp, longitude: longitude, latitude: latitude, vib: vib, rotation: rotation, status: status)
                     self.configureMapView()
                     self.configureRequestStatus()
-                    
+                    self.requestChanged+=1
                 }
             }
         }
