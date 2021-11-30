@@ -74,6 +74,8 @@
 		BEF97539270AE07400325281 /* loginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF97538270AE07400325281 /* loginViewController.swift */; };
 		BEF9753B270AE0D100325281 /* userHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9753A270AE0D100325281 /* userHomeViewController.swift */; };
 		BEF9753D270AE0E500325281 /* paramedicHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9753C270AE0E500325281 /* paramedicHomeViewController.swift */; };
+		DA9535092754E39700D715A1 /* viewLiveLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9535082754E39600D715A1 /* viewLiveLocationViewController.swift */; };
+		DA95350B2754F23500D715A1 /* Paramedic.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA95350A2754F23500D715A1 /* Paramedic.swift */; };
 		FC4BF75E181535F7BB4C96B1 /* Pods_TORQTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D35DF5D9259C289028E18D8 /* Pods_TORQTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -175,6 +177,8 @@
 		BEF97538270AE07400325281 /* loginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginViewController.swift; sourceTree = "<group>"; };
 		BEF9753A270AE0D100325281 /* userHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userHomeViewController.swift; sourceTree = "<group>"; };
 		BEF9753C270AE0E500325281 /* paramedicHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = paramedicHomeViewController.swift; sourceTree = "<group>"; };
+		DA9535082754E39600D715A1 /* viewLiveLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewLiveLocationViewController.swift; sourceTree = "<group>"; };
+		DA95350A2754F23500D715A1 /* Paramedic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paramedic.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -248,6 +252,7 @@
 			isa = PBXGroup;
 			children = (
 				BE34F6A1270F31FB0093C633 /* Request.swift */,
+				DA95350A2754F23500D715A1 /* Paramedic.swift */,
 				BE82A5642748BE6E00C4C2B5 /* RequestAccident.swift */,
 				BE34F6A3270F32260093C633 /* SRCACenters.swift */,
 				BEC34A242728710C001E99E5 /* emergencyContact.swift */,
@@ -330,6 +335,7 @@
 			isa = PBXGroup;
 			children = (
 				BEF975112707292C00325281 /* signUpFirstViewController.swift */,
+				DA9535082754E39600D715A1 /* viewLiveLocationViewController.swift */,
 				BEF975132707293600325281 /* signUpSecondViewController.swift */,
 				BEF23052274856A10068B55A /* privacyPolicyViewController.swift */,
 				BEF23054274856B80068B55A /* termsAndConditionsViewController.swift */,
@@ -640,6 +646,7 @@
 				BEDC3C1C272681F40026948E /* notificationCenterViewController.swift in Sources */,
 				BED10860273EB52F0099EE15 /* profileTableViewCell.swift in Sources */,
 				BEF23059274864ED0068B55A /* editEmergencyContactViewController.swift in Sources */,
+				DA9535092754E39700D715A1 /* viewLiveLocationViewController.swift in Sources */,
 				BEF975142707293600325281 /* signUpSecondViewController.swift in Sources */,
 				BE34F6AB27118A800093C633 /* onboardingScreen1ViewController.swift in Sources */,
 				BE34F69D270F30B70093C633 /* requestCollectionViewCell.swift in Sources */,
@@ -671,6 +678,7 @@
 				BEF2304527483F680068B55A /* SOSRequestViewController.swift in Sources */,
 				BEF2304D274847060068B55A /* viewSOSRequestDetailsViewController.swift in Sources */,
 				BEF975122707292C00325281 /* signUpFirstViewController.swift in Sources */,
+				DA95350B2754F23500D715A1 /* Paramedic.swift in Sources */,
 				BE9CDAE72729D78200CDD4B4 /* MedicalReport.swift in Sources */,
 				BEE76D2C272D3139001390D2 /* addEmergencyContactViewController.swift in Sources */,
 				BE34F6A9271182FA0093C633 /* launchViewController.swift in Sources */,
