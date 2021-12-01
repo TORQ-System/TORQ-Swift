@@ -199,11 +199,11 @@ class notificationDetailsViewController: UIViewController {
                      UIColor(red: 0.192, green: 0.353, blue: 0.584, alpha: 1).cgColor]
             shadowColor = UIColor(red: 0.318, green: 0.506, blue: 0.698, alpha: 0.8).cgColor
         } else if type == "yellow"{
-            color = [UIColor(red: 1, green: 0.587, blue: 0, alpha: 1).cgColor,
-                     UIColor(red: 0.988, green: 0.762, blue: 0.442, alpha: 1).cgColor]
+            color = [UIColor(red: 0.988, green: 0.762, blue: 0.442, alpha: 1).cgColor,
+                     UIColor(red: 1, green: 0.587, blue: 0, alpha: 1).cgColor,]
             shadowColor = UIColor(red: 0.988, green: 0.741, blue: 0.384, alpha: 0.7).cgColor
         } else{
-            color = [UIColor.gray.cgColor, UIColor.gray.cgColor]
+            color = [UIColor.lightGray.cgColor, UIColor.lightGray.cgColor]
             shadowColor = UIColor.clear.cgColor
         }
         
@@ -219,7 +219,6 @@ class notificationDetailsViewController: UIViewController {
         requestView.layer.shadowOpacity = 1
         requestView.layer.masksToBounds = false
         guard requestChanged == 0 else {
-            requestView
             requestView.layer.sublayers?[0].removeFromSuperlayer()
             requestView.layer.insertSublayer(gradient, at: 0)
             requestView.setNeedsDisplay()
@@ -248,18 +247,18 @@ class notificationDetailsViewController: UIViewController {
                 let request = Request(user_id: user_id, sensor_id: sensor_id, request_id: request_id, dateTime: time_stamp, longitude: longitude, latitude: latitude, vib: vib, rotation: rotation, status: status)
                 
                 if (self.notificationDetails.getType() == "wellbeing" && self.notificationDetails.getRequestID() == request.getRequestID()){
+                    self.requestChanged+=1
                     print(request)
                     self.assignedRequest = Request(user_id: user_id, sensor_id: sensor_id, request_id: request_id, dateTime: time_stamp, longitude: longitude, latitude: latitude, vib: vib, rotation: rotation, status: status)
                     self.configureMapView()
                     self.configureRequestStatus()
-                    self.requestChanged+=1
                 }
                 if (self.notificationDetails.getType() == "emergency" && self.notificationDetails.getSender() == request.getUserID() && request.getStatus() == "0" ){
+                    self.requestChanged+=1
                     print(request)
                     self.assignedRequest = Request(user_id: user_id, sensor_id: sensor_id, request_id: request_id, dateTime: time_stamp, longitude: longitude, latitude: latitude, vib: vib, rotation: rotation, status: status)
                     self.configureMapView()
                     self.configureRequestStatus()
-                    self.requestChanged+=1
                 }
             }
         }
