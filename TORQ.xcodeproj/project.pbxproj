@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		3DDC91A2940F7463283FBFE6 /* Pods_TORQ_TORQUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 404C9ACD593D6364A24EFF38 /* Pods_TORQ_TORQUITests.framework */; };
 		8FA67A0F52162B410B79BAF0 /* Pods_TORQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9EC7D60F5128DCF29B3517 /* Pods_TORQ.framework */; };
+		A35CB58E2757C43700E1D846 /* emergencyNumbersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35CB58D2757C43700E1D846 /* emergencyNumbersViewController.swift */; };
+		A35CB5902757C83200E1D846 /* emergencyNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35CB58F2757C83200E1D846 /* emergencyNumber.swift */; };
+		A35CB5922757CA0200E1D846 /* emergencyNumberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35CB5912757CA0200E1D846 /* emergencyNumberTableViewCell.swift */; };
 		BE04B6D2272DA7B700EEE3EE /* requestReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE04B6D1272DA7B700EEE3EE /* requestReportViewController.swift */; };
 		BE04B6D4272DAA0600EEE3EE /* hospitalsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE04B6D3272DAA0600EEE3EE /* hospitalsViewController.swift */; };
 		BE34F69D270F30B70093C633 /* requestCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE34F69C270F30B70093C633 /* requestCollectionViewCell.swift */; };
@@ -104,6 +107,9 @@
 		404C9ACD593D6364A24EFF38 /* Pods_TORQ_TORQUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TORQ_TORQUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9850D36D8AB92301B2DFBE7D /* Pods-TORQ-TORQUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TORQ-TORQUITests.debug.xcconfig"; path = "Target Support Files/Pods-TORQ-TORQUITests/Pods-TORQ-TORQUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		9F0737DF72CCC79CA95FDC8D /* Pods-TORQ.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TORQ.debug.xcconfig"; path = "Target Support Files/Pods-TORQ/Pods-TORQ.debug.xcconfig"; sourceTree = "<group>"; };
+		A35CB58D2757C43700E1D846 /* emergencyNumbersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = emergencyNumbersViewController.swift; sourceTree = "<group>"; };
+		A35CB58F2757C83200E1D846 /* emergencyNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = emergencyNumber.swift; sourceTree = "<group>"; };
+		A35CB5912757CA0200E1D846 /* emergencyNumberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = emergencyNumberTableViewCell.swift; sourceTree = "<group>"; };
 		BE04B6D1272DA7B700EEE3EE /* requestReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = requestReportViewController.swift; sourceTree = "<group>"; };
 		BE04B6D3272DAA0600EEE3EE /* hospitalsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = hospitalsViewController.swift; sourceTree = "<group>"; };
 		BE34F69C270F30B70093C633 /* requestCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = requestCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -240,6 +246,7 @@
 				BEF23050274847BB0068B55A /* sosRequestTableViewCell.swift */,
 				BEF2305C27486C1F0068B55A /* notificationCollectionViewCell.swift */,
 				BEF2305E27486CA10068B55A /* filterCollectionViewCell.swift */,
+				A35CB5912757CA0200E1D846 /* emergencyNumberTableViewCell.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -256,6 +263,7 @@
 				BE64405B272C6F2B0051662F /* Sensor.swift */,
 				BEF230482748418E0068B55A /* SOSRequest.swift */,
 				BEF2305A27486BF50068B55A /* notification.swift */,
+				A35CB58F2757C83200E1D846 /* emergencyNumber.swift */,
 			);
 			path = modules;
 			sourceTree = "<group>";
@@ -364,6 +372,7 @@
 				BEF23060274873690068B55A /* changePasswordViewController.swift */,
 				BEF23062274899060068B55A /* editAccountViewController.swift */,
 				BE82A5662748DD0300C4C2B5 /* selectHealthCareCenterViewController.swift */,
+				A35CB58D2757C43700E1D846 /* emergencyNumbersViewController.swift */,
 			);
 			path = viewControllers;
 			sourceTree = "<group>";
@@ -627,12 +636,14 @@
 				BE34F6A4270F32260093C633 /* SRCACenters.swift in Sources */,
 				BEE76D2A272D2C52001390D2 /* ECCollectionViewCell.swift in Sources */,
 				BEC34A2327284BCB001E99E5 /* resetPasswordViewController.swift in Sources */,
+				A35CB58E2757C43700E1D846 /* emergencyNumbersViewController.swift in Sources */,
 				BE9CDAE92729F66A00CDD4B4 /* User.swift in Sources */,
 				BE34F6A2270F31FB0093C633 /* Request.swift in Sources */,
 				BEF230572748599C0068B55A /* editMedicalReportViewController.swift in Sources */,
 				BEF230492748418E0068B55A /* SOSRequest.swift in Sources */,
 				BEDC3C18272653610026948E /* servicesCollectionViewCell.swift in Sources */,
 				BE04B6D2272DA7B700EEE3EE /* requestReportViewController.swift in Sources */,
+				A35CB5902757C83200E1D846 /* emergencyNumber.swift in Sources */,
 				BED10862274148040099EE15 /* AccidentHistoryViewController.swift in Sources */,
 				BE64405E272CBD080051662F /* addMedicalReportViewController.swift in Sources */,
 				BEF9751B2707D63A00325281 /* dateExtension.swift in Sources */,
@@ -674,6 +685,7 @@
 				BE9CDAE72729D78200CDD4B4 /* MedicalReport.swift in Sources */,
 				BEE76D2C272D3139001390D2 /* addEmergencyContactViewController.swift in Sources */,
 				BE34F6A9271182FA0093C633 /* launchViewController.swift in Sources */,
+				A35CB5922757CA0200E1D846 /* emergencyNumberTableViewCell.swift in Sources */,
 				BEF2305D27486C1F0068B55A /* notificationCollectionViewCell.swift in Sources */,
 				BEF23055274856B80068B55A /* termsAndConditionsViewController.swift in Sources */,
 				BE9CDAE527297FD100CDD4B4 /* viewMedicalReportViewController.swift in Sources */,
@@ -854,13 +866,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Q839S77BZ7;
+				DEVELOPMENT_TEAM = KLG5737U6K;
 				INFOPLIST_FILE = TORQ/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Alsulayfih.torq;
+				PRODUCT_BUNDLE_IDENTIFIER = torq.com.swift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -874,13 +886,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Q839S77BZ7;
+				DEVELOPMENT_TEAM = KLG5737U6K;
 				INFOPLIST_FILE = TORQ/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Alsulayfih.torq;
+				PRODUCT_BUNDLE_IDENTIFIER = torq.com.swift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
