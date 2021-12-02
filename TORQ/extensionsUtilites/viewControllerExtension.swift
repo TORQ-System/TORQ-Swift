@@ -99,7 +99,7 @@ extension UIViewController {
         let searchQueue = DispatchQueue.init(label: "searchQueue")
         let _ = DispatchQueue.init(label: "updateQueue")
         
-        searchQueue.sync {
+        _ = searchQueue.sync {
             ref.child("EmergencyContact").observe(.value) { snapshot in
                 for contact in snapshot.children{
                     let obj = contact as! DataSnapshot
@@ -308,7 +308,7 @@ extension UIViewController {
         let ref = Database.database().reference()
         let searchQueue = DispatchQueue.init(label: "searchQueue")
         let retrunQueue = DispatchQueue.init(label: "returnQueue")
-        searchQueue.sync {
+        _ = searchQueue.sync {
             ref.child("Request").observe(.value) { snapshot in
                 for request in snapshot.children{
                     let obj = request as! DataSnapshot

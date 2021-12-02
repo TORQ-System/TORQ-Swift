@@ -117,23 +117,9 @@ class notificationDetailsViewController: UIViewController {
         annotation.coordinate = pin.coordinate
         annotation.title = "Accident"
         annotation.subtitle = "\(notificationDetails.getType())"
-        let coordinateRegion = MKCoordinateRegion(center: pin.coordinate, latitudinalMeters: 800, longitudinalMeters: 800)
+        let coordinateRegion = MKCoordinateRegion(center: pin.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
         mapView.setRegion(coordinateRegion, animated: true)
         mapView.addAnnotation(annotation)
-    }
-    
-    @objc func cancelPressed(_ sender: UITapGestureRecognizer) {
-        print("cancel")
-    }
-    
-    @objc func locationPressed(_ sender: UITapGestureRecognizer) {
-        print("location")
-        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(identifier: "viewLocationViewController") as! viewLocationViewController
-        vc.latitude = Double(assignedRequest.getLatitude())
-        vc.longitude = Double(assignedRequest.getLatitude())
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: true, completion: nil)
     }
     
     func configureDetailsView(){
@@ -266,6 +252,20 @@ class notificationDetailsViewController: UIViewController {
     @IBAction func backPressed(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
+    
+    @objc func cancelPressed(_ sender: UITapGestureRecognizer) {
+        print("cancel")
+    }
+    
+    @objc func locationPressed(_ sender: UITapGestureRecognizer) {
+        print("location")
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(identifier: "viewLocationViewController") as! viewLocationViewController
+        vc.latitude = Double(assignedRequest.getLatitude())
+        vc.longitude = Double(assignedRequest.getLongitude())
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
+    }
 }
 
 //MARK: - Extensions
@@ -286,3 +286,5 @@ extension notificationDetailsViewController: MKMapViewDelegate{
         return pin
     }
 }
+
+

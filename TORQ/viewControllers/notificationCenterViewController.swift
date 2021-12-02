@@ -66,7 +66,7 @@ class notificationCenterViewController: UIViewController {
     func getNotifications() {
         let notificationsQueue = DispatchQueue.init(label: "notificationsQueue")
         _ = notificationsQueue.sync {
-            ref.child("Notification").queryOrdered(byChild: "time").observe(.value) { snapshot in
+            ref.child("Notification").observe(.value) { snapshot in
                 self.allNotifications = []
                 self.emergencyNotifications = []
                 self.wellbeingNotifications = []
@@ -103,6 +103,14 @@ class notificationCenterViewController: UIViewController {
                 self.notificationCollectionView.reloadData()
             }
         }
+    }
+    
+    @objc func viewDetails(_ sender: ViewNotificationTapGesture) {
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(identifier: "notificationDetailsViewController") as! notificationDetailsViewController
+        vc.notificationDetails = sender.notificationDetails
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
     }
 }
 
@@ -197,6 +205,11 @@ extension notificationCenterViewController: UICollectionViewDataSource{
             notificationCell.time.text = notifications[indexPath.row].getTime()
             notificationCell.date.text = notifications[indexPath.row].getDate()
             
+            let viewDetails = ViewNotificationTapGesture(target: self, action: #selector(self.viewDetails(_:)))
+            viewDetails.notificationDetails = notifications[indexPath.row]
+            notificationCell.button.addGestureRecognizer(viewDetails)
+            notificationCell.button.isUserInteractionEnabled = true
+            
             return notificationCell
         }
         
@@ -205,8 +218,7 @@ extension notificationCenterViewController: UICollectionViewDataSource{
         
         let backgroundView = UIView()
         let filterCell = collectionView.dequeueReusableCell(withReuseIdentifier: "filterCell", for: indexPath) as! filterCollectionViewCell
-        
-        
+                
         filterCell.layer.cornerRadius = 15
         filterCell.layer.masksToBounds = true
         filterCell.filterLabel.text = filterBy[indexPath.row]
@@ -249,7 +261,6 @@ extension notificationCenterViewController: SwipeCollectionViewCellDelegate{
             
         }
         
-        deleteAction.backgroundColor = .clear.withAlphaComponent(0)
         
         return [deleteAction]
     }
@@ -263,13 +274,13 @@ extension notificationCenterViewController: SwipeCollectionViewCellDelegate{
         var options = SwipeOptions()
         options.expansionStyle = .destructive
         options.transitionStyle = .drag
-        options.backgroundColor = .clear
-                return options
+        return options
     }
-    
-    
     
 }
 
-
+//MARK: - Classes
+class ViewNotificationTapGesture: UITapGestureRecognizer {
+    var notificationDetails: notification?
+}
 
