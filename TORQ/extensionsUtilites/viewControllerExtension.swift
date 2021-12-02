@@ -15,7 +15,7 @@ extension UIViewController {
         let ref = Database.database().reference()
         let sendRequestQueue = DispatchQueue.init(label: "sendRequestQueue")
         
-        sendRequestQueue.sync {
+        _ = sendRequestQueue.sync {
             ref.child("Request").observe(.childAdded, with: { snapshot in
                 let obj = snapshot
                 let latitude = obj.childSnapshot(forPath: "latitude").value as! String

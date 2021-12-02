@@ -42,6 +42,7 @@ class notificationDetailsViewController: UIViewController {
     //MARK: - Overriden functions
     override func viewDidLoad() {
         super.viewDidLoad()
+        cancelButton.isHidden = true
         requestChanged = -1
         getRequest()
         configureDetailsView()
@@ -109,7 +110,6 @@ class notificationDetailsViewController: UIViewController {
         roundView.layer.insertSublayer(gradient, at: 0)
     }
     
-    
     func configureMapView(){
         let pin = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(Double(assignedRequest.getLatitude())!),
                                                                  longitude: CLLocationDegrees(Double(assignedRequest.getLongitude())!)))
@@ -128,6 +128,12 @@ class notificationDetailsViewController: UIViewController {
     
     @objc func locationPressed(_ sender: UITapGestureRecognizer) {
         print("location")
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(identifier: "viewLocationViewController") as! viewLocationViewController
+        vc.latitude = Double(assignedRequest.getLatitude())
+        vc.longitude = Double(assignedRequest.getLatitude())
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
     }
     
     func configureDetailsView(){
@@ -141,13 +147,11 @@ class notificationDetailsViewController: UIViewController {
         detailsView.layer.shadowOpacity = 0.4
         detailsView.layer.masksToBounds = false
         
-        
         notificationTitle.text = notificationDetails.getTitle()
         body.text = notificationDetails.getBody()
         
         if notificationDetails.getType() == "emergency"{
             subtitle.isHidden = true
-            
         } else {
             from.text = "TORQ"
             subtitle.text = notificationDetails.getSubtitle()
@@ -170,21 +174,25 @@ class notificationDetailsViewController: UIViewController {
             setBackgroundColor(requestView: activeRequest, type: "blue")
             setBackgroundColor(requestView: canceledRequest, type: "gray")
             setBackgroundColor(requestView: processedRequest, type: "gray")
+            cancelButton.isHidden = true
             break
         case "1":
             setBackgroundColor(requestView: processedRequest, type: "red")
             setBackgroundColor(requestView: activeRequest, type: "gray")
             setBackgroundColor(requestView: canceledRequest, type: "gray")
+            cancelButton.isHidden = false
             break
         case "2":
             setBackgroundColor(requestView: canceledRequest, type: "yellow")
             setBackgroundColor(requestView: activeRequest, type: "gray")
             setBackgroundColor(requestView: processedRequest, type: "gray")
+            cancelButton.isHidden = true
             break
         default:
             break
         }
     }
+    
     func setBackgroundColor(requestView: UIView, type: String){
         let gradient = CAGradientLayer()
         let color: [CGColor]?
@@ -226,9 +234,8 @@ class notificationDetailsViewController: UIViewController {
             return
         }
         
-        requestView.layer.insertSublayer(gradient, at: 0) 
+        requestView.layer.insertSublayer(gradient, at: 0)
     }
-    
     
     func getRequest(){
         ref.child("Request").observe(.value) { snapshot in
@@ -243,7 +250,7 @@ class notificationDetailsViewController: UIViewController {
                 let time_stamp = obj.childSnapshot(forPath: "time_stamp").value as! String
                 let user_id = obj.childSnapshot(forPath: "user_id").value as! String
                 let vib = obj.childSnapshot(forPath: "vib").value as! String
-                                
+                
                 if self.notificationDetails.getRequestID() == request_id{
                     print(request)
                     self.requestChanged+=1
