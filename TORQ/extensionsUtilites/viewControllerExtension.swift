@@ -30,7 +30,6 @@ extension UIViewController {
                 
                 let userRequest = Request(user_id: user_id, sensor_id: sensor_id, request_id: request_id, dateTime: time_stamp, longitude: longitude, latitude: latitude, vib: vib, rotation: rotation, status: status)
                 
-                
                 if (userRequest.getUserID()) == userID && (userRequest.getStatus() == "0"){
                     var center = UNUserNotificationCenter.current()
                     center = UNUserNotificationCenter.current()
@@ -145,7 +144,8 @@ extension UIViewController {
                                 let month = calendar.component(.month, from: date)
                                 let year = calendar.component(.year, from: date)
                                 
-                                ref.child("Notification").childByAutoId().setValue(["title":content.title, "subtitle": "none", "body":content.body, "date": "\(day)-\(month)-\(year)", "time": "\(hour):\(minutes):\(seconds)", "type": "emergency", "sender":senderID, "receiver": receiverID, "request_id": "NA"])
+                                let notificationRef = ref.child("Notification").childByAutoId()
+                                notificationRef.setValue(["title":content.title, "subtitle": "none", "body":content.body, "date": "\(day)-\(month)-\(year)", "time": "\(hour):\(minutes):\(seconds)", "type": "emergency", "sender":senderID, "receiver": receiverID, "request_id": self.getRequestID(sender: senderID, notif: notificationRef.key!)])
                             }
                         }
                         self.getAccidentLocation(senderID: emergencyContact.getSenderID())
@@ -153,8 +153,38 @@ extension UIViewController {
                 }
             }
         }
-        
-        
+    }
+    
+    func getRequestID(sender: String, notif: String) -> String{
+        let ref = Database.database().reference()
+        let searchRequestQueue = DispatchQueue.init(label: "searchRequestQueue")
+        searchRequestQueue.sync {
+            ref.child("Request").observe(.value) { snapshot in
+                for request in snapshot.children{
+                    let obj = request as! DataSnapshot
+                    let latitude = obj.childSnapshot(forPath: "latitude").value as! String
+                    let longitude = obj.childSnapshot(forPath: "longitude").value as! String
+                    let request_id = obj.childSnapshot(forPath: "request_id").value as! String
+                    let rotation = obj.childSnapshot(forPath: "rotation").value as! String
+                    let sensor_id = obj.childSnapshot(forPath: "sensor_id").value as! String
+                    let status = obj.childSnapshot(forPath: "status").value as! String
+                    let time_stamp = obj.childSnapshot(forPath: "time_stamp").value as! String
+                    let user_id = obj.childSnapshot(forPath: "user_id").value as! String
+                    let vib = obj.childSnapshot(forPath: "vib").value as! String
+                    
+                    let request = Request(user_id: user_id, sensor_id: sensor_id, request_id: request_id, dateTime: time_stamp, longitude: longitude, latitude: latitude, vib: vib, rotation: rotation, status: status)
+                    
+                    if (request.getUserID()) == sender && (request.getStatus() == "0"){
+                        ref.child("Notification").child(notif).updateChildValues(["request_id": request.getRequestID()]) {(error, ref) in
+                            if let error = error {
+                                print("Data could not be saved: \(error.localizedDescription).")
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return "NA"
     }
     
     func updateEmergencyContacts(userID: String){

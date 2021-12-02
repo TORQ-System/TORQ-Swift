@@ -28,7 +28,6 @@ class notificationCenterViewController: UIViewController {
     var wellbeing = false
     var usesTallCells = true
     
-    
     //MARK: - Constants
     let filterBy = ["All", "From Contacts", "From TORQ"]
     
@@ -40,7 +39,6 @@ class notificationCenterViewController: UIViewController {
         filterCollectionView.selectItem(at: indexPath, animated: true, scrollPosition: .top)
         getNotifications()
         configureGradient()
-        
     }
     
     //MARK: - Functions
@@ -67,7 +65,7 @@ class notificationCenterViewController: UIViewController {
     
     func getNotifications() {
         let notificationsQueue = DispatchQueue.init(label: "notificationsQueue")
-        notificationsQueue.sync {
+        _ = notificationsQueue.sync {
             ref.child("Notification").queryOrdered(byChild: "time").observe(.value) { snapshot in
                 self.allNotifications = []
                 self.emergencyNotifications = []
@@ -264,7 +262,7 @@ extension notificationCenterViewController: SwipeCollectionViewCellDelegate{
     func collectionView(_ collectionView: UICollectionView, editActionsOptionsForItemAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
         var options = SwipeOptions()
         options.expansionStyle = .destructive
-        options.transitionStyle = .border
+        options.transitionStyle = .drag
         options.backgroundColor = .clear
                 return options
     }

@@ -218,15 +218,15 @@ class notificationDetailsViewController: UIViewController {
         requestView.layer.shadowRadius = 15
         requestView.layer.shadowOpacity = 1
         requestView.layer.masksToBounds = false
+        
         guard requestChanged == 0 else {
             requestView.layer.sublayers?[0].removeFromSuperlayer()
             requestView.layer.insertSublayer(gradient, at: 0)
             requestView.setNeedsDisplay()
             return
         }
-        requestView.layer.insertSublayer(gradient, at: 0)
-
- 
+        
+        requestView.layer.insertSublayer(gradient, at: 0) 
     }
     
     
@@ -243,19 +243,10 @@ class notificationDetailsViewController: UIViewController {
                 let time_stamp = obj.childSnapshot(forPath: "time_stamp").value as! String
                 let user_id = obj.childSnapshot(forPath: "user_id").value as! String
                 let vib = obj.childSnapshot(forPath: "vib").value as! String
-                
-                let request = Request(user_id: user_id, sensor_id: sensor_id, request_id: request_id, dateTime: time_stamp, longitude: longitude, latitude: latitude, vib: vib, rotation: rotation, status: status)
-                
-                if (self.notificationDetails.getType() == "wellbeing" && self.notificationDetails.getRequestID() == request.getRequestID()){
-                    self.requestChanged+=1
+                                
+                if self.notificationDetails.getRequestID() == request_id{
                     print(request)
-                    self.assignedRequest = Request(user_id: user_id, sensor_id: sensor_id, request_id: request_id, dateTime: time_stamp, longitude: longitude, latitude: latitude, vib: vib, rotation: rotation, status: status)
-                    self.configureMapView()
-                    self.configureRequestStatus()
-                }
-                if (self.notificationDetails.getType() == "emergency" && self.notificationDetails.getSender() == request.getUserID() && request.getStatus() == "0" ){
                     self.requestChanged+=1
-                    print(request)
                     self.assignedRequest = Request(user_id: user_id, sensor_id: sensor_id, request_id: request_id, dateTime: time_stamp, longitude: longitude, latitude: latitude, vib: vib, rotation: rotation, status: status)
                     self.configureMapView()
                     self.configureRequestStatus()
@@ -269,6 +260,7 @@ class notificationDetailsViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
 }
+
 //MARK: - Extensions
 extension notificationDetailsViewController: MKMapViewDelegate{
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
