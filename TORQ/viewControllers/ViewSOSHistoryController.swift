@@ -18,8 +18,7 @@ class ViewSOSHistoryController: UIViewController {
     var requests: [SOSRequest] = []
 
     var ref = Database.database().reference()
-    var userID = ""
-
+    var userID: String?
     override func viewDidLoad() {
         super.viewDidLoad()
         background()
@@ -69,12 +68,16 @@ class ViewSOSHistoryController: UIViewController {
                 let request = SOSRequest(user_id: user_id, status: status, assignedCenter: center, sent: sent, longitude: lonitude, latitude: latitude, timeDate:time_stamp)
              
 
-                self.requests.append(request)
-                print(self.requests)
-               self.collectionViewSOS.reloadData()
+              
+                print(self.userID!)
+                if(self.userID! == request.user_id){
+                    print("should add")
 
-               // if(user_id==request.user_id){
-                //}
+                    self.requests.append(request)
+                    print(self.requests)
+                   self.collectionViewSOS.reloadData()
+                    
+                }
             }}
      
     }
