@@ -73,7 +73,7 @@ class emergencyNumbersViewController: UIViewController {
          background.layer.addSublayer(gradientLayer)
          background.layer.insertSublayer(gradientLayer, at: 0)
          // table view style
-         emergencyNumbers.layer.cornerRadius = 15
+//         emergencyNumbers.layer.cornerRadius = 15
          emergencyNumbers.separatorStyle = .none
          emergencyNumbers.showsVerticalScrollIndicator = false
     }
@@ -100,8 +100,8 @@ extension emergencyNumbersViewController : UITableViewDataSource {
         cell.phoneLabel.text = emergencyNumbersArray[indexPath.row].getPhone()
         
         // cell style
-//        cell.layer.cornerRadius = 20
-//        cell.clipsToBounds = true
+        cell.layer.cornerRadius = 20
+        cell.clipsToBounds = true
         
         return cell
     }
@@ -109,11 +109,6 @@ extension emergencyNumbersViewController : UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: true)
         guard let cell = tableView.cellForRow(at: indexPath) as? emergencyNumberTableViewCell else { return }
         
-//        guard let url = URL(string: "tel://\(cell.phoneLabel.text!)"),
-//               UIApplication.shared.canOpenURL(url) else {
-//               return
-//           }
-//           UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
     
 }

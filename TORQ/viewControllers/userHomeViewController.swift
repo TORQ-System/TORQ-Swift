@@ -29,7 +29,7 @@ class userHomeViewController: UIViewController {
     var userID: String?
     let locationManager = CLLocationManager()
     let ref = Database.database().reference()
-    let services = ["Medical Information","Emergency Contact","View Accidents History","SOS Request"]
+    let services = ["Emergency Numbers","Medical Information","Emergency Contacts","View Accidents History","SOS Request"]
     let center = UNUserNotificationCenter.current()
     var user: User? = nil
     var location: [String: String] = ["lon":"","lat":""]
@@ -330,24 +330,29 @@ extension userHomeViewController: UICollectionViewDelegate{
         var vc = UIViewController()
         switch indexPath.row {
         case 0:
+            let viewVC = storyboard.instantiateViewController(identifier: "emergencyNumbersViewController") as! emergencyNumbersViewController
+            viewVC.modalPresentationStyle = .fullScreen
+            vc = viewVC
+            break
+        case 1:
             let viewVC = storyboard.instantiateViewController(identifier: "viewMedicalReportViewController") as! viewMedicalReportViewController
             viewVC.modalPresentationStyle = .fullScreen
             viewVC.userID = userID
             viewVC.user = user
             vc = viewVC
             break
-        case 1:
+        case 2:
             let viewVC = storyboard.instantiateViewController(identifier: "ViewEmergencyContactViewController") as! ViewEmergencyContactViewController
             viewVC.modalPresentationStyle = .fullScreen
             viewVC.userID = userID
             vc = viewVC
             break
-        case 2:
-            let viewVC = storyboard.instantiateViewController(identifier: "emergencyNumbersViewController") as! emergencyNumbersViewController
+        case 3:
+            let viewVC = storyboard.instantiateViewController(identifier: "AccidentsHistory") as! AccidentHistoryViewController
             viewVC.modalPresentationStyle = .fullScreen
             vc = viewVC
             break
-        case 3:
+        case 4:
             let viewVC = storyboard.instantiateViewController(identifier: "SOSRequestViewController") as! SOSRequestViewController
             viewVC.modalPresentationStyle = .fullScreen
             viewVC.longitude = location["lon"]
@@ -383,12 +388,14 @@ extension userHomeViewController: UICollectionViewDataSource{
         cell.serviceLabel.text = services[indexPath.row]
         switch indexPath.row {
         case 0:
-            cell.serviceImage.image = UIImage(imageLiteralResourceName: "pulse")
-        case 1:
             cell.serviceImage.image = UIImage(imageLiteralResourceName: "telephone")
+        case 1:
+            cell.serviceImage.image = UIImage(imageLiteralResourceName: "pulse")
         case 2:
-            cell.serviceImage.image = UIImage(imageLiteralResourceName: "clock")
+            cell.serviceImage.image = UIImage(imageLiteralResourceName: "emergencyContacts")
         case 3:
+            cell.serviceImage.image = UIImage(imageLiteralResourceName: "clock")
+        case 4:
             cell.serviceImage.image = UIImage(imageLiteralResourceName: "sos")
         default:
             print("unknown")
