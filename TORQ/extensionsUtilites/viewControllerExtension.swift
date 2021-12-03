@@ -158,7 +158,7 @@ extension UIViewController {
     func getRequestID(sender: String, notif: String) -> String{
         let ref = Database.database().reference()
         let searchRequestQueue = DispatchQueue.init(label: "searchRequestQueue")
-        searchRequestQueue.sync {
+        _ = searchRequestQueue.sync {
             ref.child("Request").observe(.value) { snapshot in
                 for request in snapshot.children{
                     let obj = request as! DataSnapshot

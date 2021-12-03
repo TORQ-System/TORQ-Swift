@@ -9,6 +9,7 @@ import UIKit
 import Firebase
 import CoreLocation
 import MapKit
+import SCLAlertView
 
 class notificationDetailsViewController: UIViewController {
     
@@ -38,6 +39,15 @@ class notificationDetailsViewController: UIViewController {
     
     //MARK: - Constants
     let ref = Database.database().reference()
+    
+    //MARK: - Constants
+    let redUIColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
+    let blueUIColor = UIColor( red: 49/255, green: 90/255, blue:149/255, alpha: 1.0 )
+    let alertIcon = UIImage(named: "errorIcon")
+    let alertErrorIcon = UIImage(named: "errorIcon")
+    let alertSuccessIcon = UIImage(named: "successIcon")
+    let apperance = SCLAlertView.SCLAppearance(contentViewCornerRadius: 15,buttonCornerRadius: 7,hideWhenBackgroundViewIsTapped: true)
+    
     
     //MARK: - Overriden functions
     override func viewDidLoad() {
@@ -160,12 +170,16 @@ class notificationDetailsViewController: UIViewController {
             setBackgroundColor(requestView: activeRequest, type: "blue")
             setBackgroundColor(requestView: canceledRequest, type: "gray")
             setBackgroundColor(requestView: processedRequest, type: "gray")
-            cancelButton.isHidden = true
+            cancelButton.isHidden = false
             break
         case "1":
             setBackgroundColor(requestView: processedRequest, type: "red")
             setBackgroundColor(requestView: activeRequest, type: "gray")
             setBackgroundColor(requestView: canceledRequest, type: "gray")
+            guard notificationDetails.getType() == "emergency" else{
+                cancelButton.isHidden = true
+                return
+            }
             cancelButton.isHidden = false
             break
         case "2":
@@ -254,11 +268,19 @@ class notificationDetailsViewController: UIViewController {
     }
     
     @objc func cancelPressed(_ sender: UITapGestureRecognizer) {
-        print("cancel")
+        let alertView = SCLAlertView(appearance: self.apperance)
+        alertView.addButton("Cancel request", backgroundColor: self.redUIColor){
+            self.ref.child("Request").child("Req\(self.assignedRequest.getRequestID())").updateChildValues(["status": "2"]){(error, ref) in
+                if error == nil{
+                    SCLAlertView(appearance: self.apperance).showCustom("Sucess", subTitle: "Request has been cancelled", color: self.blueUIColor, icon: self.alertSuccessIcon!, closeButtonTitle: "Okay", animationStyle: SCLAnimationStyle.topToBottom)
+                    self.dismiss(animated: true, completion: nil)
+                }
+            }
+        }
+        alertView.showCustom("Are you sure?", subTitle: "A cancelled request will not go through to paramedics", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Go back", animationStyle: SCLAnimationStyle.topToBottom)
     }
     
     @objc func locationPressed(_ sender: UITapGestureRecognizer) {
-        print("location")
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(identifier: "viewLocationViewController") as! viewLocationViewController
         vc.latitude = Double(assignedRequest.getLatitude())

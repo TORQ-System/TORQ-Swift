@@ -27,7 +27,7 @@ class AccidentsViewController: UIViewController {
     //MARK: - Functions
     private func retreiveAccidents() -> Void{
         
-        DispatchQueue.global(qos: .background).sync{
+       _ = DispatchQueue.global(qos: .background).sync{
             ref.child("Request").observe(.value) { snapshot in
                 print(snapshot.value!)
                 for req in snapshot.children{

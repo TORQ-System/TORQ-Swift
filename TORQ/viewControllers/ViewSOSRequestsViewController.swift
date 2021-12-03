@@ -51,7 +51,7 @@ class ViewSOSRequestsViewController: UIViewController {
         //fetching sos requests from the database
         let requestsQueue = DispatchQueue.init(label: "requestsQueue")
         let usersQueue = DispatchQueue.init(label: "usersQueue")
-        requestsQueue.sync {
+        _ = requestsQueue.sync {
             ref.child("SOSRequests").queryOrdered(byChild: "time_date").observe(.value) { snapshot in
                 self.activeRequests = []
                 self.processedRequests = []
@@ -93,7 +93,7 @@ class ViewSOSRequestsViewController: UIViewController {
     private func fetchUsers(){
         // getting the user's information of sos requests
         let usersQueue = DispatchQueue.init(label: "usersQueue")
-        usersQueue.sync {
+        _=usersQueue.sync {
             ref.child("User").observe(.value) { snapshot in
                 self.users = []
                 for user in snapshot.children{

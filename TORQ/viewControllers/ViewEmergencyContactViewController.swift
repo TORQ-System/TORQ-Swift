@@ -37,7 +37,7 @@ class ViewEmergencyContactViewController: UIViewController {
         let ref = Database.database().reference()
         let searchQueue = DispatchQueue.init(label: "searchQueue")
         
-        searchQueue.sync {
+        _ = searchQueue.sync {
             ref.child("EmergencyContact").observe(.childAdded) { snapshot in
                 
                 let obj = snapshot.value as! [String: Any]

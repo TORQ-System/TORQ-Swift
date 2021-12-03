@@ -34,7 +34,7 @@ class AccidentHistoryViewController: UIViewController {
         
         let searchQueue = DispatchQueue.init(label: "searchQueue")
         
-        searchQueue.sync {
+       _ = searchQueue.sync {
             
             ref.child("Request").observe(.value) { snapshot in
                 self.accidentsArray = []

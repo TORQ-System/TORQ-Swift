@@ -256,7 +256,7 @@ class viewSOSRequestDetailsViewController: UIViewController {
     private func fetchMedicalReports(){
         // getting the user's Medical information
         let usersQueue = DispatchQueue.init(label: "usersQueue")
-        usersQueue.sync {
+        _ = usersQueue.sync {
             ref.child("MedicalReport").observe(.value) { snapshot in
                 self.MedicalReports = []
                 for report in snapshot.children{
@@ -302,7 +302,7 @@ class viewSOSRequestDetailsViewController: UIViewController {
     private func fetchSOSRequests(){
         // getting the user's SOS request's status
         let usersQueue = DispatchQueue.init(label: "usersQueue")
-        usersQueue.sync {
+        _ = usersQueue.sync {
             ref.child("SOSRequests").observe(.value) { snapshot in
                 for req in snapshot.children{
                     let obj = req as! DataSnapshot
