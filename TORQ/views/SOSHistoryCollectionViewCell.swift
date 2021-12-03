@@ -10,8 +10,11 @@ import MapKit
 
 class SOSHistoryCollectionViewCell: UICollectionViewCell {
     
-    
-    
+    @IBOutlet weak var Requestnum: UILabel!
+    @IBOutlet weak var CenterName: UILabel!
+    @IBOutlet weak var Date: UILabel!
+    @IBOutlet weak var status: UILabel!
+    @IBOutlet weak var map: MKMapView!
     
     override func layoutSubviews() {
         
