@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3DDC91A2940F7463283FBFE6 /* Pods_TORQ_TORQUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 404C9ACD593D6364A24EFF38 /* Pods_TORQ_TORQUITests.framework */; };
+		713836E4275B029D00E45FE1 /* notificationDetailsCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713836E3275B029D00E45FE1 /* notificationDetailsCardViewController.swift */; };
 		71D93C34274EE74E0089266C /* notificationDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D93C33274EE74D0089266C /* notificationDetailsViewController.swift */; };
 		8FA67A0F52162B410B79BAF0 /* Pods_TORQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9EC7D60F5128DCF29B3517 /* Pods_TORQ.framework */; };
 		BE04B6D2272DA7B700EEE3EE /* requestReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE04B6D1272DA7B700EEE3EE /* requestReportViewController.swift */; };
@@ -103,6 +104,7 @@
 		2FF5348CF2C51FD8DA9067F8 /* Pods-TORQTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TORQTests.release.xcconfig"; path = "Target Support Files/Pods-TORQTests/Pods-TORQTests.release.xcconfig"; sourceTree = "<group>"; };
 		3AAFD3CBF88AE59FE9BCC730 /* Pods-TORQ-TORQUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TORQ-TORQUITests.release.xcconfig"; path = "Target Support Files/Pods-TORQ-TORQUITests/Pods-TORQ-TORQUITests.release.xcconfig"; sourceTree = "<group>"; };
 		404C9ACD593D6364A24EFF38 /* Pods_TORQ_TORQUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TORQ_TORQUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		713836E3275B029D00E45FE1 /* notificationDetailsCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = notificationDetailsCardViewController.swift; sourceTree = "<group>"; };
 		71D93C33274EE74D0089266C /* notificationDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = notificationDetailsViewController.swift; sourceTree = "<group>"; };
 		9850D36D8AB92301B2DFBE7D /* Pods-TORQ-TORQUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TORQ-TORQUITests.debug.xcconfig"; path = "Target Support Files/Pods-TORQ-TORQUITests/Pods-TORQ-TORQUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		9F0737DF72CCC79CA95FDC8D /* Pods-TORQ.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TORQ.debug.xcconfig"; path = "Target Support Files/Pods-TORQ/Pods-TORQ.debug.xcconfig"; sourceTree = "<group>"; };
@@ -367,6 +369,7 @@
 				BEF23062274899060068B55A /* editAccountViewController.swift */,
 				BE82A5662748DD0300C4C2B5 /* selectHealthCareCenterViewController.swift */,
 				71D93C33274EE74D0089266C /* notificationDetailsViewController.swift */,
+				713836E3275B029D00E45FE1 /* notificationDetailsCardViewController.swift */,
 			);
 			path = viewControllers;
 			sourceTree = "<group>";
@@ -670,6 +673,7 @@
 				BEF2304B274846D80068B55A /* ViewSOSRequestsViewController.swift in Sources */,
 				BEF23063274899060068B55A /* editAccountViewController.swift in Sources */,
 				BE34F6A6270F327A0093C633 /* viewLocationViewController.swift in Sources */,
+				713836E4275B029D00E45FE1 /* notificationDetailsCardViewController.swift in Sources */,
 				BE34F69F270F31A00093C633 /* requestsViewController.swift in Sources */,
 				BEF2304527483F680068B55A /* SOSRequestViewController.swift in Sources */,
 				BEF2304D274847060068B55A /* viewSOSRequestDetailsViewController.swift in Sources */,
