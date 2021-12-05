@@ -1,23 +1,35 @@
 //
-//  SOSHistoryCollectionViewCell.swift
+//  HistorySOSCollectionViewCell.swift
 //  TORQ
 //
-//  Created by  Lama Alshahrani on 20/04/1443 AH.
+//  Created by  Lama Alshahrani on 29/04/1443 AH.
 //
 
 import UIKit
 import MapKit
 
-class SOSHistoryCollectionViewCell: UICollectionViewCell {
+class HistorySOSCollectionViewCell: UICollectionViewCell {
+ 
     
-    @IBOutlet weak var Requestnum: UILabel!
+    
+//    @IBOutlet weak var Requestnum: UILabel!
+//
+//    @IBOutlet weak var CenterName: UILabel!
+//
+//    @IBOutlet weak var status: UILabel!
+//    @IBOutlet weak var Date: UILabel!
+//    @IBOutlet weak var map: MKMapView!
+//    @IBOutlet weak var time: UILabel!
     @IBOutlet weak var CenterName: UILabel!
+    
     @IBOutlet weak var Date: UILabel!
+    @IBOutlet weak var Requestnum: UILabel!
     @IBOutlet weak var status: UILabel!
+    @IBOutlet weak var viewButten: UIButton!
     @IBOutlet weak var map: MKMapView!
     
     override func layoutSubviews() {
-
+        
         self.layer.cornerRadius = 15
         self.contentView.layer.cornerRadius = 15
         let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: 15)

@@ -355,10 +355,12 @@ extension userHomeViewController: UICollectionViewDelegate{
             vc = viewVC
             break
         case 4:
-            let viewVC = storyboard.instantiateViewController(identifier: "ViewSOSHistoryController") as! ViewSOSHistoryController
+            let viewVC = storyboard.instantiateViewController(identifier: "SOSHistoryViewController") as!
+            SOSHistoryViewController
             viewVC.modalPresentationStyle = .fullScreen
             viewVC.userID = userID
             vc = viewVC
+          
             break
         default:
             print("unKnown")
