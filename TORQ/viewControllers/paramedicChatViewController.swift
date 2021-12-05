@@ -8,7 +8,7 @@
 import UIKit
 
 class paramedicChatViewController: UIViewController {
-
+    
     
     //MARK: - @IBOutlets
     @IBOutlet weak var containerView: UIView!
@@ -16,13 +16,14 @@ class paramedicChatViewController: UIViewController {
     @IBOutlet weak var callButton: UIButton!
     
     //MARK: - Variables
+    var phoneNumber: String?
     
     //MARK: - Overriden Functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
-
+        
     }
     
     //MARK: - Functions
@@ -53,6 +54,13 @@ class paramedicChatViewController: UIViewController {
     
     @IBAction func callRequester(_ sender: Any) {
         
+        if let phoneCallURL = URL(string: "telprompt://\(phoneNumber!)") {
+            
+            let application:UIApplication = UIApplication.shared
+            if (application.canOpenURL(phoneCallURL)) {
+                application.open(phoneCallURL, options: [:], completionHandler: nil)
+            }
+        }
     }
     
 }
