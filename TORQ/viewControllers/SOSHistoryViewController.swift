@@ -97,7 +97,7 @@ class SOSHistoryViewController: UIViewController {
 
               
                 print(self.userID!)
-                if(self.userID! == request.user_id){
+                if(self.userID! == request.user_id ){
                     print("should add")
 
                     self.requests.append(request)
@@ -134,6 +134,18 @@ class SOSHistoryViewController: UIViewController {
  
 
 
+//MARK: - Extension
+extension SOSHistoryViewController: UICollectionViewDelegate{
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+//        let vc = storyboard.instantiateViewController(identifier: "requestReportViewController") as! requestReportViewController
+//     
+//        vc.modalPresentationStyle = .fullScreen
+//            self.present(vc, animated: true, completion: nil)}
+    }
+    
+}
 //MARK: - extinsions
 
     extension SOSHistoryViewController: UICollectionViewDataSource{
