@@ -41,11 +41,18 @@ class paramedicChatViewController: UIViewController {
         gradientLayer.position = containerView.center
         containerView.layer.addSublayer(gradientLayer)
         containerView.layer.insertSublayer(gradientLayer, at: 0)
+        
+        //2- call button
+        callButton.layer.cornerRadius = callButton.frame.width/2
     }
     
     //MARK: - @IBActions
     @IBAction func back(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func callRequester(_ sender: Any) {
+        
     }
     
 }
