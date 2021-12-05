@@ -6,15 +6,14 @@
 //
 
 import UIKit
-import SwipeCellKit
 
-class notificationCollectionViewCell: SwipeCollectionViewCell {
-    @IBOutlet weak var title: UILabel!
-    @IBOutlet weak var time: UILabel!
-    @IBOutlet weak var date: UILabel!
+class notificationTableViewCell: UITableViewCell {
     @IBOutlet weak var details: UILabel!
+    @IBOutlet weak var title: UILabel!
+    @IBOutlet weak var date: UILabel!
+    @IBOutlet weak var time: UILabel!
     @IBOutlet weak var button: UIButton!
-    
+    @IBOutlet weak var container: UIView!
     
     func configureButton(){
         button.backgroundColor = .clear
@@ -32,20 +31,43 @@ class notificationCollectionViewCell: SwipeCollectionViewCell {
     }
     
     func configureCellView() {
+        
+//        self.contentView.setCardView()
+
         let radius: CGFloat = 25
+        container.layer.cornerRadius = radius
+        container.layer.backgroundColor = UIColor.white.cgColor
         
-        self.contentView.layer.cornerRadius = radius
-        self.contentView.layer.borderColor = UIColor.clear.cgColor
-        self.contentView.layer.backgroundColor = UIColor.white.cgColor
-        self.contentView.layer.masksToBounds = true
         
-        self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowOffset = CGSize(width: 0, height: 3)
-        self.layer.shadowRadius = 15
-        self.layer.shadowOpacity = 0.25
-        self.layer.masksToBounds = false
-        self.layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: radius).cgPath
-        
-        self.layer.cornerRadius = radius
+        container.layer.cornerRadius = 25
+
+        // shadow
+        container.layer.shadowColor = UIColor.black.cgColor
+        container.layer.shadowOffset = CGSize(width: 0.5, height: 2)
+        container.layer.shadowOpacity = 0.25
+        container.layer.shadowRadius = 10
+//
+//        self.layer.shadowColor = UIColor.black.cgColor
+//        self.layer.shadowOffset = CGSize(width: 0, height: 3)
+//        self.layer.shadowRadius = 15
+//        self.layer.shadowOpacity = 0.25
+//        self.layer.masksToBounds = false
+//        self.layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: radius).cgPath
+//
+//        self.layer.cornerRadius = radius
+    }
+}
+
+extension UIView {
+
+    func setCardView(){
+        layer.cornerRadius = 5.0
+        layer.borderColor  =  UIColor.clear.cgColor
+        layer.borderWidth = 5.0
+        layer.shadowOpacity = 0.5
+        layer.shadowColor =  UIColor.lightGray.cgColor
+        layer.shadowRadius = 5.0
+        layer.shadowOffset = CGSize(width:5, height: 5)
+        layer.masksToBounds = true
     }
 }

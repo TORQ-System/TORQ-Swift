@@ -14,7 +14,7 @@ class notificationCenterViewController: UIViewController {
     //MARK: - @IBOutlets
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var filterCollectionView: UICollectionView!
-    @IBOutlet weak var notificationCollectionView: UICollectionView!
+    @IBOutlet weak var notificationCollectionView: UITableView!
     @IBOutlet weak var noNotificationsView: UIStackView!
     
     //MARK: - Variables
@@ -37,6 +37,7 @@ class notificationCenterViewController: UIViewController {
         
         let indexPath = IndexPath(row: 0, section: 0)
         filterCollectionView.selectItem(at: indexPath, animated: true, scrollPosition: .top)
+        
         getNotifications()
         configureGradient()
     }
@@ -115,28 +116,30 @@ class notificationCenterViewController: UIViewController {
 }
 
 //MARK: - Extensions
-extension notificationCenterViewController: UICollectionViewDelegate{
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard collectionView == filterCollectionView else{
-            let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-            let vc = storyboard.instantiateViewController(identifier: "notificationDetailsViewController") as! notificationDetailsViewController
-            let notifications: [notification]
-            
-            if all {
-                notifications = allNotifications
-            } else if emergency {
-                notifications = emergencyNotifications
-            } else{
-                notifications = wellbeingNotifications
-            }
-            
-            vc.notificationDetails = notifications[indexPath.row]
-            
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: true, completion: nil)
-            return
+extension notificationCenterViewController: UITableViewDelegate, UICollectionViewDelegate{
+
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(identifier: "notificationDetailsViewController") as! notificationDetailsViewController
+        let notifications: [notification]
+        
+        if all {
+            notifications = allNotifications
+        } else if emergency {
+            notifications = emergencyNotifications
+        } else{
+            notifications = wellbeingNotifications
         }
         
+        vc.notificationDetails = notifications[indexPath.row]
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         all = false; wellbeing = false; emergency = false
         
         switch indexPath.row {
@@ -158,67 +161,68 @@ extension notificationCenterViewController: UICollectionViewDelegate{
     }
 }
 
-extension notificationCenterViewController: UICollectionViewDataSource{
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard collectionView == filterCollectionView else{
-            var count: Int = 4
-            
-            if all{
-                count = allNotifications.count
-            } else if wellbeing {
-                count = wellbeingNotifications.count
-            } else if emergency {
-                count = emergencyNotifications.count
-            }
-            
-            noNotificationsView.alpha = count == 0 ? 1.0 : 0.0
-            
-            return count
+extension notificationCenterViewController: UITableViewDataSource, UICollectionViewDataSource{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        var count: Int = 4
+        
+        if all{
+            count = allNotifications.count
+        } else if wellbeing {
+            count = wellbeingNotifications.count
+        } else if emergency {
+            count = emergencyNotifications.count
         }
+        
+        noNotificationsView.alpha = count == 0 ? 1.0 : 0.0
+        
+        return count
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return filterBy.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard collectionView == filterCollectionView else{
-            let notificationCell = collectionView.dequeueReusableCell(withReuseIdentifier: "notificationCell", for: indexPath) as! notificationCollectionViewCell
-            
-            notificationCell.delegate = self
-            
-            notificationCell.configureCellView()
-            notificationCell.configureButton()
-            
-            var notifications: [notification]
-            
-            if all {
-                notifications = allNotifications
-            } else if emergency {
-                notifications = emergencyNotifications
-            } else{
-                notifications = wellbeingNotifications
-            }
-            
-            notifications.sort(by: {$0.date > $1.date})
-            
-            
-            notificationCell.title.text = notifications[indexPath.row].getTitle()
-            notificationCell.details.text = notifications[indexPath.row].getBody()
-            notificationCell.time.text = notifications[indexPath.row].getTime()
-            notificationCell.date.text = notifications[indexPath.row].getDate()
-            
-            let viewDetails = ViewNotificationTapGesture(target: self, action: #selector(self.viewDetails(_:)))
-            viewDetails.notificationDetails = notifications[indexPath.row]
-            notificationCell.button.addGestureRecognizer(viewDetails)
-            notificationCell.button.isUserInteractionEnabled = true
-            
-            return notificationCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let notificationCell = tableView.dequeueReusableCell(withIdentifier: "notificationCell", for: indexPath) as! notificationTableViewCell
+        
+        notificationCell.configureCellView()
+        notificationCell.configureButton()
+        
+        var notifications: [notification]
+        
+        if all {
+            notifications = allNotifications
+        } else if emergency {
+            notifications = emergencyNotifications
+        } else{
+            notifications = wellbeingNotifications
         }
         
+        notifications.sort(by: {$0.date > $1.date})
+        
+        
+        notificationCell.title.text = notifications[indexPath.row].getTitle()
+        notificationCell.details.text = notifications[indexPath.row].getBody()
+        notificationCell.time.text = notifications[indexPath.row].getTime()
+        notificationCell.date.text = notifications[indexPath.row].getDate()
+        
+        let viewDetails = ViewNotificationTapGesture(target: self, action: #selector(self.viewDetails(_:)))
+        viewDetails.notificationDetails = notifications[indexPath.row]
+        notificationCell.button.addGestureRecognizer(viewDetails)
+        notificationCell.button.isUserInteractionEnabled = true
+        
+        return notificationCell
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let colors = [UIColor(red: 49.0/255.0, green: 90.0/255.0, blue: 149.0/255.0, alpha: 1.0),
                       UIColor(red: 120.0/255.0, green: 120.0/255.0, blue: 120.0/255.0, alpha: 0.75),]
         
         let backgroundView = UIView()
         let filterCell = collectionView.dequeueReusableCell(withReuseIdentifier: "filterCell", for: indexPath) as! filterCollectionViewCell
-                
+        
         filterCell.layer.cornerRadius = 15
         filterCell.layer.masksToBounds = true
         filterCell.filterLabel.text = filterBy[indexPath.row]
@@ -234,49 +238,8 @@ extension notificationCenterViewController: UICollectionViewDataSource{
 
 extension notificationCenterViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        guard collectionView == filterCollectionView else{
-            return CGSize(width: collectionView.frame.width/1.05, height: 130)
-        }
         return CGSize(width: filterBy[indexPath.item].size(withAttributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18)]).width+25, height: 30)
     }
-}
-
-extension notificationCenterViewController: SwipeCollectionViewCellDelegate{
-    func collectionView(_ collectionView: UICollectionView, editActionsForItemAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
-        guard orientation == .right else { return nil }
-        
-        let deleteAction = SwipeAction(style: .destructive, title: nil) { action, indexPath in
-            var notifications: [notification]
-            
-            if self.all {
-                notifications = self.allNotifications
-            } else if self.emergency {
-                notifications = self.emergencyNotifications
-            } else{
-                notifications = self.wellbeingNotifications
-            }
-            
-            self.ref.child("Notification").child(notifications[indexPath.row].getNotificationID()).removeValue()
-            action.fulfill(with: .delete)
-            
-        }
-        
-        
-        return [deleteAction]
-    }
-    
-    func visibleRect(for collectionView: UICollectionView) -> CGRect? {
-        return collectionView.safeAreaLayoutGuide.layoutFrame
-    }
-    
-    
-    func collectionView(_ collectionView: UICollectionView, editActionsOptionsForItemAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
-        var options = SwipeOptions()
-        options.expansionStyle = .destructive
-        options.transitionStyle = .drag
-        return options
-    }
-    
 }
 
 //MARK: - Classes
