@@ -63,6 +63,7 @@ class viewSOSRequestDetailsViewController: UIViewController {
     var medicalReport = false
     var requestDetails = true
     var medicalReportID: String?
+    var phoneNumber: String?
 
     
     //MARK: - Overriden functions
@@ -391,6 +392,7 @@ class viewSOSRequestDetailsViewController: UIViewController {
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(identifier: "paramedicChatViewController") as! paramedicChatViewController
         vc.Name = self.patientName.text
+        vc.phoneNumber = self.phoneNumber
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
     }
