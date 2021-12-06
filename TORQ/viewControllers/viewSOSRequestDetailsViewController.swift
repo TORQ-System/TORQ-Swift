@@ -383,9 +383,18 @@ class viewSOSRequestDetailsViewController: UIViewController {
     @IBAction func processButton(_ sender: Any) {
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(identifier: "selectHealthCareCenterViewController") as! selectHealthCareCenterViewController
-        vc.sosRequestUserID = self.sosRequester
+        vc.sosRequestUserID = self.patientName.text
         self.present(vc, animated: true, completion: nil)
     }
+    
+    @IBAction func chat(_ sender: Any) {
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(identifier: "paramedicChatViewController") as! paramedicChatViewController
+        vc.Name = self.patientName.text
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
+    }
+    
     
 }
 

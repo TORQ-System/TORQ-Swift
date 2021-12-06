@@ -17,6 +17,7 @@ class paramedicChatViewController: UIViewController {
     
     //MARK: - Variables
     var phoneNumber: String?
+    var Name: String?
     
     //MARK: - Overriden Functions
     

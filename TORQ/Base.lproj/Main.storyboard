@@ -3239,13 +3239,16 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="opg-8F-Dq8">
                                         <rect key="frame" x="30" y="237" width="354" height="40"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ba6-gg-lus" userLabel="Chat">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ba6-gg-lus" userLabel="Chat">
                                                 <rect key="frame" x="0.0" y="0.0" width="82.333333333333329" height="40"/>
                                                 <color key="backgroundColor" red="0.27500000000000002" green="0.53700000000000003" blue="0.97599999999999998" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <color key="tintColor" red="0.27500000000000002" green="0.53700000000000003" blue="0.68627450980000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <state key="normal" title=" Chat" image="message" catalog="system">
                                                     <color key="titleColor" red="0.27500000000000002" green="0.53700000000000003" blue="0.68627450980000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="chat:" destination="YJk-LH-2Yo" eventType="touchUpInside" id="FZz-dH-bKF"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GCC-gX-Ek5">
                                                 <rect key="frame" x="92.333333333333343" y="0.0" width="111.33333333333334" height="40"/>
@@ -3258,7 +3261,7 @@
                                                     <action selector="processButton:" destination="YJk-LH-2Yo" eventType="touchUpInside" id="mmZ-Io-QRG"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qq7-gT-4Jj">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qq7-gT-4Jj">
                                                 <rect key="frame" x="213.66666666666663" y="0.0" width="140.33333333333337" height="40"/>
                                                 <color key="backgroundColor" red="0.27500000000000002" green="0.53700000000000003" blue="0.97599999999999998" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <color key="tintColor" red="0.27500000000000002" green="0.53700000000000003" blue="0.68627450980000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -3338,13 +3341,13 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="60" translatesAutoresizingMaskIntoConstraints="NO" id="sbA-Ag-Jmg">
-                                        <rect key="frame" x="10" y="120" width="334" height="241"/>
+                                        <rect key="frame" x="10" y="120" width="334" height="292"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="pdc-sQ-cSb">
-                                                <rect key="frame" x="0.0" y="0.0" width="334" height="71"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="334" height="122"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="klU-uk-Cgv">
-                                                        <rect key="frame" x="0.0" y="0.0" width="30" height="71"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="30" height="122"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DNF-89-xO6">
                                                                 <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
@@ -3374,7 +3377,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YiQ-5d-jkq">
-                                                        <rect key="frame" x="40" y="0.0" width="294" height="71"/>
+                                                        <rect key="frame" x="40" y="0.0" width="294" height="122"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Noura Alsulayfih’s request has been assigned to your center" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Byo-Ph-Som">
                                                                 <rect key="frame" x="0.0" y="0.0" width="294" height="36"/>
@@ -3393,7 +3396,7 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Xi9-vV-8MV">
-                                                <rect key="frame" x="0.0" y="131" width="334" height="25"/>
+                                                <rect key="frame" x="0.0" y="182" width="334" height="25"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="48r-Sn-7Md">
                                                         <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
@@ -3425,7 +3428,7 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="0zL-Lc-gBT">
-                                                <rect key="frame" x="0.0" y="216" width="334" height="25"/>
+                                                <rect key="frame" x="0.0" y="267" width="334" height="25"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B0p-XA-aJo">
                                                         <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
@@ -3595,7 +3598,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="calButton" destination="sLz-uo-zRf" id="RdI-fg-Q3d"/>
+                        <outlet property="callButton" destination="sLz-uo-zRf" id="em2-hU-LVt"/>
                         <outlet property="containerView" destination="iCp-Mg-Ech" id="5uj-Kr-Sxx"/>
                         <outlet property="requesterName" destination="1n9-iV-Xh3" id="hmv-0C-Toq"/>
                     </connections>
