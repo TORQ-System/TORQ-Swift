@@ -117,7 +117,26 @@ class notificationCenterViewController: UIViewController {
 
 //MARK: - Extensions
 extension notificationCenterViewController: UITableViewDelegate, UICollectionViewDelegate{
-
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        var notifications: [notification]
+        if self.all {
+            notifications = self.allNotifications
+        } else if self.emergency {
+            notifications = self.emergencyNotifications
+        } else{
+            notifications = self.wellbeingNotifications
+        }
+        let delete = UIContextualAction(style: .destructive, title: "Delete notification") { (action, sourceView, completionHandler) in
+            self.ref.child("Notification").child(notifications[indexPath.row].getNotificationID()).removeValue()
+            completionHandler(true)
+        }
+        let deleteActionImage = UIImage(systemName: "trash.fill")?.withTintColor(UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 ), renderingMode: .alwaysOriginal)
+        delete.image = deleteActionImage
+        delete.backgroundColor = UIColor.white.withAlphaComponent(0)
+        let swipeActionConfig = UISwipeActionsConfiguration(actions: [delete])
+        swipeActionConfig.performsFirstActionWithFullSwipe = true
+        return swipeActionConfig
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
