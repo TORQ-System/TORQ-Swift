@@ -109,6 +109,13 @@ extension emergencyNumbersViewController : UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: true)
         guard let cell = tableView.cellForRow(at: indexPath) as? emergencyNumberTableViewCell else { return }
         
+        guard let url = URL(string: "tel://\(cell.phoneLabel.text!)"),
+                UIApplication.shared.canOpenURL(url) else {
+                return
+        }
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        
+        
     }
     
 }
