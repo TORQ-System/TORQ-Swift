@@ -404,16 +404,27 @@ class viewSOSRequestDetailsViewController: UIViewController {
 //        let placeMark = MKPlacemark(coordinate: coordinates)
 //        let mapItem = MKMapItem(placemark: placeMark)
 //        mapItem.openInMaps(launchOptions: options)
+        
+        
+        
        let latitude:CLLocationDegrees = 24.73870668203088
        let longitue:CLLocationDegrees = 46.667692992746616
-        if(UIApplication.shared.canOpenURL(NSURL(string:"comgooglemaps://")! as URL)) {
-                    UIApplication.shared.openURL(NSURL(string:
-                                                        "comgooglemaps://?saddr=&daddr=\(latitude),\(longitue)&directionsmode=driving")! as URL)
+//        if(UIApplication.shared.canOpenURL(NSURL(string:"comgooglemaps://")! as URL)) {
+//                    UIApplication.shared.openURL(NSURL(string:
+//                                                        "comgooglemaps://?saddr=&daddr=\(latitude),\(longitue)&directionsmode=driving")! as URL)
+//
+//                } else {
+//                    NSLog("Can't use comgooglemaps://");
+//                }
+//
+//}
+  
 
-                } else {
-                    NSLog("Can't use comgooglemaps://");
-                }
-            
+        if let url = URL(string: "comgooglemaps://?saddr=&daddr=\(latitude),\(longitue)&directionsmode=driving") {
+                UIApplication.shared.open(url, options: [:])
+            }
+        
+        
 }
 }
 
