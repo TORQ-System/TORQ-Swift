@@ -76,6 +76,7 @@
 		BEF9753D270AE0E500325281 /* paramedicHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9753C270AE0E500325281 /* paramedicHomeViewController.swift */; };
 		DA9535092754E39700D715A1 /* viewLiveLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9535082754E39600D715A1 /* viewLiveLocationViewController.swift */; };
 		DA95350B2754F23500D715A1 /* Paramedic.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA95350A2754F23500D715A1 /* Paramedic.swift */; };
+		DAFD7CEC275FC107007C5DE1 /* directionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFD7CEB275FC106007C5DE1 /* directionsViewController.swift */; };
 		FC4BF75E181535F7BB4C96B1 /* Pods_TORQTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D35DF5D9259C289028E18D8 /* Pods_TORQTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -179,6 +180,7 @@
 		BEF9753C270AE0E500325281 /* paramedicHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = paramedicHomeViewController.swift; sourceTree = "<group>"; };
 		DA9535082754E39600D715A1 /* viewLiveLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewLiveLocationViewController.swift; sourceTree = "<group>"; };
 		DA95350A2754F23500D715A1 /* Paramedic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paramedic.swift; sourceTree = "<group>"; };
+		DAFD7CEB275FC106007C5DE1 /* directionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = directionsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -370,6 +372,7 @@
 				BEF23060274873690068B55A /* changePasswordViewController.swift */,
 				BEF23062274899060068B55A /* editAccountViewController.swift */,
 				BE82A5662748DD0300C4C2B5 /* selectHealthCareCenterViewController.swift */,
+				DAFD7CEB275FC106007C5DE1 /* directionsViewController.swift */,
 			);
 			path = viewControllers;
 			sourceTree = "<group>";
@@ -636,6 +639,7 @@
 				BE9CDAE92729F66A00CDD4B4 /* User.swift in Sources */,
 				BE34F6A2270F31FB0093C633 /* Request.swift in Sources */,
 				BEF230572748599C0068B55A /* editMedicalReportViewController.swift in Sources */,
+				DAFD7CEC275FC107007C5DE1 /* directionsViewController.swift in Sources */,
 				BEF230492748418E0068B55A /* SOSRequest.swift in Sources */,
 				BEDC3C18272653610026948E /* servicesCollectionViewCell.swift in Sources */,
 				BE04B6D2272DA7B700EEE3EE /* requestReportViewController.swift in Sources */,
@@ -868,7 +872,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Alsulayfih.torq;
+				PRODUCT_BUNDLE_IDENTIFIER = Alsuayfih.torq;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -888,7 +892,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Alsulayfih.torq;
+				PRODUCT_BUNDLE_IDENTIFIER = Alsuayfih.torq;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

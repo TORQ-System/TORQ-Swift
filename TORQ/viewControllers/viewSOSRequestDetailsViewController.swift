@@ -7,6 +7,8 @@
 
 import UIKit
 import Firebase
+import CoreLocation
+import MapKit
 
 class viewSOSRequestDetailsViewController: UIViewController {
     
@@ -387,6 +389,32 @@ class viewSOSRequestDetailsViewController: UIViewController {
         self.present(vc, animated: true, completion: nil)
     }
     
+    @IBAction func launchDirections(_ sender: Any) {
+        
+//        let latitude:CLLocationDegrees = 24.73870668203088
+//        let longitue:CLLocationDegrees = 46.667692992746616
+//        let regionDistance:CLLocationDistance = 1000
+//
+//        let coordinates = CLLocationCoordinate2D(latitude: latitude,longitude: longitue)
+//
+//        let regionSpan = MKCoordinateRegion(center: coordinates, latitudinalMeters: regionDistance, longitudinalMeters: regionDistance)
+//
+//        let options = [MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: regionSpan.center), MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: regionSpan.span)]
+//
+//        let placeMark = MKPlacemark(coordinate: coordinates)
+//        let mapItem = MKMapItem(placemark: placeMark)
+//        mapItem.openInMaps(launchOptions: options)
+       let latitude:CLLocationDegrees = 24.73870668203088
+       let longitue:CLLocationDegrees = 46.667692992746616
+        if(UIApplication.shared.canOpenURL(NSURL(string:"comgooglemaps://")! as URL)) {
+                    UIApplication.shared.openURL(NSURL(string:
+                                                        "comgooglemaps://?saddr=&daddr=\(latitude),\(longitue)&directionsmode=driving")! as URL)
+
+                } else {
+                    NSLog("Can't use comgooglemaps://");
+                }
+            
+}
 }
 
 //MARK: - extension
