@@ -30,15 +30,17 @@ class paramedicChatViewController: UIViewController {
     //MARK: - Functions
     private func setupLayout(){
         //1- background view
-        containerView.layer.cornerRadius = 50
+        containerView.layer.cornerRadius = 30
         containerView.layer.masksToBounds = true
         containerView.layer.maskedCorners = [.layerMinXMaxYCorner,.layerMaxXMaxYCorner]
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = containerView.frame
-        gradientLayer.colors = [UIColor(red: 0.879, green: 0.462, blue: 0.524, alpha: 1).cgColor,UIColor(red: 0.757, green: 0.204, blue: 0.286, alpha: 1).cgColor]
+        gradientLayer.colors =  [
+            UIColor(red: 0.102, green: 0.157, blue: 0.345, alpha: 1).cgColor,
+            UIColor(red: 0.192, green: 0.353, blue: 0.584, alpha: 1).cgColor]
         gradientLayer.startPoint = CGPoint(x: 0.25, y: 0.5)
         gradientLayer.endPoint = CGPoint(x: 0.75, y: 0.5)
-        gradientLayer.transform = CATransform3DMakeAffineTransform(CGAffineTransform(a: -0.96, b: 0.95, c: -0.95, d: -1.56, tx: 1.43, ty: 0.83))
+        gradientLayer.transform = CATransform3DMakeAffineTransform(CGAffineTransform(a: 0.99, b: 0.98, c: -0.75, d: 1.6, tx: 0.38, ty: -0.77))
         gradientLayer.bounds = containerView.bounds.insetBy(dx: -0.5*containerView.bounds.size.width, dy: -0.5*containerView.bounds.size.height)
         gradientLayer.position = containerView.center
         containerView.layer.addSublayer(gradientLayer)
