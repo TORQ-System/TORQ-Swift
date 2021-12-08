@@ -179,7 +179,9 @@ class sosDetailsViewController: UIViewController {
         let vc = storyboard.instantiateViewController(identifier: "userChatViewController") as! userChatViewController
         vc.centerName = SOSRequest?.getAssignedCenter()
         vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: true, completion: nil)
+        let navController = UINavigationController(rootViewController: vc)
+        navController.modalPresentationStyle = .fullScreen
+        self.present(navController, animated:true, completion: nil)
     }
     
     @IBAction func cancelSOSrequest(_ sender: Any) {
