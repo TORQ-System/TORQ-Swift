@@ -25,8 +25,8 @@ class profileViewController: UIViewController {
     var userID = Auth.auth().currentUser?.uid
     let ref = Database.database().reference()
     var user: User?
-    var services = ["Terms and conditions","Privacy and Policies","Edit Account","Change passowrd","Logout"]
-    var servicesImages = ["terms","privacy","edit account","change password","logout"]
+    var services = ["Terms and conditions","Privacy and Policies","Edit Account","Change passowrd","Share App","Logout"]
+    var servicesImages = ["terms","privacy","edit account","change password","Share","logout"]
     let redUIColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
     let alertIcon = UIImage(named: "errorIcon")
     let apperance = SCLAlertView.SCLAppearance(
@@ -163,6 +163,14 @@ extension profileViewController: UITableViewDelegate{
             vc = changePassVC
             break
         case 4:
+            let text = "With TORQ you can receive immediate medical help when a car accident is detected You are invited to register to TORQ App and you can downloed it throug the app store "
+                let textShare = [ text ]
+                let activityViewController = UIActivityViewController(activityItems: textShare , applicationActivities: nil)
+                activityViewController.popoverPresentationController?.sourceView = self.view
+                self.present(activityViewController, animated: true, completion: nil)
+            
+            break
+        case 5:
             //logout
             do {
                 try Auth.auth().signOut()
