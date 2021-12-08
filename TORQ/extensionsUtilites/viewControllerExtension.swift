@@ -65,7 +65,7 @@ extension UIViewController {
                     formatter.pmSymbol = "p.m."
                     
                     let dateString = formatter.string(from: date)
-                    let index = dateString.index(dateString.endIndex, offsetBy: -9)
+                    let index = dateString.index(dateString.endIndex, offsetBy: -10)
                     let notifDate = dateString.prefix(12)
                     let notifTime = dateString.suffix(from: index)
                     
@@ -148,15 +148,15 @@ extension UIViewController {
                                 formatter.pmSymbol = "p.m."
                                 
                                 let dateString = formatter.string(from: date)
-                                let index = dateString.index(dateString.endIndex, offsetBy: -9)
+                                let index = dateString.index(dateString.endIndex, offsetBy: -10)
                                 let notifDate = dateString.prefix(12)
                                 let notifTime = dateString.suffix(from: index)
                                         
                                 let notificationRef = ref.child("Notification").childByAutoId()
                                 notificationRef.setValue(["title":content.title, "subtitle": "none", "body":content.body, "date": "\(notifDate)", "time": "\(notifTime)", "type": "emergency", "sender":senderID, "receiver": receiverID, "request_id": self.getRequestID(sender: senderID, notif: notificationRef.key!)])
                             }
+                            self.getAccidentLocation(senderID: emergencyContact.getSenderID())
                         }
-                        self.getAccidentLocation(senderID: emergencyContact.getSenderID())
                     }
                 }
             }

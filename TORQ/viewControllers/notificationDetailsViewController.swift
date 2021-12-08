@@ -39,7 +39,7 @@ class notificationDetailsViewController: UIViewController, FloatingPanelControll
         shadow.spread = 16
         appearance.shadows = [shadow]
         
-        appearance.cornerRadius = 48
+        appearance.cornerRadius = 30
         appearance.backgroundColor = .white
         
         floatingPanel.surfaceView.appearance = appearance
@@ -60,7 +60,7 @@ class notificationDetailsViewController: UIViewController, FloatingPanelControll
     //MARK: - Functions
     func configureMapView(lat: Double, long: Double){
         let pin = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(lat), longitude: CLLocationDegrees(long)))
-        let coordinateRegion = MKCoordinateRegion(center: pin.coordinate, latitudinalMeters: 1100, longitudinalMeters: 1100)
+        let coordinateRegion = MKCoordinateRegion(center: pin.coordinate, latitudinalMeters: 1200, longitudinalMeters: 1200)
         let annotation = MKPointAnnotation()
         annotation.coordinate = pin.coordinate
         annotation.title = "Accident"
@@ -122,9 +122,8 @@ class BottomCustomFloatingPanelLayout: FloatingPanelLayout {
     let initialState: FloatingPanelState = .tip
     var anchors: [FloatingPanelState: FloatingPanelLayoutAnchoring] {
         return [
-            .full: FloatingPanelLayoutAnchor(fractionalInset: 0.75, edge: .bottom, referenceGuide: .safeArea),
-            .half: FloatingPanelLayoutAnchor(absoluteInset: 44.0*4, edge: .bottom, referenceGuide: .safeArea),
-            .tip:  FloatingPanelLayoutAnchor(fractionalInset: 0.25, edge: .bottom, referenceGuide: .safeArea),
+            .full: FloatingPanelLayoutAnchor(fractionalInset: 0.55, edge: .bottom, referenceGuide: .safeArea),
+            .tip:  FloatingPanelLayoutAnchor(fractionalInset: 0.2, edge: .bottom, referenceGuide: .safeArea),
         ]
     }
 }

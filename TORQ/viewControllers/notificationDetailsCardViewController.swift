@@ -10,11 +10,12 @@ import Firebase
 import SCLAlertView
 
 class notificationDetailsCardViewController: UIViewController {
-
+    
     //MARK: - @IBOutlets
-    @IBOutlet weak var canceledRequest: UIView!
-    @IBOutlet weak var activeRequest: UIView!
-    @IBOutlet weak var processedRequest: UIView!
+    @IBOutlet weak var requestStatus: UIView!
+    @IBOutlet weak var requestStatusLabel: UILabel!
+    @IBOutlet weak var requestStatusDetails: UILabel!
+    @IBOutlet weak var requestStatusIcon: UIImageView!
     @IBOutlet weak var date: UILabel!
     @IBOutlet weak var time: UILabel!
     @IBOutlet weak var subtitle: UILabel!
@@ -26,11 +27,9 @@ class notificationDetailsCardViewController: UIViewController {
     
     //MARK: - Variables
     var cancelTap = UITapGestureRecognizer()
-    var locationTap = UITapGestureRecognizer()
     var requestChanged = -1
     var notificationDetails: notification!
     var assignedRequest: Request!
-
     
     //MARK: - Constants
     let ref = Database.database().reference()
@@ -44,17 +43,22 @@ class notificationDetailsCardViewController: UIViewController {
     //MARK: - Overriden functions
     override func viewDidLoad() {
         super.viewDidLoad()
-
         cancelButton.isHidden = true
         requestChanged = -1
-        
+        configureNotification()
+        configureCancelButton()
+        getRequest()
+    }
+    
+    //MARK: - Functions
+    func configureNotification(){
         notificationTitle.text = notificationDetails.getTitle()
         body.text = notificationDetails.getBody()
         
         if notificationDetails.getType() == "emergency"{
             subtitle.isHidden = true
         } else {
-            from.text = "TORQ"
+            from.text = "from TORQ"
             subtitle.text = notificationDetails.getSubtitle()
         }
         
@@ -70,20 +74,13 @@ class notificationDetailsCardViewController: UIViewController {
                     if obj.key == self.notificationDetails.getSender() {
                         print(fullName)
                         DispatchQueue.main.async() {
-                            self.from.text = fullName
+                            self.from.text = "from \(fullName)"
                         }
                     }
                 }
             })
         }
-        
-        getRequest()
-        configureTapGesture()
-        configureButtonsView()
-        // Do any additional setup after loading the view.
     }
-    
-    //MARK: - Functions
     func getRequest(){
         ref.child("Request").observe(.value) { snapshot in
             for request in snapshot.children{
@@ -107,38 +104,16 @@ class notificationDetailsCardViewController: UIViewController {
             }
         }
     }
-        
-    func configureTapGesture(){
-        /* When the user taps cancel */
+    
+    func configureCancelButton(){
+        /* Add tap gesture */
         cancelTap = UITapGestureRecognizer(target: self, action: #selector(self.cancelPressed(_:)))
         cancelTap.numberOfTapsRequired = 1
         cancelTap.numberOfTouchesRequired = 1
         cancelButton.addGestureRecognizer(cancelTap)
         cancelButton.isUserInteractionEnabled = true
         
-        /* When the user taps view location        locationTap = UITapGestureRecognizer(target: self, action: #selector(self.locationPressed(_:)))
-        locationTap.numberOfTapsRequired = 1
-        locationTap.numberOfTouchesRequired = 1
-        viewLocationButtonView.addGestureRecognizer(locationTap)
-        viewLocationButtonView.isUserInteractionEnabled = true
-         */
-
-    }
-    
-    func configureButtonsView(){
-        /* Adjust the view location button's UI
-        viewLocationButtonView.layer.cornerRadius = 15
-        viewLocationButtonView.layer.masksToBounds = true
-        viewLocationButtonView.layer.shouldRasterize = true
-        viewLocationButtonView.layer.rasterizationScale = UIScreen.main.scale
-        viewLocationButtonView.layer.shadowColor = UIColor.black.cgColor
-        viewLocationButtonView.layer.shadowOffset = CGSize(width: 1, height: 2)
-        viewLocationButtonView.layer.shadowRadius = 5
-        viewLocationButtonView.layer.shadowOpacity = 0.25
-        viewLocationButtonView.layer.masksToBounds = false
-         */
-        
-        /* Adjust the cancel button's UI */
+        /* Add UI config */
         let gradient: CAGradientLayer = CAGradientLayer()
         roundView.layer.cornerRadius = 20
         roundView.layer.shouldRasterize = true
@@ -153,61 +128,73 @@ class notificationDetailsCardViewController: UIViewController {
         roundView.layer.insertSublayer(gradient, at: 0)
     }
     
+    
     func configureRequestStatus(){
-        /* Set requests radius */
-        canceledRequest.layer.cornerRadius = canceledRequest.frame.height/2
-        activeRequest.layer.cornerRadius = activeRequest.frame.height/2
-        processedRequest.layer.cornerRadius = processedRequest.frame.height/2
-        
-        /* Set status color and dropshadow */
+        requestStatus.layer.cornerRadius = 15
         switch assignedRequest.getStatus() {
         case "0":
-            setBackgroundColor(requestView: activeRequest, type: "blue")
-            setBackgroundColor(requestView: canceledRequest, type: "gray")
-            setBackgroundColor(requestView: processedRequest, type: "gray")
-            cancelButton.isHidden = false
-            break
-        case "1":
-            setBackgroundColor(requestView: processedRequest, type: "red")
-            setBackgroundColor(requestView: activeRequest, type: "gray")
-            setBackgroundColor(requestView: canceledRequest, type: "gray")
+            setBackgroundColor(requestView: requestStatus, type: "blue")
+            requestStatusLabel.text = "Active Request"
+            requestStatusDetails.text = "waiting for paramedics to arrive!"
+            requestStatusIcon.image = UIImage(named: "activeIcon")
             guard notificationDetails.getType() == "emergency" else{
-                cancelButton.isHidden = true
+                cancelButton.isHidden = false
                 return
             }
-            cancelButton.isHidden = false
+            cancelButton.isHidden = true
+            break
+        case "1":
+            setBackgroundColor(requestView: requestStatus, type: "red")
+            requestStatusLabel.text = "Processed Request"
+            requestStatusIcon.image = UIImage(named: "processedIcon")
+            findProcessedHospital()
+            cancelButton.isHidden = true
             break
         case "2":
-            setBackgroundColor(requestView: canceledRequest, type: "yellow")
-            setBackgroundColor(requestView: activeRequest, type: "gray")
-            setBackgroundColor(requestView: processedRequest, type: "gray")
+            setBackgroundColor(requestView: requestStatus, type: "yellow")
+            requestStatusLabel.text = "Cancelled Request"
+            requestStatusDetails.text = "has been cancelled by the user"
+            requestStatusIcon.image = UIImage(named: "cancelledIcon")
             cancelButton.isHidden = true
             break
         default:
+            setBackgroundColor(requestView: requestStatus, type: "gray")
             break
+        }
+    }
+    
+    func findProcessedHospital(){
+        ref.child("ProcessingRequest").observeSingleEvent(of: .value) { snapshot in
+            for child in snapshot.children{
+                let hospital = child as! DataSnapshot
+                for hospitalChild in hospital.children{
+                    let processedRequest = hospitalChild as! DataSnapshot
+                    let request_id = processedRequest.childSnapshot(forPath: "Rquest_id").value as! String
+                    if(request_id == self.notificationDetails.getRequestID()){
+                        DispatchQueue.main.async() {
+                            self.requestStatusDetails.text = "processed at \(hospital.key)"
+                        }
+                    }
+                }
+            }
         }
     }
     
     func setBackgroundColor(requestView: UIView, type: String){
         let gradient = CAGradientLayer()
         let color: [CGColor]?
-        let shadowColor: CGColor?
         
         if(type == "red"){
-            color = [UIColor(red: 0.871, green: 0.408, blue: 0.471, alpha: 1).cgColor,
-                     UIColor(red: 0.754, green: 0.149, blue: 0.231, alpha: 1).cgColor]
-            shadowColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 0.8).cgColor
+            color = [UIColor(red: 0.887, green: 0.294, blue: 0.375, alpha: 1).cgColor,
+                     UIColor(red: 0.933, green: 0.453, blue: 0.518, alpha: 1).cgColor]
         } else if(type == "blue"){
-            color = [UIColor(red: 0.446, green: 0.667, blue: 0.812, alpha: 1).cgColor,
-                     UIColor(red: 0.192, green: 0.353, blue: 0.584, alpha: 1).cgColor]
-            shadowColor = UIColor(red: 0.318, green: 0.506, blue: 0.698, alpha: 0.8).cgColor
+            color = [UIColor(red: 0.29, green: 0.67, blue: 0.871, alpha: 1).cgColor,
+                     UIColor(red: 0.54, green: 0.771, blue: 0.9, alpha: 1).cgColor]
         } else if type == "yellow"{
-            color = [UIColor(red: 0.988, green: 0.762, blue: 0.442, alpha: 1).cgColor,
-                     UIColor(red: 1, green: 0.587, blue: 0, alpha: 1).cgColor,]
-            shadowColor = UIColor(red: 0.988, green: 0.741, blue: 0.384, alpha: 0.7).cgColor
+            color = [UIColor(red: 1, green: 0.644, blue: 0.139, alpha: 1).cgColor,
+                     UIColor(red: 1, green: 0.782, blue: 0.473, alpha: 1).cgColor]
         } else{
             color = [UIColor.lightGray.cgColor, UIColor.lightGray.cgColor]
-            shadowColor = UIColor.clear.cgColor
         }
         
         requestView.backgroundColor = nil
@@ -215,11 +202,11 @@ class notificationDetailsCardViewController: UIViewController {
         gradient.startPoint = CGPoint(x: 0, y: 0)
         gradient.endPoint = CGPoint(x: 1, y: 0)
         gradient.frame = requestView.bounds
-        gradient.cornerRadius = requestView.frame.height/2
-        requestView.layer.shadowColor = shadowColor!
-        requestView.layer.shadowOffset = CGSize(width: 0, height: 0)
-        requestView.layer.shadowRadius = 15
-        requestView.layer.shadowOpacity = 1
+        gradient.cornerRadius = 15
+        requestView.layer.shadowColor = color?[0]
+        requestView.layer.shadowOffset = CGSize(width: 1, height: 10)
+        requestView.layer.shadowRadius = 10
+        requestView.layer.shadowOpacity = 0.5
         requestView.layer.masksToBounds = false
         
         guard requestChanged == 0 else {
@@ -231,13 +218,13 @@ class notificationDetailsCardViewController: UIViewController {
         
         requestView.layer.insertSublayer(gradient, at: 0)
     }
-
+    
     @objc func cancelPressed(_ sender: UITapGestureRecognizer) {
         let alertView = SCLAlertView(appearance: self.apperance)
         alertView.addButton("Cancel request", backgroundColor: self.redUIColor){
             self.ref.child("Request").child("Req\(self.assignedRequest.getRequestID())").updateChildValues(["status": "2"]){(error, ref) in
                 if error == nil{
-                    SCLAlertView(appearance: self.apperance).showCustom("Sucess", subTitle: "Request has been cancelled", color: self.blueUIColor, icon: self.alertSuccessIcon!, closeButtonTitle: "Okay", animationStyle: SCLAnimationStyle.topToBottom)
+                    SCLAlertView(appearance: self.apperance).showCustom("Success", subTitle: "Request has been cancelled", color: self.blueUIColor, icon: self.alertSuccessIcon!, closeButtonTitle: "Okay", animationStyle: SCLAnimationStyle.topToBottom)
                     self.dismiss(animated: true, completion: nil)
                 }
             }
@@ -245,15 +232,4 @@ class notificationDetailsCardViewController: UIViewController {
         alertView.showCustom("Are you sure?", subTitle: "A cancelled request will not go through to paramedics", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Go back", animationStyle: SCLAnimationStyle.topToBottom)
     }
     
-    @objc func locationPressed(_ sender: UITapGestureRecognizer) {
-        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(identifier: "viewLocationViewController") as! viewLocationViewController
-        vc.latitude = Double(assignedRequest.getLatitude())
-        vc.longitude = Double(assignedRequest.getLongitude())
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: true, completion: nil)
-    }
-        
-        
-
 }
