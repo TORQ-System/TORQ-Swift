@@ -43,6 +43,7 @@ class sosDetailsViewController: UIViewController {
         buttonCornerRadius: 7,
         hideWhenBackgroundViewIsTapped: true)
     var sosId: String?
+    var userName: String?
     
     
     //MARK: - Overriden Functions
@@ -181,6 +182,7 @@ class sosDetailsViewController: UIViewController {
         }
         let vc = userChatViewController(with: "\(name)@srca.org.sa")
         vc.centerName = name
+        vc.userName = userName
         vc.isNewConversation = true
         vc.modalPresentationStyle = .fullScreen
         let navController = UINavigationController(rootViewController: vc)

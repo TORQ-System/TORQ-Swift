@@ -24,6 +24,14 @@ class userChatViewController: MessagesViewController {
     var sender: SenderType?
     var isNewConversation = false
     let otherUserEmail: String
+    var userName: String?
+    let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .long
+        formatter.locale = .current
+        return formatter
+    }()
     
     
     //MARK: - Constructure
@@ -79,8 +87,7 @@ class userChatViewController: MessagesViewController {
     
     private func configuration(){
         navigationItem.title = centerName
-        //TODO pass the name of the user
-        sender = Sender(senderId: userEmail, displayName: "userEmail")
+        sender = Sender(senderId: userEmail, displayName: userName!)
     }
     
     
@@ -115,6 +122,14 @@ class userChatViewController: MessagesViewController {
     
     private func sendMessage(to conversation: String ,message: Message, completion: @escaping (Bool)-> Void){
         
+    }
+    
+    private func createMessageId() -> String{
+        //date , otherUserEmail, senderEmail, randomInt
+        let dateString = self.dateFormatter.string(from: Date())
+        let newIdentefier = "\(otherUserEmail)_\(userEmail)_\(dateString)"
+        print("created message id: \(newIdentefier)")
+        return newIdentefier
     }
     
     
@@ -165,8 +180,14 @@ extension userChatViewController: InputBarAccessoryViewDelegate{
         if isNewConversation{
             //create converstaion in db
             
-            let message = Message(sender: <#T##SenderType#>, messageId: <#T##String#>, sentDate: Date(), kind: .text(text))
-            self.createNewConversation(with: <#T##String#>, firstMessage: <#T##Message#>, completion: <#T##(Bool) -> Void#>)
+            let message = Message(sender: sender!, messageId: createMessageId(), sentDate: Date(), kind: .text(text))
+            self.createNewConversation(with: otherUserEmail, firstMessage: message) { success in
+                if success{
+                    print("message sent")
+                }else{
+                    print("failed to sent")
+                }
+            }
         }else{
             //append to exsisting conversation in db
         }
