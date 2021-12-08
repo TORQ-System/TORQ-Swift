@@ -7,6 +7,7 @@
 
 import UIKit
 import MessageKit
+import Firebase
 
 class userChatViewController: MessagesViewController {
     
@@ -16,6 +17,8 @@ class userChatViewController: MessagesViewController {
     
     //MARK: - Variables
     var centerName:String?
+    var messgaes = [Message]()
+    var sender = Sender(senderId: Auth.auth().currentUser!.uid, displayName: Auth.auth().currentUser!.displayName!)
     
     //MARK: - Overriden Function
 
@@ -23,6 +26,13 @@ class userChatViewController: MessagesViewController {
         super.viewDidLoad()
         setupLayout()
         cName.text = centerName
+        messagesCollectionView.messagesDataSource = self
+        messagesCollectionView.messagesLayoutDelegate = self
+        messagesCollectionView.messagesDisplayDelegate = self
+        
+        messgaes.append(Message(sender: sender, messageId: "1", sentDate: Date(), kind: .text("hello world")))
+        
+        messgaes.append(Message(sender: sender, messageId: "1", sentDate: Date(), kind: .text("hello worldworldworldworldworldworldworldworldworldworldworldworldworldworldworldworldworldworldworldworldworldworldworldworldworldworldworldworldworldworldworld")))
 
     }
     
@@ -53,4 +63,27 @@ class userChatViewController: MessagesViewController {
     
 }
 
-//MARK: - Extensions
+//MARK: - MessagesDataSource Extensions
+extension userChatViewController: MessagesDataSource{
+    func currentSender() -> SenderType {
+        return sender
+    }
+    
+    func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
+        return messgaes[indexPath.section]
+    }
+    
+    func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {
+        return messgaes.count
+    }
+}
+
+//MARK: - MessagesLayoutDelegate Extensions
+extension userChatViewController: MessagesLayoutDelegate{
+    
+}
+
+//MARK: - MessagesDisplayDelegate Extensions
+extension userChatViewController: MessagesDisplayDelegate{
+    
+}
