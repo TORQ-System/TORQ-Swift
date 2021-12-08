@@ -23,5 +23,8 @@ target 'TORQ' do
   pod 'Firebase/Auth'
   pod 'SCLAlertView'
   pod 'IQKeyboardManagerSwift'
+  pod 'MessageKit'
+  pod 'JGProgressHUD'
+
 
 end
