@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import MessageKit
 
-class userChatViewController: UIViewController {
+class userChatViewController: MessagesViewController {
     
     //MARK: - @IBOutlets
     @IBOutlet weak var containerView: UIView!

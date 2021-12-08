@@ -25,6 +25,8 @@
 		BE82A5652748BE6E00C4C2B5 /* RequestAccident.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE82A5642748BE6E00C4C2B5 /* RequestAccident.swift */; };
 		BE82A5672748DD0300C4C2B5 /* selectHealthCareCenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE82A5662748DD0300C4C2B5 /* selectHealthCareCenterViewController.swift */; };
 		BE94ABC12760FB0800AB7855 /* userChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE94ABC02760FB0800AB7855 /* userChatViewController.swift */; };
+		BE97225327610CD600CD8435 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE97225227610CD600CD8435 /* Message.swift */; };
+		BE97225527610D5A00CD8435 /* Sender.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE97225427610D5A00CD8435 /* Sender.swift */; };
 		BE9CDAE527297FD100CDD4B4 /* viewMedicalReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9CDAE427297FD100CDD4B4 /* viewMedicalReportViewController.swift */; };
 		BE9CDAE72729D78200CDD4B4 /* MedicalReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9CDAE62729D78200CDD4B4 /* MedicalReport.swift */; };
 		BE9CDAE92729F66A00CDD4B4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9CDAE82729F66A00CDD4B4 /* User.swift */; };
@@ -122,6 +124,8 @@
 		BE82A5642748BE6E00C4C2B5 /* RequestAccident.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestAccident.swift; sourceTree = "<group>"; };
 		BE82A5662748DD0300C4C2B5 /* selectHealthCareCenterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = selectHealthCareCenterViewController.swift; sourceTree = "<group>"; };
 		BE94ABC02760FB0800AB7855 /* userChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userChatViewController.swift; sourceTree = "<group>"; };
+		BE97225227610CD600CD8435 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		BE97225427610D5A00CD8435 /* Sender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sender.swift; sourceTree = "<group>"; };
 		BE9CDAE427297FD100CDD4B4 /* viewMedicalReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewMedicalReportViewController.swift; sourceTree = "<group>"; };
 		BE9CDAE62729D78200CDD4B4 /* MedicalReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicalReport.swift; sourceTree = "<group>"; };
 		BE9CDAE82729F66A00CDD4B4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -260,6 +264,8 @@
 				BE64405B272C6F2B0051662F /* Sensor.swift */,
 				BEF230482748418E0068B55A /* SOSRequest.swift */,
 				BEF2305A27486BF50068B55A /* notification.swift */,
+				BE97225227610CD600CD8435 /* Message.swift */,
+				BE97225427610D5A00CD8435 /* Sender.swift */,
 			);
 			path = modules;
 			sourceTree = "<group>";
@@ -646,6 +652,7 @@
 				BEDC3C1C272681F40026948E /* notificationCenterViewController.swift in Sources */,
 				BED10860273EB52F0099EE15 /* profileTableViewCell.swift in Sources */,
 				BEF23059274864ED0068B55A /* editEmergencyContactViewController.swift in Sources */,
+				BE97225527610D5A00CD8435 /* Sender.swift in Sources */,
 				BEF975142707293600325281 /* signUpSecondViewController.swift in Sources */,
 				BE34F6AB27118A800093C633 /* onboardingScreen1ViewController.swift in Sources */,
 				BE34F69D270F30B70093C633 /* requestCollectionViewCell.swift in Sources */,
@@ -675,6 +682,7 @@
 				BEF2304B274846D80068B55A /* ViewSOSRequestsViewController.swift in Sources */,
 				BEF23063274899060068B55A /* editAccountViewController.swift in Sources */,
 				BE34F6A6270F327A0093C633 /* viewLocationViewController.swift in Sources */,
+				BE97225327610CD600CD8435 /* Message.swift in Sources */,
 				BE34F69F270F31A00093C633 /* requestsViewController.swift in Sources */,
 				BEF2304527483F680068B55A /* SOSRequestViewController.swift in Sources */,
 				BEF2304D274847060068B55A /* viewSOSRequestDetailsViewController.swift in Sources */,
