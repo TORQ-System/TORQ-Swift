@@ -66,40 +66,44 @@ class notificationCenterViewController: UIViewController {
     
     func getNotifications() {
         let notificationsQueue = DispatchQueue.init(label: "notificationsQueue")
-        _ = notificationsQueue.sync { ref.child("Notification").queryOrdered(byChild: "date").observe(.value) { snapshot in
-                self.allNotifications = []
-                self.emergencyNotifications = []
-                self.wellbeingNotifications = []
-                for notif in snapshot.children{
-                    let obj = notif as! DataSnapshot
-                    let body = obj.childSnapshot(forPath: "body").value as! String
-                    let date = obj.childSnapshot(forPath: "date").value as! String
-                    let receiver = obj.childSnapshot(forPath: "receiver").value as! String
-                    let request_id = obj.childSnapshot(forPath:  "request_id").value as! String
-                    let sender = obj.childSnapshot(forPath: "sender").value as! String
-                    let subtitle = obj.childSnapshot(forPath: "subtitle").value as! String
-                    let time = obj.childSnapshot(forPath: "time").value as! String
-                    let title = obj.childSnapshot(forPath: "title").value as! String
-                    let type = obj.childSnapshot(forPath:  "type").value as! String
-                    
-                    let alert = notification(title: title, subtitle: subtitle, body:body, date: date, time: time, type: type, sender: sender, receiver: receiver, request_id: request_id, notification_id: obj.key)
-                    
-                    if (alert.getReceiver() == Auth.auth().currentUser?.uid){
-                        self.allNotifications.append(alert)
-                        switch alert.getType() {
-                        case "emergency":
-                            self.emergencyNotifications.append(alert)
-                            break
-                        case "wellbeing":
-                            self.wellbeingNotifications.append(alert)
-                            break
-                        default:
-                            print("unknown status")
-                        }
+        _ = notificationsQueue.sync { ref.child("Notification").observe(.value) { snapshot in
+            self.allNotifications = []
+            self.emergencyNotifications = []
+            self.wellbeingNotifications = []
+            for notif in snapshot.children{
+                let obj = notif as! DataSnapshot
+                let body = obj.childSnapshot(forPath: "body").value as! String
+                let date = obj.childSnapshot(forPath: "date").value as! String
+                let receiver = obj.childSnapshot(forPath: "receiver").value as! String
+                let request_id = obj.childSnapshot(forPath:  "request_id").value as! String
+                let sender = obj.childSnapshot(forPath: "sender").value as! String
+                let subtitle = obj.childSnapshot(forPath: "subtitle").value as! String
+                let time = obj.childSnapshot(forPath: "time").value as! String
+                let title = obj.childSnapshot(forPath: "title").value as! String
+                let type = obj.childSnapshot(forPath:  "type").value as! String
+                
+                let alert = notification(title: title, subtitle: subtitle, body:body, date: date, time: time, type: type, sender: sender, receiver: receiver, request_id: request_id, notification_id: obj.key)
+                
+                if (alert.getReceiver() == Auth.auth().currentUser?.uid){
+                    self.allNotifications.append(alert)
+                    switch alert.getType() {
+                    case "emergency":
+                        self.emergencyNotifications.append(alert)
+                        break
+                    case "wellbeing":
+                        self.wellbeingNotifications.append(alert)
+                        break
+                    default:
+                        print("unknown status")
                     }
                 }
-                self.notificationCollectionView.reloadData()
             }
+            
+            self.allNotifications.reverse()
+            self.emergencyNotifications.reverse()
+            self.wellbeingNotifications.reverse()
+            self.notificationCollectionView.reloadData()
+        }
         }
     }
     
