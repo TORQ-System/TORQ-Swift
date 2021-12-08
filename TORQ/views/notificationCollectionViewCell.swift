@@ -32,7 +32,6 @@ class notificationTableViewCell: UITableViewCell {
     
     func configureCellView() {
         
-//        self.contentView.setCardView()
 
         let radius: CGFloat = 25
         container.layer.cornerRadius = radius
@@ -41,33 +40,11 @@ class notificationTableViewCell: UITableViewCell {
         
         container.layer.cornerRadius = 25
 
-        // shadow
         container.layer.shadowColor = UIColor.black.cgColor
-        container.layer.shadowOffset = CGSize(width: 0.5, height: 2)
+        container.layer.shadowOffset = CGSize(width: 0.5, height: 1)
         container.layer.shadowOpacity = 0.25
-        container.layer.shadowRadius = 10
-//
-//        self.layer.shadowColor = UIColor.black.cgColor
-//        self.layer.shadowOffset = CGSize(width: 0, height: 3)
-//        self.layer.shadowRadius = 15
-//        self.layer.shadowOpacity = 0.25
-//        self.layer.masksToBounds = false
-//        self.layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: radius).cgPath
-//
-//        self.layer.cornerRadius = radius
+        container.layer.shadowRadius = 5
+
     }
 }
 
-extension UIView {
-
-    func setCardView(){
-        layer.cornerRadius = 5.0
-        layer.borderColor  =  UIColor.clear.cgColor
-        layer.borderWidth = 5.0
-        layer.shadowOpacity = 0.5
-        layer.shadowColor =  UIColor.lightGray.cgColor
-        layer.shadowRadius = 5.0
-        layer.shadowOffset = CGSize(width:5, height: 5)
-        layer.masksToBounds = true
-    }
-}

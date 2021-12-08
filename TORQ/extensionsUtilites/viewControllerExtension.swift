@@ -14,7 +14,6 @@ extension UIViewController {
     func registerToNotifications(userID: String) {
         let ref = Database.database().reference()
         let sendRequestQueue = DispatchQueue.init(label: "sendRequestQueue")
-        
         _ = sendRequestQueue.sync {
             ref.child("Request").observe(.childAdded, with: { snapshot in
                 let obj = snapshot
@@ -57,13 +56,18 @@ extension UIViewController {
                     }
                     
                     let date = Date()
-                    let calendar = Calendar.current
-                    let hour = calendar.component(.hour, from: date)
-                    let minutes = calendar.component(.minute, from: date)
-                    let seconds = calendar.component(.second, from: date)
-                    let day = calendar.component(.day, from: date)
-                    let month = calendar.component(.month, from: date)
-                    let year = calendar.component(.year, from: date)
+                    let formatter = DateFormatter()
+                    
+                    formatter.timeStyle = .medium
+                    formatter.dateStyle = .medium
+                    formatter.dateFormat = "MMM d, yyyy h:mm a"
+                    formatter.amSymbol = "a.m."
+                    formatter.pmSymbol = "p.m."
+                    
+                    let dateString = formatter.string(from: date)
+                    let index = dateString.index(dateString.endIndex, offsetBy: -9)
+                    let notifDate = dateString.prefix(12)
+                    let notifTime = dateString.suffix(from: index)
                     
                     center.getNotificationSettings { setting in
                         if setting.authorizationStatus == .authorized{
@@ -73,7 +77,7 @@ extension UIViewController {
                                     return
                                 }
                                 
-                                ref.child("Notification").childByAutoId().setValue(["title":content.title, "subtitle":content.subtitle, "body":content.body, "date": "\(day)-\(month)-\(year)", "time": "\(hour):\(minutes):\(seconds)", "type": "wellbeing", "sender":userID, "receiver": userID, "request_id": userRequest.getRequestID()])
+                                ref.child("Notification").childByAutoId().setValue(["title":content.title, "subtitle":content.subtitle, "body":content.body, "date": "\(notifDate)", "time": "\(notifTime)", "type": "wellbeing", "sender":userID, "receiver": userID, "request_id": userRequest.getRequestID()])
                             }
                         } else {
                             center.requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
@@ -84,7 +88,7 @@ extension UIViewController {
                                     guard error == nil else{
                                         return
                                     }
-                                    ref.child("Notification").childByAutoId().setValue(["title":content.title, "subtitle":content.subtitle, "body":content.body, "date": "\(day)-\(month)-\(year)", "time": "\(hour):\(minutes):\(seconds)", "type": "wellbeing", "sender":userID, "receiver": userID, "request_id": userRequest.getRequestID()])
+                                    ref.child("Notification").childByAutoId().setValue(["title":content.title, "subtitle":content.subtitle, "body":content.body, "date": "\(notifDate)", "time": "\(notifTime)", "type": "wellbeing", "sender":userID, "receiver": userID, "request_id": userRequest.getRequestID()])
                                 }
                             }
                         }
@@ -111,7 +115,6 @@ extension UIViewController {
                     let sent = obj.childSnapshot(forPath: "sent").value as! String
                     let msg = obj.childSnapshot(forPath: "msg").value as! String
                     
-                    //create a EC object
                     let emergencyContact = emergencyContact(name: name, phone_number: phone, senderID:senderID, recieverID: receiverID, sent: sent, contactID: 1, msg: msg, relation: relation)
                     
                     if (emergencyContact.getReciverID()) == userID && ((emergencyContact.getSent() == "Late") || (emergencyContact.getSent() == "Immediate")){
@@ -136,16 +139,21 @@ extension UIViewController {
                                 }
                                 
                                 let date = Date()
-                                let calendar = Calendar.current
-                                let hour = calendar.component(.hour, from: date)
-                                let minutes = calendar.component(.minute, from: date)
-                                let seconds = calendar.component(.second, from: date)
-                                let day = calendar.component(.day, from: date)
-                                let month = calendar.component(.month, from: date)
-                                let year = calendar.component(.year, from: date)
+                                let formatter = DateFormatter()
                                 
+                                formatter.timeStyle = .medium
+                                formatter.dateStyle = .medium
+                                formatter.dateFormat = "MMM d, yyyy h:mm a"
+                                formatter.amSymbol = "a.m."
+                                formatter.pmSymbol = "p.m."
+                                
+                                let dateString = formatter.string(from: date)
+                                let index = dateString.index(dateString.endIndex, offsetBy: -9)
+                                let notifDate = dateString.prefix(12)
+                                let notifTime = dateString.suffix(from: index)
+                                        
                                 let notificationRef = ref.child("Notification").childByAutoId()
-                                notificationRef.setValue(["title":content.title, "subtitle": "none", "body":content.body, "date": "\(day)-\(month)-\(year)", "time": "\(hour):\(minutes):\(seconds)", "type": "emergency", "sender":senderID, "receiver": receiverID, "request_id": self.getRequestID(sender: senderID, notif: notificationRef.key!)])
+                                notificationRef.setValue(["title":content.title, "subtitle": "none", "body":content.body, "date": "\(notifDate)", "time": "\(notifTime)", "type": "emergency", "sender":senderID, "receiver": receiverID, "request_id": self.getRequestID(sender: senderID, notif: notificationRef.key!)])
                             }
                         }
                         self.getAccidentLocation(senderID: emergencyContact.getSenderID())
@@ -364,7 +372,7 @@ extension UIViewController: UNUserNotificationCenterDelegate{
             cancelUpdateEmergencyContacts(userID: userID)
             break
         case "REQUEST_ACTION":
-            updateEmergencyContacts(userID: userID) // only called after immediate actions
+            updateEmergencyContacts(userID: userID)
             break
         default:
             print("Dissmissed or Cleared Notification")

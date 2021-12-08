@@ -44,7 +44,7 @@ class notificationCenterViewController: UIViewController {
     
     //MARK: - Functions
     func configureGradient() {
-        backgroundView.layer.cornerRadius = 40
+        backgroundView.layer.cornerRadius = 80
         backgroundView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         backgroundView.layer.shouldRasterize = true
         backgroundView.layer.rasterizationScale = UIScreen.main.scale
@@ -66,8 +66,7 @@ class notificationCenterViewController: UIViewController {
     
     func getNotifications() {
         let notificationsQueue = DispatchQueue.init(label: "notificationsQueue")
-        _ = notificationsQueue.sync {
-            ref.child("Notification").observe(.value) { snapshot in
+        _ = notificationsQueue.sync { ref.child("Notification").queryOrdered(byChild: "date").observe(.value) { snapshot in
                 self.allNotifications = []
                 self.emergencyNotifications = []
                 self.wellbeingNotifications = []
@@ -76,19 +75,17 @@ class notificationCenterViewController: UIViewController {
                     let body = obj.childSnapshot(forPath: "body").value as! String
                     let date = obj.childSnapshot(forPath: "date").value as! String
                     let receiver = obj.childSnapshot(forPath: "receiver").value as! String
+                    let request_id = obj.childSnapshot(forPath:  "request_id").value as! String
                     let sender = obj.childSnapshot(forPath: "sender").value as! String
                     let subtitle = obj.childSnapshot(forPath: "subtitle").value as! String
                     let time = obj.childSnapshot(forPath: "time").value as! String
                     let title = obj.childSnapshot(forPath: "title").value as! String
                     let type = obj.childSnapshot(forPath:  "type").value as! String
-                    let request_id = obj.childSnapshot(forPath:  "request_id").value as! String
-                    
                     
                     let alert = notification(title: title, subtitle: subtitle, body:body, date: date, time: time, type: type, sender: sender, receiver: receiver, request_id: request_id, notification_id: obj.key)
                     
                     if (alert.getReceiver() == Auth.auth().currentUser?.uid){
                         self.allNotifications.append(alert)
-                        
                         switch alert.getType() {
                         case "emergency":
                             self.emergencyNotifications.append(alert)
@@ -116,7 +113,7 @@ class notificationCenterViewController: UIViewController {
 }
 
 //MARK: - Extensions
-extension notificationCenterViewController: UITableViewDelegate, UICollectionViewDelegate{
+extension notificationCenterViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         var notifications: [notification]
         if self.all {
@@ -126,15 +123,19 @@ extension notificationCenterViewController: UITableViewDelegate, UICollectionVie
         } else{
             notifications = self.wellbeingNotifications
         }
+        
         let delete = UIContextualAction(style: .destructive, title: "Delete notification") { (action, sourceView, completionHandler) in
+            print(notifications[indexPath.row].getNotificationID())
             self.ref.child("Notification").child(notifications[indexPath.row].getNotificationID()).removeValue()
             completionHandler(true)
         }
-        let deleteActionImage = UIImage(systemName: "trash.fill")?.withTintColor(UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 ), renderingMode: .alwaysOriginal)
+        
+        let deleteActionImage = UIImage(named: "deleteCircle")
         delete.image = deleteActionImage
         delete.backgroundColor = UIColor.white.withAlphaComponent(0)
         let swipeActionConfig = UISwipeActionsConfiguration(actions: [delete])
         swipeActionConfig.performsFirstActionWithFullSwipe = true
+        
         return swipeActionConfig
     }
     
@@ -152,11 +153,14 @@ extension notificationCenterViewController: UITableViewDelegate, UICollectionVie
         }
         
         vc.notificationDetails = notifications[indexPath.row]
+        print(notifications[indexPath.row].getNotificationID())
         
-        tableView.deselectRow(at: indexPath, animated: true)
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
     }
+}
+
+extension notificationCenterViewController: UICollectionViewDelegate{
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         all = false; wellbeing = false; emergency = false
@@ -178,9 +182,10 @@ extension notificationCenterViewController: UITableViewDelegate, UICollectionVie
             notificationCollectionView.reloadData()
         }
     }
+    
 }
 
-extension notificationCenterViewController: UITableViewDataSource, UICollectionViewDataSource{
+extension notificationCenterViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var count: Int = 4
         
@@ -196,10 +201,6 @@ extension notificationCenterViewController: UITableViewDataSource, UICollectionV
         
         return count
         
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return filterBy.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -218,8 +219,6 @@ extension notificationCenterViewController: UITableViewDataSource, UICollectionV
             notifications = wellbeingNotifications
         }
         
-        notifications.sort(by: {$0.date > $1.date})
-        
         
         notificationCell.title.text = notifications[indexPath.row].getTitle()
         notificationCell.details.text = notifications[indexPath.row].getBody()
@@ -231,9 +230,19 @@ extension notificationCenterViewController: UITableViewDataSource, UICollectionV
         notificationCell.button.addGestureRecognizer(viewDetails)
         notificationCell.button.isUserInteractionEnabled = true
         
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = UIColor.white.withAlphaComponent(0)
+        notificationCell.selectedBackgroundView = backgroundView
+        
         return notificationCell
         
     }
+}
+extension notificationCenterViewController: UICollectionViewDataSource{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return filterBy.count
+    }
+    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let colors = [UIColor(red: 49.0/255.0, green: 90.0/255.0, blue: 149.0/255.0, alpha: 1.0),

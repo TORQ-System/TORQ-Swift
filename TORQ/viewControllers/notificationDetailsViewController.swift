@@ -40,7 +40,7 @@ class notificationDetailsViewController: UIViewController, FloatingPanelControll
         appearance.shadows = [shadow]
         
         appearance.cornerRadius = 48
-        appearance.backgroundColor = .clear
+        appearance.backgroundColor = .white
         
         floatingPanel.surfaceView.appearance = appearance
         floatingPanel.delegate = self
@@ -70,7 +70,6 @@ class notificationDetailsViewController: UIViewController, FloatingPanelControll
     }
     
     func getRequest(){
-        
         ref.child("Request").observeSingleEvent(of: .value) { snapshot in
             for request in snapshot.children{
                 let obj = request as! DataSnapshot

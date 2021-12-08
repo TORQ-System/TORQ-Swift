@@ -22,7 +22,6 @@ class signUpSecondViewController: UIViewController {
     @IBOutlet weak var conditionsLabel: UILabel!
     @IBOutlet weak var checkBoxButton : UIButton!
     
-    
     //MARK: - Variables
     var ref = Database.database().reference()
     let datePicker = UIDatePicker()
@@ -37,11 +36,8 @@ class signUpSecondViewController: UIViewController {
     var completedFields: Float = 0.5
     var numberOfCompleted: Int = 4
     var correctField: [String:Bool] = ["nationalID":false, "phone": false, "date":false,"conditions":false]
-    // tap gesture variable
     var tap = UITapGestureRecognizer()
-    // arrays
     var usersArray : [User] = []
-    // chcck var
     var isChecked : Bool?
     
     //MARK: - Constants
@@ -57,10 +53,15 @@ class signUpSecondViewController: UIViewController {
         contentViewCornerRadius: 15,
         buttonCornerRadius: 7,
         hideWhenBackgroundViewIsTapped: true)
+    let formatter = DateFormatter()
     
     //MARK: - Overriden Functions
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
+        formatter.dateFormat = "MMM d, yyyy" //Universal format
         
         percentageLabel.text = "\(calculatePercentage())%"
         progressBar.setProgress(completedFields, animated: true)
@@ -96,7 +97,7 @@ class signUpSecondViewController: UIViewController {
         
         // conditions label
         let stringValue = "By signing up, you are accepting our Terms & Conditions, and Privacy Policy"
-
+        
         let attributedString: NSMutableAttributedString = NSMutableAttributedString(string: stringValue)
         attributedString.setColorForText(textForAttribute: "Terms & Conditions", withColor: UIColor(red: 73/255, green: 171/255, blue:223/255, alpha: 1.0))
         attributedString.setColorForText(textForAttribute: "Privacy Policy", withColor: UIColor(red: 73/255, green: 171/255, blue:223/255, alpha: 1.0))
@@ -109,6 +110,7 @@ class signUpSecondViewController: UIViewController {
         conditionsLabel.addGestureRecognizer(tapgesture)
         
     }
+    
     @objc func tappedOnLabel(_ gesture: UITapGestureRecognizer) {
         guard let text = self.conditionsLabel.text else { return }
         let termsAndConditionRange = (text as NSString).range(of: "Terms & Conditions")
@@ -127,32 +129,35 @@ class signUpSecondViewController: UIViewController {
             present(vc, animated: true, completion: nil)
         }
     }
+    
     func configureButtonView(){
-            roundGradientView.layer.cornerRadius = 20
-            roundGradientView.layer.shouldRasterize = true
-            roundGradientView.layer.rasterizationScale = UIScreen.main.scale
-            
-            let gradient: CAGradientLayer = CAGradientLayer()
-            
-            gradient.cornerRadius = 20
-            gradient.colors = [
-                UIColor(red: 0.887, green: 0.436, blue: 0.501, alpha: 1).cgColor,
-                UIColor(red: 0.75, green: 0.191, blue: 0.272, alpha: 1).cgColor
-            ]
-            
-            gradient.locations = [0, 1]
-            gradient.startPoint = CGPoint(x: 0, y: 0)
-            gradient.endPoint = CGPoint(x: 1, y: 1)
-            gradient.frame = roundGradientView.bounds
-            roundGradientView.layer.insertSublayer(gradient, at: 0)
+        roundGradientView.layer.cornerRadius = 20
+        roundGradientView.layer.shouldRasterize = true
+        roundGradientView.layer.rasterizationScale = UIScreen.main.scale
+        
+        let gradient: CAGradientLayer = CAGradientLayer()
+        
+        gradient.cornerRadius = 20
+        gradient.colors = [
+            UIColor(red: 0.887, green: 0.436, blue: 0.501, alpha: 1).cgColor,
+            UIColor(red: 0.75, green: 0.191, blue: 0.272, alpha: 1).cgColor
+        ]
+        
+        gradient.locations = [0, 1]
+        gradient.startPoint = CGPoint(x: 0, y: 0)
+        gradient.endPoint = CGPoint(x: 1, y: 1)
+        gradient.frame = roundGradientView.bounds
+        roundGradientView.layer.insertSublayer(gradient, at: 0)
     }
+    
     func configureTapGesture(){
-            tap = UITapGestureRecognizer(target: self, action: #selector(self.signUpClicked(_:)))
-            tap.numberOfTapsRequired = 1
-            tap.numberOfTouchesRequired = 1
-            buttonView.addGestureRecognizer(tap)
-            buttonView.isUserInteractionEnabled = true
-        }
+        tap = UITapGestureRecognizer(target: self, action: #selector(self.signUpClicked(_:)))
+        tap.numberOfTapsRequired = 1
+        tap.numberOfTouchesRequired = 1
+        buttonView.addGestureRecognizer(tap)
+        buttonView.isUserInteractionEnabled = true
+    }
+    
     func fillUsersArray(){
         ref.child("User").observe(.value) { snapshot in
             for user in snapshot.children{
@@ -169,6 +174,7 @@ class signUpSecondViewController: UIViewController {
             }
         }
     }
+    
     func validateFields() -> [String: String] {
         var errors = ["Empty":"","nationalID":"", "phone":"","date":""]
         
@@ -205,9 +211,10 @@ class signUpSecondViewController: UIViewController {
         
         return errors
     }
+    
     func validatePhone() -> [String: String] {
         var error = ["phoneExists":""]
-
+        
         for user in usersArray {
             if phone.text != nil && phone.text != "" {
                 if user.getPhone() == phone.text {
@@ -215,12 +222,13 @@ class signUpSecondViewController: UIViewController {
                 }
             }
         }
-
+        
         return error
     }
+    
     func validateNationalID() -> [String: String] {
         var error = ["idExists":""]
-
+        
         for user in usersArray {
             if nationalID.text != nil && nationalID.text != "" {
                 if user.getNationalID() == nationalID.text {
@@ -228,14 +236,12 @@ class signUpSecondViewController: UIViewController {
                 }
             }
         }
-
+        
         return error
     }
     
     func setupDatePickerView(){
         datePicker.preferredDatePickerStyle = .wheels
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MM/dd/yyyy"
         datePicker.maximumDate = Date("12-31-2012")
         datePicker.minimumDate = Date("01-01-1930")
         let toolbar = UIToolbar()
@@ -249,10 +255,6 @@ class signUpSecondViewController: UIViewController {
     }
     
     @objc func chooseDate(){
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MM/dd/yyyy"
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .none
         date.text = formatter.string(from: datePicker.date)
         self.view.endEditing(true)
     }
@@ -269,7 +271,6 @@ class signUpSecondViewController: UIViewController {
     }
     
     //MARK: - @IBActions
-    
     @IBAction func goToLogin(_ sender: Any) {
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let loginVC = storyboard.instantiateViewController(identifier: "loginViewController") as! loginViewController
@@ -277,14 +278,13 @@ class signUpSecondViewController: UIViewController {
         self.present(loginVC, animated: true, completion: nil)
     }
     
-    
     @IBAction func back(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
     @IBAction func checkBoxTapped(_ sender:UIButton){
         
-//        let errors = validateFields()
+        //        let errors = validateFields()
         if sender.isSelected {
             // check box is not selected
             sender.isSelected = false
@@ -304,7 +304,7 @@ class signUpSecondViewController: UIViewController {
             numberOfCompleted+=1
             correctField["conditions"]! = true
         }
-
+        
         progressBar.setProgress(completedFields, animated: true)
         percentageLabel.text = "\(calculatePercentage())%"
         
@@ -354,11 +354,11 @@ class signUpSecondViewController: UIViewController {
             return
         }
         guard natID_error["idExists"] == "" else {
-                   errorNationalID.text = natID_error["idExists"]!
-                   nationalID.setBorder(color: "error", image: UIImage(named: "idError")!)
-                   errorNationalID.alpha = 1
-                   return
-               }
+            errorNationalID.text = natID_error["idExists"]!
+            nationalID.setBorder(color: "error", image: UIImage(named: "idError")!)
+            errorNationalID.alpha = 1
+            return
+        }
         // if Date of Birth has an error
         guard errors["date"] == "" else {
             //handle the error
@@ -376,12 +376,12 @@ class signUpSecondViewController: UIViewController {
             return
         }
         guard phone_error["phoneExists"] == "" else {
-                  //handle the error
-                  errorPhone.text = phone_error["phoneExists"]!
-                  phone.setBorder(color: "error", image: UIImage(named: "phoneError")!)
-                  errorPhone.alpha = 1
-                  return
-              }
+            //handle the error
+            errorPhone.text = phone_error["phoneExists"]!
+            phone.setBorder(color: "error", image: UIImage(named: "phoneError")!)
+            errorPhone.alpha = 1
+            return
+        }
         // if conditions checkbox was unchecked
         guard checkBoxButton.isSelected == true else {
             SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "You must agree on Terms & Conditions and Privacy Policy" , color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
@@ -445,7 +445,7 @@ class signUpSecondViewController: UIViewController {
             self.ref.child("Sensor").child("S\(id!)/X").setValue("0")
             self.ref.child("Sensor").child("S\(id!)/Y").setValue("0")
             self.ref.child("Sensor").child("S\(id!)/Z").setValue("0")
-
+            
             let alertView = SCLAlertView(appearance: self.apperanceWithoutClose)
             alertView.addButton("Let's go", backgroundColor: self.blueUIColor){
                 self.goToHomeScreen()
@@ -567,17 +567,17 @@ extension signUpSecondViewController: UITextFieldDelegate{
     }
 }
 extension NSMutableAttributedString {
-
+    
     func setColorForText(textForAttribute: String, withColor color: UIColor) {
         let range: NSRange = self.mutableString.range(of: textForAttribute, options: .caseInsensitive)
-
+        
         // Swift 4.2 and above
         self.addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: range)
-
+        
         // Swift 4.1 and below
         self.addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: range)
     }
-
+    
 }
 extension UITapGestureRecognizer {
     

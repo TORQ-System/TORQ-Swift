@@ -33,7 +33,6 @@ class editAccountViewController: UIViewController {
     var tap = UITapGestureRecognizer()
     var users: [User] = []
     
-    
     //MARK: - Constants
     let datePicker = UIDatePicker()
     let redUIColor = UIColor(red: 200/255, green: 68/255, blue:86/255, alpha: 1.0)
