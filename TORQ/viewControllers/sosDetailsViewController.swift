@@ -135,7 +135,7 @@ class sosDetailsViewController: UIViewController {
                     let obj = req as! DataSnapshot
                     let status = obj.childSnapshot(forPath: "status").value as! String
                     print("condtion result:\(status == "Processed" && self.sosId == obj.key)")
-                    print("self.sosId: \(self.sosId)")
+                    print("self.sosId: \(String(describing: self.sosId))")
                     print("obj.key: \(obj.key)")
                     
                     if status == "Processed" && self.sosId == obj.key {
@@ -175,9 +175,13 @@ class sosDetailsViewController: UIViewController {
     
     //MARK: - @IBActions
     @IBAction func goChat(_ sender: Any) {
-        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(identifier: "userChatViewController") as! userChatViewController
-        vc.centerName = SOSRequest?.getAssignedCenter()
+        
+        guard let name = SOSRequest?.getAssignedCenter()else{
+            return
+        }
+        let vc = userChatViewController(with: "\(name)@srca.org.sa")
+        vc.centerName = name
+        vc.isNewConversation = true
         vc.modalPresentationStyle = .fullScreen
         let navController = UINavigationController(rootViewController: vc)
         navController.modalPresentationStyle = .fullScreen

@@ -8,6 +8,7 @@
 import UIKit
 import MessageKit
 import Firebase
+import InputBarAccessoryView
 
 class userChatViewController: MessagesViewController {
     
@@ -18,23 +19,39 @@ class userChatViewController: MessagesViewController {
     //MARK: - Variables
     var userID = Auth.auth().currentUser!.uid
     var userEmail = Auth.auth().currentUser!.email!
-    var centerName:String?
+    var centerName: String?
     var messgaes = [Message]()
     var sender: SenderType?
+    var isNewConversation = false
+    let otherUserEmail: String
+    
+    
+    //MARK: - Constructure
+    
+    init(with email:String) {
+        self.otherUserEmail = email
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     
     //MARK: - Overriden Function
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupLayout()
+//        setupLayout()
         setDelegate()
         setbackButton()
-        
-        messgaes.append(Message(sender: sender!, messageId: "1", sentDate: Date(), kind: .text("hello world")))
-        
-        messgaes.append(Message(sender: sender!, messageId: "1", sentDate: Date(), kind: .text("hello worldworldworldworldworldworldworldworldworldworldworldworldworldworldworldworldworldworldworldworldworldworldworldworldworldworldworldworldworldworldworld")))
+        configuration()
 
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        messageInputBar.inputTextView.becomeFirstResponder()
     }
     
     //MARK: - Private functions
@@ -46,6 +63,7 @@ class userChatViewController: MessagesViewController {
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
+        messageInputBar.delegate = self
     }
     
     private func setbackButton(){
@@ -60,8 +78,9 @@ class userChatViewController: MessagesViewController {
     }
     
     private func configuration(){
-        cName.text = centerName
-        sender = Sender(senderId: userID, displayName: userEmail)
+        navigationItem.title = centerName
+        //TODO pass the name of the user
+        sender = Sender(senderId: userEmail, displayName: "userEmail")
     }
     
     
@@ -80,6 +99,22 @@ class userChatViewController: MessagesViewController {
         gradientLayer.position = containerView.center
         containerView.layer.addSublayer(gradientLayer)
         containerView.layer.insertSublayer(gradientLayer, at: 0)
+    }
+    
+    private func createNewConversation(with otherUserEmail: String, firstMessage: Message, completion: @escaping (Bool)-> Void){
+        
+    }
+    
+    private func getAllConversation(for email:String, completion: @escaping (Result<String, Error>)-> Void){
+        
+    }
+    
+    private func getAllMessagesForConversation(with id:String, completion: @escaping (Result<String, Error>)-> Void){
+        
+    }
+    
+    private func sendMessage(to conversation: String ,message: Message, completion: @escaping (Bool)-> Void){
+        
     }
     
     
@@ -115,3 +150,28 @@ extension userChatViewController: MessagesLayoutDelegate{
 extension userChatViewController: MessagesDisplayDelegate{
     
 }
+
+//MARK: - MessagesDisplayDelegate Extensions
+extension userChatViewController: InputBarAccessoryViewDelegate{
+    
+    func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
+        guard !text.replacingOccurrences(of: " ", with: "").isEmpty else{
+            return
+        }
+        
+        print("sending: \(text)")
+        
+        //send meesage
+        if isNewConversation{
+            //create converstaion in db
+            
+            let message = Message(sender: <#T##SenderType#>, messageId: <#T##String#>, sentDate: Date(), kind: .text(text))
+            self.createNewConversation(with: <#T##String#>, firstMessage: <#T##Message#>, completion: <#T##(Bool) -> Void#>)
+        }else{
+            //append to exsisting conversation in db
+        }
+    }
+    
+}
+
+
