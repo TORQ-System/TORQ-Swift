@@ -11,13 +11,16 @@ class userChatViewController: UIViewController {
     
     //MARK: - @IBOutlets
     @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var cName: UILabel!
     
     //MARK: - Variables
+    var centerName:String?
     
     //MARK: - Overriden Function
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        cName.text = centerName
 
     }
     

@@ -175,7 +175,11 @@ class sosDetailsViewController: UIViewController {
     
     //MARK: - @IBActions
     @IBAction func goChat(_ sender: Any) {
-        
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(identifier: "userChatViewController") as! userChatViewController
+        vc.centerName = SOSRequest?.getAssignedCenter()
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
     }
     
     @IBAction func cancelSOSrequest(_ sender: Any) {
