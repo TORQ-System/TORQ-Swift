@@ -22,33 +22,14 @@ class userChatViewController: MessagesViewController {
     var messgaes = [Message]()
     var sender: SenderType?
     
-    //MARK: - creating UIKit Programmatically
-//    private let backbutton: UIButton = {
-//        let button = UIButton(frame: CGRect(x: 20, y: -50, width: 60, height: 30))
-//        button.tintColor = .blue
-//        button.setTitle("back", for: .normal)
-//        button.setImage(UIImage(systemName: "back"), for: .normal)
-//        button.addTarget(self, action: #selector(backClicked), for: .touchUpInside)
-//        return button
-//    }()
     
     //MARK: - Overriden Function
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()
-        let back = UIButton()
-        back.setTitle("back", for: .normal)
-        back.setImage(UIImage(systemName: "chevron.backward"), for: .normal)
-        back.tintColor = .systemBlue
-        back.setTitleColor(.systemBlue, for: .normal)
-        let barButton = UIBarButtonItem(customView: back)
-        navigationItem.leftBarButtonItem = barButton
-        cName.text = centerName
-        messagesCollectionView.messagesDataSource = self
-        messagesCollectionView.messagesLayoutDelegate = self
-        messagesCollectionView.messagesDisplayDelegate = self
-        sender = Sender(senderId: userID, displayName: userEmail)
+        setDelegate()
+        setbackButton()
         
         messgaes.append(Message(sender: sender!, messageId: "1", sentDate: Date(), kind: .text("hello world")))
         
@@ -59,6 +40,28 @@ class userChatViewController: MessagesViewController {
     //MARK: - Private functions
     @objc private func backClicked(){
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    private func setDelegate(){
+        messagesCollectionView.messagesDataSource = self
+        messagesCollectionView.messagesLayoutDelegate = self
+        messagesCollectionView.messagesDisplayDelegate = self
+    }
+    
+    private func setbackButton(){
+        let back = UIButton()
+        back.setTitle("back", for: .normal)
+        back.setImage(UIImage(systemName: "chevron.backward"), for: .normal)
+        back.tintColor = .systemBlue
+        back.setTitleColor(.systemBlue, for: .normal)
+        back.addTarget(self, action: #selector(backClicked), for: .touchUpInside)
+        let barButton = UIBarButtonItem(customView: back)
+        navigationItem.leftBarButtonItem = barButton
+    }
+    
+    private func configuration(){
+        cName.text = centerName
+        sender = Sender(senderId: userID, displayName: userEmail)
     }
     
     
