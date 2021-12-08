@@ -20,6 +20,7 @@ class userChatViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupLayout()
         cName.text = centerName
 
     }
@@ -44,6 +45,9 @@ class userChatViewController: UIViewController {
     
     
     //MARK: - @IBActions
+    @IBAction func back(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
     
     
 }
