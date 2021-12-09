@@ -382,12 +382,46 @@ class userChatViewController: MessagesViewController {
                             return
                         }
                         
-                        completion(true)
+                        self.ref.child("\(finalOtherUserEmail)/conversations").observeSingleEvent(of: .value) { snapshot in
+                            guard var othertUserConversatiosns = snapshot.value as? [[String: Any]] else{
+                                completion(false)
+                                return
+                            }
+                            
+                            let updatedValue: [String:Any] = ["date":dateString,"message":message!,"is_read":false]
+                            var targetConversation:[String: Any]?
+                            var position = 0
+                            
+                            for conversationDictionary in othertUserConversatiosns {
+                                if let currentID = conversationDictionary["id"] as? String, currentID == conversation {
+                                    targetConversation = conversationDictionary
+                                    break
+                                }
+                                position += 1
+                            }
+                            targetConversation?["latest_message"] = updatedValue
+                            guard let finalConversation = targetConversation else{
+                                completion(false)
+                                return
+                            }
+                            othertUserConversatiosns[position] = finalConversation
+                            self.ref.child("\(finalOtherUserEmail)/conversations").setValue(othertUserConversatiosns) { error, _ in
+                                guard error == nil else{
+                                    completion(false)
+                                    return
+                                }
+                                
+                                completion(true)
+                            }
+
+                        }
+                        
+//                        completion(true)
                     }
 
                 }
                 
-                completion(true)
+//                completion(true)
             }
             
             
