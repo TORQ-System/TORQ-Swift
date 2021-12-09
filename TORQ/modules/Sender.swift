@@ -9,6 +9,6 @@ import Foundation
 import MessageKit
 
 struct Sender: SenderType {
-    var senderId: String
-    var displayName: String
+   public var senderId: String
+   public var displayName: String
 }

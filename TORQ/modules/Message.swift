@@ -9,8 +9,8 @@ import Foundation
 import MessageKit
 
 struct Message: MessageType {
-    var sender: SenderType
-    var messageId: String
-    var sentDate: Date
-    var kind: MessageKind
+   public var sender: SenderType
+   public var messageId: String
+   public var sentDate: Date
+   public var kind: MessageKind
 }

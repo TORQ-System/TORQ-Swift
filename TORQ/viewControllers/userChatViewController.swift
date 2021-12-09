@@ -19,6 +19,7 @@ class userChatViewController: MessagesViewController {
     //MARK: - Variables
     var userID = Auth.auth().currentUser!.uid
     var userEmail = Auth.auth().currentUser!.email!
+    var ref = Database.database().reference()
     var centerName: String?
     var messgaes = [Message]()
     var sender: SenderType?
@@ -109,7 +110,52 @@ class userChatViewController: MessagesViewController {
     }
     
     private func createNewConversation(with otherUserEmail: String, firstMessage: Message, completion: @escaping (Bool)-> Void){
-        
+        let filteredEmail = self.userEmail.replacingOccurrences(of: "@", with: "-")
+        let finalEmail = filteredEmail.replacingOccurrences(of: ".", with: "-")
+        ref.child("\(finalEmail)").observeSingleEvent(of: .value) { snapshot in
+            var userNode = snapshot.value as! [String: Any]
+            let messageDate = firstMessage.sentDate
+            let dateString = self.dateFormatter.string(from: messageDate)
+            var message:String?
+            
+            switch firstMessage.kind{
+            case .text(let messageText):
+                message = messageText
+            case .attributedText(_):
+                break
+            case .photo(_):
+                break
+            case .video(_):
+                break
+            case .location(_):
+                break
+            case .emoji(_):
+                break
+            case .audio(_):
+                break
+            case .contact(_):
+                break
+            case .linkPreview(_):
+                break
+            case .custom(_):
+                break
+            }
+            
+            let newConversationData:[String:Any] = ["id":"conversation_\(firstMessage.messageId)","otherUserEmail":otherUserEmail,"latest_message":["date":dateString, "message":message!,"is_read":false],"":""]
+            
+            if var conversations = userNode["conversations"] as? [[String: Any]]{
+                // there exist a converstation for this user
+                // append message to the conversation
+                conversations.append(newConversationData)
+                userNode["conversations"] = conversations
+                self.ref.child("\(finalEmail)").setValue(userNode)
+            }else{
+                //converstaion array dont exists , create it
+                userNode["conversations"] = [newConversationData]
+                self.ref.child("\(finalEmail)").setValue(userNode)
+            }
+        }
+
     }
     
     private func getAllConversation(for email:String, completion: @escaping (Result<String, Error>)-> Void){
