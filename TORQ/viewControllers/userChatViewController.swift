@@ -146,8 +146,6 @@ class userChatViewController: MessagesViewController {
         let finalEmail = filteredEmail.replacingOccurrences(of: ".", with: "-")
         let filteredOtherUserEmail = otherUserEmail.replacingOccurrences(of: "@", with: "-")
         let finalOtherUserEmail = filteredOtherUserEmail.replacingOccurrences(of: "@", with: "-")
-//        let filteredMessageId = firstMessage.messageId.replacingOccurrences(of: "@", with: "-")
-//        let finalMessageId = filteredMessageId.replacingOccurrences(of: ".", with: "-")
         
         ref.child("\(finalEmail)").observeSingleEvent(of: .value) { snapshot in
             guard var userNode = snapshot.value as? [String: Any] else{
@@ -293,7 +291,7 @@ class userChatViewController: MessagesViewController {
                 let stringDate = self.dateFormatter.date(from: date)
                 let sender = Sender(senderId: senderEmail, displayName: self.userName!)
                 return Message(sender: sender, messageId: id, sentDate: stringDate!, kind: .text(content))
-
+                
             }
             
             completion(.success(messages))
@@ -410,23 +408,13 @@ class userChatViewController: MessagesViewController {
                                     completion(false)
                                     return
                                 }
-                                
                                 completion(true)
                             }
-
                         }
-                        
-//                        completion(true)
                     }
-
                 }
-                
-//                completion(true)
             }
-            
-            
         }
-        
     }
     
     private func createMessageId() -> String{
@@ -436,7 +424,7 @@ class userChatViewController: MessagesViewController {
         let filteredOtherUserEmail = otherUserEmail.replacingOccurrences(of: "@", with: "-")
         let finalOtherUserEmail = filteredOtherUserEmail.replacingOccurrences(of: "@", with: "-")
         
-//        let dateString = self.dateFormatter.string(from: Date())
+        //        let dateString = self.dateFormatter.string(from: Date())
         let newIdentefier = "\(finalOtherUserEmail)_\(finalEmail)"
         print("created message id: \(newIdentefier)")
         return newIdentefier
@@ -507,7 +495,7 @@ extension userChatViewController: InputBarAccessoryViewDelegate{
             }
             sendMessage(to: conversationId, otherUserEmail: otherUserEmail, newMessage: message) { success in
                 if success{
-                   print("message sent")
+                    print("message sent")
                 }else{
                     print("failed to send")
                 }
