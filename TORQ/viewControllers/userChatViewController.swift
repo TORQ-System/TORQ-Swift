@@ -44,9 +44,10 @@ class userChatViewController: MessagesViewController {
         super.init(nibName: nil, bundle: nil)
         if let id = converstationID {
             print("id is not nil")
-            listenForMessages(id: id)
+            listenForMessages(id: id, shouldScrollToButtom: true)
+        }else{
+            print("id is nil")
         }
-        print("id is nil")
     }
     
     required init?(coder: NSCoder) {
@@ -74,16 +75,20 @@ class userChatViewController: MessagesViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    private func listenForMessages(id: String){
-        self.getAllMessagesForConversation(with: id, completion: { result in
+    private func listenForMessages(id: String, shouldScrollToButtom: Bool){
+        print("conv id: \(id)")
+        self.getAllMessagesForConversation(with: "\(id)/messages", completion: { result in
             switch result{
-            case .success(let message):
-                guard !message.isEmpty else{
+            case .success(let messages):
+                guard !messages.isEmpty else{
                     return
                 }
-                self.messgaes = message
+                self.messgaes = messages
                 DispatchQueue.main.async {
                     self.messagesCollectionView.reloadDataAndKeepOffset()
+                    if shouldScrollToButtom{
+                        self.messagesCollectionView.scrollToLastItem()
+                    }
                 }
             case.failure(let error):
                 print(error.localizedDescription)
@@ -113,7 +118,9 @@ class userChatViewController: MessagesViewController {
     
     private func configuration(){
         navigationItem.title = centerName
-        sender = Sender(senderId: userEmail, displayName: userName!)
+        let filteredEmail = self.userEmail.replacingOccurrences(of: "@", with: "-")
+        let finalEmail = filteredEmail.replacingOccurrences(of: ".", with: "-")
+        sender = Sender(senderId: finalEmail, displayName: userName!)
     }
     
     
@@ -139,11 +146,16 @@ class userChatViewController: MessagesViewController {
         let finalEmail = filteredEmail.replacingOccurrences(of: ".", with: "-")
         let filteredOtherUserEmail = otherUserEmail.replacingOccurrences(of: "@", with: "-")
         let finalOtherUserEmail = filteredOtherUserEmail.replacingOccurrences(of: "@", with: "-")
-        let filteredMessageId = firstMessage.messageId.replacingOccurrences(of: "@", with: "-")
-        let finalMessageId = filteredMessageId.replacingOccurrences(of: ".", with: "-")
+//        let filteredMessageId = firstMessage.messageId.replacingOccurrences(of: "@", with: "-")
+//        let finalMessageId = filteredMessageId.replacingOccurrences(of: ".", with: "-")
         
         ref.child("\(finalEmail)").observeSingleEvent(of: .value) { snapshot in
-            var userNode = snapshot.value as! [String: Any]
+            guard var userNode = snapshot.value as? [String: Any] else{
+                completion(false)
+                print("user not found")
+                return
+            }
+            
             let messageDate = firstMessage.sentDate
             let dateString = self.dateFormatter.string(from: messageDate)
             var message:String?
@@ -172,6 +184,17 @@ class userChatViewController: MessagesViewController {
             }
             
             let newConversationData:[String:Any] = ["id":"conversation_\(finalOtherUserEmail)_\(finalEmail)","otherUserEmail":"\(finalOtherUserEmail)","latest_message":["date":dateString, "message":message!,"is_read":false]]
+            
+            let recipient_newConversation:[String:Any] = ["id":"conversation_\(finalOtherUserEmail)_\(finalEmail)","otherUserEmail":"\(finalEmail)","latest_message":["date":dateString, "message":message!,"is_read":false]]
+            
+            self.ref.child("\(finalOtherUserEmail)/conversations").observeSingleEvent(of: .value) { snap in
+                if var conversations = snap.value as? [[String: Any]]{
+                    conversations.append(recipient_newConversation)
+                    self.ref.child("\(finalOtherUserEmail)/conversations").setValue("conversation_\(finalOtherUserEmail)_\(finalEmail)")
+                }else{
+                    self.ref.child("\(finalOtherUserEmail)/conversations").setValue([recipient_newConversation])
+                }
+            }
             
             if var conversations = userNode["conversations"] as? [[String: Any]]{
                 // there exist a converstation for this user
@@ -224,7 +247,7 @@ class userChatViewController: MessagesViewController {
         
         let collectionMessage:[String: Any] = ["id":firstMessage.messageId
                                                ,"type":firstMessage.kind.messageKindString,"content":message!,"date":dateString,"sender_email":finalEmail,"is_read":false]
-        let value:[String: Any] = ["messages":collectionMessage]
+        let value:[String: Any] = ["messages":[collectionMessage]]
         
         
         ref.child("\(conversationID)").setValue(value) { error, _ in
@@ -257,23 +280,23 @@ class userChatViewController: MessagesViewController {
     }
     
     private func getAllMessagesForConversation(with id:String, completion: @escaping (Result<[Message], Error>)-> Void){
-        ref.child("\(id)/messages").observe(.value) { snapshot in
+        ref.child("\(id)").observe(.value) { snapshot in
             guard let value = snapshot.value as? [[String: Any]] else{
                 return
             }
             
-            let messagess: [Message] = value.compactMap { dictionary in
+            let messages: [Message] = value.compactMap { dictionary in
                 guard let content = dictionary["content"] as? String, let date = dictionary["date"] as? String, let id = dictionary["id"] as? String, let _ = dictionary["is_read"] as? Bool, let senderEmail = dictionary["sender_email"] as? String, let _ = dictionary["type"] as? String? else{
                     return nil
                 }
                 
                 let stringDate = self.dateFormatter.date(from: date)
-                let senderr = Sender(senderId: senderEmail, displayName: self.userName!)
-                return Message(sender: senderr, messageId: id, sentDate: stringDate!, kind: .text(content))
+                let sender = Sender(senderId: senderEmail, displayName: self.userName!)
+                return Message(sender: sender, messageId: id, sentDate: stringDate!, kind: .text(content))
 
             }
             
-            completion(.success(messagess))
+            completion(.success(messages))
         }
     }
     
@@ -288,8 +311,8 @@ class userChatViewController: MessagesViewController {
         let filteredOtherUserEmail = otherUserEmail.replacingOccurrences(of: "@", with: "-")
         let finalOtherUserEmail = filteredOtherUserEmail.replacingOccurrences(of: "@", with: "-")
         
-        let dateString = self.dateFormatter.string(from: Date())
-        let newIdentefier = "\(finalOtherUserEmail)_\(finalEmail)_\(dateString)"
+//        let dateString = self.dateFormatter.string(from: Date())
+        let newIdentefier = "\(finalOtherUserEmail)_\(finalEmail)"
         print("created message id: \(newIdentefier)")
         return newIdentefier
     }
@@ -340,21 +363,28 @@ extension userChatViewController: InputBarAccessoryViewDelegate{
         }
         
         print("sending: \(text)")
-        
+        let message = Message(sender: sender!, messageId: createMessageId(), sentDate: Date(), kind: .text(text))
         //send meesage
         if isNewConversation{
             //create converstaion in db
-            
-            let message = Message(sender: sender!, messageId: createMessageId(), sentDate: Date(), kind: .text(text))
             self.createNewConversation(with: otherUserEmail, firstMessage: message) { success in
                 if success{
                     print("message sent")
+                    self.isNewConversation = false
                 }else{
                     print("failed to sent")
                 }
             }
         }else{
             //append to exsisting conversation in db
+            sendMessage(to: otherUserEmail, message: message) { success in
+                if success{
+                   print("message sent")
+                }else{
+                    print("failed to send")
+                }
+            }
+            
         }
     }
     
