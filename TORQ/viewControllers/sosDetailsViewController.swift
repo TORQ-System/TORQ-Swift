@@ -56,11 +56,6 @@ class sosDetailsViewController: UIViewController {
         conversations = []
     }
     
-    //    override func viewWillAppear(_ animated: Bool) {
-    //        super.viewWillAppear(animated)
-    //        conversations = []
-    //    }
-    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         conversations = []

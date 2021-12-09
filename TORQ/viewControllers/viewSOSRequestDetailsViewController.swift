@@ -64,6 +64,10 @@ class viewSOSRequestDetailsViewController: UIViewController {
     var requestDetails = true
     var medicalReportID: String?
     var phoneNumber: String?
+    var conversations: [Conversation]?
+    var centerEmail = Auth.auth().currentUser!.email!
+    var userEmail: String?
+
 
     
     //MARK: - Overriden functions
@@ -72,10 +76,17 @@ class viewSOSRequestDetailsViewController: UIViewController {
         fetchMedicalReports()
         layoutViews()
         subLayoutRequestDetails()
+        conversations = []
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.fetchSOSRequests()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        conversations = []
     }
     
     //MARK: - functions
@@ -361,6 +372,29 @@ class viewSOSRequestDetailsViewController: UIViewController {
         view.sendSubviewToBack(border)
     }
     
+    private func getAllConversations(for email:String, completion: @escaping (Result<[Conversation], Error>)-> Void){
+        ref.child("\(email)/conversations").observe(.value) { snapshot in
+            guard let value = snapshot.value as? [[String: Any]] else{
+                print("value is nil")
+                completion(.failure(NSError(domain: "", code: 401, userInfo: [ NSLocalizedDescriptionKey: "Invalid access token"])))
+                return
+            }
+            
+            let conversations: [Conversation] = value.compactMap { dictionary in
+                guard let id = dictionary["id"] as? String, let lm = dictionary["latest_message"] as? [String: Any], let date = lm["date"] as? String, let isRead = lm["is_read"] as? Bool, let message = lm["message"] as? String, let otherUserEmail = dictionary["otherUserEmail"] as? String else{
+                    print("one of the conversation attribute is nil")
+                    return nil
+                }
+                
+                let lMessage = latestMessage(date: date, text: message, isRread: isRead)
+                
+                return Conversation(id: id, latestMessage: lMessage, otherUserEmail: otherUserEmail)
+            }
+            print(conversations)
+            completion(.success(conversations))
+        }
+    }
+    
     
     //MARK: - @IBActions
     @IBAction func backButton(_ sender: Any) {
@@ -389,12 +423,74 @@ class viewSOSRequestDetailsViewController: UIViewController {
     }
     
     @IBAction func chat(_ sender: Any) {
-        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(identifier: "paramedicChatViewController") as! paramedicChatViewController
-        vc.Name = self.patientName.text
-        vc.phoneNumber = self.phoneNumber
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: true, completion: nil)
+        
+        let filteredEmail = self.centerEmail.replacingOccurrences(of: "@", with: "-")
+        let finalEmail = filteredEmail.replacingOccurrences(of: ".", with: "-")
+        let filteredOtherUserEmail = userEmail!.replacingOccurrences(of: "@", with: "-")
+        let finalOtherUserEmail = filteredOtherUserEmail.replacingOccurrences(of: ".", with: "-")
+        
+        let checkQueue = DispatchQueue.init(label: "checkQueue")
+        let fetchQueue = DispatchQueue.init(label: "fetchQueue")
+        fetchQueue.sync {
+            self.getAllConversations(for: finalEmail) { result in
+                switch result {
+                case .success(let conversations):
+                    print("successfuly got conversations model")
+                    guard !conversations.isEmpty else {
+                        print("conversations is empty")
+                        return
+                    }
+                    print("line232\(conversations)")
+                    self.conversations = conversations
+                case .failure(let error):
+                    print("faliure case: \(error.localizedDescription)")
+                }
+                checkQueue.sync {
+                    if self.conversations == nil || self.conversations!.isEmpty{
+                        print("empty")
+                        let vc = paramedicChatViewController(with: "\(finalOtherUserEmail)",id: nil)
+                        vc.Name = self.patientName.text
+                        vc.phoneNumber = self.phoneNumber
+                        vc.isNewConversation = true
+                        vc.modalPresentationStyle = .fullScreen
+                        let navController = UINavigationController(rootViewController: vc)
+                        navController.modalPresentationStyle = .fullScreen
+                        self.present(navController, animated:true, completion: nil)
+                    }else{
+                        var c: Conversation?
+                        for conv in self.conversations!{
+                            if conv.id == "conversation_\(finalOtherUserEmail)_\(finalEmail)" {
+                                print("found c that matches")
+                                c = conv
+                                break
+                            }
+                        }
+                        
+                        if c == nil {
+                            print("c is nil")
+                            let vc = paramedicChatViewController(with: "\(finalOtherUserEmail)",id: nil)
+                            vc.Name = self.patientName.text
+                            vc.phoneNumber = self.phoneNumber
+                            vc.isNewConversation = true
+                            vc.modalPresentationStyle = .fullScreen
+                            let navController = UINavigationController(rootViewController: vc)
+                            navController.modalPresentationStyle = .fullScreen
+                            self.present(navController, animated:true, completion: nil)
+                        }else{
+                            print("c is not nil")
+                            let vc = paramedicChatViewController(with: "\(finalOtherUserEmail)",id: c!.id)
+                            vc.Name = self.patientName.text
+                            vc.phoneNumber = self.phoneNumber
+                            vc.modalPresentationStyle = .fullScreen
+                            let navController = UINavigationController(rootViewController: vc)
+                            navController.modalPresentationStyle = .fullScreen
+                            self.present(navController, animated:true, completion: nil)
+                        }
+                    }
+                }
+            }
+        }
+        conversations = []
     }
     
     

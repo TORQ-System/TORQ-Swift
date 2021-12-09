@@ -188,6 +188,7 @@ class ViewSOSRequestsViewController: UIViewController {
         vc.sosRequestTime = sender.requestTime
         vc.sosRequestAge = sender.requesterAge
         vc.phoneNumber = sender.phone
+        vc.userEmail = sender.email
         if processed {
             vc.sosRequestStatus = "Processed"
         }else if active {
@@ -210,6 +211,7 @@ class ViewSOSRequestsViewController: UIViewController {
         var userID: String?
         var requesterAge: Int?
         var phone:String?
+        var email: String?
         
     }
     
