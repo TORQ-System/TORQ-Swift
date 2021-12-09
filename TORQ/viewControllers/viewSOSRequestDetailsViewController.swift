@@ -459,7 +459,7 @@ class viewSOSRequestDetailsViewController: UIViewController {
                     }else{
                         var c: Conversation?
                         for conv in self.conversations!{
-                            if conv.id == "conversation_\(finalOtherUserEmail)_\(finalEmail)" {
+                            if conv.id == "conversation_\(finalEmail)_\(finalOtherUserEmail)" {
                                 print("found c that matches")
                                 c = conv
                                 break

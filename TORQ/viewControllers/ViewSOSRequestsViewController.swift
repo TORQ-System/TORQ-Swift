@@ -401,6 +401,7 @@ extension ViewSOSRequestsViewController: UITableViewDataSource{
         buttonTap.requesterAge = age
         buttonTap.requestTime = String(time)
         buttonTap.phone = userObject!.first?.getPhone()
+        buttonTap.email = userObject!.first?.getEmail()
         cell.viewDetailsButton.addGestureRecognizer(buttonTap)
         return cell
     }

@@ -44,6 +44,8 @@ class paramedicChatViewController: MessagesViewController {
     init(with email:String, id: String?) {
         self.otherUserEmail = email
         self.converstationID = id
+        let token = centerEmail.components(separatedBy: "@")
+        centerName = token[0]
         super.init(nibName: nil, bundle: nil)
         if let id = converstationID {
             print("id is not nil")
@@ -59,10 +61,8 @@ class paramedicChatViewController: MessagesViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let token = centerEmail.components(separatedBy: "@")
-        centerName = token[0]
-        
         setDelegate()
+        setbackButton()
         configuration()
 
     }
