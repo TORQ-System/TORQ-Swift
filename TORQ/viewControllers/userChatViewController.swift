@@ -22,7 +22,7 @@ class userChatViewController: MessagesViewController {
     var ref = Database.database().reference()
     var centerName: String?
     var messgaes = [Message]()
-    var sender: SenderType?
+    var sender: Sender?
     var isNewConversation = false
     let otherUserEmail: String
     let converstationID: String?
@@ -171,7 +171,7 @@ class userChatViewController: MessagesViewController {
                 break
             }
             
-            let newConversationData:[String:Any] = ["id":"conversation_\(finalMessageId)","otherUserEmail":"\(finalOtherUserEmail)","latest_message":["date":dateString, "message":message!,"is_read":false]]
+            let newConversationData:[String:Any] = ["id":"conversation_\(finalOtherUserEmail)_\(finalEmail)","otherUserEmail":"\(finalOtherUserEmail)","latest_message":["date":dateString, "message":message!,"is_read":false]]
             
             if var conversations = userNode["conversations"] as? [[String: Any]]{
                 // there exist a converstation for this user
@@ -179,12 +179,12 @@ class userChatViewController: MessagesViewController {
                 conversations.append(newConversationData)
                 userNode["conversations"] = conversations
                 self.ref.child("\(finalEmail)").setValue(userNode)
-                self.finishCreatingConversation(conversationID: "conversation_\(finalMessageId)", firstMessage: firstMessage, completion: completion)
+                self.finishCreatingConversation(conversationID: "conversation_\(finalOtherUserEmail)_\(finalEmail)", firstMessage: firstMessage, completion: completion)
             }else{
                 //converstaion array dont exists , create it
                 userNode["conversations"] = [newConversationData]
                 self.ref.child("\(finalEmail)").setValue(userNode)
-                self.finishCreatingConversation(conversationID: "conversation_\(finalMessageId)", firstMessage: firstMessage, completion: completion)
+                self.finishCreatingConversation(conversationID: "conversation_\(finalOtherUserEmail)_\(finalEmail)", firstMessage: firstMessage, completion: completion)
             }
         }
         
@@ -283,8 +283,13 @@ class userChatViewController: MessagesViewController {
     
     private func createMessageId() -> String{
         //date , otherUserEmail, senderEmail, randomInt
+        let filteredEmail = self.userEmail.replacingOccurrences(of: "@", with: "-")
+        let finalEmail = filteredEmail.replacingOccurrences(of: ".", with: "-")
+        let filteredOtherUserEmail = otherUserEmail.replacingOccurrences(of: "@", with: "-")
+        let finalOtherUserEmail = filteredOtherUserEmail.replacingOccurrences(of: "@", with: "-")
+        
         let dateString = self.dateFormatter.string(from: Date())
-        let newIdentefier = "\(otherUserEmail)_\(userEmail)_\(dateString)"
+        let newIdentefier = "\(finalOtherUserEmail)_\(finalEmail)_\(dateString)"
         print("created message id: \(newIdentefier)")
         return newIdentefier
     }

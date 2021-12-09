@@ -34,6 +34,7 @@ class sosDetailsViewController: UIViewController {
     
     //MARK: - Variables
     var SOSRequest: SOSRequest?
+    var userEmail = Auth.auth().currentUser!.email!
     var userID = Auth.auth().currentUser?.uid
     var ref = Database.database().reference()
     let redUIColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
@@ -44,6 +45,7 @@ class sosDetailsViewController: UIViewController {
         hideWhenBackgroundViewIsTapped: true)
     var sosId: String?
     var userName: String?
+    var conversations: [Conversation]?
     
     
     //MARK: - Overriden Functions
@@ -172,6 +174,26 @@ class sosDetailsViewController: UIViewController {
             print("out of ref")
         }
     }
+
+    
+    private func getAllConversations(for email:String, completion: @escaping (Result<[Conversation], Error>)-> Void){
+        ref.child("\(email)/conversations").observe(.value) { snapshot in
+            guard let value = snapshot.value as? [[String: Any]] else{
+                return
+            }
+            
+            let conversations: [Conversation] = value.compactMap { dictionary in
+                guard let id = dictionary["id"] as? String, let lm = dictionary["latest_message"] as? [String: Any], let date = lm["date"] as? String, let isRead = lm["is_read"] as? Bool, let message = lm["message"] as? String, let otherUserEmail = dictionary["otherUserEmail"] as? String else{
+                    return nil
+                }
+                
+                let lMessage = latestMessage(date: date, text: message, isRread: isRead)
+                
+                return Conversation(id: id, latestMessage: lMessage, otherUserEmail: otherUserEmail)
+            }
+            completion(.success(conversations))
+        }
+    }
     
     
     
@@ -181,14 +203,55 @@ class sosDetailsViewController: UIViewController {
         guard let name = SOSRequest?.getAssignedCenter()else{
             return
         }
-        let vc = userChatViewController(with: "\(name)@srca.org.sa",id: nil)
-        vc.centerName = name
-        vc.userName = userName
-        vc.isNewConversation = true
-        vc.modalPresentationStyle = .fullScreen
-        let navController = UINavigationController(rootViewController: vc)
-        navController.modalPresentationStyle = .fullScreen
-        self.present(navController, animated:true, completion: nil)
+        let filteredEmail = self.userEmail.replacingOccurrences(of: "@", with: "-")
+        let finalEmail = filteredEmail.replacingOccurrences(of: ".", with: "-")
+        
+        let fetchQueue = DispatchQueue.init(label: "fetchQueue")
+        fetchQueue.sync {
+            getAllConversations(for: finalEmail) { [weak self] result in
+                switch result {
+                    case .success(let conversations):
+                        print("successfuly got conversations model")
+                        guard !conversations.isEmpty else {
+                            return
+                        }
+                        self?.conversations = conversations
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        }
+        
+        if conversations == nil{
+            let vc = userChatViewController(with: "\(name)-srca-org-sa",id: nil)
+            vc.centerName = name
+            vc.userName = userName
+            vc.isNewConversation = true
+            vc.modalPresentationStyle = .fullScreen
+            let navController = UINavigationController(rootViewController: vc)
+            navController.modalPresentationStyle = .fullScreen
+            self.present(navController, animated:true, completion: nil)
+        }else{
+            var c: Conversation?
+            for conv in conversations!{
+                if conv.id == "conversations_\(name)-srca-org-sa_\(finalEmail)" {
+                    c = conv
+                    break
+                }
+            }
+            
+            var vc = userChatViewController(with: "\(name)-srca-org-sa",id: nil)
+            if let id = c {
+                vc = userChatViewController(with: "\(name)-srca-org-sa",id: id.id)
+            }
+            vc.centerName = name
+            vc.userName = userName
+            vc.isNewConversation = true
+            vc.modalPresentationStyle = .fullScreen
+            let navController = UINavigationController(rootViewController: vc)
+            navController.modalPresentationStyle = .fullScreen
+            self.present(navController, animated:true, completion: nil)
+        }
     }
     
     @IBAction func cancelSOSrequest(_ sender: Any) {
