@@ -12,13 +12,7 @@ import CoreLocation
 
 class SOSHistoryViewController: UIViewController {
 
-//    @IBOutlet weak var noSos: UILabel!
-//    @IBOutlet weak var collectionViewSOS: UICollectionView!
-//    @IBOutlet weak var BackgroundView: UIView!
-    
-//    @IBOutlet weak var BackgroundView: UIView!
-//    @IBOutlet weak var noSos: UILabel!
-//    @IBOutlet weak var collectionViewSOS: UICollectionView!
+
     @IBOutlet weak var BackgroundView: UIStackView!
     @IBOutlet weak var noSos: UILabel!
     @IBOutlet weak var BackgroundView1: UIView!
@@ -40,35 +34,6 @@ class SOSHistoryViewController: UIViewController {
     }
     
     func background() {
-//        BackgroundView1.layer.cornerRadius = 50
-//        BackgroundView1.layer.masksToBounds = true
-//        BackgroundView1.layer.maskedCorners = [.layerMinXMaxYCorner,.layerMaxXMaxYCorner]
-//         let gradientLayer = CAGradientLayer()
-//         gradientLayer.frame = BackgroundView1.frame
-//         gradientLayer.colors = [UIColor(red: 0.879, green: 0.462, blue: 0.524, alpha: 1).cgColor,UIColor(red: 0.757, green: 0.204, blue: 0.286, alpha: 1).cgColor]
-//         gradientLayer.startPoint = CGPoint(x: 0.25, y: 0.5)
-//         gradientLayer.endPoint = CGPoint(x: 0.75, y: 0.5)
-//         gradientLayer.transform = CATransform3DMakeAffineTransform(CGAffineTransform(a: -0.96, b: 0.95, c: -0.95, d: -1.56, tx: 1.43, ty: 0.83))
-//         gradientLayer.bounds = BackgroundView1.bounds.insetBy(dx: -0.5*BackgroundView1.bounds.size.width, dy: -0.5*BackgroundView1.bounds.size.height)
-//        gradientLayer.position = BackgroundView1.center
-//        BackgroundView1.layer.cornerRadius = 40
-//        BackgroundView1.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-//        BackgroundView1.layer.shouldRasterize = true
-//        BackgroundView1.layer.rasterizationScale = UIScreen.main.scale
-//
-//                let gradient: CAGradientLayer = CAGradientLayer()
-//
-//                gradient.colors = [
-//                    UIColor(red: 0.887, green: 0.436, blue: 0.501, alpha: 1).cgColor,
-//                    UIColor(red: 0.75, green: 0.191, blue: 0.272, alpha: 1).cgColor
-//                ]
-//
-//                gradient.locations = [0, 1]
-//                gradient.startPoint = CGPoint(x: 0, y: 0)
-//                gradient.endPoint = CGPoint(x: 1, y: 1)
-//                gradient.frame = BackgroundView1.layer.frame
-//
-//        BackgroundView1.layer.insertSublayer(gradient, at: 0)
         /// other reame
         BackgroundView1.layer.cornerRadius = 50
         BackgroundView1.layer.masksToBounds = true
@@ -83,7 +48,7 @@ class SOSHistoryViewController: UIViewController {
         gradientLayer.position = BackgroundView1.center
         BackgroundView1.layer.addSublayer(gradientLayer)
         BackgroundView1.layer.insertSublayer(gradientLayer, at: 0)
-        // add corner radius to the clooection view as a whole
+       
          collectionViewSOS.layer.cornerRadius = 15
     }
     

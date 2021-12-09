@@ -399,7 +399,7 @@ extension userHomeViewController: UICollectionViewDataSource{
         case 3:
             cell.serviceImage.image = UIImage(imageLiteralResourceName: "sos")
         case 4:
-            cell.serviceImage.image = UIImage(imageLiteralResourceName: "sos")
+            cell.serviceImage.image = UIImage(imageLiteralResourceName: "SOS_History")
         
         
         default:

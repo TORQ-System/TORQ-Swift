@@ -2169,13 +2169,13 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="80" translatesAutoresizingMaskIntoConstraints="NO" id="GaR-LI-80y">
-                                        <rect key="frame" x="10" y="80" width="334" height="612.33333333333337"/>
+                                        <rect key="frame" x="10" y="80" width="334" height="290"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="4s8-73-Fm7">
-                                                <rect key="frame" x="0.0" y="0.0" width="334" height="161.33333333333334"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="334" height="0.0"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="weW-Sx-ZtO">
-                                                        <rect key="frame" x="0.0" y="0.0" width="30" height="161.33333333333334"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="30" height="0.0"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q9h-hd-gfg">
                                                                 <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
@@ -2205,7 +2205,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c0d-nL-Ft1">
-                                                        <rect key="frame" x="40" y="0.0" width="294" height="161.33333333333334"/>
+                                                        <rect key="frame" x="40" y="0.0" width="294" height="0.0"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your SOS request had been created successfully! Hang on while we assign it to the nearest center" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GC0-xp-4rQ">
                                                                 <rect key="frame" x="0.0" y="0.0" width="294" height="54"/>
@@ -2224,10 +2224,10 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="rXZ-uA-Peh">
-                                                <rect key="frame" x="0.0" y="241.33333333333337" width="334" height="161"/>
+                                                <rect key="frame" x="0.0" y="80" width="334" height="0.0"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xfd-y4-mHZ">
-                                                        <rect key="frame" x="0.0" y="0.0" width="30" height="161"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="30" height="0.0"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EaF-LI-nxv">
                                                                 <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
@@ -2257,7 +2257,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2yz-Pd-HHw">
-                                                        <rect key="frame" x="40" y="0.0" width="294" height="161"/>
+                                                        <rect key="frame" x="40" y="0.0" width="294" height="0.0"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your request has been assigned to Almalqa SRCA  center" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pqf-D6-b1x">
                                                                 <rect key="frame" x="0.0" y="0.0" width="294" height="36"/>
@@ -2276,7 +2276,7 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Ccg-rm-8Bp">
-                                                <rect key="frame" x="0.0" y="482.33333333333337" width="334" height="25"/>
+                                                <rect key="frame" x="0.0" y="160" width="334" height="25"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LXx-6t-ztA">
                                                         <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
@@ -2308,7 +2308,7 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="wtO-pY-v8t">
-                                                <rect key="frame" x="0.0" y="587.33333333333326" width="334" height="25"/>
+                                                <rect key="frame" x="0.0" y="265" width="334" height="25"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="36Y-QY-wGT">
                                                         <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
@@ -7539,7 +7539,7 @@ We may request access or permission to and track location-based information from
                                         </subviews>
                                     </stackView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.83921568629999999" green="0.33333333329999998" blue="0.42352941179999998" alpha="0.57715470270000002" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="etf-LD-xWn" firstAttribute="top" secondItem="DGO-Ru-CNF" secondAttribute="top" constant="50" id="7Qc-Ld-xiP"/>
                                     <constraint firstItem="etf-LD-xWn" firstAttribute="leading" secondItem="DGO-Ru-CNF" secondAttribute="leading" constant="20" id="WzW-ZA-NGd"/>
@@ -7585,17 +7585,11 @@ We may request access or permission to and track location-based information from
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hGS-zl-Y4f">
-                                                    <rect key="frame" x="0.0" y="0.0" width="117.33333333333333" height="124"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="115" height="124"/>
                                                     <connections>
                                                         <outlet property="delegate" destination="qGy-Jn-reF" id="8aF-pV-LvL"/>
                                                     </connections>
                                                 </mapView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Processed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pJO-mF-Cbt">
-                                                    <rect key="frame" x="250.66666666666666" y="14.999999999999998" width="76.333333333333343" height="19.333333333333329"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" systemColor="systemGreenColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" axis="vertical" alignment="top" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="jTF-1i-0bj">
                                                     <rect key="frame" x="125" y="52" width="213" height="39"/>
                                                     <subviews>
@@ -7605,7 +7599,7 @@ We may request access or permission to and track location-based information from
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Assigned center: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xvg-qv-joW">
                                                                     <rect key="frame" x="0.0" y="0.0" width="119.33333333333333" height="18"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <color key="textColor" red="0.63921568630000003" green="0.63137254899999995" blue="0.63137254899999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="King fahad" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P9A-uP-r94">
@@ -7622,7 +7616,7 @@ We may request access or permission to and track location-based information from
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Occured at:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tnQ-pm-shy">
                                                                     <rect key="frame" x="0.0" y="0.0" width="80.333333333333329" height="18"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <color key="textColor" red="0.61176470588235299" green="0.59215686274509804" blue="0.59215686274509804" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12/03/2021,12:03:09" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I3d-mF-enZ">
@@ -7635,22 +7629,29 @@ We may request access or permission to and track location-based information from
                                                         </stackView>
                                                     </subviews>
                                                 </stackView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Processed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pJO-mF-Cbt">
+                                                    <rect key="frame" x="270" y="13.999999999999998" width="76.333333333333314" height="19.333333333333329"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" systemColor="systemGreenColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="pJO-mF-Cbt" secondAttribute="trailing" constant="13.67" id="5CK-KN-beD"/>
+                                                <constraint firstItem="Xvg-qv-joW" firstAttribute="height" secondItem="CnZ-76-UkJ" secondAttribute="height" multiplier="0.145161" id="5JN-RM-WdV"/>
                                                 <constraint firstItem="I3d-mF-enZ" firstAttribute="height" secondItem="CnZ-76-UkJ" secondAttribute="height" multiplier="0.145161" id="7n0-8H-9wD"/>
+                                                <constraint firstItem="jTF-1i-0bj" firstAttribute="leading" secondItem="hGS-zl-Y4f" secondAttribute="trailing" constant="10" id="8Ih-3r-LuD"/>
+                                                <constraint firstItem="pJO-mF-Cbt" firstAttribute="top" secondItem="CnZ-76-UkJ" secondAttribute="top" constant="14" id="GIB-6t-ctK"/>
                                                 <constraint firstItem="Wne-lS-F2K" firstAttribute="top" secondItem="CnZ-76-UkJ" secondAttribute="top" constant="14" id="Hpb-cJ-dWt"/>
                                                 <constraint firstItem="hGS-zl-Y4f" firstAttribute="leading" secondItem="CnZ-76-UkJ" secondAttribute="leading" id="SMv-hz-hDw"/>
-                                                <constraint firstAttribute="trailing" secondItem="pJO-mF-Cbt" secondAttribute="trailing" constant="33" id="Sa4-Zo-3gy"/>
-                                                <constraint firstItem="Wne-lS-F2K" firstAttribute="leading" secondItem="hGS-zl-Y4f" secondAttribute="trailing" constant="7.6699999999999999" id="XoN-Sm-la0"/>
-                                                <constraint firstItem="jTF-1i-0bj" firstAttribute="leading" secondItem="hGS-zl-Y4f" secondAttribute="trailing" constant="7.6699999999999999" id="ZoW-Oe-0wV"/>
-                                                <constraint firstItem="jTF-1i-0bj" firstAttribute="top" secondItem="pJO-mF-Cbt" secondAttribute="bottom" constant="17.670000000000002" id="ZtG-hl-auc"/>
                                                 <constraint firstAttribute="trailing" secondItem="jTF-1i-0bj" secondAttribute="trailing" constant="22" id="et5-4u-gZO"/>
-                                                <constraint firstItem="pJO-mF-Cbt" firstAttribute="leading" secondItem="Wne-lS-F2K" secondAttribute="trailing" constant="35" id="hDH-ze-Y7g"/>
+                                                <constraint firstItem="Wne-lS-F2K" firstAttribute="leading" secondItem="hGS-zl-Y4f" secondAttribute="trailing" constant="10" id="itt-Nl-P8u"/>
                                                 <constraint firstItem="hGS-zl-Y4f" firstAttribute="top" secondItem="CnZ-76-UkJ" secondAttribute="top" id="kWe-I1-9wf"/>
                                                 <constraint firstAttribute="bottom" secondItem="jTF-1i-0bj" secondAttribute="bottom" constant="33" id="lRH-y0-bSU"/>
-                                                <constraint firstItem="pJO-mF-Cbt" firstAttribute="top" secondItem="CnZ-76-UkJ" secondAttribute="top" constant="15" id="rYd-jR-hMy"/>
                                                 <constraint firstAttribute="bottom" secondItem="hGS-zl-Y4f" secondAttribute="bottom" id="uHR-B9-Ch9"/>
+                                                <constraint firstItem="jTF-1i-0bj" firstAttribute="top" secondItem="pJO-mF-Cbt" secondAttribute="bottom" constant="18.670000000000002" id="v4k-Gu-PKP"/>
                                                 <constraint firstItem="jTF-1i-0bj" firstAttribute="top" secondItem="Wne-lS-F2K" secondAttribute="bottom" constant="17.670000000000002" id="vrq-9Q-pEH"/>
+                                                <constraint firstItem="pJO-mF-Cbt" firstAttribute="leading" secondItem="Wne-lS-F2K" secondAttribute="trailing" constant="54.329999999999998" id="zuR-w3-NSs"/>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
