@@ -300,7 +300,98 @@ class userChatViewController: MessagesViewController {
         }
     }
     
-    private func sendMessage(to conversation: String ,message: Message, completion: @escaping (Bool)-> Void){
+    private func sendMessage(to conversation: String , otherUserEmail: String ,newMessage: Message, completion: @escaping (Bool)-> Void){
+        //add new message to messages
+        //update sender latest messages
+        //update reciever latest messages
+        self.ref.child("\(conversation)/messages").observeSingleEvent(of: .value) { snapshot in
+            guard var currentMessages = snapshot.value as? [[String:Any]] else{
+                completion(false)
+                return
+            }
+            
+            let filteredEmail = self.userEmail.replacingOccurrences(of: "@", with: "-")
+            let finalEmail = filteredEmail.replacingOccurrences(of: ".", with: "-")
+            let filteredOtherUserEmail = otherUserEmail.replacingOccurrences(of: "@", with: "-")
+            let finalOtherUserEmail = filteredOtherUserEmail.replacingOccurrences(of: "@", with: "-")
+            
+            let messageDate = newMessage.sentDate
+            let dateString = self.dateFormatter.string(from: messageDate)
+            var message:String?
+            
+            switch newMessage.kind{
+            case .text(let messageText):
+                message = messageText
+            case .attributedText(_):
+                break
+            case .photo(_):
+                break
+            case .video(_):
+                break
+            case .location(_):
+                break
+            case .emoji(_):
+                break
+            case .audio(_):
+                break
+            case .contact(_):
+                break
+            case .linkPreview(_):
+                break
+            case .custom(_):
+                break
+            }
+            
+            
+            let collectionMessage:[String: Any] = ["id":newMessage.messageId
+                                                   ,"type":newMessage.kind.messageKindString,"content":message!,"date":dateString,"sender_email":finalEmail,"is_read":false]
+            currentMessages.append(collectionMessage)
+            
+            self.ref.child("\(conversation)/messages").setValue(currentMessages) { error, _ in
+                guard error == nil else{
+                    completion(false)
+                    return
+                }
+                
+                self.ref.child("\(finalEmail)/conversations").observeSingleEvent(of: .value) { snapshot in
+                    guard var currentUserConversatiosns = snapshot.value as? [[String: Any]] else{
+                        completion(false)
+                        return
+                    }
+                    
+                    let updatedValue: [String:Any] = ["date":dateString,"message":message!,"is_read":false]
+                    var targetConversation:[String: Any]?
+                    var position = 0
+                    
+                    for conversationDictionary in currentUserConversatiosns {
+                        if let currentID = conversationDictionary["id"] as? String, currentID == conversation {
+                            targetConversation = conversationDictionary
+                            break
+                        }
+                        position += 1
+                    }
+                    targetConversation?["latest_message"] = updatedValue
+                    guard let finalConversation = targetConversation else{
+                        completion(false)
+                        return
+                    }
+                    currentUserConversatiosns[position] = finalConversation
+                    self.ref.child("\(finalEmail)/conversations").setValue(currentUserConversatiosns) { error, _ in
+                        guard error == nil else{
+                            completion(false)
+                            return
+                        }
+                        
+                        completion(true)
+                    }
+
+                }
+                
+                completion(true)
+            }
+            
+            
+        }
         
     }
     
@@ -377,7 +468,10 @@ extension userChatViewController: InputBarAccessoryViewDelegate{
             }
         }else{
             //append to exsisting conversation in db
-            sendMessage(to: otherUserEmail, message: message) { success in
+            guard let conversationId = converstationID else {
+                return
+            }
+            sendMessage(to: conversationId, otherUserEmail: otherUserEmail, newMessage: message) { success in
                 if success{
                    print("message sent")
                 }else{
