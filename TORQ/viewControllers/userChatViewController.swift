@@ -48,14 +48,14 @@ class userChatViewController: MessagesViewController {
     
     
     //MARK: - Overriden Function
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-//        setupLayout()
+        //        setupLayout()
         setDelegate()
         setbackButton()
         configuration()
-
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -112,6 +112,11 @@ class userChatViewController: MessagesViewController {
     private func createNewConversation(with otherUserEmail: String, firstMessage: Message, completion: @escaping (Bool)-> Void){
         let filteredEmail = self.userEmail.replacingOccurrences(of: "@", with: "-")
         let finalEmail = filteredEmail.replacingOccurrences(of: ".", with: "-")
+        let filteredOtherUserEmail = otherUserEmail.replacingOccurrences(of: "@", with: "-")
+        let finalOtherUserEmail = filteredOtherUserEmail.replacingOccurrences(of: "@", with: "-")
+        let filteredMessageId = firstMessage.messageId.replacingOccurrences(of: "@", with: "-")
+        let finalMessageId = filteredMessageId.replacingOccurrences(of: ".", with: "-")
+        
         ref.child("\(finalEmail)").observeSingleEvent(of: .value) { snapshot in
             var userNode = snapshot.value as! [String: Any]
             let messageDate = firstMessage.sentDate
@@ -141,7 +146,7 @@ class userChatViewController: MessagesViewController {
                 break
             }
             
-            let newConversationData:[String:Any] = ["id":"conversation_\(firstMessage.messageId)","otherUserEmail":otherUserEmail,"latest_message":["date":dateString, "message":message!,"is_read":false],"":""]
+            let newConversationData:[String:Any] = ["id":"conversation_\(finalMessageId)","otherUserEmail":"\(finalOtherUserEmail)","latest_message":["date":dateString, "message":message!,"is_read":false]]
             
             if var conversations = userNode["conversations"] as? [[String: Any]]{
                 // there exist a converstation for this user
@@ -149,13 +154,62 @@ class userChatViewController: MessagesViewController {
                 conversations.append(newConversationData)
                 userNode["conversations"] = conversations
                 self.ref.child("\(finalEmail)").setValue(userNode)
+                self.finishCreatingConversation(conversationID: "conversation_\(finalMessageId)", firstMessage: firstMessage, completion: completion)
             }else{
                 //converstaion array dont exists , create it
                 userNode["conversations"] = [newConversationData]
                 self.ref.child("\(finalEmail)").setValue(userNode)
+                self.finishCreatingConversation(conversationID: "conversation_\(finalMessageId)", firstMessage: firstMessage, completion: completion)
             }
         }
-
+        
+    }
+    
+    private func finishCreatingConversation(conversationID: String, firstMessage: Message, completion: @escaping (Bool)-> Void){
+        
+        let filteredEmail = self.userEmail.replacingOccurrences(of: "@", with: "-")
+        let finalEmail = filteredEmail.replacingOccurrences(of: ".", with: "-")
+        let messageDate = firstMessage.sentDate
+        let dateString = self.dateFormatter.string(from: messageDate)
+        var message:String?
+        
+        switch firstMessage.kind{
+        case .text(let messageText):
+            message = messageText
+        case .attributedText(_):
+            break
+        case .photo(_):
+            break
+        case .video(_):
+            break
+        case .location(_):
+            break
+        case .emoji(_):
+            break
+        case .audio(_):
+            break
+        case .contact(_):
+            break
+        case .linkPreview(_):
+            break
+        case .custom(_):
+            break
+        }
+        
+        
+        let collectionMessage:[String: Any] = ["id":firstMessage.messageId
+                                               ,"type":firstMessage.kind.messageKindString,"content":message!,"date":dateString,"sender_email":filteredEmail,"is_read":false]
+        let value:[String: Any] = ["messages":collectionMessage]
+        
+        
+        ref.child("\(conversationID)").setValue(value) { error, _ in
+            guard error == nil else{
+                completion(false)
+                return
+            }
+            completion(true)
+        }
+        
     }
     
     private func getAllConversation(for email:String, completion: @escaping (Result<String, Error>)-> Void){

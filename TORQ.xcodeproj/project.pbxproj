@@ -27,6 +27,7 @@
 		BE94ABC12760FB0800AB7855 /* userChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE94ABC02760FB0800AB7855 /* userChatViewController.swift */; };
 		BE97225327610CD600CD8435 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE97225227610CD600CD8435 /* Message.swift */; };
 		BE97225527610D5A00CD8435 /* Sender.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE97225427610D5A00CD8435 /* Sender.swift */; };
+		BE972257276187EF00CD8435 /* MessageKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE972256276187EF00CD8435 /* MessageKind.swift */; };
 		BE9CDAE527297FD100CDD4B4 /* viewMedicalReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9CDAE427297FD100CDD4B4 /* viewMedicalReportViewController.swift */; };
 		BE9CDAE72729D78200CDD4B4 /* MedicalReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9CDAE62729D78200CDD4B4 /* MedicalReport.swift */; };
 		BE9CDAE92729F66A00CDD4B4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9CDAE82729F66A00CDD4B4 /* User.swift */; };
@@ -126,6 +127,7 @@
 		BE94ABC02760FB0800AB7855 /* userChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userChatViewController.swift; sourceTree = "<group>"; };
 		BE97225227610CD600CD8435 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		BE97225427610D5A00CD8435 /* Sender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sender.swift; sourceTree = "<group>"; };
+		BE972256276187EF00CD8435 /* MessageKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageKind.swift; sourceTree = "<group>"; };
 		BE9CDAE427297FD100CDD4B4 /* viewMedicalReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewMedicalReportViewController.swift; sourceTree = "<group>"; };
 		BE9CDAE62729D78200CDD4B4 /* MedicalReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicalReport.swift; sourceTree = "<group>"; };
 		BE9CDAE82729F66A00CDD4B4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -376,6 +378,7 @@
 				BE82A5662748DD0300C4C2B5 /* selectHealthCareCenterViewController.swift */,
 				BEAB6D72275C9B7D00483A14 /* paramedicChatViewController.swift */,
 				BE94ABC02760FB0800AB7855 /* userChatViewController.swift */,
+				BE972256276187EF00CD8435 /* MessageKind.swift */,
 			);
 			path = viewControllers;
 			sourceTree = "<group>";
@@ -685,6 +688,7 @@
 				BE97225327610CD600CD8435 /* Message.swift in Sources */,
 				BE34F69F270F31A00093C633 /* requestsViewController.swift in Sources */,
 				BEF2304527483F680068B55A /* SOSRequestViewController.swift in Sources */,
+				BE972257276187EF00CD8435 /* MessageKind.swift in Sources */,
 				BEF2304D274847060068B55A /* viewSOSRequestDetailsViewController.swift in Sources */,
 				BEF975122707292C00325281 /* signUpFirstViewController.swift in Sources */,
 				BE9CDAE72729D78200CDD4B4 /* MedicalReport.swift in Sources */,
