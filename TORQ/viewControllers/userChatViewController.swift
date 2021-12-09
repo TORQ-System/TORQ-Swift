@@ -212,11 +212,27 @@ class userChatViewController: MessagesViewController {
         
     }
     
-    private func getAllConversation(for email:String, completion: @escaping (Result<String, Error>)-> Void){
-        
+    private func getAllConversations(for email:String, completion: @escaping (Result<[Conversation], Error>)-> Void){
+        ref.child("\(email)/conversations").observe(.value) { snapshot in
+            guard let value = snapshot.value as? [[String: Any]] else{
+                return
+            }
+            
+            let conversations: [Conversation] = value.compactMap { dictionary in
+                guard let id = dictionary["id"] as? String, let lm = dictionary["latest_message"] as? [String: Any], let date = lm["date"] as? String, let isRead = lm["is_read"] as? Bool, let message = lm["message"] as? String, let otherUserEmail = dictionary["otherUserEmail"] as? String else{
+                    return nil
+                }
+                
+                let lMessage = latestMessage(date: date, text: message, isRread: isRead)
+                
+                return Conversation(id: id, latestMessage: lMessage, otherUserEmail: otherUserEmail)
+            }
+            completion(.success(conversations))
+        }
     }
     
     private func getAllMessagesForConversation(with id:String, completion: @escaping (Result<String, Error>)-> Void){
+        
         
     }
     

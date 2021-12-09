@@ -28,6 +28,8 @@
 		BE97225327610CD600CD8435 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE97225227610CD600CD8435 /* Message.swift */; };
 		BE97225527610D5A00CD8435 /* Sender.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE97225427610D5A00CD8435 /* Sender.swift */; };
 		BE972257276187EF00CD8435 /* MessageKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE972256276187EF00CD8435 /* MessageKind.swift */; };
+		BE9722592761C58300CD8435 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9722582761C58300CD8435 /* Conversation.swift */; };
+		BE97225B2761C83800CD8435 /* latestMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE97225A2761C83800CD8435 /* latestMessage.swift */; };
 		BE9CDAE527297FD100CDD4B4 /* viewMedicalReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9CDAE427297FD100CDD4B4 /* viewMedicalReportViewController.swift */; };
 		BE9CDAE72729D78200CDD4B4 /* MedicalReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9CDAE62729D78200CDD4B4 /* MedicalReport.swift */; };
 		BE9CDAE92729F66A00CDD4B4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9CDAE82729F66A00CDD4B4 /* User.swift */; };
@@ -128,6 +130,8 @@
 		BE97225227610CD600CD8435 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		BE97225427610D5A00CD8435 /* Sender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sender.swift; sourceTree = "<group>"; };
 		BE972256276187EF00CD8435 /* MessageKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageKind.swift; sourceTree = "<group>"; };
+		BE9722582761C58300CD8435 /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
+		BE97225A2761C83800CD8435 /* latestMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = latestMessage.swift; sourceTree = "<group>"; };
 		BE9CDAE427297FD100CDD4B4 /* viewMedicalReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewMedicalReportViewController.swift; sourceTree = "<group>"; };
 		BE9CDAE62729D78200CDD4B4 /* MedicalReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicalReport.swift; sourceTree = "<group>"; };
 		BE9CDAE82729F66A00CDD4B4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -267,7 +271,9 @@
 				BEF230482748418E0068B55A /* SOSRequest.swift */,
 				BEF2305A27486BF50068B55A /* notification.swift */,
 				BE97225227610CD600CD8435 /* Message.swift */,
+				BE97225A2761C83800CD8435 /* latestMessage.swift */,
 				BE97225427610D5A00CD8435 /* Sender.swift */,
+				BE9722582761C58300CD8435 /* Conversation.swift */,
 			);
 			path = modules;
 			sourceTree = "<group>";
@@ -671,6 +677,7 @@
 				BEF9753D270AE0E500325281 /* paramedicHomeViewController.swift in Sources */,
 				BEAB6D73275C9B7D00483A14 /* paramedicChatViewController.swift in Sources */,
 				BE94ABC12760FB0800AB7855 /* userChatViewController.swift in Sources */,
+				BE9722592761C58300CD8435 /* Conversation.swift in Sources */,
 				BEF23061274873690068B55A /* changePasswordViewController.swift in Sources */,
 				BEF97539270AE07400325281 /* loginViewController.swift in Sources */,
 				BEF2304F274847710068B55A /* medicalCollectionViewCell.swift in Sources */,
@@ -682,6 +689,7 @@
 				BEF9753B270AE0D100325281 /* userHomeViewController.swift in Sources */,
 				BEDC3C1E272682160026948E /* profileViewController.swift in Sources */,
 				BEF2305F27486CA10068B55A /* filterCollectionViewCell.swift in Sources */,
+				BE97225B2761C83800CD8435 /* latestMessage.swift in Sources */,
 				BEF2304B274846D80068B55A /* ViewSOSRequestsViewController.swift in Sources */,
 				BEF23063274899060068B55A /* editAccountViewController.swift in Sources */,
 				BE34F6A6270F327A0093C633 /* viewLocationViewController.swift in Sources */,
