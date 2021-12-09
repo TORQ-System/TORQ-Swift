@@ -174,13 +174,14 @@ class sosDetailsViewController: UIViewController {
     }
     
     
+    
     //MARK: - @IBActions
     @IBAction func goChat(_ sender: Any) {
         
         guard let name = SOSRequest?.getAssignedCenter()else{
             return
         }
-        let vc = userChatViewController(with: "\(name)@srca.org.sa")
+        let vc = userChatViewController(with: "\(name)@srca.org.sa",id: nil)
         vc.centerName = name
         vc.userName = userName
         vc.isNewConversation = true

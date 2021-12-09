@@ -25,6 +25,7 @@ class userChatViewController: MessagesViewController {
     var sender: SenderType?
     var isNewConversation = false
     let otherUserEmail: String
+    let converstationID: String?
     var userName: String?
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -37,9 +38,15 @@ class userChatViewController: MessagesViewController {
     
     //MARK: - Constructure
     
-    init(with email:String) {
+    init(with email:String, id: String?) {
         self.otherUserEmail = email
+        self.converstationID = id
         super.init(nibName: nil, bundle: nil)
+        if let id = converstationID {
+            print("id is not nil")
+            listenForMessages(id: id)
+        }
+        print("id is nil")
     }
     
     required init?(coder: NSCoder) {
@@ -51,7 +58,6 @@ class userChatViewController: MessagesViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //        setupLayout()
         setDelegate()
         setbackButton()
         configuration()
@@ -66,6 +72,25 @@ class userChatViewController: MessagesViewController {
     //MARK: - Private functions
     @objc private func backClicked(){
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    private func listenForMessages(id: String){
+        self.getAllMessagesForConversation(with: id, completion: { result in
+            switch result{
+            case .success(let message):
+                guard !message.isEmpty else{
+                    return
+                }
+                self.messgaes = message
+                DispatchQueue.main.async {
+                    self.messagesCollectionView.reloadDataAndKeepOffset()
+                }
+            case.failure(let error):
+                print(error.localizedDescription)
+            }
+        })
+        
+        
     }
     
     private func setDelegate(){
@@ -198,7 +223,7 @@ class userChatViewController: MessagesViewController {
         
         
         let collectionMessage:[String: Any] = ["id":firstMessage.messageId
-                                               ,"type":firstMessage.kind.messageKindString,"content":message!,"date":dateString,"sender_email":filteredEmail,"is_read":false]
+                                               ,"type":firstMessage.kind.messageKindString,"content":message!,"date":dateString,"sender_email":finalEmail,"is_read":false]
         let value:[String: Any] = ["messages":collectionMessage]
         
         
@@ -231,9 +256,25 @@ class userChatViewController: MessagesViewController {
         }
     }
     
-    private func getAllMessagesForConversation(with id:String, completion: @escaping (Result<String, Error>)-> Void){
-        
-        
+    private func getAllMessagesForConversation(with id:String, completion: @escaping (Result<[Message], Error>)-> Void){
+        ref.child("\(id)/messages").observe(.value) { snapshot in
+            guard let value = snapshot.value as? [[String: Any]] else{
+                return
+            }
+            
+            let messagess: [Message] = value.compactMap { dictionary in
+                guard let content = dictionary["content"] as? String, let date = dictionary["date"] as? String, let id = dictionary["id"] as? String, let _ = dictionary["is_read"] as? Bool, let senderEmail = dictionary["sender_email"] as? String, let _ = dictionary["type"] as? String? else{
+                    return nil
+                }
+                
+                let stringDate = self.dateFormatter.date(from: date)
+                let senderr = Sender(senderId: senderEmail, displayName: self.userName!)
+                return Message(sender: senderr, messageId: id, sentDate: stringDate!, kind: .text(content))
+
+            }
+            
+            completion(.success(messagess))
+        }
     }
     
     private func sendMessage(to conversation: String ,message: Message, completion: @escaping (Bool)-> Void){
@@ -260,7 +301,10 @@ class userChatViewController: MessagesViewController {
 //MARK: - MessagesDataSource Extensions
 extension userChatViewController: MessagesDataSource{
     func currentSender() -> SenderType {
-        return sender!
+        if let s = sender {
+            return s
+        }
+        fatalError()
     }
     
     func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
