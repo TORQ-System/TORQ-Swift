@@ -342,7 +342,6 @@ extension userHomeViewController: UICollectionViewDelegate{
             viewVC.modalPresentationStyle = .fullScreen
             vc = viewVC
             break
-            break
         case 2:
             let viewVC = storyboard.instantiateViewController(identifier: "viewMedicalReportViewController") as! viewMedicalReportViewController
             viewVC.modalPresentationStyle = .fullScreen
@@ -363,6 +362,10 @@ extension userHomeViewController: UICollectionViewDelegate{
             break
         case 5:
             // GO TO SOS History View Controller
+            let viewVC = storyboard.instantiateViewController(identifier: "SOSHistoryViewController") as! SOSHistoryViewController
+            viewVC.modalPresentationStyle = .fullScreen
+            viewVC.userID = userID
+            vc = viewVC
             break
         default:
             print("unKnown")
