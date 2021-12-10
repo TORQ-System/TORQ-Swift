@@ -786,6 +786,7 @@
                             <constraint firstItem="XwQ-KR-0YT" firstAttribute="top" secondItem="7G4-Qs-whk" secondAttribute="top" id="kas-vg-Vk8"/>
                             <constraint firstAttribute="trailing" secondItem="XwQ-KR-0YT" secondAttribute="trailing" id="n09-S8-DYP"/>
                             <constraint firstItem="XwQ-KR-0YT" firstAttribute="leading" secondItem="7G4-Qs-whk" secondAttribute="leading" id="nfc-pG-tP8"/>
+                            <constraint firstItem="kTp-GK-Qg0" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="StS-BY-8yo" secondAttribute="trailing" symbolic="YES" id="peh-WE-v7v"/>
                         </constraints>
                     </view>
                     <connections>
@@ -2169,13 +2170,13 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="80" translatesAutoresizingMaskIntoConstraints="NO" id="GaR-LI-80y">
-                                        <rect key="frame" x="10" y="80.000000000000028" width="334" height="442.66666666666674"/>
+                                        <rect key="frame" x="10" y="80" width="334" height="612.33333333333337"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="4s8-73-Fm7">
-                                                <rect key="frame" x="0.0" y="0.0" width="334" height="76.333333333333329"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="334" height="161.33333333333334"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="weW-Sx-ZtO">
-                                                        <rect key="frame" x="0.0" y="0.0" width="30" height="76.333333333333329"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="30" height="161.33333333333334"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q9h-hd-gfg">
                                                                 <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
@@ -2205,7 +2206,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c0d-nL-Ft1">
-                                                        <rect key="frame" x="40" y="0.0" width="294" height="76.333333333333329"/>
+                                                        <rect key="frame" x="40" y="0.0" width="294" height="161.33333333333334"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your SOS request had been created successfully! Hang on while we assign it to the nearest center" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GC0-xp-4rQ">
                                                                 <rect key="frame" x="0.0" y="0.0" width="294" height="54"/>
@@ -2224,10 +2225,10 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="rXZ-uA-Peh">
-                                                <rect key="frame" x="0.0" y="156.33333333333337" width="334" height="76.333333333333314"/>
+                                                <rect key="frame" x="0.0" y="241.33333333333337" width="334" height="161"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xfd-y4-mHZ">
-                                                        <rect key="frame" x="0.0" y="0.0" width="30" height="76.333333333333329"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="30" height="161"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EaF-LI-nxv">
                                                                 <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
@@ -2257,7 +2258,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2yz-Pd-HHw">
-                                                        <rect key="frame" x="40" y="0.0" width="294" height="76.333333333333329"/>
+                                                        <rect key="frame" x="40" y="0.0" width="294" height="161"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your request has been assigned to Almalqa SRCA  center" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pqf-D6-b1x">
                                                                 <rect key="frame" x="0.0" y="0.0" width="294" height="36"/>
@@ -2276,7 +2277,7 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Ccg-rm-8Bp">
-                                                <rect key="frame" x="0.0" y="312.66666666666663" width="334" height="25"/>
+                                                <rect key="frame" x="0.0" y="482.33333333333337" width="334" height="25"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LXx-6t-ztA">
                                                         <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
@@ -2308,7 +2309,7 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="wtO-pY-v8t">
-                                                <rect key="frame" x="0.0" y="417.66666666666663" width="334" height="25"/>
+                                                <rect key="frame" x="0.0" y="587.33333333333326" width="334" height="25"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="36Y-QY-wGT">
                                                         <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
@@ -3337,13 +3338,13 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="60" translatesAutoresizingMaskIntoConstraints="NO" id="sbA-Ag-Jmg">
-                                        <rect key="frame" x="10" y="120" width="334" height="292"/>
+                                        <rect key="frame" x="10" y="120" width="334" height="602"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="pdc-sQ-cSb">
-                                                <rect key="frame" x="0.0" y="0.0" width="334" height="122"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="334" height="432"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="klU-uk-Cgv">
-                                                        <rect key="frame" x="0.0" y="0.0" width="30" height="122"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="30" height="432"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DNF-89-xO6">
                                                                 <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
@@ -3373,7 +3374,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YiQ-5d-jkq">
-                                                        <rect key="frame" x="40" y="0.0" width="294" height="122"/>
+                                                        <rect key="frame" x="40" y="0.0" width="294" height="432"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Noura Alsulayfih’s request has been assigned to your center" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Byo-Ph-Som">
                                                                 <rect key="frame" x="0.0" y="0.0" width="294" height="36"/>
@@ -3392,7 +3393,7 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Xi9-vV-8MV">
-                                                <rect key="frame" x="0.0" y="182" width="334" height="25"/>
+                                                <rect key="frame" x="0.0" y="492" width="334" height="25"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="48r-Sn-7Md">
                                                         <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
@@ -3424,7 +3425,7 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="0zL-Lc-gBT">
-                                                <rect key="frame" x="0.0" y="267" width="334" height="25"/>
+                                                <rect key="frame" x="0.0" y="577" width="334" height="25"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B0p-XA-aJo">
                                                         <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
@@ -7413,6 +7414,51 @@ We may request access or permission to and track location-based information from
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wxv-hw-lfF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1743" y="2770"/>
+        </scene>
+        <!--View Live Location View Controller-->
+        <scene sceneID="6nx-HP-Rdx">
+            <objects>
+                <viewController storyboardIdentifier="viewLiveLocationViewController" id="0YX-b3-3Nu" customClass="viewLiveLocationViewController" customModule="TORQ" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="xUW-z8-WR3">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="e4m-W2-NDQ">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <connections>
+                                    <outlet property="delegate" destination="xUW-z8-WR3" id="pma-5o-e0o"/>
+                                </connections>
+                            </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TPW-RQ-rIA">
+                                <rect key="frame" x="19.999999999999996" y="50" width="56.666666666666657" height="22"/>
+                                <color key="tintColor" red="0.72783231739999998" green="0.23010128739999999" blue="0.3333318233" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <state key="normal" title=" back" image="chevron.left" catalog="system">
+                                    <color key="titleColor" red="0.72783231739999998" green="0.23010128739999999" blue="0.3333318233" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </state>
+                                <connections>
+                                    <action selector="backButton:" destination="0YX-b3-3Nu" eventType="touchUpInside" id="tvZ-yD-27V"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="M0b-GN-1lb"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="e4m-W2-NDQ" secondAttribute="bottom" id="ABk-K1-ntf"/>
+                            <constraint firstItem="e4m-W2-NDQ" firstAttribute="top" secondItem="xUW-z8-WR3" secondAttribute="top" id="ZA8-dW-Ch5"/>
+                            <constraint firstItem="e4m-W2-NDQ" firstAttribute="leading" secondItem="xUW-z8-WR3" secondAttribute="leading" id="ZLQ-l4-2cI"/>
+                            <constraint firstItem="M0b-GN-1lb" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="TPW-RQ-rIA" secondAttribute="trailing" symbolic="YES" id="ZqN-kh-Krz"/>
+                            <constraint firstItem="TPW-RQ-rIA" firstAttribute="leading" secondItem="M0b-GN-1lb" secondAttribute="leading" constant="20" id="cVU-bA-meb"/>
+                            <constraint firstItem="TPW-RQ-rIA" firstAttribute="top" secondItem="xUW-z8-WR3" secondAttribute="top" constant="50" id="oWq-wK-709"/>
+                            <constraint firstAttribute="trailing" secondItem="e4m-W2-NDQ" secondAttribute="trailing" id="tOw-14-j4S"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="map" destination="e4m-W2-NDQ" id="1OZ-cO-37r"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IP2-cj-6g0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1007" y="2770"/>
         </scene>
     </scenes>
     <resources>

@@ -189,7 +189,11 @@ class sosDetailsViewController: UIViewController {
     }
     
     @IBAction func seeLiveLocation(_ sender: Any) {
-        
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(identifier: "viewLiveLocationViewController") as! viewLiveLocationViewController
+        vc.modalPresentationStyle = .fullScreen
+        vc.assignedCenter = SOSRequest!.getAssignedCenter()
+        self.present(vc, animated: true, completion: nil)
     }
     
     @IBAction func backButton(_ sender: Any) {
