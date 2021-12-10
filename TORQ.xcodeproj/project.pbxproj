@@ -31,6 +31,8 @@
 		BE9E6CA32763D8B300BE90BB /* emergencyNumberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9E6CA22763D8B300BE90BB /* emergencyNumberTableViewCell.swift */; };
 		BE9E6CA52763D91400BE90BB /* emergencyNumbersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9E6CA42763D91400BE90BB /* emergencyNumbersViewController.swift */; };
 		BE9E6CA72763E64500BE90BB /* viewLiveLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9E6CA62763E64500BE90BB /* viewLiveLocationViewController.swift */; };
+		BE9E6CA92763ECFB00BE90BB /* HistorySOSCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9E6CA82763ECFB00BE90BB /* HistorySOSCollectionViewCell.swift */; };
+		BE9E6CAB2763ED8B00BE90BB /* SOSHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9E6CAA2763ED8A00BE90BB /* SOSHistoryViewController.swift */; };
 		BEC34A1F27281B0D001E99E5 /* textFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC34A1E27281B0D001E99E5 /* textFieldExtension.swift */; };
 		BEC34A2127284A85001E99E5 /* viewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC34A2027284A85001E99E5 /* viewControllerExtension.swift */; };
 		BEC34A2327284BCB001E99E5 /* resetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC34A2227284BCB001E99E5 /* resetPasswordViewController.swift */; };
@@ -130,6 +132,8 @@
 		BE9E6CA22763D8B300BE90BB /* emergencyNumberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = emergencyNumberTableViewCell.swift; sourceTree = "<group>"; };
 		BE9E6CA42763D91400BE90BB /* emergencyNumbersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = emergencyNumbersViewController.swift; sourceTree = "<group>"; };
 		BE9E6CA62763E64500BE90BB /* viewLiveLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewLiveLocationViewController.swift; sourceTree = "<group>"; };
+		BE9E6CA82763ECFB00BE90BB /* HistorySOSCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistorySOSCollectionViewCell.swift; sourceTree = "<group>"; };
+		BE9E6CAA2763ED8A00BE90BB /* SOSHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SOSHistoryViewController.swift; sourceTree = "<group>"; };
 		BEC34A1E27281B0D001E99E5 /* textFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = textFieldExtension.swift; sourceTree = "<group>"; };
 		BEC34A2027284A85001E99E5 /* viewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewControllerExtension.swift; sourceTree = "<group>"; };
 		BEC34A2227284BCB001E99E5 /* resetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = resetPasswordViewController.swift; sourceTree = "<group>"; };
@@ -249,6 +253,7 @@
 				BEF2305C27486C1F0068B55A /* notificationCollectionViewCell.swift */,
 				BEF2305E27486CA10068B55A /* filterCollectionViewCell.swift */,
 				BE9E6CA22763D8B300BE90BB /* emergencyNumberTableViewCell.swift */,
+				BE9E6CA82763ECFB00BE90BB /* HistorySOSCollectionViewCell.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -376,6 +381,7 @@
 				BE82A5662748DD0300C4C2B5 /* selectHealthCareCenterViewController.swift */,
 				BE9E6CA42763D91400BE90BB /* emergencyNumbersViewController.swift */,
 				BE9E6CA62763E64500BE90BB /* viewLiveLocationViewController.swift */,
+				BE9E6CAA2763ED8A00BE90BB /* SOSHistoryViewController.swift */,
 			);
 			path = viewControllers;
 			sourceTree = "<group>";
@@ -632,6 +638,7 @@
 			files = (
 				BE34F6AD27118A8F0093C633 /* onboardingScreen2ViewController.swift in Sources */,
 				BED10864274148650099EE15 /* AccidentsCollectionViewCell.swift in Sources */,
+				BE9E6CAB2763ED8B00BE90BB /* SOSHistoryViewController.swift in Sources */,
 				BE82A5652748BE6E00C4C2B5 /* RequestAccident.swift in Sources */,
 				BE64405C272C6F2B0051662F /* Sensor.swift in Sources */,
 				BE82A5672748DD0300C4C2B5 /* selectHealthCareCenterViewController.swift in Sources */,
@@ -685,6 +692,7 @@
 				BE34F6A6270F327A0093C633 /* viewLocationViewController.swift in Sources */,
 				BE34F69F270F31A00093C633 /* requestsViewController.swift in Sources */,
 				BEF2304527483F680068B55A /* SOSRequestViewController.swift in Sources */,
+				BE9E6CA92763ECFB00BE90BB /* HistorySOSCollectionViewCell.swift in Sources */,
 				BEF2304D274847060068B55A /* viewSOSRequestDetailsViewController.swift in Sources */,
 				BEF975122707292C00325281 /* signUpFirstViewController.swift in Sources */,
 				BE9CDAE72729D78200CDD4B4 /* MedicalReport.swift in Sources */,
