@@ -88,7 +88,7 @@ class loginViewController: UIViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let tb = storyboard.instantiateViewController(identifier: "paramedicHome") as! UITabBarController
         let vcs = tb.viewControllers!
-        let home = vcs[1] as! ViewSOSRequestsViewController
+        let home = vcs[0] as! requestsViewController
         let domainRange = email.text!.range(of: "@")!
         let centerName = email.text![..<domainRange.lowerBound]
         home.loggedinEmail = String(centerName)
