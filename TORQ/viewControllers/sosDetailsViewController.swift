@@ -244,7 +244,7 @@ class sosDetailsViewController: UIViewController {
                     }else{
                         var c: Conversation?
                         for conv in self.conversations!{
-                            if conv.id == "conversation_\(self.SOSRequest!.getAssignedCenter())-srca-org-sa_\(finalEmail)" {
+                            if conv.id == "conversation_\(self.SOSRequest!.getAssignedCenter())-srca-org-sa_\(finalEmail)" || conv.id == "conversation_\(finalEmail)_\(self.SOSRequest!.getAssignedCenter())-srca-org-sa" {
                                 print("found c that matches")
                                 c = conv
                                 break

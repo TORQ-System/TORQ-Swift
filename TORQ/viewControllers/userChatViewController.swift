@@ -200,12 +200,18 @@ class userChatViewController: MessagesViewController {
                 conversations.append(newConversationData)
                 userNode["conversations"] = conversations
                 self.ref.child("\(finalEmail)").setValue(userNode)
+                self.messagesCollectionView.reloadData()
                 self.finishCreatingConversation(conversationID: "conversation_\(finalOtherUserEmail)_\(finalEmail)", firstMessage: firstMessage, completion: completion)
+                self.messagesCollectionView.reloadData()
+
             }else{
                 //converstaion array dont exists , create it
                 userNode["conversations"] = [newConversationData]
                 self.ref.child("\(finalEmail)").setValue(userNode)
+                self.messagesCollectionView.reloadData()
                 self.finishCreatingConversation(conversationID: "conversation_\(finalOtherUserEmail)_\(finalEmail)", firstMessage: firstMessage, completion: completion)
+                self.messagesCollectionView.reloadData()
+
             }
         }
         
@@ -479,22 +485,26 @@ extension userChatViewController: InputBarAccessoryViewDelegate{
         let message = Message(sender: sender!, messageId: createMessageId(), sentDate: Date(), kind: .text(text))
         //send meesage
         if isNewConversation{
+            print("new")
             //create converstaion in db
             self.createNewConversation(with: otherUserEmail, firstMessage: message) { success in
                 if success{
                     print("message sent")
+                    self.messagesCollectionView.reloadData()
                     self.isNewConversation = false
                 }else{
                     print("failed to sent")
                 }
             }
         }else{
+            print("not new")
             //append to exsisting conversation in db
             guard let conversationId = converstationID else {
                 return
             }
             sendMessage(to: conversationId, otherUserEmail: otherUserEmail, newMessage: message) { success in
                 if success{
+                    self.messagesCollectionView.reloadData()
                     print("message sent")
                 }else{
                     print("failed to send")

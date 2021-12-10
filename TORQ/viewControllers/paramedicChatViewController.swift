@@ -501,6 +501,7 @@ extension paramedicChatViewController: InputBarAccessoryViewDelegate{
             self.createNewConversation(with: otherUserEmail, firstMessage: message) { success in
                 if success{
                     print("message sent")
+                    self.messagesCollectionView.reloadData()
                     self.isNewConversation = false
                 }else{
                     print("failed to sent")
@@ -514,6 +515,7 @@ extension paramedicChatViewController: InputBarAccessoryViewDelegate{
             sendMessage(to: conversationId, otherUserEmail: otherUserEmail, newMessage: message) { success in
                 if success{
                     print("message sent")
+                    self.messagesCollectionView.reloadData()
                 }else{
                     print("failed to send")
                 }
