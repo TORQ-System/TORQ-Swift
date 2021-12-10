@@ -54,9 +54,10 @@ class SOSHistoryViewController: UIViewController {
     
     //fetch data from firebase and reload the collection
     func getRequests(){
-      
        
         ref.child("SOSRequests").observe(.value) { snapshot in
+            self.requests.removeAll()
+
             for contact in snapshot.children{
               // print("enter")
 
@@ -79,7 +80,6 @@ class SOSHistoryViewController: UIViewController {
                 print(self.userID!)
                 //cheak
                 if(self.userID! == request.user_id ) && (request.getStatus() != "1") {
-                    print("should add")
 
                     self.requests.append(request)
                     print(self.requests)
