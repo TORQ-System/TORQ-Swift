@@ -63,7 +63,9 @@ class viewSOSRequestDetailsViewController: UIViewController {
     var medicalReport = false
     var requestDetails = true
     var medicalReportID: String?
-
+    var latitude: Double?
+    var longitude: Double?
+    
     
     //MARK: - Overriden functions
     override func viewDidLoad() {
@@ -81,9 +83,9 @@ class viewSOSRequestDetailsViewController: UIViewController {
     private func layoutViews(){
         
         //1- back button
-//        backButton.backgroundColor = UIColor(red: 0.784, green: 0.267, blue: 0.337, alpha: 0.17)
-//        backButton.layer.cornerRadius = 10
-//        backButton.layer.maskedCorners = [.layerMaxXMaxYCorner,.layerMaxXMinYCorner]
+        //        backButton.backgroundColor = UIColor(red: 0.784, green: 0.267, blue: 0.337, alpha: 0.17)
+        //        backButton.layer.cornerRadius = 10
+        //        backButton.layer.maskedCorners = [.layerMaxXMaxYCorner,.layerMaxXMinYCorner]
         
         //2- profile container
         profileContainer.layer.cornerRadius = profileContainer.layer.frame.width/2
@@ -93,7 +95,7 @@ class viewSOSRequestDetailsViewController: UIViewController {
         gradientLayer.colors = [
             UIColor(red: 0.102, green: 0.157, blue: 0.345, alpha: 1).cgColor,
             UIColor(red: 0.192, green: 0.353, blue: 0.584, alpha: 1).cgColor
-          ]
+        ]
         gradientLayer.startPoint = CGPoint(x: 0.25, y: 0.5)
         gradientLayer.endPoint = CGPoint(x: 0.75, y: 0.5)
         gradientLayer.transform = CATransform3DMakeAffineTransform(CGAffineTransform(a: 0.99, b: 0.98, c: -0.75, d: 1.6, tx: 0.38, ty: -0.77))
@@ -144,23 +146,23 @@ class viewSOSRequestDetailsViewController: UIViewController {
         requestDetailsButton.setTitleColor(buttonColor, for: .normal)
         requestDetailsButton.layer.cornerRadius = 10
         requestDetailsButton.backgroundColor = UIColor(red: 0.965, green: 0.922, blue: 0.937, alpha: 1)
-
-
+        
+        
         //10- container view
-//        containerView.layer.cornerRadius = 20
-//        containerView.backgroundColor = .white
-//        containerView.layer.shadowPath = UIBezierPath(rect: CGRect(x: 0,
-//        y: containerView.bounds.maxY - containerView.layer.shadowRadius,width: containerView.bounds.width,height: containerView.layer.shadowRadius)).cgPath
-//        containerView.layer.masksToBounds = false
-//        containerView.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
-//        containerView.layer.shadowOffset = CGSize(width: 0, height: 2)
-//        containerView.layer.shadowOpacity = 0.5
+        //        containerView.layer.cornerRadius = 20
+        //        containerView.backgroundColor = .white
+        //        containerView.layer.shadowPath = UIBezierPath(rect: CGRect(x: 0,
+        //        y: containerView.bounds.maxY - containerView.layer.shadowRadius,width: containerView.bounds.width,height: containerView.layer.shadowRadius)).cgPath
+        //        containerView.layer.masksToBounds = false
+        //        containerView.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
+        //        containerView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        //        containerView.layer.shadowOpacity = 0.5
         let shadowPath = UIBezierPath()
         shadowPath.move(to: CGPoint(x: containerView.bounds.origin.x, y: containerView.frame.size.height))
         shadowPath.addLine(to: CGPoint(x: containerView.bounds.width / 2, y: containerView.bounds.height + 7.0))
         shadowPath.addLine(to: CGPoint(x: containerView.bounds.width, y: containerView.bounds.height))
         shadowPath.close()
-
+        
         containerView.layer.shadowColor = UIColor.darkGray.cgColor
         containerView.layer.shadowOpacity = 0.3
         containerView.layer.masksToBounds = false
@@ -194,7 +196,7 @@ class viewSOSRequestDetailsViewController: UIViewController {
         
         //18- Medical View
         MedicalInfromationView.isHidden = true
-
+        
         
         //19- Request View
         RequestInformationView.isHidden = false
@@ -267,11 +269,11 @@ class viewSOSRequestDetailsViewController: UIViewController {
                     let disabilities = obj.childSnapshot(forPath: "disabilities").value as! String
                     let prescribed_medication = obj.childSnapshot(forPath: "prescribed_medication").value as! String
                     let user_id = obj.childSnapshot(forPath: "user_id").value as! String
-
+                    
                     let medicalReport = MedicalReport(userID: user_id, bloodType: blood_type, allergies: allergies, chronic_disease: chronic_disease, disabilities: disabilities, prescribed_medication: prescribed_medication)
                     
                     if medicalReport.getUserID() == self.sosRequester {
-                            self.MedicalReports.append(medicalReport)
+                        self.MedicalReports.append(medicalReport)
                         self.bloodTypeLabel.text = medicalReport.getBloodType()
                         self.medicalReportID = obj.key
                         
@@ -332,7 +334,7 @@ class viewSOSRequestDetailsViewController: UIViewController {
         view.addSubview(border)
         view.sendSubviewToBack(border)
     }
-
+    
     func addBottomBorder(with color: UIColor?, andWidth borderWidth: CGFloat, view: UIView) {
         let border = UIView()
         border.backgroundColor = color
@@ -350,7 +352,7 @@ class viewSOSRequestDetailsViewController: UIViewController {
         view.addSubview(border)
         view.sendSubviewToBack(border)
     }
-
+    
     func addRightBorder(with color: UIColor?, andWidth borderWidth: CGFloat, view: UIView) {
         let border = UIView()
         border.backgroundColor = color
@@ -364,6 +366,14 @@ class viewSOSRequestDetailsViewController: UIViewController {
     //MARK: - @IBActions
     @IBAction func backButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func launchDirections(_ sender: Any) {
+        
+        if let url = URL(string: "comgooglemaps://?saddr=&daddr=\(String(describing: latitude!)),\(String(describing: longitude!))&directionsmode=driving") {
+            UIApplication.shared.open(url, options: [:])
+        }
+        
     }
     
     
@@ -449,10 +459,10 @@ extension viewSOSRequestDetailsViewController: UICollectionViewDataSource{
 
 public func collectionView(_ collectionView: UICollectionView,layout collectionViewLayout: UICollectionViewLayout,minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
     return 2.5
-    }
+}
 
-    public func collectionView(_ collectionView: UICollectionView,
-                               layout collectionViewLayout: UICollectionViewLayout,
-                               minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 2.5
-    }
+public func collectionView(_ collectionView: UICollectionView,
+                           layout collectionViewLayout: UICollectionViewLayout,
+                           minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    return 2.5
+}
