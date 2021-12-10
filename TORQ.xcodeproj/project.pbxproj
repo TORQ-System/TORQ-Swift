@@ -28,6 +28,8 @@
 		BE9CDAE72729D78200CDD4B4 /* MedicalReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9CDAE62729D78200CDD4B4 /* MedicalReport.swift */; };
 		BE9CDAE92729F66A00CDD4B4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9CDAE82729F66A00CDD4B4 /* User.swift */; };
 		BE9E6CA12763D81500BE90BB /* emergencyNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9E6CA02763D81500BE90BB /* emergencyNumber.swift */; };
+		BE9E6CA32763D8B300BE90BB /* emergencyNumberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9E6CA22763D8B300BE90BB /* emergencyNumberTableViewCell.swift */; };
+		BE9E6CA52763D91400BE90BB /* emergencyNumbersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9E6CA42763D91400BE90BB /* emergencyNumbersViewController.swift */; };
 		BEC34A1F27281B0D001E99E5 /* textFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC34A1E27281B0D001E99E5 /* textFieldExtension.swift */; };
 		BEC34A2127284A85001E99E5 /* viewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC34A2027284A85001E99E5 /* viewControllerExtension.swift */; };
 		BEC34A2327284BCB001E99E5 /* resetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC34A2227284BCB001E99E5 /* resetPasswordViewController.swift */; };
@@ -124,6 +126,8 @@
 		BE9CDAE62729D78200CDD4B4 /* MedicalReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicalReport.swift; sourceTree = "<group>"; };
 		BE9CDAE82729F66A00CDD4B4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		BE9E6CA02763D81500BE90BB /* emergencyNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = emergencyNumber.swift; sourceTree = "<group>"; };
+		BE9E6CA22763D8B300BE90BB /* emergencyNumberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = emergencyNumberTableViewCell.swift; sourceTree = "<group>"; };
+		BE9E6CA42763D91400BE90BB /* emergencyNumbersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = emergencyNumbersViewController.swift; sourceTree = "<group>"; };
 		BEC34A1E27281B0D001E99E5 /* textFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = textFieldExtension.swift; sourceTree = "<group>"; };
 		BEC34A2027284A85001E99E5 /* viewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewControllerExtension.swift; sourceTree = "<group>"; };
 		BEC34A2227284BCB001E99E5 /* resetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = resetPasswordViewController.swift; sourceTree = "<group>"; };
@@ -242,6 +246,7 @@
 				BEF23050274847BB0068B55A /* sosRequestTableViewCell.swift */,
 				BEF2305C27486C1F0068B55A /* notificationCollectionViewCell.swift */,
 				BEF2305E27486CA10068B55A /* filterCollectionViewCell.swift */,
+				BE9E6CA22763D8B300BE90BB /* emergencyNumberTableViewCell.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -367,6 +372,7 @@
 				BEF23060274873690068B55A /* changePasswordViewController.swift */,
 				BEF23062274899060068B55A /* editAccountViewController.swift */,
 				BE82A5662748DD0300C4C2B5 /* selectHealthCareCenterViewController.swift */,
+				BE9E6CA42763D91400BE90BB /* emergencyNumbersViewController.swift */,
 			);
 			path = viewControllers;
 			sourceTree = "<group>";
@@ -634,6 +640,7 @@
 				BE34F6A2270F31FB0093C633 /* Request.swift in Sources */,
 				BEF230572748599C0068B55A /* editMedicalReportViewController.swift in Sources */,
 				BEF230492748418E0068B55A /* SOSRequest.swift in Sources */,
+				BE9E6CA32763D8B300BE90BB /* emergencyNumberTableViewCell.swift in Sources */,
 				BEDC3C18272653610026948E /* servicesCollectionViewCell.swift in Sources */,
 				BE04B6D2272DA7B700EEE3EE /* requestReportViewController.swift in Sources */,
 				BED10862274148040099EE15 /* AccidentHistoryViewController.swift in Sources */,
@@ -643,6 +650,7 @@
 				BEDC3C1C272681F40026948E /* notificationCenterViewController.swift in Sources */,
 				BED10860273EB52F0099EE15 /* profileTableViewCell.swift in Sources */,
 				BEF23059274864ED0068B55A /* editEmergencyContactViewController.swift in Sources */,
+				BE9E6CA52763D91400BE90BB /* emergencyNumbersViewController.swift in Sources */,
 				BEF975142707293600325281 /* signUpSecondViewController.swift in Sources */,
 				BE34F6AB27118A800093C633 /* onboardingScreen1ViewController.swift in Sources */,
 				BE34F69D270F30B70093C633 /* requestCollectionViewCell.swift in Sources */,
