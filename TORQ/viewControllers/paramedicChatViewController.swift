@@ -87,6 +87,16 @@ class paramedicChatViewController: MessagesViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
+    @objc private func callClicked(){
+        if let phoneCallURL = URL(string: "telprompt://\(phoneNumber!)") {
+            
+            let application:UIApplication = UIApplication.shared
+            if (application.canOpenURL(phoneCallURL)) {
+                application.open(phoneCallURL, options: [:], completionHandler: nil)
+            }
+        }
+    }
+    
     private func setDelegate(){
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
@@ -95,14 +105,53 @@ class paramedicChatViewController: MessagesViewController {
     }
     
     private func setbackButton(){
+        
+        let callButton = UIButton()
+        callButton.setImage(UIImage(systemName: "phone.fill"), for: .normal)
+        callButton.frame.size = CGSize(width: 50, height: 50)
+        callButton.layer.cornerRadius = 20
+        callButton.backgroundColor = .systemGreen
+        callButton.tintColor = .white
+        callButton.addTarget(self, action: #selector(callClicked), for: .touchUpInside)
+        let calBarButton = UIBarButtonItem(customView: callButton)
+
+
         let back = UIButton()
         back.setTitle("back", for: .normal)
         back.setImage(UIImage(systemName: "chevron.backward"), for: .normal)
         back.tintColor = .systemBlue
         back.setTitleColor(.systemBlue, for: .normal)
+        back.tintColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
+        back.setTitleColor(UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1), for: .normal)
         back.addTarget(self, action: #selector(backClicked), for: .touchUpInside)
         let barButton = UIBarButtonItem(customView: back)
+        
         navigationItem.leftBarButtonItem = barButton
+        navigationItem.rightBarButtonItem = calBarButton
+        
+        navigationItem.largeTitleDisplayMode = .always
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
+        
+//        navigationController?.navigationBar.layer.cornerRadius = 30
+//        navigationController?.navigationBar.layer.masksToBounds = true
+//        navigationController?.navigationBar.layer.maskedCorners = [.layerMinXMaxYCorner,.layerMaxXMaxYCorner]
+        
+//        let gradientLayer = CAGradientLayer()
+//        gradientLayer.frame = (navigationController?.navigationBar.frame)!
+//        gradientLayer.colors =  [
+//            UIColor(red: 0.102, green: 0.157, blue: 0.345, alpha: 1).cgColor,
+//            UIColor(red: 0.192, green: 0.353, blue: 0.584, alpha: 1).cgColor]
+//        gradientLayer.startPoint = CGPoint(x: 0.25, y: 0.5)
+//        gradientLayer.endPoint = CGPoint(x: 0.75, y: 0.5)
+//        gradientLayer.transform = CATransform3DMakeAffineTransform(CGAffineTransform(a: 0.99, b: 0.98, c: -0.75, d: 1.6, tx: 0.38, ty: -0.77))
+//        gradientLayer.bounds = (navigationController?.navigationBar.bounds.insetBy(dx: -0.5*(navigationController?.navigationBar.bounds.size.width)!, dy: -0.5*(navigationController?.navigationBar.bounds.size.height)!))!
+//        gradientLayer.position = (navigationController?.navigationBar.center)!
+//        navigationController?.navigationBar.layer.addSublayer(gradientLayer)
+//        navigationController?.navigationBar.layer.insertSublayer(gradientLayer, at: 0)
+//        navigationController?.navigationBar.barTintColor = .lightGray
+        
+        
     }
     
     private func configuration(){

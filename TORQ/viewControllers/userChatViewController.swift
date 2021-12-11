@@ -116,9 +116,15 @@ class userChatViewController: MessagesViewController {
         back.setImage(UIImage(systemName: "chevron.backward"), for: .normal)
         back.tintColor = .systemBlue
         back.setTitleColor(.systemBlue, for: .normal)
+        back.tintColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
+        back.setTitleColor(UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1), for: .normal)
         back.addTarget(self, action: #selector(backClicked), for: .touchUpInside)
         let barButton = UIBarButtonItem(customView: back)
+        
         navigationItem.leftBarButtonItem = barButton
+        
+        navigationItem.largeTitleDisplayMode = .always
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     private func configuration(){
@@ -478,6 +484,7 @@ extension userChatViewController: MessagesDataSource{
 
 //MARK: - MessagesLayoutDelegate Extensions
 extension userChatViewController: MessagesLayoutDelegate{
+    
     
 }
 
