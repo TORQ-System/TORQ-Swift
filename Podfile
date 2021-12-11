@@ -25,5 +25,6 @@ target 'TORQ' do
   pod 'IQKeyboardManagerSwift'
   pod 'SwipeCellKit'
   pod 'FloatingPanel'
+  pod 'MessageKit'
 
 end
