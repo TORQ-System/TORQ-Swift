@@ -55,8 +55,8 @@ class SOSHistoryViewController: UIViewController {
     //fetch data from firebase and reload the collection
     func getRequests(){
       
-       
         ref.child("SOSRequests").observe(.value) { snapshot in
+            self.requests.removeAll()
             for contact in snapshot.children{
               // print("enter")
                 let obj = contact as! DataSnapshot
