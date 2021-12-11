@@ -410,7 +410,7 @@ class signUpSecondViewController: UIViewController {
         
         let user: [String: Any] = [
             "fullName": userFirstName!,
-            "email": userEmail!,
+            "email": userEmail!.lowercased(),
             "password": userPassword!,
             "dateOfBirth": userDate!,
             "gender": userGender!,
@@ -440,7 +440,7 @@ class signUpSecondViewController: UIViewController {
             self.ref.child("User").child(id!).setValue(user)
             
             let filteredEmail = self.userEmail!.replacingOccurrences(of: "@", with: "-")
-            let finalEmail = filteredEmail.replacingOccurrences(of: ".", with: "-")
+            let finalEmail = filteredEmail.replacingOccurrences(of: ".", with: "-").lowercased()
             self.ref.child("\(finalEmail)").child("full_name").setValue(self.userFirstName!)
             
             self.ref.child("Sensor").child("S\(id!)/Vib").setValue("0")
