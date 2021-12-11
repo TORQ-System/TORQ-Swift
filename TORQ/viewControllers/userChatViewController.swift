@@ -48,6 +48,7 @@ class userChatViewController: MessagesViewController {
         }else{
             print("id is nil")
         }
+        messagesCollectionView.reloadData()
     }
     
     required init?(coder: NSCoder) {
@@ -62,12 +63,14 @@ class userChatViewController: MessagesViewController {
         setDelegate()
         setbackButton()
         configuration()
+        messagesCollectionView.reloadData()
         
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         messageInputBar.inputTextView.becomeFirstResponder()
+        messagesCollectionView.reloadData()
     }
     
     //MARK: - Private functions
@@ -207,6 +210,7 @@ class userChatViewController: MessagesViewController {
             }else{
                 //converstaion array dont exists , create it
                 userNode["conversations"] = [newConversationData]
+                self.messagesCollectionView.reloadData()
                 self.ref.child("\(finalEmail)").setValue(userNode)
                 self.messagesCollectionView.reloadData()
                 self.finishCreatingConversation(conversationID: "conversation_\(finalOtherUserEmail)_\(finalEmail)", firstMessage: firstMessage, completion: completion)
@@ -214,13 +218,16 @@ class userChatViewController: MessagesViewController {
 
             }
         }
-        
+        listenForMessages(id: "conversation_\(finalOtherUserEmail)_\(finalEmail)", shouldScrollToButtom: true)
+        self.messagesCollectionView.reloadData()
     }
     
     private func finishCreatingConversation(conversationID: String, firstMessage: Message, completion: @escaping (Bool)-> Void){
         
         let filteredEmail = self.userEmail.replacingOccurrences(of: "@", with: "-")
         let finalEmail = filteredEmail.replacingOccurrences(of: ".", with: "-")
+        let filteredOtherUserEmail = otherUserEmail.replacingOccurrences(of: "@", with: "-")
+        let finalOtherUserEmail = filteredOtherUserEmail.replacingOccurrences(of: "@", with: "-")
         let messageDate = firstMessage.sentDate
         let dateString = self.dateFormatter.string(from: messageDate)
         var message:String?
@@ -259,8 +266,11 @@ class userChatViewController: MessagesViewController {
                 completion(false)
                 return
             }
+            self.messagesCollectionView.reloadData()
             completion(true)
         }
+        listenForMessages(id: "conversation_\(finalOtherUserEmail)_\(finalEmail)", shouldScrollToButtom: true)
+        self.messagesCollectionView.reloadData()
         
     }
     
@@ -281,6 +291,7 @@ class userChatViewController: MessagesViewController {
             }
             completion(.success(conversations))
         }
+        self.messagesCollectionView.reloadData()
     }
     
     private func getAllMessagesForConversation(with id:String, completion: @escaping (Result<[Message], Error>)-> Void){
@@ -488,14 +499,16 @@ extension userChatViewController: InputBarAccessoryViewDelegate{
             print("new")
             //create converstaion in db
             self.createNewConversation(with: otherUserEmail, firstMessage: message) { success in
+                self.isNewConversation = false
                 if success{
-                    print("message sent")
+                    print("message sent for new conv")
                     self.messagesCollectionView.reloadData()
                     self.isNewConversation = false
                 }else{
-                    print("failed to sent")
+                    print("failed to sent for new conv")
                 }
             }
+            self.messagesCollectionView.reloadData()
         }else{
             print("not new")
             //append to exsisting conversation in db

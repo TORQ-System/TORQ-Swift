@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import SCLAlertView
 
 class viewSOSRequestDetailsViewController: UIViewController {
     
@@ -67,8 +68,9 @@ class viewSOSRequestDetailsViewController: UIViewController {
     var conversations: [Conversation]?
     var centerEmail = Auth.auth().currentUser!.email!
     var userEmail: String?
-
-
+    let redUIColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
+    let alertIcon = UIImage(named: "errorIcon")
+    let apperance = SCLAlertView.SCLAppearance(contentViewCornerRadius: 15, buttonCornerRadius: 7, hideWhenBackgroundViewIsTapped: true)
     
     //MARK: - Overriden functions
     override func viewDidLoad() {
@@ -216,6 +218,8 @@ class viewSOSRequestDetailsViewController: UIViewController {
         
         //1- background view
         RequestInformationView.backgroundColor = UIColor(red: 0.976, green: 0.988, blue: 0.992, alpha: 1)
+        self.label1.text = "\(self.patientName.text!)'s request has been assgined to your center"
+
         
         if self.sosRequestStatus == "Cancelled" {
             
@@ -241,7 +245,7 @@ class viewSOSRequestDetailsViewController: UIViewController {
         } else if self.sosRequestStatus == "Processed" || self.sosRequestStatus == "Active" {
             //1- circle one
             circle1.layer.cornerRadius = circle1.layer.frame.width/2
-            DispatchQueue.main.asyncAfter(deadline: .now()+2) {
+            DispatchQueue.main.asyncAfter(deadline: .now()+1) {
                 UIView.animate(withDuration: 1) {
                     self.check1.alpha = 1.0
                     self.circle1.backgroundColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
@@ -251,7 +255,7 @@ class viewSOSRequestDetailsViewController: UIViewController {
             
             //2- circle two
             circle2.layer.cornerRadius = circle2.layer.frame.width/2
-            DispatchQueue.main.asyncAfter(deadline: .now()+3) {
+            DispatchQueue.main.asyncAfter(deadline: .now()+2) {
                 UIView.animate(withDuration: 1) {
                     self.check2.alpha = 1.0
                     self.circle2.backgroundColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
@@ -261,7 +265,14 @@ class viewSOSRequestDetailsViewController: UIViewController {
             
             //3- circle three
             circle3.layer.cornerRadius = circle3.layer.frame.width/2
-            self.label3.text = "This SOS Request has been processed"
+            DispatchQueue.main.asyncAfter(deadline: .now()+3) {
+                UIView.animate(withDuration: 1) {
+                    self.circle3.alpha = 1.0
+                    self.circle3.backgroundColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
+                    self.label3.textColor = UIColor(red: 0.839, green: 0.333, blue: 0.424, alpha: 1)
+                    self.label3.text = "This SOS Request has been processed"
+                }
+            }
         }
     }
     
@@ -283,7 +294,7 @@ class viewSOSRequestDetailsViewController: UIViewController {
                     let medicalReport = MedicalReport(userID: user_id, bloodType: blood_type, allergies: allergies, chronic_disease: chronic_disease, disabilities: disabilities, prescribed_medication: prescribed_medication)
                     
                     if medicalReport.getUserID() == self.sosRequester {
-                            self.MedicalReports.append(medicalReport)
+                        self.MedicalReports.append(medicalReport)
                         self.bloodTypeLabel.text = medicalReport.getBloodType()
                         self.medicalReportID = obj.key
                         
@@ -373,7 +384,7 @@ class viewSOSRequestDetailsViewController: UIViewController {
     }
     
     private func getAllConversations(for email:String, completion: @escaping (Result<[Conversation], Error>)-> Void){
-        ref.child("\(email)/conversations").observe(.value) { snapshot in
+        ref.child("\(email)/conversations").observeSingleEvent(of: .value) { snapshot in
             guard let value = snapshot.value as? [[String: Any]] else{
                 print("value is nil")
                 completion(.failure(NSError(domain: "", code: 401, userInfo: [ NSLocalizedDescriptionKey: "Invalid access token"])))
@@ -432,7 +443,7 @@ class viewSOSRequestDetailsViewController: UIViewController {
         let checkQueue = DispatchQueue.init(label: "checkQueue")
         let fetchQueue = DispatchQueue.init(label: "fetchQueue")
         fetchQueue.sync {
-            self.getAllConversations(for: finalEmail) { result in
+            self.getAllConversations(for: finalOtherUserEmail) { result in
                 switch result {
                 case .success(let conversations):
                     print("successfuly got conversations model")
@@ -448,14 +459,15 @@ class viewSOSRequestDetailsViewController: UIViewController {
                 checkQueue.sync {
                     if self.conversations == nil || self.conversations!.isEmpty{
                         print("empty")
-                        let vc = paramedicChatViewController(with: "\(finalOtherUserEmail)",id: nil)
-                        vc.Name = self.patientName.text
-                        vc.phoneNumber = self.phoneNumber
-                        vc.isNewConversation = true
-                        vc.modalPresentationStyle = .fullScreen
-                        let navController = UINavigationController(rootViewController: vc)
-                        navController.modalPresentationStyle = .fullScreen
-                        self.present(navController, animated:true, completion: nil)
+                        SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "Please wait for \(String(describing: self.patientName.text!)) to initiate the conversation", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Got it!", circleIconImage: UIImage(named: "warning"), animationStyle: SCLAnimationStyle.topToBottom)
+//                        let vc = paramedicChatViewController(with: "\(finalOtherUserEmail)",id: nil)
+//                        vc.Name = self.patientName.text
+//                        vc.phoneNumber = self.phoneNumber
+//                        vc.isNewConversation = true
+//                        vc.modalPresentationStyle = .fullScreen
+//                        let navController = UINavigationController(rootViewController: vc)
+//                        navController.modalPresentationStyle = .fullScreen
+//                        self.present(navController, animated:true, completion: nil)
                     }else{
                         var c: Conversation?
                         for conv in self.conversations!{
@@ -468,16 +480,17 @@ class viewSOSRequestDetailsViewController: UIViewController {
                         
                         if c == nil {
                             print("c is nil")
-                            let vc = paramedicChatViewController(with: "\(finalOtherUserEmail)",id: nil)
-                            vc.Name = self.patientName.text
-                            vc.phoneNumber = self.phoneNumber
-                            vc.isNewConversation = true
-                            vc.modalPresentationStyle = .fullScreen
-                            let navController = UINavigationController(rootViewController: vc)
-                            navController.modalPresentationStyle = .fullScreen
-                            self.present(navController, animated:true, completion: nil)
+                            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "an error occured please try again", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Got it!", circleIconImage: UIImage(named: "warning"), animationStyle: SCLAnimationStyle.topToBottom)
+//                            let vc = paramedicChatViewController(with: "\(finalOtherUserEmail)",id: nil)
+//                            vc.Name = self.patientName.text
+//                            vc.phoneNumber = self.phoneNumber
+//                            vc.isNewConversation = true
+//                            vc.modalPresentationStyle = .fullScreen
+//                            let navController = UINavigationController(rootViewController: vc)
+//                            navController.modalPresentationStyle = .fullScreen
+//                            self.present(navController, animated:true, completion: nil)
                         }else{
-                            print("c is not nil")
+                            print("the user has initiated the conversation")
                             let vc = paramedicChatViewController(with: "\(finalOtherUserEmail)",id: c!.id)
                             vc.Name = self.patientName.text
                             vc.phoneNumber = self.phoneNumber

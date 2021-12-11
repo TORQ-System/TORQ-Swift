@@ -37,6 +37,10 @@ class paramedicChatViewController: MessagesViewController {
         return formatter
     }()
     var centerName: String?
+    var filteredEmail: String?
+    var finalEmail: String?
+    var filteredOtherUserEmail: String?
+    var finalOtherUserEmail: String?
 
     
     //MARK: - Overriden Functions
@@ -51,8 +55,11 @@ class paramedicChatViewController: MessagesViewController {
             print("id is not nil")
             listenForMessages(id: id, shouldScrollToButtom: true)
         }else{
+            listenForMessages(id: "conversation_\(String(describing: finalEmail))_\(String(describing: finalOtherUserEmail))", shouldScrollToButtom: true)
             print("id is nil")
         }
+        listenForMessages(id: "conversation_\(String(describing: finalEmail))_\(String(describing: finalOtherUserEmail))", shouldScrollToButtom: true)
+        self.messagesCollectionView.reloadData()
     }
     
     required init?(coder: NSCoder) {
@@ -64,12 +71,21 @@ class paramedicChatViewController: MessagesViewController {
         setDelegate()
         setbackButton()
         configuration()
+        listenForMessages(id: "conversation_\(String(describing: finalEmail))_\(String(describing: finalOtherUserEmail))", shouldScrollToButtom: true)
+        self.messagesCollectionView.reloadData()
+        self.filteredEmail = self.centerEmail.replacingOccurrences(of: "@", with: "-")
+        self.finalEmail = filteredEmail!.replacingOccurrences(of: ".", with: "-")
+        self.filteredOtherUserEmail = otherUserEmail.replacingOccurrences(of: "@", with: "-")
+        self.finalOtherUserEmail = filteredOtherUserEmail!.replacingOccurrences(of: "@", with: "-")
 
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         messageInputBar.inputTextView.becomeFirstResponder()
+        listenForMessages(id: "conversation_\(String(describing: finalEmail))_\(String(describing: finalOtherUserEmail))", shouldScrollToButtom: true)
+        self.messagesCollectionView.reloadData()
+
     }
     
     //MARK: - Functions
@@ -209,15 +225,15 @@ class paramedicChatViewController: MessagesViewController {
                 conversations.append(newConversationData)
                 userNode["conversations"] = conversations
                 self.ref.child("\(finalEmail)").setValue(userNode)
-                self.finishCreatingConversation(conversationID: "conversation_\(finalOtherUserEmail)_\(finalEmail)", firstMessage: firstMessage, completion: completion)
+                self.finishCreatingConversation(conversationID: "conversation_\(finalEmail)_\(finalOtherUserEmail)", firstMessage: firstMessage, completion: completion)
             }else{
                 //converstaion array dont exists , create it
                 userNode["conversations"] = [newConversationData]
                 self.ref.child("\(finalEmail)").setValue(userNode)
-                self.finishCreatingConversation(conversationID: "conversation_\(finalOtherUserEmail)_\(finalEmail)", firstMessage: firstMessage, completion: completion)
+                self.finishCreatingConversation(conversationID: "conversation_\(finalEmail)_\(finalOtherUserEmail)", firstMessage: firstMessage, completion: completion)
             }
         }
-        
+        self.messagesCollectionView.reloadData()
     }
     
     private func finishCreatingConversation(conversationID: String, firstMessage: Message, completion: @escaping (Bool)-> Void){
@@ -284,6 +300,7 @@ class paramedicChatViewController: MessagesViewController {
             }
             completion(.success(conversations))
         }
+        self.messagesCollectionView.reloadData()
     }
     
     private func getAllMessagesForConversation(with id:String, completion: @escaping (Result<[Message], Error>)-> Void){
@@ -500,13 +517,14 @@ extension paramedicChatViewController: InputBarAccessoryViewDelegate{
             //create converstaion in db
             self.createNewConversation(with: otherUserEmail, firstMessage: message) { success in
                 if success{
-                    print("message sent")
+                    print("message sent for new conv")
                     self.messagesCollectionView.reloadData()
                     self.isNewConversation = false
                 }else{
-                    print("failed to sent")
+                    print("failed to sent for new conv")
                 }
             }
+            self.messagesCollectionView.reloadData()
         }else{
             //append to exsisting conversation in db
             guard let conversationId = converstationID else {
@@ -520,6 +538,7 @@ extension paramedicChatViewController: InputBarAccessoryViewDelegate{
                     print("failed to send")
                 }
             }
+            self.messagesCollectionView.reloadData()
             
         }
     }
