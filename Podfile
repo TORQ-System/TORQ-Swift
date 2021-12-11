@@ -23,6 +23,7 @@ target 'TORQ' do
   pod 'Firebase/Auth'
   pod 'SCLAlertView'
   pod 'IQKeyboardManagerSwift'
+  pod 'SwipeCellKit'
   pod 'FloatingPanel'
 
 end
