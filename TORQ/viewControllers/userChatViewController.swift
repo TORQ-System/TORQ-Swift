@@ -104,7 +104,6 @@ class userChatViewController: MessagesViewController {
             }
         })
         
-        
     }
     
     private func setDelegate(){
@@ -129,6 +128,7 @@ class userChatViewController: MessagesViewController {
         
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.barTintColor = .white
     }
     
     private func configuration(){

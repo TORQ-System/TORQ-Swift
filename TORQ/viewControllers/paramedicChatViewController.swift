@@ -136,6 +136,8 @@ class paramedicChatViewController: MessagesViewController {
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
         
+        navigationController?.navigationBar.barTintColor = .white
+        
         
 //        navigationController?.navigationBar.layer.cornerRadius = 30
 //        navigationController?.navigationBar.layer.masksToBounds = true
@@ -187,8 +189,11 @@ class paramedicChatViewController: MessagesViewController {
             case.failure(let error):
                 print(error.localizedDescription)
             }
+            self.messagesCollectionView.scrollToLastItem(animated: false)
+
         })
-        
+        messagesCollectionView.scrollToLastItem(animated: false)
+
         
     }
     
