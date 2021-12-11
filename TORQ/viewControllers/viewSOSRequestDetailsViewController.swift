@@ -430,6 +430,12 @@ class viewSOSRequestDetailsViewController: UIViewController {
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(identifier: "selectHealthCareCenterViewController") as! selectHealthCareCenterViewController
         vc.sosRequestUserID = self.patientName.text
+        let filteredEmail = self.centerEmail.replacingOccurrences(of: "@", with: "-")
+        let finalEmail = filteredEmail.replacingOccurrences(of: ".", with: "-")
+        let filteredOtherUserEmail = userEmail!.replacingOccurrences(of: "@", with: "-")
+        let finalOtherUserEmail = filteredOtherUserEmail.replacingOccurrences(of: ".", with: "-")
+        vc.finalEmail = finalEmail
+        vc.finalOtherUserEmail = finalOtherUserEmail
         self.present(vc, animated: true, completion: nil)
     }
     

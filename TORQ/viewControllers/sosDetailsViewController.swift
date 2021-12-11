@@ -281,6 +281,36 @@ class sosDetailsViewController: UIViewController {
         alertView.addButton("Yes, I'm sure", backgroundColor: self.redUIColor){
             // update status to cancel
             self.updateSOSRequestsStatus(update: "Cancelled")
+            
+            
+            let finalOtherEmail = "\(self.SOSRequest!.getAssignedCenter())-srca-org-sa"
+            let filteredEmail = self.userEmail.replacingOccurrences(of: "@", with: "-")
+            let finalEmail = filteredEmail.replacingOccurrences(of: ".", with: "-")
+            
+            print("delete the conversation node")
+            print("conversation_\(finalOtherEmail)_\(finalEmail)")
+            // delete the conversation node
+            self.ref.child("conversation_\(finalOtherEmail)_\(finalEmail)").removeValue()
+
+            
+            print("delete the conversation node from the user side")
+            print("\(finalEmail)/conversations")
+            // delete the conversation node from the user side
+            self.ref.child("\(finalEmail)/conversations").removeValue()
+
+            
+            
+            // delete conversations from the center side
+            self.ref.child("\(finalOtherEmail)/conversations").observeSingleEvent(of: .value, with: { snapshot in
+                for conv in snapshot.children{
+                    let obj = conv as! DataSnapshot
+                    let conv_id = obj.childSnapshot(forPath: "id").value as! String
+                    if conv_id == "conversation_\(finalOtherEmail)_\(finalEmail)" {
+                        self.ref.child("\(finalOtherEmail)/conversations").child(obj.key).removeValue()
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                }
+            })
             self.dismiss(animated: true, completion: nil)
         }
         alertView.showCustom("Warning", subTitle: "Once you confirm the cancellation your SOS Request will be canceled, Are you sure ?", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Cancel", circleIconImage: UIImage(named: "warning"), animationStyle: SCLAnimationStyle.topToBottom)
