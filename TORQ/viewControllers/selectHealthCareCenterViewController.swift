@@ -33,6 +33,7 @@ class selectHealthCareCenterViewController: UIViewController, UIAlertViewDelegat
     let hospitallist = ["None","Security Forces Hospital","King Salman Hospital","King Abdulaziz Hospital","Dallah Hospital","Green Crescent Hospital","King Khalid Hospital","King Abduallah Hospital","Prince Sultan Hospital"]
     var finalEmail: String?
     var finalOtherUserEmail: String?
+    var userID: String?
     
     
     //MARK: - Overriden Functions
@@ -127,11 +128,14 @@ class selectHealthCareCenterViewController: UIViewController, UIAlertViewDelegat
                     let status = obj.childSnapshot(forPath: "status").value as! String
                     let user_id = obj.childSnapshot(forPath: "user_id").value as! String
                     
-                    if (user_id == self.sosRequestUserID && status == "1"){
+                    
+                    print(user_id == self.sosRequestUserID)
+                    print(status == "1")
+                    if (user_id == self.userID && status == "1"){
                         print("inside if")
                         let snapshotKey = obj.key
                         self.ref.child("SOSRequests").child(snapshotKey).updateChildValues(["status": "Processed"])
-                        self.ref.child("ProcessingRequest").child(self.selhealth).childByAutoId().setValue(["Rquest_id":snapshotKey ,"User_id": self.sosRequestUserID])
+                        self.ref.child("ProcessingRequest").child(self.selhealth).childByAutoId().setValue(["Rquest_id":snapshotKey ,"User_id": self.userID])
                         
                         let alertView = SCLAlertView(appearance: self.apperanceWithoutClose)
                         alertView.addButton("Okay", backgroundColor: self.blueUIColor){

@@ -434,6 +434,7 @@ class viewSOSRequestDetailsViewController: UIViewController {
         let finalEmail = filteredEmail.replacingOccurrences(of: ".", with: "-")
         let filteredOtherUserEmail = userEmail!.replacingOccurrences(of: "@", with: "-")
         let finalOtherUserEmail = filteredOtherUserEmail.replacingOccurrences(of: ".", with: "-")
+        vc.userID = sosRequester
         vc.finalEmail = finalEmail
         vc.finalOtherUserEmail = finalOtherUserEmail
         self.present(vc, animated: true, completion: nil)
