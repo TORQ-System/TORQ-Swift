@@ -14,8 +14,7 @@ extension UIViewController {
     func registerToNotifications(userID: String) {
         let ref = Database.database().reference()
         let sendRequestQueue = DispatchQueue.init(label: "sendRequestQueue")
-        
-        sendRequestQueue.sync {
+        _ = sendRequestQueue.sync {
             ref.child("Request").observe(.childAdded, with: { snapshot in
                 let obj = snapshot
                 let latitude = obj.childSnapshot(forPath: "latitude").value as! String
@@ -29,7 +28,6 @@ extension UIViewController {
                 let vib = obj.childSnapshot(forPath: "vib").value as! String
                 
                 let userRequest = Request(user_id: user_id, sensor_id: sensor_id, request_id: request_id, dateTime: time_stamp, longitude: longitude, latitude: latitude, vib: vib, rotation: rotation, status: status)
-                
                 
                 if (userRequest.getUserID()) == userID && (userRequest.getStatus() == "0"){
                     var center = UNUserNotificationCenter.current()
@@ -58,13 +56,18 @@ extension UIViewController {
                     }
                     
                     let date = Date()
-                    let calendar = Calendar.current
-                    let hour = calendar.component(.hour, from: date)
-                    let minutes = calendar.component(.minute, from: date)
-                    let seconds = calendar.component(.second, from: date)
-                    let day = calendar.component(.day, from: date)
-                    let month = calendar.component(.month, from: date)
-                    let year = calendar.component(.year, from: date)
+                    let formatter = DateFormatter()
+                    
+                    formatter.timeStyle = .medium
+                    formatter.dateStyle = .medium
+                    formatter.dateFormat = "MMM d, yyyy h:mm a"
+                    formatter.amSymbol = "a.m."
+                    formatter.pmSymbol = "p.m."
+                    
+                    let dateString = formatter.string(from: date)
+                    let index = dateString.index(dateString.endIndex, offsetBy: -10)
+                    let notifDate = dateString.prefix(12)
+                    let notifTime = dateString.suffix(from: index)
                     
                     center.getNotificationSettings { setting in
                         if setting.authorizationStatus == .authorized{
@@ -74,7 +77,7 @@ extension UIViewController {
                                     return
                                 }
                                 
-                                ref.child("Notification").childByAutoId().setValue(["title":content.title, "subtitle":content.subtitle, "body":content.body, "date": "\(day)-\(month)-\(year)", "time": "\(hour):\(minutes):\(seconds)", "type": "wellbeing", "sender":userID, "receiver": userID, "request_id": userRequest.getRequestID()])
+                                ref.child("Notification").childByAutoId().setValue(["title":content.title, "subtitle":content.subtitle, "body":content.body, "date": "\(notifDate)", "time": "\(notifTime)", "type": "wellbeing", "sender":userID, "receiver": userID, "request_id": userRequest.getRequestID()])
                             }
                         } else {
                             center.requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
@@ -85,7 +88,7 @@ extension UIViewController {
                                     guard error == nil else{
                                         return
                                     }
-                                    ref.child("Notification").childByAutoId().setValue(["title":content.title, "subtitle":content.subtitle, "body":content.body, "date": "\(day)-\(month)-\(year)", "time": "\(hour):\(minutes):\(seconds)", "type": "wellbeing", "sender":userID, "receiver": userID, "request_id": userRequest.getRequestID()])
+                                    ref.child("Notification").childByAutoId().setValue(["title":content.title, "subtitle":content.subtitle, "body":content.body, "date": "\(notifDate)", "time": "\(notifTime)", "type": "wellbeing", "sender":userID, "receiver": userID, "request_id": userRequest.getRequestID()])
                                 }
                             }
                         }
@@ -100,7 +103,7 @@ extension UIViewController {
         let searchQueue = DispatchQueue.init(label: "searchQueue")
         let _ = DispatchQueue.init(label: "updateQueue")
         
-        searchQueue.sync {
+        _ = searchQueue.sync {
             ref.child("EmergencyContact").observe(.value) { snapshot in
                 for contact in snapshot.children{
                     let obj = contact as! DataSnapshot
@@ -112,7 +115,6 @@ extension UIViewController {
                     let sent = obj.childSnapshot(forPath: "sent").value as! String
                     let msg = obj.childSnapshot(forPath: "msg").value as! String
                     
-                    //create a EC object
                     let emergencyContact = emergencyContact(name: name, phone_number: phone, senderID:senderID, recieverID: receiverID, sent: sent, contactID: 1, msg: msg, relation: relation)
                     
                     if (emergencyContact.getReciverID()) == userID && ((emergencyContact.getSent() == "Late") || (emergencyContact.getSent() == "Immediate")){
@@ -137,22 +139,60 @@ extension UIViewController {
                                 }
                                 
                                 let date = Date()
-                                let calendar = Calendar.current
-                                let hour = calendar.component(.hour, from: date)
-                                let minutes = calendar.component(.minute, from: date)
-                                let seconds = calendar.component(.second, from: date)
-                                let day = calendar.component(.day, from: date)
-                                let month = calendar.component(.month, from: date)
-                                let year = calendar.component(.year, from: date)
+                                let formatter = DateFormatter()
                                 
-                                ref.child("Notification").childByAutoId().setValue(["title":content.title, "subtitle": "none", "body":content.body, "date": "\(day)-\(month)-\(year)", "time": "\(hour):\(minutes):\(seconds)", "type": "emergency", "sender":senderID, "receiver": receiverID, "request_id": "NA"])
+                                formatter.timeStyle = .medium
+                                formatter.dateStyle = .medium
+                                formatter.dateFormat = "MMM d, yyyy h:mm a"
+                                formatter.amSymbol = "a.m."
+                                formatter.pmSymbol = "p.m."
+                                
+                                let dateString = formatter.string(from: date)
+                                let index = dateString.index(dateString.endIndex, offsetBy: -10)
+                                let notifDate = dateString.prefix(12)
+                                let notifTime = dateString.suffix(from: index)
+                                        
+                                let notificationRef = ref.child("Notification").childByAutoId()
+                                notificationRef.setValue(["title":content.title, "subtitle": "none", "body":content.body, "date": "\(notifDate)", "time": "\(notifTime)", "type": "emergency", "sender":senderID, "receiver": receiverID, "request_id": self.getRequestID(sender: senderID, notif: notificationRef.key!)])
                             }
+                            self.getAccidentLocation(senderID: emergencyContact.getSenderID())
                         }
-                        self.getAccidentLocation(senderID: emergencyContact.getSenderID())
                     }
                 }
             }
         }
+    }
+    
+    func getRequestID(sender: String, notif: String) -> String{
+        let ref = Database.database().reference()
+        let searchRequestQueue = DispatchQueue.init(label: "searchRequestQueue")
+        _ = searchRequestQueue.sync {
+            ref.child("Request").observe(.value) { snapshot in
+                for request in snapshot.children{
+                    let obj = request as! DataSnapshot
+                    let latitude = obj.childSnapshot(forPath: "latitude").value as! String
+                    let longitude = obj.childSnapshot(forPath: "longitude").value as! String
+                    let request_id = obj.childSnapshot(forPath: "request_id").value as! String
+                    let rotation = obj.childSnapshot(forPath: "rotation").value as! String
+                    let sensor_id = obj.childSnapshot(forPath: "sensor_id").value as! String
+                    let status = obj.childSnapshot(forPath: "status").value as! String
+                    let time_stamp = obj.childSnapshot(forPath: "time_stamp").value as! String
+                    let user_id = obj.childSnapshot(forPath: "user_id").value as! String
+                    let vib = obj.childSnapshot(forPath: "vib").value as! String
+                    
+                    let request = Request(user_id: user_id, sensor_id: sensor_id, request_id: request_id, dateTime: time_stamp, longitude: longitude, latitude: latitude, vib: vib, rotation: rotation, status: status)
+                    
+                    if (request.getUserID()) == sender && (request.getStatus() == "0"){
+                        ref.child("Notification").child(notif).updateChildValues(["request_id": request.getRequestID()]) {(error, ref) in
+                            if let error = error {
+                                print("Data could not be saved: \(error.localizedDescription).")
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return "NA"
     }
     
     func updateEmergencyContacts(userID: String){
@@ -276,7 +316,7 @@ extension UIViewController {
         let ref = Database.database().reference()
         let searchQueue = DispatchQueue.init(label: "searchQueue")
         let retrunQueue = DispatchQueue.init(label: "returnQueue")
-        searchQueue.sync {
+        _ = searchQueue.sync {
             ref.child("Request").observe(.value) { snapshot in
                 for request in snapshot.children{
                     let obj = request as! DataSnapshot
@@ -332,7 +372,7 @@ extension UIViewController: UNUserNotificationCenterDelegate{
             cancelUpdateEmergencyContacts(userID: userID)
             break
         case "REQUEST_ACTION":
-            updateEmergencyContacts(userID: userID) // only called after immediate actions
+            updateEmergencyContacts(userID: userID)
             break
         default:
             print("Dissmissed or Cleared Notification")
