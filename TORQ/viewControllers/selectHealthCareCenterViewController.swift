@@ -31,6 +31,9 @@ class selectHealthCareCenterViewController: UIViewController, UIAlertViewDelegat
     let apperanceWithoutClose = SCLAlertView.SCLAppearance(showCloseButton: false,contentViewCornerRadius: 15,buttonCornerRadius: 7)
     let apperance = SCLAlertView.SCLAppearance(contentViewCornerRadius: 15,buttonCornerRadius: 7,hideWhenBackgroundViewIsTapped: true)
     let hospitallist = ["None","Security Forces Hospital","King Salman Hospital","King Abdulaziz Hospital","Dallah Hospital","Green Crescent Hospital","King Khalid Hospital","King Abduallah Hospital","Prince Sultan Hospital"]
+    var finalEmail: String?
+    var finalOtherUserEmail: String?
+    var userID: String?
     
     
     //MARK: - Overriden Functions
@@ -125,11 +128,14 @@ class selectHealthCareCenterViewController: UIViewController, UIAlertViewDelegat
                     let status = obj.childSnapshot(forPath: "status").value as! String
                     let user_id = obj.childSnapshot(forPath: "user_id").value as! String
                     
-                    if (user_id == self.sosRequestUserID && status == "1"){
+                    
+                    print(user_id == self.sosRequestUserID)
+                    print(status == "1")
+                    if (user_id == self.userID && status == "1"){
                         print("inside if")
                         let snapshotKey = obj.key
                         self.ref.child("SOSRequests").child(snapshotKey).updateChildValues(["status": "Processed"])
-                        self.ref.child("ProcessingRequest").child(self.selhealth).childByAutoId().setValue(["Rquest_id":snapshotKey ,"User_id": self.sosRequestUserID])
+                        self.ref.child("ProcessingRequest").child(self.selhealth).childByAutoId().setValue(["Rquest_id":snapshotKey ,"User_id": self.userID])
                         
                         let alertView = SCLAlertView(appearance: self.apperanceWithoutClose)
                         alertView.addButton("Okay", backgroundColor: self.blueUIColor){
@@ -139,6 +145,25 @@ class selectHealthCareCenterViewController: UIViewController, UIAlertViewDelegat
                     }
                 }
                 
+            })
+            
+            // delete the conversation node
+            self.ref.child("conversation_\(finalEmail!)_\(finalOtherUserEmail!)").removeValue()
+
+            // delete the conversation node from the user side
+            self.ref.child("\(finalOtherUserEmail!)/conversations").removeValue()
+
+            
+            // delete conversations from the center side
+            self.ref.child("\(finalEmail!)/conversations").observeSingleEvent(of: .value, with: { snapshot in
+                for conv in snapshot.children{
+                    let obj = conv as! DataSnapshot
+                    let conv_id = obj.childSnapshot(forPath: "id").value as! String
+                    if conv_id == "conversation_\(self.finalEmail!)_\(self.finalOtherUserEmail!)" {
+                        self.ref.child("\(self.finalEmail!)/conversations").child(obj.key).removeValue()
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                }
             })
         }
     }

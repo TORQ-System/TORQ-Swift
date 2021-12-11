@@ -34,6 +34,7 @@ class sosDetailsViewController: UIViewController {
     
     //MARK: - Variables
     var SOSRequest: SOSRequest?
+    var userEmail = Auth.auth().currentUser!.email!
     var userID = Auth.auth().currentUser?.uid
     var ref = Database.database().reference()
     let redUIColor = UIColor( red: 200/255, green: 68/255, blue:86/255, alpha: 1.0 )
@@ -43,6 +44,8 @@ class sosDetailsViewController: UIViewController {
         buttonCornerRadius: 7,
         hideWhenBackgroundViewIsTapped: true)
     var sosId: String?
+    var userName: String?
+    var conversations: [Conversation]?
     
     
     //MARK: - Overriden Functions
@@ -50,6 +53,12 @@ class sosDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setLayout()
+        conversations = []
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        conversations = []
     }
     
     
@@ -172,10 +181,95 @@ class sosDetailsViewController: UIViewController {
         }
     }
     
+    private func getAllConversations(for email:String, completion: @escaping (Result<[Conversation], Error>)-> Void){
+        ref.child("\(email)/conversations").observe(.value) { snapshot in
+            guard let value = snapshot.value as? [[String: Any]] else{
+                print("value is nil")
+                completion(.failure(NSError(domain: "", code: 401, userInfo: [ NSLocalizedDescriptionKey: "Invalid access token"])))
+                return
+            }
+            
+            let conversations: [Conversation] = value.compactMap { dictionary in
+                guard let id = dictionary["id"] as? String, let lm = dictionary["latest_message"] as? [String: Any], let date = lm["date"] as? String, let isRead = lm["is_read"] as? Bool, let message = lm["message"] as? String, let otherUserEmail = dictionary["otherUserEmail"] as? String else{
+                    print("one of the conversation attribute is nil")
+                    return nil
+                }
+                
+                let lMessage = latestMessage(date: date, text: message, isRread: isRead)
+                
+                return Conversation(id: id, latestMessage: lMessage, otherUserEmail: otherUserEmail)
+            }
+            print(conversations)
+            completion(.success(conversations))
+        }
+    }
+    
     
     //MARK: - @IBActions
     @IBAction func goChat(_ sender: Any) {
+        let filteredEmail = self.userEmail.replacingOccurrences(of: "@", with: "-")
+        let finalEmail = filteredEmail.replacingOccurrences(of: ".", with: "-")
         
+        let checkQueue = DispatchQueue.init(label: "checkQueue")
+        let fetchQueue = DispatchQueue.init(label: "fetchQueue")
+        fetchQueue.sync {
+            self.getAllConversations(for: finalEmail) { result in
+                switch result {
+                case .success(let conversations):
+                    print("successfuly got conversations model")
+                    guard !conversations.isEmpty else {
+                        print("conversations is empty")
+                        return
+                    }
+                    print("line232\(conversations)")
+                    self.conversations = conversations
+                case .failure(let error):
+                    print("faliure case: \(error.localizedDescription)")
+                }
+                
+                checkQueue.sync {
+                    if self.conversations == nil || self.conversations!.isEmpty{
+                        print("new conversation")
+                        let vc = userChatViewController(with: "\(self.SOSRequest!.getAssignedCenter())-srca-org-sa",id: nil)
+                        vc.centerName = self.SOSRequest!.getAssignedCenter()
+                        vc.userName = self.userName
+                        vc.finalOtherEmail = "\(self.SOSRequest!.getAssignedCenter())-srca-org-sa"
+                        vc.finalEmail = finalEmail
+                        vc.isNewConversation = true
+                        vc.modalPresentationStyle = .fullScreen
+                        let navController = UINavigationController(rootViewController: vc)
+                        navController.modalPresentationStyle = .fullScreen
+                        self.present(navController, animated:true, completion: nil)
+                    }else{
+                        var c: Conversation?
+                        for conv in self.conversations!{
+                            if conv.id == "conversation_\(self.SOSRequest!.getAssignedCenter())-srca-org-sa_\(finalEmail)" {
+                                print("found c that matches")
+                                c = conv
+                                break
+                            }
+                        }
+                        
+                        if c == nil {
+                            print("c is nil")
+                            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "an error occured please try again", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Got it!", circleIconImage: UIImage(named: "warning"), animationStyle: SCLAnimationStyle.topToBottom)
+                        }else{
+                            print("old conversation")
+                            let vc = userChatViewController(with: "\(self.SOSRequest!.getAssignedCenter())-srca-org-sa",id: c!.id)
+                            vc.centerName = self.SOSRequest!.getAssignedCenter()
+                            vc.userName = self.userName
+                            vc.finalOtherEmail = "\(self.SOSRequest!.getAssignedCenter())-srca-org-sa"
+                            vc.finalEmail = finalEmail
+                            vc.modalPresentationStyle = .fullScreen
+                            let navController = UINavigationController(rootViewController: vc)
+                            navController.modalPresentationStyle = .fullScreen
+                            self.present(navController, animated:true, completion: nil)
+                        }
+                    }
+                }
+            }
+        }
+        conversations = []
     }
     
     @IBAction func cancelSOSrequest(_ sender: Any) {
@@ -183,6 +277,36 @@ class sosDetailsViewController: UIViewController {
         alertView.addButton("Yes, I'm sure", backgroundColor: self.redUIColor){
             // update status to cancel
             self.updateSOSRequestsStatus(update: "Cancelled")
+            
+            
+            let finalOtherEmail = "\(self.SOSRequest!.getAssignedCenter())-srca-org-sa"
+            let filteredEmail = self.userEmail.replacingOccurrences(of: "@", with: "-")
+            let finalEmail = filteredEmail.replacingOccurrences(of: ".", with: "-")
+            
+            print("delete the conversation node")
+            print("conversation_\(finalOtherEmail)_\(finalEmail)")
+            // delete the conversation node
+            self.ref.child("conversation_\(finalOtherEmail)_\(finalEmail)").removeValue()
+
+            
+            print("delete the conversation node from the user side")
+            print("\(finalEmail)/conversations")
+            // delete the conversation node from the user side
+            self.ref.child("\(finalEmail)/conversations").removeValue()
+
+            
+            
+            // delete conversations from the center side
+            self.ref.child("\(finalOtherEmail)/conversations").observeSingleEvent(of: .value, with: { snapshot in
+                for conv in snapshot.children{
+                    let obj = conv as! DataSnapshot
+                    let conv_id = obj.childSnapshot(forPath: "id").value as! String
+                    if conv_id == "conversation_\(finalOtherEmail)_\(finalEmail)" {
+                        self.ref.child("\(finalOtherEmail)/conversations").child(obj.key).removeValue()
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                }
+            })
             self.dismiss(animated: true, completion: nil)
         }
         alertView.showCustom("Warning", subTitle: "Once you confirm the cancellation your SOS Request will be canceled, Are you sure ?", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Cancel", circleIconImage: UIImage(named: "warning"), animationStyle: SCLAnimationStyle.topToBottom)
