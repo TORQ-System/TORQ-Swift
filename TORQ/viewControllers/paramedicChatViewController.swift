@@ -73,6 +73,10 @@ class paramedicChatViewController: MessagesViewController {
         self.messagesCollectionView.reloadData()
     }
     
+    override func viewDidLayoutSubviews() {
+        self.messagesCollectionView.contentInset = UIEdgeInsets(top: 50, left: 0, bottom: 70, right: 0)
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         messageInputBar.inputTextView.becomeFirstResponder()
@@ -589,6 +593,7 @@ extension paramedicChatViewController: InputBarAccessoryViewDelegate{
             self.messagesCollectionView.reloadData()
             
         }
+        inputBar.inputTextView.text = ""
     }
     
 }
