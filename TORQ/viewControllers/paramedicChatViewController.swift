@@ -37,9 +37,7 @@ class paramedicChatViewController: MessagesViewController {
         return formatter
     }()
     var centerName: String?
-    var filteredEmail: String?
     var finalEmail: String?
-    var filteredOtherUserEmail: String?
     var finalOtherUserEmail: String?
 
     
@@ -55,10 +53,10 @@ class paramedicChatViewController: MessagesViewController {
             print("id is not nil")
             listenForMessages(id: id, shouldScrollToButtom: true)
         }else{
-            listenForMessages(id: "conversation_\(String(describing: finalEmail))_\(String(describing: finalOtherUserEmail))", shouldScrollToButtom: true)
+//            listenForMessages(id: "conversation_\(finalEmail!)_\(finalOtherUserEmail!)", shouldScrollToButtom: true)
             print("id is nil")
         }
-        listenForMessages(id: "conversation_\(String(describing: finalEmail))_\(String(describing: finalOtherUserEmail))", shouldScrollToButtom: true)
+//        listenForMessages(id: "conversation_\(finalEmail!)_\(finalOtherUserEmail!)", shouldScrollToButtom: true)
         self.messagesCollectionView.reloadData()
     }
     
@@ -73,17 +71,12 @@ class paramedicChatViewController: MessagesViewController {
         configuration()
         listenForMessages(id: "conversation_\(String(describing: finalEmail))_\(String(describing: finalOtherUserEmail))", shouldScrollToButtom: true)
         self.messagesCollectionView.reloadData()
-        self.filteredEmail = self.centerEmail.replacingOccurrences(of: "@", with: "-")
-        self.finalEmail = filteredEmail!.replacingOccurrences(of: ".", with: "-")
-        self.filteredOtherUserEmail = otherUserEmail.replacingOccurrences(of: "@", with: "-")
-        self.finalOtherUserEmail = filteredOtherUserEmail!.replacingOccurrences(of: "@", with: "-")
-
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         messageInputBar.inputTextView.becomeFirstResponder()
-        listenForMessages(id: "conversation_\(String(describing: finalEmail))_\(String(describing: finalOtherUserEmail))", shouldScrollToButtom: true)
+        listenForMessages(id: "conversation_\(finalEmail!)_\(finalOtherUserEmail!)", shouldScrollToButtom: true)
         self.messagesCollectionView.reloadData()
 
     }
@@ -131,10 +124,13 @@ class paramedicChatViewController: MessagesViewController {
                 self.messgaes = messages
                 DispatchQueue.main.async {
                     self.messagesCollectionView.reloadDataAndKeepOffset()
+                    self.messagesCollectionView.reloadData()
                     if shouldScrollToButtom{
                         self.messagesCollectionView.scrollToLastItem()
+                        self.messagesCollectionView.reloadData()
                     }
                 }
+                self.messagesCollectionView.reloadData()
             case.failure(let error):
                 print(error.localizedDescription)
             }
@@ -334,11 +330,6 @@ class paramedicChatViewController: MessagesViewController {
                 return
             }
             
-            let filteredEmail = self.centerEmail.replacingOccurrences(of: "@", with: "-")
-            let finalEmail = filteredEmail.replacingOccurrences(of: ".", with: "-")
-            let filteredOtherUserEmail = otherUserEmail.replacingOccurrences(of: "@", with: "-")
-            let finalOtherUserEmail = filteredOtherUserEmail.replacingOccurrences(of: "@", with: "-")
-            
             let messageDate = newMessage.sentDate
             let dateString = self.dateFormatter.string(from: messageDate)
             var message:String?
@@ -368,7 +359,7 @@ class paramedicChatViewController: MessagesViewController {
             
             
             let collectionMessage:[String: Any] = ["id":newMessage.messageId
-                                                   ,"type":newMessage.kind.messageKindString,"content":message!,"date":dateString,"sender_email":finalEmail,"is_read":false]
+                                                   ,"type":newMessage.kind.messageKindString,"content":message!,"date":dateString,"sender_email":self.finalEmail!,"is_read":false]
             currentMessages.append(collectionMessage)
             
             self.ref.child("\(conversation)/messages").setValue(currentMessages) { error, _ in
@@ -377,7 +368,7 @@ class paramedicChatViewController: MessagesViewController {
                     return
                 }
                 
-                self.ref.child("\(finalEmail)/conversations").observeSingleEvent(of: .value) { snapshot in
+                self.ref.child("\(self.finalEmail!)/conversations").observeSingleEvent(of: .value) { snapshot in
                     guard var currentUserConversatiosns = snapshot.value as? [[String: Any]] else{
                         completion(false)
                         return
@@ -400,13 +391,13 @@ class paramedicChatViewController: MessagesViewController {
                         return
                     }
                     currentUserConversatiosns[position] = finalConversation
-                    self.ref.child("\(finalEmail)/conversations").setValue(currentUserConversatiosns) { error, _ in
+                    self.ref.child("\(self.finalEmail!)/conversations").setValue(currentUserConversatiosns) { error, _ in
                         guard error == nil else{
                             completion(false)
                             return
                         }
                         
-                        self.ref.child("\(finalOtherUserEmail)/conversations").observeSingleEvent(of: .value) { snapshot in
+                        self.ref.child("\(self.finalOtherUserEmail!)/conversations").observeSingleEvent(of: .value) { snapshot in
                             guard var othertUserConversatiosns = snapshot.value as? [[String: Any]] else{
                                 completion(false)
                                 return
@@ -429,7 +420,7 @@ class paramedicChatViewController: MessagesViewController {
                                 return
                             }
                             othertUserConversatiosns[position] = finalConversation
-                            self.ref.child("\(finalOtherUserEmail)/conversations").setValue(othertUserConversatiosns) { error, _ in
+                            self.ref.child("\(self.finalOtherUserEmail!)/conversations").setValue(othertUserConversatiosns) { error, _ in
                                 guard error == nil else{
                                     completion(false)
                                     return
@@ -519,7 +510,7 @@ extension paramedicChatViewController: InputBarAccessoryViewDelegate{
                 if success{
                     print("message sent for new conv")
                     self.messagesCollectionView.reloadData()
-                    self.isNewConversation = false
+//                    self.isNewConversation = false
                 }else{
                     print("failed to sent for new conv")
                 }
@@ -530,7 +521,7 @@ extension paramedicChatViewController: InputBarAccessoryViewDelegate{
             guard let conversationId = converstationID else {
                 return
             }
-            sendMessage(to: conversationId, otherUserEmail: otherUserEmail, newMessage: message) { success in
+            sendMessage(to: conversationId, otherUserEmail: self.finalOtherUserEmail!, newMessage: message) { success in
                 if success{
                     print("message sent")
                     self.messagesCollectionView.reloadData()

@@ -34,6 +34,8 @@ class userChatViewController: MessagesViewController {
         formatter.locale = .current
         return formatter
     }()
+    var finalEmail: String?
+    var finalOtherEmail: String?
     
     
     //MARK: - Constructure
@@ -43,10 +45,10 @@ class userChatViewController: MessagesViewController {
         self.converstationID = id
         super.init(nibName: nil, bundle: nil)
         if let id = converstationID {
-            print("id is not nil")
+            print("not new conv")
             listenForMessages(id: id, shouldScrollToButtom: true)
         }else{
-            print("id is nil")
+            print("new conv")
         }
         messagesCollectionView.reloadData()
     }
@@ -512,10 +514,11 @@ extension userChatViewController: InputBarAccessoryViewDelegate{
         }else{
             print("not new")
             //append to exsisting conversation in db
-            guard let conversationId = converstationID else {
-                return
-            }
-            sendMessage(to: conversationId, otherUserEmail: otherUserEmail, newMessage: message) { success in
+//            guard let conversationId = converstationID else {
+//                print("conv id is nil")
+//                return
+//            }
+            sendMessage(to: "conversation_\(finalOtherEmail!)_\(finalEmail!)", otherUserEmail: otherUserEmail, newMessage: message) { success in
                 if success{
                     self.messagesCollectionView.reloadData()
                     print("message sent")
@@ -523,7 +526,7 @@ extension userChatViewController: InputBarAccessoryViewDelegate{
                     print("failed to send")
                 }
             }
-            
+            self.messagesCollectionView.reloadData()
         }
     }
     

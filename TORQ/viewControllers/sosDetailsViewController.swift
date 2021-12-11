@@ -230,12 +230,15 @@ class sosDetailsViewController: UIViewController {
                 case .failure(let error):
                     print("faliure case: \(error.localizedDescription)")
                 }
+                
                 checkQueue.sync {
                     if self.conversations == nil || self.conversations!.isEmpty{
-                        print("empty")
+                        print("new conversation")
                         let vc = userChatViewController(with: "\(self.SOSRequest!.getAssignedCenter())-srca-org-sa",id: nil)
                         vc.centerName = self.SOSRequest!.getAssignedCenter()
                         vc.userName = self.userName
+                        vc.finalOtherEmail = "\(self.SOSRequest!.getAssignedCenter())-srca-org-sa"
+                        vc.finalEmail = finalEmail
                         vc.isNewConversation = true
                         vc.modalPresentationStyle = .fullScreen
                         let navController = UINavigationController(rootViewController: vc)
@@ -244,7 +247,7 @@ class sosDetailsViewController: UIViewController {
                     }else{
                         var c: Conversation?
                         for conv in self.conversations!{
-                            if conv.id == "conversation_\(self.SOSRequest!.getAssignedCenter())-srca-org-sa_\(finalEmail)" || conv.id == "conversation_\(finalEmail)_\(self.SOSRequest!.getAssignedCenter())-srca-org-sa" {
+                            if conv.id == "conversation_\(self.SOSRequest!.getAssignedCenter())-srca-org-sa_\(finalEmail)" {
                                 print("found c that matches")
                                 c = conv
                                 break
@@ -253,19 +256,14 @@ class sosDetailsViewController: UIViewController {
                         
                         if c == nil {
                             print("c is nil")
-                            let vc = userChatViewController(with: "\(self.SOSRequest!.getAssignedCenter())-srca-org-sa",id: nil)
-                            vc.centerName = self.SOSRequest!.getAssignedCenter()
-                            vc.userName = self.userName
-                            vc.isNewConversation = true
-                            vc.modalPresentationStyle = .fullScreen
-                            let navController = UINavigationController(rootViewController: vc)
-                            navController.modalPresentationStyle = .fullScreen
-                            self.present(navController, animated:true, completion: nil)
+                            SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "an error occured please try again", color: self.redUIColor, icon: self.alertIcon!, closeButtonTitle: "Got it!", circleIconImage: UIImage(named: "warning"), animationStyle: SCLAnimationStyle.topToBottom)
                         }else{
-                            print("c is not nil")
+                            print("old conversation")
                             let vc = userChatViewController(with: "\(self.SOSRequest!.getAssignedCenter())-srca-org-sa",id: c!.id)
                             vc.centerName = self.SOSRequest!.getAssignedCenter()
                             vc.userName = self.userName
+                            vc.finalOtherEmail = "\(self.SOSRequest!.getAssignedCenter())-srca-org-sa"
+                            vc.finalEmail = finalEmail
                             vc.modalPresentationStyle = .fullScreen
                             let navController = UINavigationController(rootViewController: vc)
                             navController.modalPresentationStyle = .fullScreen

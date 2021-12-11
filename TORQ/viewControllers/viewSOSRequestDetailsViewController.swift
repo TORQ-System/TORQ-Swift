@@ -494,6 +494,8 @@ class viewSOSRequestDetailsViewController: UIViewController {
                             let vc = paramedicChatViewController(with: "\(finalOtherUserEmail)",id: c!.id)
                             vc.Name = self.patientName.text
                             vc.phoneNumber = self.phoneNumber
+                            vc.finalEmail = finalEmail
+                            vc.finalOtherUserEmail = finalOtherUserEmail
                             vc.modalPresentationStyle = .fullScreen
                             let navController = UINavigationController(rootViewController: vc)
                             navController.modalPresentationStyle = .fullScreen
