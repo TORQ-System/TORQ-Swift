@@ -491,6 +491,14 @@ extension userChatViewController: MessagesLayoutDelegate{
 //MARK: - MessagesDisplayDelegate Extensions
 extension userChatViewController: MessagesDisplayDelegate{
     
+    func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
+        avatarView.isHidden = true
+    }
+    
+    func avatarSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
+        return .zero
+    }
+    
 }
 
 //MARK: - MessagesDisplayDelegate Extensions
