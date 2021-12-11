@@ -188,6 +188,8 @@ class ViewSOSRequestsViewController: UIViewController {
         vc.sosRequestAge = sender.requesterAge
         vc.phoneNumber = sender.phone
         vc.userEmail = sender.email
+        vc.longitude = sender.longitude
+        vc.latitude = sender.latitude
         if processed {
             vc.sosRequestStatus = "Processed"
         }else if active {
@@ -211,7 +213,9 @@ class ViewSOSRequestsViewController: UIViewController {
         var requesterAge: Int?
         var phone:String?
         var email: String?
-        
+        var longitude: Double?
+        var latitude: Double?
+
     }
     
     //MARK: - @IBActions
@@ -401,6 +405,8 @@ extension ViewSOSRequestsViewController: UITableViewDataSource{
         buttonTap.requestTime = String(time)
         buttonTap.phone = userObject!.first?.getPhone()
         buttonTap.email = userObject!.first?.getEmail()
+        buttonTap.longitude = Double(array[indexPath.row].getLongitude())!
+        buttonTap.latitude = Double(array[indexPath.row].getLatitude())!
         cell.viewDetailsButton.addGestureRecognizer(buttonTap)
         return cell
     }
