@@ -438,14 +438,19 @@ class signUpSecondViewController: UIViewController {
             self.userID = Result!.user.uid
             let id = self.userID
             self.ref.child("User").child(id!).setValue(user)
-            self.ref.child("Sensor").child("S\(id!)/longitude").setValue("0")
-            self.ref.child("Sensor").child("S\(id!)/latitude").setValue("0")
-            self.ref.child("Sensor").child("S\(id!)/time").setValue("0")
-            self.ref.child("Sensor").child("S\(id!)/date").setValue("0")
+            
+            let filteredEmail = self.userEmail!.replacingOccurrences(of: "@", with: "-")
+            let finalEmail = filteredEmail.replacingOccurrences(of: ".", with: "-")
+            self.ref.child("\(finalEmail)").child("full_name").setValue(self.userFirstName!)
+            
             self.ref.child("Sensor").child("S\(id!)/Vib").setValue("0")
             self.ref.child("Sensor").child("S\(id!)/X").setValue("0")
             self.ref.child("Sensor").child("S\(id!)/Y").setValue("0")
             self.ref.child("Sensor").child("S\(id!)/Z").setValue("0")
+            self.ref.child("Sensor").child("S\(id!)/longitude").setValue("0")
+            self.ref.child("Sensor").child("S\(id!)/latitude").setValue("0")
+            self.ref.child("Sensor").child("S\(id!)/time").setValue("0")
+            self.ref.child("Sensor").child("S\(id!)/date").setValue("0")
             
             let alertView = SCLAlertView(appearance: self.apperanceWithoutClose)
             alertView.addButton("Let's go", backgroundColor: self.blueUIColor){
