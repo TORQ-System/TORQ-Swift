@@ -47,7 +47,6 @@ class sosDetailsViewController: UIViewController {
     var userName: String?
     var conversations: [Conversation]?
     
-    
     //MARK: - Overriden Functions
 
     override func viewDidLoad() {

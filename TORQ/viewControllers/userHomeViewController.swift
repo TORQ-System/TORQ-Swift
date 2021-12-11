@@ -334,6 +334,7 @@ extension userHomeViewController: UICollectionViewDelegate{
             viewVC.modalPresentationStyle = .fullScreen
             viewVC.longitude = location["lon"]
             viewVC.latitude = location["lat"]
+            viewVC.userName = userFullName.text!
             vc = viewVC
             break
         case 1:
