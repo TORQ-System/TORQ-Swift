@@ -39,6 +39,7 @@ class SOSRequestViewController: UIViewController {
         buttonCornerRadius: 7,
         hideWhenBackgroundViewIsTapped: true)
     var sosRequestID: String?
+    var userName:String?
     
     
 
@@ -185,6 +186,7 @@ class SOSRequestViewController: UIViewController {
         vc.SOSRequest = SOS
         print("go to details: \(String(describing: sosRequestID))")
         vc.sosId = sosRequestID
+        vc.userName = self.userName!
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
     }

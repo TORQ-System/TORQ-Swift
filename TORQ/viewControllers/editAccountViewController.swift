@@ -221,22 +221,25 @@ class editAccountViewController: UIViewController {
         
         credential = EmailAuthProvider.credential(withEmail: currentEmail!, password: (user?.getPassword())!)
         
+        self.view.showBlurLoader()
         Auth.auth().currentUser?.reauthenticate(with: credential, completion: { (result, error)  in
             if error != nil  {
                 SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "An error occured while authenticating your information", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
             } else {
                 Auth.auth().currentUser?.updateEmail(to: updatedUser["email"]!, completion: { error in
                     if error != nil {
+                        self.view.removeBlurLoader()
                         SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "The email entered is already in use", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
                     } else{
                         self.ref.child("User").child(userID!).updateChildValues(["fullName": updatedUser["fullName"]!, "email": updatedUser["email"]!, "phone": updatedUser["phoneNumber"]!, "gender": updatedUser["gender"]!, "dateOfBirth": updatedUser["birthDate"]! ]){
                             (error : Error?, ref: DatabaseReference) in
                             if error != nil{
+                                self.view.removeBlurLoader()
                                 SCLAlertView(appearance: self.apperance).showCustom("Oops!", subTitle: "An error ocuured, please try again later", color: self.redUIColor, icon: self.alertErrorIcon!, closeButtonTitle: "Got it!", animationStyle: SCLAnimationStyle.topToBottom)
                             }
                             else{
+                                self.view.removeBlurLoader()
                                 SCLAlertView(appearance: self.apperance).showCustom("Success!", subTitle: "We have updated your information", color: self.blueUIColor, icon: self.alertSuccessIcon!, closeButtonTitle: "Okay", animationStyle: SCLAnimationStyle.topToBottom)
-                                
                                 self.fetchUserData()
                             }
                         }
@@ -244,6 +247,7 @@ class editAccountViewController: UIViewController {
                 })
             }
         })
+        
         
         configureInputs()
     }
@@ -415,5 +419,49 @@ extension UITextField {
         if let t = textField.text {
             textField.text = String(t.prefix(maxLength))
         }
+    }
+}
+
+extension UIView {
+    func showBlurLoader() {
+        let blurLoader = BlurLoader(frame: frame)
+        self.addSubview(blurLoader)
+    }
+
+    func removeBlurLoader() {
+        if let blurLoader = subviews.first(where: { $0 is BlurLoader }) {
+            blurLoader.removeFromSuperview()
+        }
+    }
+}
+
+
+class BlurLoader: UIView {
+
+    var blurEffectView: UIVisualEffectView?
+
+    override init(frame: CGRect) {
+        let blurEffect = UIBlurEffect(style: .light)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = frame
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        self.blurEffectView = blurEffectView
+        super.init(frame: frame)
+        addSubview(blurEffectView)
+        addLoader()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func addLoader() {
+        guard let blurEffectView = blurEffectView else { return }
+        let activityIndicator = UIActivityIndicatorView(style: .medium)
+        activityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        blurEffectView.contentView.addSubview(activityIndicator)
+        activityIndicator.center = blurEffectView.contentView.center
+        activityIndicator.color = UIColor(red: 73/255, green: 171/255, blue:223/255, alpha: 1.0)
+        activityIndicator.startAnimating()
     }
 }

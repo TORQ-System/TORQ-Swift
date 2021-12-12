@@ -4,7 +4,6 @@
 //
 //  Created by Noura Alsulayfih on 14/11/2021.
 //
-
 import UIKit
 import Firebase
 import CoreLocation
@@ -187,6 +186,10 @@ class ViewSOSRequestsViewController: UIViewController {
         vc.sosRequestName = sender.userName
         vc.sosRequestTime = sender.requestTime
         vc.sosRequestAge = sender.requesterAge
+        vc.phoneNumber = sender.phone
+        vc.userEmail = sender.email
+        vc.longitude = sender.longitude
+        vc.latitude = sender.latitude
         if processed {
             vc.sosRequestStatus = "Processed"
         }else if active {
@@ -208,7 +211,11 @@ class ViewSOSRequestsViewController: UIViewController {
         var requestTime: String?
         var userID: String?
         var requesterAge: Int?
-        
+        var phone:String?
+        var email: String?
+        var longitude: Double?
+        var latitude: Double?
+
     }
     
     //MARK: - @IBActions
@@ -396,6 +403,10 @@ extension ViewSOSRequestsViewController: UITableViewDataSource{
         buttonTap.userName = userObject!.first!.getFullName()
         buttonTap.requesterAge = age
         buttonTap.requestTime = String(time)
+        buttonTap.phone = userObject!.first?.getPhone()
+        buttonTap.email = userObject!.first?.getEmail()
+        buttonTap.longitude = Double(array[indexPath.row].getLongitude())!
+        buttonTap.latitude = Double(array[indexPath.row].getLatitude())!
         cell.viewDetailsButton.addGestureRecognizer(buttonTap)
         return cell
     }
