@@ -8,8 +8,10 @@ TORQ puts fourth user’s health. Therefore, users are able to initiate their ow
 </p>
 
 <h1 align = "center"> App Features </h1>
-The following video demonstrates the majority of the application's features.
-<iframe width="560" height="315" src="https://www.youtube.com/embed/lGQjZDkjL8A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+The following [video](https://youtu.be/lGQjZDkjL8A) demonstrates the majority of the application's features.
+
 
 <h1 align = "center"> Color Pallete </h1> 
 
